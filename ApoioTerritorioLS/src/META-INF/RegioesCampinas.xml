@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<regioes>
+	<regiao>
+		<nome>Região do Anhumas</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.854664</latitude>
+			<longitude>-47.042484</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região de Barão Geraldo</nome>
+		<letra>H</letra>
+		<centro>
+			<latitude>-22.792166</latitude>
+			<longitude>-47.074041</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Boa Vista</nome>
+		<letra>M</letra>
+		<centro>
+			<latitude>-22.884636</latitude>
+			<longitude>-47.124496</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Carlos Lourenço</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.923615</latitude>
+			<longitude>-47.021198</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Centro</nome>
+		<letra>A</letra>
+		<centro>
+			<latitude>-22.901992</latitude>
+			<longitude>-47.061832</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Chapadão - Guanabara</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.891674</latitude>
+			<longitude>-47.08128</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Eulina</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.891674</latitude>
+			<longitude>-47.104626</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Flamboyant</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.878389</latitude>
+			<longitude>-47.028751</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Guarani</nome>
+		<letra>E</letra>
+		<centro>
+			<latitude>-22.913654</latitude>
+			<longitude>-47.033429</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Padre Anchieta</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.869849</latitude>
+			<longitude>-47.145138</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do San Martins</nome>
+		<letra>Q</letra>
+		<centro>
+			<latitude>-22.84802</latitude>
+			<longitude>-47.147148</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Santa Bárbara</nome>
+		<letra>O</letra>
+		<centro>
+			<latitude>-22.892346</latitude>
+			<longitude>-47.146933</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do São Marcos</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.847862</latitude>
+			<longitude>-47.115054</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região de Sousas</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.881236</latitude>
+			<longitude>-46.96661</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Taquaral</nome>
+		<letra>J</letra>
+		<centro>
+			<latitude>-22.876254</latitude>
+			<longitude>-47.051368</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Vicenti Cury</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.854347</latitude>
+			<longitude>-47.06789</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região da Vila Brandina</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.901162</latitude>
+			<longitude>-47.017078</longitude>
+		</centro>
+	</regiao>
+	<regiao>
+		<nome>Região do Xangrila</nome>
+		<letra></letra>
+		<centro>
+			<latitude>-22.798338</latitude>
+			<longitude>-47.018795</longitude>
+		</centro>
+	</regiao>
+</regioes>

@@ -1,0 +1,327 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+	<g:TabLayoutPanel barUnit='EM' barHeight='3'
+		animationDuration="1" ui:field="cadastroSurdoTabLayoutPanel">
+		<g:tab>
+			<g:header>Surdos</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:Label text="Pesquisar"/>
+					<g:Grid styleName="surdo-tabela">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Nome: " />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Região: " />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Mapa: " />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:TextBox ui:field="pesquisaNomeTextBox"
+									visibleLength="25" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaRegiaoListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaMapaListBox" />
+							</g:customCell>					
+							<g:customCell>
+								<g:Button ui:field="pesquisaPesquisarButton" text="Pesquisar" />
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					<g:Label ui:field="pesquisaResultadoLabel"/>
+					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="10" />
+					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="10"/>
+					<g:HTML wordWrap="true"><br/></g:HTML>
+					<g:InlineHyperlink text="Adicionar Surdo" targetHistoryToken="adicionar" ui:field="manterAdicionarSurdoInlineHyperlink"/>
+					<g:HTML wordWrap="true"><br/></g:HTML>
+					<g:HTML ui:field="manterWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
+					<g:HTML wordWrap="true"><br/></g:HTML>
+					<g:Grid ui:field="manterSurdoGrid" visible="false" styleName="surdo-tabela">
+						<g:row>
+							<g:customCell>
+								<g:Label text="Nome:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox visibleLength="30" ui:field="manterNomeTextBox"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Logradouro:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterLogradouroTextBox" visibleLength="40"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Número:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterNumeroTextBox" visibleLength="20"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Complemento:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterComplementoTextBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Regiao:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterRegiaoListBox"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Bairro:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterBairroListBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="CEP:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterCEPTextBox" visibleLength="20"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Observação:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextArea ui:field="manterObservacaoTextArea" characterWidth="35"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Telefone:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Libras:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterLibrasListBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Criança:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterCriancaListBox"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="DVD:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterDVDListBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Instrutor:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="30"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Idade:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterIdadeIntegerBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Sexo:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="manterSexoListBox"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Horário:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Melhor dia:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20"/>
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Ônibus:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterOnibusTextBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="MSN:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterMSNTextBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
+							</g:customCell>							
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Button ui:field="manterSalvarButton" text="Salvar"/>
+							</g:customCell>
+						</g:row>					
+					</g:Grid>
+					<g:PopupPanel 
+						ui:field="manterMapaPopupPanel" 
+						visible="false" 
+						autoHideEnabled="false" 
+						animationEnabled="true" 
+						glassEnabled="true">
+						<g:VerticalPanel>
+							<g:HTML ui:field="manterWarningEnderecoHTML" wordWrap="true" styleName="surdo-warning-centro" visible="false">
+								O endereco não foi encontrado. Você precisará selecioná-lo manualmente ou voltar e alterar o cadastro.<br/><br/>
+							</g:HTML>
+							<g:LayoutPanel ui:field="manterMapaLayoutPanel"></g:LayoutPanel>
+							<g:HTML><br/></g:HTML>
+							<g:HorizontalPanel styleName="endereco-tabela">
+								<g:Button ui:field="manterMapaConfirmarEnderecoButton" text="Confirmar Endereço"></g:Button>
+								<g:HorizontalPanel styleName="endereco-tabela-direita">
+									<g:Button ui:field="manterMapaVoltarEnderecoButton" text="Voltar"></g:Button>
+								</g:HorizontalPanel>
+							</g:HorizontalPanel>
+						</g:VerticalPanel>
+					</g:PopupPanel>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Mapas</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:Label text="Pesquisar"/>
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Regiao: " />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Mapa: " />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaMapaRegiaoListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaMapaMapaListBox" enabled="false" />
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					<g:Label ui:field="manterMapaSurdoNomeMapaLabel" visible="false"/>
+					<g:Grid ui:field="manterMapaSurdoGrid" visible="false" cellSpacing="15">
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Surdos da região sem mapa</g:HTML>
+							</g:customCell>
+							<g:customCell>
+								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Associação/Desassociação</g:HTML>
+							</g:customCell>
+							<g:customCell>
+								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Surdos no mapa atualmente</g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:ListBox visibleItemCount="5" ui:field="manterMapaSurdoDeListBox" multipleSelect="true"/>
+							</g:customCell>
+							<g:customCell>
+								<g:VerticalPanel styleName="surdo-celula-central">
+									<g:Button ui:field="manterMapaSurdoAdicionarButton" text="&gt;&gt;"/>
+									<g:Button ui:field="manterMapaSurdoRemoverButton" text="&lt;&lt;"/>
+								</g:VerticalPanel>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox visibleItemCount="5" ui:field="manterMapaSurdoParaListBox" multipleSelect="true"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Button ui:field="manterMapaApagarMapaButton" text="Apagar Mapa"/>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:HorizontalPanel ui:field="manterMapaLegendaHorizontalPanel" visible="false" width="740px">
+						<g:HTML>
+							<strong>Legenda:</strong> 
+							<img src="images/icone_vermelho.png" alt="Surdos sem mapa"/> Surdos sem mapa
+							<img src="images/icone_azul.png" alt="Surdos no mapa atual"/> Surdos no mapa atual
+							<img src="images/icone_verde.png" alt="Surdos em outros mapas"/> Surdos em outros mapas
+						</g:HTML>
+					</g:HorizontalPanel>
+					<g:LayoutPanel ui:field="manterMapaMapaLayoutPanel" visible="false" width="750px"></g:LayoutPanel>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Impressão</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:Label text="Pesquisar"/>
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Região: " />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Mapa: " />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" />
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:DecoratedPopupPanel
+						ui:field="impressaoDecoratedPopupPanel" 
+						visible="false" 
+						autoHideEnabled="false" 
+						animationEnabled="true" 
+						glassEnabled="true"
+						styleName="impressao-popup-panel">
+						<g:VerticalPanel>
+							<g:FlexTable ui:field="impressaoSurdoFlexTable"></g:FlexTable>
+							<g:LayoutPanel ui:field="impressaoMapaLayoutPanel"></g:LayoutPanel>
+							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>
+						</g:VerticalPanel>
+					</g:DecoratedPopupPanel>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+	</g:TabLayoutPanel>
+</ui:UiBinder> 

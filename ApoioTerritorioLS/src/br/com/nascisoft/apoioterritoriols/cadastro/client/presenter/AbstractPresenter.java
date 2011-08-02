@@ -1,0 +1,75 @@
+package br.com.nascisoft.apoioterritoriols.cadastro.client.presenter;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
+import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
+
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HasWidgets;
+
+public abstract class AbstractPresenter implements Presenter {
+	
+	private static List<String> regioes = null;
+	protected final HandlerManager eventBus;
+	protected final CadastroServiceAsync service;
+	
+	public AbstractPresenter(CadastroServiceAsync service, HandlerManager eventBus) {
+		this.service = service;
+		this.eventBus = eventBus;
+	}
+	
+	abstract CadastroView getView();
+	
+	protected static final Logger logger = Logger.getLogger(AbstractPresenter.class.getName());
+	
+	protected void populaRegioes() {
+		if(regioes == null) {
+			service.obterRegioesCampinas(new AsyncCallback<List<String>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					logger.log(Level.SEVERE, "Falha ao obter lista de regioes", caught);
+					Window.alert("Falha ao obter lista de regioes. \n" + caught.getMessage());					
+				}
+
+				@Override
+				public void onSuccess(List<String> result) {
+					regioes = result;
+					getView().setRegiaoList(result);
+				}
+			});
+		} else {
+			getView().setRegiaoList(regioes);
+		}
+	}
+	
+	public void onPesquisaRegiaoListBoxChange(String nomeRegiao) {
+		service.obterMapasRegiao(nomeRegiao, new AsyncCallback<List<Mapa>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de mapas", caught);
+				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(List<Mapa> result) {
+				getView().setMapaList(result);
+			}
+		});		
+	}
+
+	public void go(HasWidgets container) {
+		getView().initView();
+		populaRegioes();
+		container.clear();
+		container.add(getView().asWidget());
+	}
+
+}

@@ -11,6 +11,7 @@ public class Mapa implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id private Long id;
 	private Integer numero;
+	private String letra;
 	private String regiao;
 	
 	public Mapa() {
@@ -48,7 +49,15 @@ public class Mapa implements Serializable {
 	}
 	
 	public String getNome() {
-		return "Mapa " + numero;
+		return "Mapa " + letra + numero;
+	}
+
+	public void setLetra(String letra) {
+		this.letra = letra;
+	}
+
+	public String getLetra() {
+		return letra;
 	}
 
 }

@@ -63,9 +63,8 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 		}
 		return CadastroServiceImpl.bairros;
 	}
-
-	@Override
-	public List<String> obterRegioesCampinas() {
+	
+	private void initRegioes() {
 		if (CadastroServiceImpl.regioes == null) {
 			try {
 				JAXBContext context = JAXBContext.newInstance(Regioes.class);
@@ -80,6 +79,23 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 				throw new RuntimeException("Erro ao recuperar lista de regioes.", ex);
 			}
 		}
+	}
+	
+	private Regiao obterRegiao(String nomeRegiao) {
+		initRegioes();
+		Regiao retorno = null;
+		for (Regiao regiao : CadastroServiceImpl.regioes.getRegiao()) {
+			if (regiao.getNome().equals(nomeRegiao)) {
+				retorno = regiao;
+				break;
+			}
+		}
+		return retorno;
+	}
+
+	@Override
+	public List<String> obterRegioesCampinas() {
+		initRegioes();
 		List<String> retorno = new ArrayList<String>();
 		for (Regiao regiao : regioes.getRegiao()) {
 			retorno.add(regiao.getNome());
@@ -130,7 +146,8 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public Long adicionarMapa(String nomeRegiao) {
-		return this.getDao().adicionarMapa(nomeRegiao);
+		Regiao regiao = obterRegiao(nomeRegiao);
+		return this.getDao().adicionarMapa(nomeRegiao, regiao.getLetra());
 	}
 
 	@Override

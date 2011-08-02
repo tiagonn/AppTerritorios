@@ -58,7 +58,7 @@ public class CadastroDAO extends DAOBase {
 		return ofy.get(Surdo.class, id);
 	}
 	
-	public Long adicionarMapa(String nomeRegiao) {
+	public Long adicionarMapa(String nomeRegiao, String letra) {
 		Objectify ofy = ObjectifyService.begin();
 		List<Mapa> mapas = this.obterMapasRegiao(nomeRegiao);
 		Integer i = 1;
@@ -72,6 +72,7 @@ public class CadastroDAO extends DAOBase {
 		
 		Mapa mapa = new Mapa();
 		mapa.setNumero(i);
+		mapa.setLetra(letra);
 		mapa.setRegiao(nomeRegiao);
 		
 		ofy.put(mapa);

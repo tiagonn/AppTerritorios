@@ -10,6 +10,7 @@ public interface ImpressaoView extends CadastroView {
 	public interface Presenter extends CadastroView.Presenter {
 		void onAbrirImpressao(Long identificadorMapa);
 		void abrirImpressao(Long identificadorMapa);
+		void onVoltar();
 	}
 	
 	void setPresenter(Presenter presenter);

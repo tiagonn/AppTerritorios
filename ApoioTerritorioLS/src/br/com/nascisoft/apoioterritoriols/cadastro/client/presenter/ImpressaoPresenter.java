@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoView;
@@ -57,6 +58,11 @@ public class ImpressaoPresenter extends AbstractPresenter
 	@Override
 	public void abrirImpressao(Long identificadorMapa) {
 		eventBus.fireEvent(new AbrirImpressaoMapaEvent(identificadorMapa));
+	}
+
+	@Override
+	public void onVoltar() {
+		eventBus.fireEvent(new AbrirImpressaoEvent());
 	}
 
 }

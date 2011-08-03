@@ -22,4 +22,24 @@ public final class StringUtils {
 	public static boolean isEmpty(String string) {
 		return string == null || "".equals(string);
 	}
+	
+	public static String primeiraLetra(String string) {
+		String retorno = "";
+		if (!StringUtils.isEmpty(string)) {
+			retorno = string.substring(0,1);
+		} 
+		return retorno;
+	}
+	
+	public static String duasLetras(String string) {
+		String retorno = "";
+		if (!StringUtils.isEmpty(string)) {
+			if (string.length() > 2) {
+				retorno = string.substring(0,2);
+			} else {
+				retorno = string;
+			}
+		} 
+		return retorno;
+	}
 }

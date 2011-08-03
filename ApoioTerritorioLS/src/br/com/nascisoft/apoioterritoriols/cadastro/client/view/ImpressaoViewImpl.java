@@ -57,6 +57,7 @@ public class ImpressaoViewImpl extends Composite implements
 	private void limparPesquisa() {
 		this.pesquisaImpressaoRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaImpressaoMapaListBox.clear();
+		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaImpressaoMapaListBox.setSelectedIndex(0);
 		this.pesquisaImpressaoMapaListBox.setEnabled(false);
 	}
@@ -128,18 +129,67 @@ public class ImpressaoViewImpl extends Composite implements
 
 	@Override
 	public void onAbrirImpressao(List<SurdoVO> surdos) {
+		String classe = " class=\"impressao-celula\"";
+		String classe1= " class=\"impressao-celula-titulo\"";
 		
-		for (SurdoVO surdo : surdos) {
+		for (int i = 0; i < surdos.size();i++) {
+			if (i == 0) {
+				this.impressaoSurdoFlexTable.setHTML(0, 0, surdos.get(i).getMapa());
+				this.impressaoSurdoFlexTable.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
+			}
+			SurdoVO surdo = surdos.get(i);
 			StringBuilder html = new StringBuilder();
-			html.append("<table>")
+			html.append("<table width=\"100%\" cellspacing=0>")
 					.append("<tr>")
-						.append("<td>Nome:</td>")
-						.append("<td>").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>");
-//						.append("<td>").append("")
-			//TODO: Terminar de criar a tabela HTML que vai em uma linha da flex table
+						.append("<td width=\"40px\"").append(classe1).append(">Nome:</td>")
+						.append("<td width=\"495px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
+						.append("<td width=\"150px\" ").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td width=\"60px\"").append(classe1).append(">Libras:</td>")
+						.append("<td width=\"15px\" ").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getLibras())).append("</td>")
+						.append("<td width=\"60px\"").append(classe1).append(">Idade:</td>")
+						.append("<td width=\"30px\" ").append(classe).append(">").append(StringUtils.duasLetras(surdo.getIdade())).append("</td>")
+					.append("</tr>")
+					.append("<tr>")
+						.append("<td").append(classe1).append(">End:</td>")
+						.append("<td").append(classe).append(">")
+							.append(surdo.getLogradouro()).append(" ")
+							.append(surdo.getNumero()).append(" ")
+							.append(surdo.getComplemento())
+						.append("</td>")
+						.append("<td").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td").append(classe1).append(">Crianca:</td>")
+						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getCrianca())).append("</td>")
+						.append("<td").append(classe1).append(">Sexo:</td>")
+						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getSexo())).append("</td>")
+					.append("</tr>")
+					.append("<tr>")
+						.append("<td").append(classe1).append(">Bairro:</td>")
+						.append("<td").append(classe).append(">").append(surdo.getBairro()).append("</td>")
+						.append("<td").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td").append(classe1).append(">DVD:</td>")
+						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getDvd())).append("</td>")
+						.append("<td").append(classe1).append(">Onibus:</td>")
+						.append("<td").append(classe).append(">").append(surdo.getOnibus()).append("</td>")
+					.append("</tr>")
+					.append("<tr>")
+						.append("<td").append(classe1).append(">Obs:</td>")
+						.append("<td colspan=\"6\" ").append(classe).append(">").append(surdo.getObservacao()).append("</td>")
+					.append("</tr>")
+					.append("<tr>")
+						.append("<td colspan=\"7\"><table width=\"100%\" cellspacing=0><tr>")
+						.append("<td width=\"130px\"").append(classe).append("><strong>Tel:</strong> ").append(surdo.getTelefone()).append("</td>")
+						.append("<td width=\"240px\"").append(classe).append("><strong>Horario:</strong> ").append(surdo.getHorario()).append("</td>")
+						.append("<td width=\"240px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
+						.append("<td width=\"240px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
+					.append("</tr></table></td></tr>")
+				.append("</table>");
+						
+			this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());
+			this.impressaoSurdoFlexTable.setBorderWidth(1);
+			this.impressaoSurdoFlexTable.setCellSpacing(0);
 		}
 		
-		//TODO: Terminar de criar usando o layoutpanel o mapa
+		//TODO: Terminar de criar usando o layoutpanel o mapa (vai precisar de scroll na tela, usar um scrool panel
 		
 		this.impressaoDecoratedPopupPanel.setAnimationEnabled(true);
 		this.impressaoDecoratedPopupPanel.setAutoHideEnabled(true);
@@ -151,6 +201,6 @@ public class ImpressaoViewImpl extends Composite implements
 	
 	@UiHandler("impressaoVoltarButton")
 	public void onImpressaovoltarButtonClick(ClickEvent event) {
-		this.limparImpressao();
+		this.presenter.onVoltar();
 	}
 }

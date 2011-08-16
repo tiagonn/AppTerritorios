@@ -10,8 +10,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 public interface CadastroSurdoView extends CadastroView {
 	
 	public interface Presenter extends CadastroView.Presenter {
-		void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, Long identificadorMapa);
-		void onPesquisar();
+		void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa);
+		void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa);
 		void onAdicionar();
 		void adicionarOuAlterarSurdo(Surdo surdo);
 		void onEditarButtonClick(Long id);
@@ -21,7 +21,6 @@ public interface CadastroSurdoView extends CadastroView {
 	}
 
 	void setBairroList(List<String> bairros);
-	void onPesquisar();
 	void onEditar(Surdo surdo);
 	void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa);
 	void onApagarSurdo(Long id);

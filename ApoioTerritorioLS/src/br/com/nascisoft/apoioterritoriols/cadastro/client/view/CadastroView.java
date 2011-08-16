@@ -10,11 +10,16 @@ import com.google.gwt.user.client.ui.Widget;
 public interface CadastroView {
 	
 	public interface Presenter {
+		void initView();
 		void setTabSelectionEventHandler(SelectionHandler<Integer> handler);
+		void selectThisTab();
 		void onPesquisaRegiaoListBoxChange(String nomeRegiao);
 	}
 	
+	void showWaitingPanel();
+	void hideWaitingPanel();
 	void initView();
+	void selectThisTab();
 	void setMapaList(List<Mapa> mapas);
 	void setRegiaoList(List<String> regioes);
 	void setTabSelectionEventHandler(SelectionHandler<Integer> handler);

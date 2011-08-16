@@ -13,7 +13,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public abstract class AbstractPresenter implements Presenter {
+public abstract class AbstractPresenter implements Presenter, CadastroView.Presenter {
 	
 	private static List<String> regioes = null;
 	protected final HandlerManager eventBus;
@@ -30,6 +30,7 @@ public abstract class AbstractPresenter implements Presenter {
 	
 	protected void populaRegioes() {
 		if(regioes == null) {
+			getView().showWaitingPanel();
 			service.obterRegioesCampinas(new AsyncCallback<List<String>>() {
 
 				@Override
@@ -42,6 +43,7 @@ public abstract class AbstractPresenter implements Presenter {
 				public void onSuccess(List<String> result) {
 					regioes = result;
 					getView().setRegiaoList(result);
+					getView().hideWaitingPanel();
 				}
 			});
 		} else {
@@ -50,6 +52,7 @@ public abstract class AbstractPresenter implements Presenter {
 	}
 	
 	public void onPesquisaRegiaoListBoxChange(String nomeRegiao) {
+		getView().showWaitingPanel();
 		service.obterMapasRegiao(nomeRegiao, new AsyncCallback<List<Mapa>>() {
 
 			@Override
@@ -61,15 +64,23 @@ public abstract class AbstractPresenter implements Presenter {
 			@Override
 			public void onSuccess(List<Mapa> result) {
 				getView().setMapaList(result);
+				getView().hideWaitingPanel();
 			}
 		});		
 	}
 
 	public void go(HasWidgets container) {
-		getView().initView();
-		populaRegioes();
 		container.clear();
 		container.add(getView().asWidget());
+	}
+	
+	public void initView() {
+		populaRegioes();
+		getView().initView();
+	}
+	
+	public void selectThisTab() {
+		getView().selectThisTab();
 	}
 
 }

@@ -41,6 +41,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -63,6 +64,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiField Button manterMapaApagarMapaButton;
 	@UiField LayoutPanel manterMapaMapaLayoutPanel;
 	@UiField HorizontalPanel manterMapaLegendaHorizontalPanel;
+	@UiField PopupPanel waitingPopUpPanel;
 	
 	private Long identificadorMapaAtual;
 	
@@ -87,9 +89,28 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.limparManter();
 	}
 	
+	@Override
+	public void selectThisTab() {
+		this.cadastroSurdoTabLayoutPanel.selectTab(1);
+	}
+	
+	@Override
+	public void showWaitingPanel() {
+		waitingPopUpPanel.setVisible(true);
+		waitingPopUpPanel.show();
+	}
+	
+	@Override
+	public void hideWaitingPanel() {
+		waitingPopUpPanel.hide();
+		waitingPopUpPanel.setVisible(false);
+	}
+	
+	
 	private void limparPesquisa() {
 		this.pesquisaMapaRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaMapaMapaListBox.clear();
+		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaMapaMapaListBox.setSelectedIndex(0);
 		this.pesquisaMapaMapaListBox.setEnabled(false);
 		this.identificadorMapaAtual = null;
@@ -184,6 +205,8 @@ public class CadastroMapaViewImpl extends Composite implements
 		}
 		return 0;
 	}
+	
+	//TODO: alterar componente de multi-select box para box com labels selecionados ou avaliar outra possibilidade
 
 	@UiHandler("manterMapaSurdoAdicionarButton")
 	void onManterMapaSurdoAdicionarButtonClick(ClickEvent event) {

@@ -38,6 +38,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 	@Override
 	public void adicionarMapa(String nomeRegiao) {
+		getView().showWaitingPanel();
 		service.adicionarMapa(nomeRegiao, new AsyncCallback<Long>() {
 						
 			@Override
@@ -50,6 +51,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			public void onSuccess(Long result) {
 				Window.alert("Mapa criado com sucesso.");
 				abrirMapa(result);
+				getView().hideWaitingPanel();
 			}
 
 		});
@@ -58,6 +60,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 	@Override
 	public void onAbrirMapa(Long identificadorMapa) {
+		getView().showWaitingPanel();
 		service.obterInformacoesAbrirMapa(identificadorMapa, new AsyncCallback<AbrirMapaVO>() {
 
 			@Override
@@ -69,6 +72,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			@Override
 			public void onSuccess(AbrirMapaVO result) {
 				view.onAbrirMapa(result);
+				getView().hideWaitingPanel();
 			}
 		});
 	}
@@ -80,6 +84,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 	@Override
 	public void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa) {
+		getView().showWaitingPanel();
 		service.adicionarSurdosMapa(surdos, identificadorMapa, new AsyncCallback<Long>() {
 			
 			@Override
@@ -92,12 +97,14 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			public void onSuccess(Long result) {
 				Window.alert("Surdo(s) adicionados com sucesso ao mapa");
 				eventBus.fireEvent(new AbrirMapaEvent(result));
+				getView().hideWaitingPanel();
 			}
 		});		
 	}
 	
 	@Override
 	public void removerSurdosMapa(List<Long> surdos) {
+		getView().showWaitingPanel();
 		service.removerSurdosMapa(surdos, new AsyncCallback<Long>() {
 
 			@Override
@@ -110,12 +117,14 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			public void onSuccess(Long result) {
 				Window.alert("Surdo(s) removidos com sucesso ao mapa");
 				eventBus.fireEvent(new AbrirMapaEvent(result));
+				getView().hideWaitingPanel();
 			}
 		});		
 	}
 
 	@Override
 	public void apagarMapa(Long identificadorMapa) {
+		getView().showWaitingPanel();
 		service.apagarMapa(identificadorMapa, new AsyncCallback<Void>() {
 
 			@Override
@@ -128,6 +137,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			public void onSuccess(Void result) {
 				Window.alert("Mapa apagado com sucesso");
 				view.onApagarMapa();
+				getView().hideWaitingPanel();
 			}
 		});
 	}

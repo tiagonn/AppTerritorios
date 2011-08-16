@@ -3,8 +3,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroEvent;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroEventHandler;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEvent;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroMapaEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoEvent;
@@ -64,7 +64,7 @@ public class CadastroController implements Presenter,
 			@Override
 			public void onSelection(SelectionEvent<Integer> event) {
 				if (event.getSelectedItem() == 0) {
-					eventBus.fireEvent(new AbrirCadastroEvent());
+					eventBus.fireEvent(new AbrirCadastroSurdoEvent());
 				} else if (event.getSelectedItem() == 1) {
 					eventBus.fireEvent(new AbrirCadastroMapaEvent());
 				} else if (event.getSelectedItem() == 2) {
@@ -77,12 +77,14 @@ public class CadastroController implements Presenter,
 
 	private void bind() {
 		History.addValueChangeHandler(this);
+		
+		//TODO: Rever estrutura de URIs
 
-		eventBus.addHandler(AbrirCadastroEvent.TYPE,
-				new AbrirCadastroEventHandler() {
+		eventBus.addHandler(AbrirCadastroSurdoEvent.TYPE,
+				new AbrirCadastroSurdoEventHandler() {
 					@Override
-					public void onAbrirCadastro(AbrirCadastroEvent event) {
-						History.newItem("abrir");
+					public void onAbrirCadastroSurdo(AbrirCadastroSurdoEvent event) {
+						History.newItem("surdos");
 					}
 				});
 
@@ -90,8 +92,10 @@ public class CadastroController implements Presenter,
 				new PesquisarSurdoEventHandler() {
 					@Override
 					public void onPesquisarSurdo(PesquisarSurdoEvent event) {
-						History.newItem("prepararPesquisa");
-						History.newItem("pesquisar");
+						History.newItem("surdos!pesquisar#" +
+								"nomeSurdo="+event.getNomeSurdo()+
+								"&nomeRegiao="+event.getNomeRegiao()+
+								"&identificadorMapa="+event.getIdentificadorMapa());					
 					}
 				});
 
@@ -99,7 +103,7 @@ public class CadastroController implements Presenter,
 				new AdicionarSurdoEventHandler() {
 					@Override
 					public void onAdicionarSurdo(AdicionarSurdoEvent event) {
-						History.newItem("adicionar");
+						History.newItem("surdos!adicionar");
 					}
 				});
 
@@ -107,7 +111,7 @@ public class CadastroController implements Presenter,
 				new EditarSurdoEventHandler() {
 					@Override
 					public void onEditarSurdo(EditarSurdoEvent event) {
-						History.newItem("editar!" + event.getId());
+						History.newItem("surdos!editar#identificadorSurdo=" + event.getId());
 					}
 				});
 
@@ -115,7 +119,7 @@ public class CadastroController implements Presenter,
 				new AbrirCadastroMapaEventHandler() {
 					@Override
 					public void onAbrirCadastroMapa(AbrirCadastroMapaEvent event) {
-						History.newItem("abrirMapa");
+						History.newItem("mapas");
 					}
 				});
 		
@@ -124,8 +128,7 @@ public class CadastroController implements Presenter,
 					
 					@Override
 					public void onAbrirMapa(AbrirMapaEvent event) {
-						History.newItem("prepararAbrirMapaEspecifico");
-						History.newItem("abrirMapa!" + event.getIdentificadorMapa());
+						History.newItem("mapas!abrir#identificadorMapa=" + event.getIdentificadorMapa());
 					}
 				});
 		
@@ -133,7 +136,7 @@ public class CadastroController implements Presenter,
 			
 			@Override
 			public void onAbrirImpressao(AbrirImpressaoEvent event) {
-				History.newItem("abrirImpressao");
+				History.newItem("impressao");
 			}
 		});
 		
@@ -141,7 +144,7 @@ public class CadastroController implements Presenter,
 			
 			@Override
 			public void onAbrirImpressaoMapa(AbrirImpressaoMapaEvent event) {
-				History.newItem("abrirImpressaoMapa!" + event.getIdentificadorMapa());
+				History.newItem("impressao!abrir#identificadorMapa=" + event.getIdentificadorMapa());
 			}
 		});
 	}
@@ -150,7 +153,7 @@ public class CadastroController implements Presenter,
 	public void go(HasWidgets container) {
 		this.container = container;
 		if ("".equals(History.getToken())) {
-			History.newItem("abrir");
+			History.newItem("surdos");
 		} else {
 			History.fireCurrentHistoryState();
 		}
@@ -165,29 +168,56 @@ public class CadastroController implements Presenter,
 				public void onSuccess() {
 					
 						// Aba Surdo
-					if ("abrir".equals(currentToken)) {
+					if (currentToken.startsWith("surdos")) {
 						if (cadastroSurdoView == null) {
 							cadastroSurdoView = new CadastroSurdoViewImpl();
 						}
 						if (cadastroSurdoPresenter == null) {
 							cadastroSurdoPresenter = new CadastroSurdoPresenter(
 									service, eventBus, cadastroSurdoView);
-							cadastroSurdoPresenter
-									.setTabSelectionEventHandler(selectionHandler);
-						}
-						cadastroSurdoPresenter.go(container);
-					} else if ("pesquisar".equals(currentToken)) {
-						cadastroSurdoPresenter.onPesquisar();
-					} else if ("adicionar".equals(currentToken)) {
-						cadastroSurdoPresenter.onAdicionar();
-					} else if (currentToken.startsWith("editar!")) {
-						Long id = Long.valueOf(currentToken.split("!")[1]);
-						cadastroSurdoPresenter.onEditar(id);
+							cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
+							cadastroSurdoPresenter.go(container);
+						}	
+						cadastroSurdoPresenter.selectThisTab();
 						
+						if ("surdos".equals(currentToken)) {
+							cadastroSurdoPresenter.initView();
+						} else if (currentToken.startsWith("surdos!pesquisar")) {
+							String queryString = currentToken.split("#")[1];
+							String[] parametros = queryString.split("&");
+							String nomeSurdo = null;
+							String nomeRegiao = null;
+							String identificadorMapa = null;
+							try {
+								nomeSurdo = parametros[0].split("=")[1];
+							} catch (ArrayIndexOutOfBoundsException e) {
+								// não faz nada, o nome continua null
+							}
+							try {
+								nomeRegiao = parametros[1].split("=")[1];
+							} catch (ArrayIndexOutOfBoundsException e) {
+								// não faz nada, o nome continua null
+							}
+							try {
+								identificadorMapa = parametros[2].split("=")[1];
+							} catch (ArrayIndexOutOfBoundsException e) {
+								// não faz nada, o identificador continua null
+							}
+							cadastroSurdoPresenter.onPesquisaPesquisarEvent(
+									nomeSurdo,
+									nomeRegiao,
+									identificadorMapa);	
+						}
+//						} else if ("adicionar".equals(currentToken)) {
+//							cadastroSurdoPresenter.onAdicionar();
+//						} else if (currentToken.startsWith("editar!")) {
+//							Long id = Long.valueOf(currentToken.split("!")[1]);
+//							cadastroSurdoPresenter.onEditar(id);
+//						}						
 						
 						
 						// Aba Mapa
-					} else if ("abrirMapa".equals(currentToken)) {
+					} else if (currentToken.startsWith("mapas")) {
 						if (cadastroMapaView == null) {
 							cadastroMapaView = new CadastroMapaViewImpl();
 						}
@@ -195,25 +225,40 @@ public class CadastroController implements Presenter,
 							cadastroMapaPresenter = new CadastroMapaPresenter(
 									service, eventBus, cadastroMapaView);
 							cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
+							cadastroMapaPresenter.go(container);
 						}
-						cadastroMapaPresenter.go(container);
-					} else if (currentToken.startsWith("abrirMapa!")) {
-						cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1]));
+						cadastroMapaPresenter.selectThisTab();
+						
+						if ("mapas".equals(currentToken)) {
+							cadastroMapaPresenter.initView();
+						}
+						
+//					else if (currentToken.startsWith("abrirMapa!")) {
+//						cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1]));
 					
 					
 					
 						// Aba Impressao
-					} else if ("abrirImpressao".equals(currentToken)) {
+					} else if (currentToken.startsWith("impressao")) {
 						if (impressaoView == null) {
 							impressaoView = new ImpressaoViewImpl();
 						}
 						if (impressaoPresenter == null) {
 							impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
 							impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
+							impressaoPresenter.go(container);
 						}
-						impressaoPresenter.go(container);
-					} else if (currentToken.startsWith("abrirImpressaoMapa!")) {
-						impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1]));
+						impressaoPresenter.selectThisTab();
+						
+						if ("impressao".equals(currentToken)) {
+							impressaoPresenter.initView();
+						}
+						
+						
+//						 else if (currentToken.startsWith("impressao!abrir!")) {
+//								impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1]));
+//							}
+						
 					}
 				}
 

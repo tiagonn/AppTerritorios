@@ -9,6 +9,7 @@ public class CadastroEntryPoint implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
+		//TODO: autenticação
 		CadastroServiceAsync service = GWT.create(CadastroService.class);
 		HandlerManager eventBus = new HandlerManager(null);
 		CadastroController controller = new CadastroController(service, eventBus);

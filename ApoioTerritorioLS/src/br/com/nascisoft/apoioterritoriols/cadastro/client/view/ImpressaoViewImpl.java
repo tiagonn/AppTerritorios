@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -37,6 +38,7 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField FlexTable impressaoSurdoFlexTable;
 	@UiField LayoutPanel impressaoMapaLayoutPanel;
 	@UiField Button impressaoVoltarButton;
+	@UiField PopupPanel waitingPopUpPanel;
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 
@@ -52,6 +54,23 @@ public class ImpressaoViewImpl extends Composite implements
 		this.cadastroSurdoTabLayoutPanel.selectTab(2);	
 		this.limparPesquisa();
 		this.limparImpressao();
+	}
+	
+	@Override
+	public void selectThisTab() {
+		this.cadastroSurdoTabLayoutPanel.selectTab(2);
+	}
+	
+	@Override
+	public void showWaitingPanel() {
+		waitingPopUpPanel.setVisible(true);
+		waitingPopUpPanel.show();
+	}
+	
+	@Override
+	public void hideWaitingPanel() {
+		waitingPopUpPanel.hide();
+		waitingPopUpPanel.setVisible(false);
 	}
 	
 	private void limparPesquisa() {

@@ -39,12 +39,13 @@ public class ImpressaoPresenter extends AbstractPresenter
 
 	@Override
 	public void onAbrirImpressao(Long identificadorMapa) {
+		getView().showWaitingPanel();
 		service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
 				view.onAbrirImpressao(result);
-				
+				getView().hideWaitingPanel();
 			}
 			
 			@Override

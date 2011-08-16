@@ -89,6 +89,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField HTML manterWarningEnderecoHTML;
 	@UiField Button manterMapaConfirmarEnderecoButton;
 	@UiField Button manterMapaVoltarEnderecoButton;
+	@UiField PopupPanel waitingPopUpPanel;
 	
 	Long manterId;
 	Key<Mapa> manterMapa;
@@ -97,6 +98,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	HasMarker marker;
 	boolean buscaEndereco = true;
 	
+	//TODO: Parametrizar todos os dados fixos
 	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.878419,-47.070356);// endereço do salão do reino
 
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
@@ -122,14 +124,30 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	public void initView() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(0);
 		this.pesquisaNomeTextBox.setText("");
-		this.pesquisaResultadoLabel.setText("");
+		this.pesquisaRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaMapaListBox.setSelectedIndex(0);
 		this.manterSurdoGrid.setVisible(false);
 		this.manterWarningHTML.setHTML("");
-		this.pesquisaResultadoSimplePager.setVisible(false);
 		this.manterMapaPopupPanel.hide();
 		this.limparResultadoPesquisa();
 		this.limparManter();
+	}
+	
+	@Override
+	public void showWaitingPanel() {
+		waitingPopUpPanel.setVisible(true);
+		waitingPopUpPanel.show();
+	}
+	
+	@Override
+	public void hideWaitingPanel() {
+		waitingPopUpPanel.hide();
+		waitingPopUpPanel.setVisible(false);
+	}
+	
+	@Override
+	public void selectThisTab() {
+		this.cadastroSurdoTabLayoutPanel.selectTab(0);
 	}
 
 	@Override
@@ -180,17 +198,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	void onPesquisaPesquisarButtonClick(ClickEvent event) {
 		if (this.presenter != null) {
 			
-			Long identificadorMapa = null;
-			if (this.pesquisaMapaListBox.getSelectedIndex() != -1 &&
-					this.pesquisaMapaListBox.getSelectedIndex() != 0) {
-				identificadorMapa = Long.valueOf(this.pesquisaMapaListBox.getValue(
-						this.pesquisaMapaListBox.getSelectedIndex()));
-			}
-			
 			this.presenter.onPesquisaPesquisarButtonClick(
 					this.pesquisaNomeTextBox.getText(), 
 					this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()),
-					identificadorMapa);
+					this.pesquisaMapaListBox.getValue(
+							this.pesquisaMapaListBox.getSelectedIndex()));
 		}
 		this.manterSurdoGrid.setVisible(false);
 	}
@@ -216,13 +228,19 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@Override
 	public void onAdicionar() {
 		this.manterSurdoGrid.setVisible(true);
-		this.limparResultados();
+		this.limparResultadoPesquisa();
 		this.limparManter();
 	}
 	
 	@Override
-	public void onPesquisar() {
+	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
 		this.limparResultadoPesquisa();
+		this.pesquisaResultadoCellTable.setRowCount(resultadoPesquisa.size());
+		this.resultadoPesquisa.setList(resultadoPesquisa);
+		this.mostrarResultadoPesquisa();
+	}
+	
+	private void mostrarResultadoPesquisa() {
 		if (this.pesquisaResultadoCellTable.getRowCount() == 0) {
 			this.pesquisaResultadoLabel.setText("Nao foram encontrados resultados para a pesquisa informada");
 			this.pesquisaResultadoSimplePager.setVisible(false);
@@ -290,12 +308,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		}
 		this.manterWarningHTML.setHTML("");
 		this.manterSurdoGrid.setVisible(false);
-	}
-	
-	@Override
-	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
-		this.pesquisaResultadoCellTable.setRowCount(resultadoPesquisa.size());
-		this.resultadoPesquisa.setList(resultadoPesquisa);
 	}
 	
 	@UiHandler("manterSalvarButton")
@@ -373,7 +385,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@Override
 	public void onEditar(Surdo surdo) {
 		this.manterSurdoGrid.setVisible(true);
-		this.limparResultados();
+		this.limparResultadoPesquisa();
 		this.populaManter(surdo);
 	}
 	
@@ -392,7 +404,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 		this.pesquisaResultadoCellTable.setRowCount(this.resultadoPesquisa.getList().size());
-		this.onPesquisar();
+		this.mostrarResultadoPesquisa();
 	}
 
 	private Validacoes validaManterSurdo() {
@@ -414,8 +426,17 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		return validacoes;
 	} 
 	
-	private void limparResultados() {
+	private void limparResultadoPesquisa() {	
+		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
+		// portanto sempre é necessário remover a coluna 0.
+		int j = this.pesquisaResultadoCellTable.getColumnCount();
+		for (int i = 0; i < j; i++) {
+			this.pesquisaResultadoCellTable.removeColumn(0);
+		}
 		this.pesquisaResultadoLabel.setText("");
+//		this.pesquisaResultadoCellTable.setRowCount(0);
+//		this.resultadoPesquisa.removeDataDisplay(this.pesquisaResultadoCellTable);
+//		this.resultadoPesquisa.setList(new ArrayList<SurdoDetailsVO>());
 		this.pesquisaResultadoCellTable.setVisible(false);
 		this.pesquisaResultadoSimplePager.setVisible(false);
 	}
@@ -529,13 +550,5 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		return 0;
 	}
 	
-	private void limparResultadoPesquisa() {
-		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
-		// portanto sempre é necessário remover a coluna 0.
-		int j = this.pesquisaResultadoCellTable.getColumnCount();
-		for (int i = 0; i < j; i++) {
-			this.pesquisaResultadoCellTable.removeColumn(0);
-		}
-	}
 	
 }

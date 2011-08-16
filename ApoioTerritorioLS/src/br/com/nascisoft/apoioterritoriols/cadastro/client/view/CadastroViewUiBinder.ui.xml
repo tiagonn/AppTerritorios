@@ -42,7 +42,7 @@
 					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="10" />
 					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="10"/>
 					<g:HTML wordWrap="true"><br/></g:HTML>
-					<g:InlineHyperlink text="Adicionar Surdo" targetHistoryToken="adicionar" ui:field="manterAdicionarSurdoInlineHyperlink"/>
+					<g:InlineHyperlink text="Adicionar Surdo" targetHistoryToken="surdos!adicionar" ui:field="manterAdicionarSurdoInlineHyperlink"/>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:HTML ui:field="manterWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"><br/></g:HTML>
@@ -321,6 +321,15 @@
 							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>
 						</g:VerticalPanel>
 					</g:DecoratedPopupPanel>
+					<g:PopupPanel 
+								ui:field="waitingPopUpPanel" 
+								visible="false" 
+								autoHideEnabled="false" 
+								animationEnabled="true" 
+								glassEnabled="true"
+								styleName="imagem-div-centro">
+								<g:HTML><img src="images/waiting.gif" alt="Esperando..."/></g:HTML>
+					</g:PopupPanel>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>

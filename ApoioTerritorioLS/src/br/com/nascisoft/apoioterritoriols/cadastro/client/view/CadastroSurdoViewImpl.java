@@ -122,7 +122,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 	
 	public void initView() {
-		this.cadastroSurdoTabLayoutPanel.selectTab(0);
+		this.selectThisTab();
 		this.pesquisaNomeTextBox.setText("");
 		this.pesquisaRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaMapaListBox.setSelectedIndex(0);
@@ -147,7 +147,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	@Override
 	public void selectThisTab() {
-		this.cadastroSurdoTabLayoutPanel.selectTab(0);
+		this.cadastroSurdoTabLayoutPanel.selectTab(0, false);
 	}
 
 	@Override
@@ -439,6 +439,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 //		this.resultadoPesquisa.setList(new ArrayList<SurdoDetailsVO>());
 		this.pesquisaResultadoCellTable.setVisible(false);
 		this.pesquisaResultadoSimplePager.setVisible(false);
+		this.resultadoPesquisa.flush();
 	}
 	
 	private void limparManter() {

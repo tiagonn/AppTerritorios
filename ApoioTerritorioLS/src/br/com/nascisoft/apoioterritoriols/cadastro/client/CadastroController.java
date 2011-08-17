@@ -51,7 +51,18 @@ public class CadastroController implements Presenter,
 	private ImpressaoPresenter impressaoPresenter = null;
 	private ImpressaoViewImpl impressaoView = null;
 	private String currentToken = null;
-	private SelectionHandler<Integer> selectionHandler = null;
+	private SelectionHandler<Integer> selectionHandler = new SelectionHandler<Integer>() {
+		@Override
+		public void onSelection(SelectionEvent<Integer> event) {
+			if (event.getSelectedItem() == 0) {
+				eventBus.fireEvent(new AbrirCadastroSurdoEvent());
+			} else if (event.getSelectedItem() == 1) {
+				eventBus.fireEvent(new AbrirCadastroMapaEvent());
+			} else if (event.getSelectedItem() == 2) {
+				eventBus.fireEvent(new AbrirImpressaoEvent());
+			}
+		}
+	};;
 
 	private static final Logger logger = Logger
 			.getLogger(CadastroController.class.getName());
@@ -60,18 +71,6 @@ public class CadastroController implements Presenter,
 			HandlerManager eventBusParam) {
 		this.service = service;
 		this.eventBus = eventBusParam;
-		this.selectionHandler = new SelectionHandler<Integer>() {
-			@Override
-			public void onSelection(SelectionEvent<Integer> event) {
-				if (event.getSelectedItem() == 0) {
-					eventBus.fireEvent(new AbrirCadastroSurdoEvent());
-				} else if (event.getSelectedItem() == 1) {
-					eventBus.fireEvent(new AbrirCadastroMapaEvent());
-				} else if (event.getSelectedItem() == 2) {
-					eventBus.fireEvent(new AbrirImpressaoEvent());
-				}
-			}
-		};
 		bind();
 	}
 
@@ -176,8 +175,8 @@ public class CadastroController implements Presenter,
 							cadastroSurdoPresenter = new CadastroSurdoPresenter(
 									service, eventBus, cadastroSurdoView);
 							cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
-							cadastroSurdoPresenter.go(container);
 						}	
+						
 						cadastroSurdoPresenter.selectThisTab();
 						
 						if ("surdos".equals(currentToken)) {
@@ -208,6 +207,7 @@ public class CadastroController implements Presenter,
 									nomeRegiao,
 									identificadorMapa);	
 						}
+						
 //						} else if ("adicionar".equals(currentToken)) {
 //							cadastroSurdoPresenter.onAdicionar();
 //						} else if (currentToken.startsWith("editar!")) {
@@ -215,6 +215,7 @@ public class CadastroController implements Presenter,
 //							cadastroSurdoPresenter.onEditar(id);
 //						}						
 						
+						cadastroSurdoPresenter.go(container);
 						
 						// Aba Mapa
 					} else if (currentToken.startsWith("mapas")) {
@@ -225,7 +226,6 @@ public class CadastroController implements Presenter,
 							cadastroMapaPresenter = new CadastroMapaPresenter(
 									service, eventBus, cadastroMapaView);
 							cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
-							cadastroMapaPresenter.go(container);
 						}
 						cadastroMapaPresenter.selectThisTab();
 						
@@ -236,8 +236,7 @@ public class CadastroController implements Presenter,
 //					else if (currentToken.startsWith("abrirMapa!")) {
 //						cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1]));
 					
-					
-					
+						cadastroMapaPresenter.go(container);
 						// Aba Impressao
 					} else if (currentToken.startsWith("impressao")) {
 						if (impressaoView == null) {
@@ -246,7 +245,6 @@ public class CadastroController implements Presenter,
 						if (impressaoPresenter == null) {
 							impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
 							impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
-							impressaoPresenter.go(container);
 						}
 						impressaoPresenter.selectThisTab();
 						
@@ -258,7 +256,7 @@ public class CadastroController implements Presenter,
 //						 else if (currentToken.startsWith("impressao!abrir!")) {
 //								impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1]));
 //							}
-						
+						impressaoPresenter.go(container);
 					}
 				}
 

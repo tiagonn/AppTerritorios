@@ -223,7 +223,7 @@
 					<g:Grid>
 						<g:row>
 							<g:customCell>
-								<g:Label text="Regiao: " />
+								<g:Label text="Região: " />
 							</g:customCell>
 							<g:customCell>
 								<g:Label text="Mapa: " />

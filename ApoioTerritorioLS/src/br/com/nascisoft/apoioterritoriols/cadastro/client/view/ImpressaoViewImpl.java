@@ -51,14 +51,14 @@ public class ImpressaoViewImpl extends Composite implements
 
 	@Override
 	public void initView() {
-		this.cadastroSurdoTabLayoutPanel.selectTab(2);	
+		this.selectThisTab();	
 		this.limparPesquisa();
 		this.limparImpressao();
 	}
 	
 	@Override
 	public void selectThisTab() {
-		this.cadastroSurdoTabLayoutPanel.selectTab(2);
+		this.cadastroSurdoTabLayoutPanel.selectTab(2, false);
 	}
 	
 	@Override

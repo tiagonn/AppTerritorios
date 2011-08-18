@@ -97,11 +97,6 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 			}
 		});			
 	}
-	
-	@Override
-	public void onAdicionar() {
-		view.onAdicionar();
-	}
 
 	@Override
 	public void adicionarOuAlterarSurdo(Surdo surdo) {
@@ -220,6 +215,11 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 			}
 		});
 		
+	}
+
+	@Override
+	public void onAdicionar() {
+		getView().onAdicionar();
 	}
 
 }

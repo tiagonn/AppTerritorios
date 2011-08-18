@@ -206,14 +206,12 @@ public class CadastroController implements Presenter,
 									nomeSurdo,
 									nomeRegiao,
 									identificadorMapa);	
+						} else if ("surdos!adicionar".equals(currentToken)) {
+							cadastroSurdoPresenter.onAdicionar();
+						} else if (currentToken.startsWith("surdos!editar")) {
+							Long id = Long.valueOf(currentToken.split("#")[1].split("=")[1]);
+							cadastroSurdoPresenter.onEditar(id);
 						}
-						
-//						} else if ("adicionar".equals(currentToken)) {
-//							cadastroSurdoPresenter.onAdicionar();
-//						} else if (currentToken.startsWith("editar!")) {
-//							Long id = Long.valueOf(currentToken.split("!")[1]);
-//							cadastroSurdoPresenter.onEditar(id);
-//						}						
 						
 						cadastroSurdoPresenter.go(container);
 						

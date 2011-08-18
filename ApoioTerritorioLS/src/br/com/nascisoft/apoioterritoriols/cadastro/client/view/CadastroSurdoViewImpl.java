@@ -219,19 +219,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 	}	
-	
-	@UiHandler("manterAdicionarSurdoInlineHyperlink")
-	void onmanterAdicionarSurdoInlineHyperlinkClick(ClickEvent event) {
-		this.onAdicionar();
-	}
-
-	@Override
-	public void onAdicionar() {
-		this.manterSurdoGrid.setVisible(true);
-		this.limparResultadoPesquisa();
-		this.limparManter();
-	}
-	
+		
 	@Override
 	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
 		this.limparResultadoPesquisa();
@@ -550,6 +538,12 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		}
 		return 0;
 	}
-	
+
+	@Override
+	public void onAdicionar() {
+		this.manterSurdoGrid.setVisible(true);
+		this.limparResultadoPesquisa();
+		this.limparManter();
+	}	
 	
 }

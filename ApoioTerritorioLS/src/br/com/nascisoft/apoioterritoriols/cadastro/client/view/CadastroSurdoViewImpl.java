@@ -392,6 +392,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 		this.pesquisaResultadoCellTable.setRowCount(this.resultadoPesquisa.getList().size());
+		this.limparResultadoPesquisa();
 		this.mostrarResultadoPesquisa();
 	}
 
@@ -422,12 +423,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			this.pesquisaResultadoCellTable.removeColumn(0);
 		}
 		this.pesquisaResultadoLabel.setText("");
-//		this.pesquisaResultadoCellTable.setRowCount(0);
-//		this.resultadoPesquisa.removeDataDisplay(this.pesquisaResultadoCellTable);
-//		this.resultadoPesquisa.setList(new ArrayList<SurdoDetailsVO>());
 		this.pesquisaResultadoCellTable.setVisible(false);
 		this.pesquisaResultadoSimplePager.setVisible(false);
-		this.resultadoPesquisa.flush();
 	}
 	
 	private void limparManter() {

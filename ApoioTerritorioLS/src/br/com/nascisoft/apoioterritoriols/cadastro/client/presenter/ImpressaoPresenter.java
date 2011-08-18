@@ -45,6 +45,7 @@ public class ImpressaoPresenter extends AbstractPresenter
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
+				result.addAll(result);
 				view.onAbrirImpressao(result);
 				getView().hideWaitingPanel();
 			}

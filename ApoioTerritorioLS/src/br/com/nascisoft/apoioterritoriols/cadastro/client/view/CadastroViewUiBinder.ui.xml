@@ -316,6 +316,7 @@
 						styleName="impressao-popup-panel">
 						<g:VerticalPanel>
 							<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
+							<g:HTML wordWrap="true"><br /><br /></g:HTML>
 							<g:LayoutPanel ui:field="impressaoMapaLayoutPanel"></g:LayoutPanel>
 							<g:HTML wordWrap="true"><br /></g:HTML>
 							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>

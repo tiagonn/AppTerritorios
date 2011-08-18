@@ -10,6 +10,15 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.maps.client.HasMapOptions;
+import com.google.gwt.maps.client.MapOptions;
+import com.google.gwt.maps.client.MapTypeId;
+import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.overlay.HasMarker;
+import com.google.gwt.maps.client.overlay.HasMarkerOptions;
+import com.google.gwt.maps.client.overlay.Marker;
+import com.google.gwt.maps.client.overlay.MarkerOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -151,12 +160,27 @@ public class ImpressaoViewImpl extends Composite implements
 		String classe = " class=\"impressao-celula\"";
 		String classe1= " class=\"impressao-celula-titulo\"";
 		
+		HasMapOptions opt = new MapOptions();
+		opt.setZoom(16);
+		opt.setMapTypeId(new MapTypeId().getRoadmap());
+		opt.setDraggable(true);
+		opt.setNavigationControl(false);
+		opt.setScrollwheel(true);
+		opt.setDisableDefaultUI(true);
+		//TODO: Determinar o centro do mapa - tratar quando lista de surdos for vazia
+		opt.setCenter(new LatLng(surdos.get(0).getLatitude(), surdos.get(0).getLongitude()));
+		MapWidget mapa = new MapWidget(opt);
+		mapa.setSize("850px", "600px");
+		
 		for (int i = 0; i < surdos.size();i++) {
 			if (i == 0) {
 				this.impressaoSurdoFlexTable.setHTML(0, 0, surdos.get(i).getMapa());
 				this.impressaoSurdoFlexTable.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
 			}
 			SurdoVO surdo = surdos.get(i);
+			
+			adicionarMarcadorSurdo(surdo, mapa);
+			
 			StringBuilder html = new StringBuilder();
 			html.append("<table width=\"100%\" cellspacing=0>")
 					.append("<tr>")
@@ -208,7 +232,12 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTable.setCellSpacing(0);
 		}
 		
-		//TODO: Terminar de criar usando o layoutpanel o mapa (vai precisar de scroll na tela, usar um scrool panel
+		this.impressaoMapaLayoutPanel.setSize("850px", "600px");
+		this.impressaoMapaLayoutPanel.setVisible(true);
+		this.impressaoMapaLayoutPanel.add(mapa);
+		
+		//TODO: Checar scrooling (verificar se a impressão contém a página toda ou apenas o que está visível)
+		//TODO: implementar feature de imprimir mapa em modo paisagem
 		
 		this.impressaoDecoratedPopupPanel.setAnimationEnabled(true);
 		this.impressaoDecoratedPopupPanel.setAutoHideEnabled(true);
@@ -216,6 +245,15 @@ public class ImpressaoViewImpl extends Composite implements
 		this.impressaoDecoratedPopupPanel.setTitle("Impressao de mapas");
 		this.impressaoDecoratedPopupPanel.setVisible(true);
 		this.impressaoDecoratedPopupPanel.show();		
+	}
+	
+	private void adicionarMarcadorSurdo(SurdoVO surdo, MapWidget mapa) {
+		HasMarkerOptions markerOpt = new MarkerOptions();
+		markerOpt.setClickable(false);
+		markerOpt.setVisible(true);
+		HasMarker marker = new Marker(markerOpt);
+		marker.setPosition(new LatLng(surdo.getLatitude(), surdo.getLongitude()));
+		marker.setMap(mapa.getMap());
 	}
 	
 	@UiHandler("impressaoVoltarButton")

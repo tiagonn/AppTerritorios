@@ -75,7 +75,6 @@ public abstract class AbstractPresenter implements Presenter, CadastroView.Prese
 	}
 	
 	public void initView() {
-		populaRegioes();
 		getView().initView();
 	}
 	

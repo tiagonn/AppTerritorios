@@ -76,8 +76,6 @@ public class CadastroController implements Presenter,
 
 	private void bind() {
 		History.addValueChangeHandler(this);
-		
-		//TODO: Rever estrutura de URIs
 
 		eventBus.addHandler(AbrirCadastroSurdoEvent.TYPE,
 				new AbrirCadastroSurdoEventHandler() {
@@ -127,7 +125,8 @@ public class CadastroController implements Presenter,
 					
 					@Override
 					public void onAbrirMapa(AbrirMapaEvent event) {
-						History.newItem("mapas!abrir#identificadorMapa=" + event.getIdentificadorMapa());
+						History.newItem("mapas!abrir#identificadorMapa=" + event.getIdentificadorMapa(), false);
+						History.fireCurrentHistoryState();
 					}
 				});
 		
@@ -165,96 +164,97 @@ public class CadastroController implements Presenter,
 			GWT.runAsync(new RunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					
-						// Aba Surdo
-					if (currentToken.startsWith("surdos")) {
-						if (cadastroSurdoView == null) {
-							cadastroSurdoView = new CadastroSurdoViewImpl();
-						}
-						if (cadastroSurdoPresenter == null) {
-							cadastroSurdoPresenter = new CadastroSurdoPresenter(
-									service, eventBus, cadastroSurdoView);
-							cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
-						}	
-						
-						cadastroSurdoPresenter.selectThisTab();
-						
-						if ("surdos".equals(currentToken)) {
-							cadastroSurdoPresenter.initView();
-						} else if (currentToken.startsWith("surdos!pesquisar")) {
-							String queryString = currentToken.split("#")[1];
-							String[] parametros = queryString.split("&");
-							String nomeSurdo = null;
-							String nomeRegiao = null;
-							String identificadorMapa = null;
-							try {
-								nomeSurdo = parametros[0].split("=")[1];
-							} catch (ArrayIndexOutOfBoundsException e) {
-								// não faz nada, o nome continua null
+					try {
+							// Aba Surdo
+						if (currentToken.startsWith("surdos")) {
+							if (cadastroSurdoView == null) {
+								cadastroSurdoView = new CadastroSurdoViewImpl();
 							}
-							try {
-								nomeRegiao = parametros[1].split("=")[1];
-							} catch (ArrayIndexOutOfBoundsException e) {
-								// não faz nada, o nome continua null
+							if (cadastroSurdoPresenter == null) {
+								cadastroSurdoPresenter = new CadastroSurdoPresenter(
+										service, eventBus, cadastroSurdoView);
+								cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
+							}	
+							
+							cadastroSurdoPresenter.selectThisTab();
+							
+							if ("surdos".equals(currentToken)) {
+								cadastroSurdoPresenter.initView();
+							} else if (currentToken.startsWith("surdos!pesquisar")) {
+								String queryString = currentToken.split("#")[1];
+								String[] parametros = queryString.split("&");
+								String nomeSurdo = null;
+								String nomeRegiao = null;
+								String identificadorMapa = null;
+								try {
+									nomeSurdo = parametros[0].split("=")[1];
+								} catch (ArrayIndexOutOfBoundsException e) {
+									// não faz nada, o nome continua null
+								}
+								try {
+									nomeRegiao = parametros[1].split("=")[1];
+								} catch (ArrayIndexOutOfBoundsException e) {
+									// não faz nada, o nome continua null
+								}
+								try {
+									identificadorMapa = parametros[2].split("=")[1];
+								} catch (ArrayIndexOutOfBoundsException e) {
+									// não faz nada, o identificador continua null
+								}
+								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
+										nomeSurdo,
+										nomeRegiao,
+										identificadorMapa);	
+							} else if ("surdos!adicionar".equals(currentToken)) {
+								cadastroSurdoPresenter.onAdicionar();
+							} else if (currentToken.startsWith("surdos!editar")) {
+								Long id = Long.valueOf(currentToken.split("#")[1].split("=")[1]);
+								cadastroSurdoPresenter.onEditar(id);
 							}
-							try {
-								identificadorMapa = parametros[2].split("=")[1];
-							} catch (ArrayIndexOutOfBoundsException e) {
-								// não faz nada, o identificador continua null
+							
+							cadastroSurdoPresenter.go(container);
+							
+							// Aba Mapa
+						} else if (currentToken.startsWith("mapas")) {
+							if (cadastroMapaView == null) {
+								cadastroMapaView = new CadastroMapaViewImpl();
 							}
-							cadastroSurdoPresenter.onPesquisaPesquisarEvent(
-									nomeSurdo,
-									nomeRegiao,
-									identificadorMapa);	
-						} else if ("surdos!adicionar".equals(currentToken)) {
-							cadastroSurdoPresenter.onAdicionar();
-						} else if (currentToken.startsWith("surdos!editar")) {
-							Long id = Long.valueOf(currentToken.split("#")[1].split("=")[1]);
-							cadastroSurdoPresenter.onEditar(id);
-						}
+							if (cadastroMapaPresenter == null) {
+								cadastroMapaPresenter = new CadastroMapaPresenter(
+										service, eventBus, cadastroMapaView);
+								cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							cadastroMapaPresenter.selectThisTab();
+							
+							if ("mapas".equals(currentToken)) {
+								cadastroMapaPresenter.initView();
+							} else if (currentToken.startsWith("mapas!abrir")) {
+								cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1].split("=")[1]));
+							}
 						
-						cadastroSurdoPresenter.go(container);
-						
-						// Aba Mapa
-					} else if (currentToken.startsWith("mapas")) {
-						if (cadastroMapaView == null) {
-							cadastroMapaView = new CadastroMapaViewImpl();
+							cadastroMapaPresenter.go(container);
+							// Aba Impressao
+						} else if (currentToken.startsWith("impressao")) {
+							if (impressaoView == null) {
+								impressaoView = new ImpressaoViewImpl();
+							}
+							if (impressaoPresenter == null) {
+								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
+								impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							impressaoPresenter.selectThisTab();
+							
+							if ("impressao".equals(currentToken)) {
+								impressaoPresenter.initView();
+							} else if (currentToken.startsWith("impressao!abrir")) {
+								impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1].split("=")[1]));
+							}
+							
+							impressaoPresenter.go(container);
 						}
-						if (cadastroMapaPresenter == null) {
-							cadastroMapaPresenter = new CadastroMapaPresenter(
-									service, eventBus, cadastroMapaView);
-							cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
-						}
-						cadastroMapaPresenter.selectThisTab();
-						
-						if ("mapas".equals(currentToken)) {
-							cadastroMapaPresenter.initView();
-						}
-						
-//					else if (currentToken.startsWith("abrirMapa!")) {
-//						cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1]));
-					
-						cadastroMapaPresenter.go(container);
-						// Aba Impressao
-					} else if (currentToken.startsWith("impressao")) {
-						if (impressaoView == null) {
-							impressaoView = new ImpressaoViewImpl();
-						}
-						if (impressaoPresenter == null) {
-							impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
-							impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
-						}
-						impressaoPresenter.selectThisTab();
-						
-						if ("impressao".equals(currentToken)) {
-							impressaoPresenter.initView();
-						}
-						
-						
-//						 else if (currentToken.startsWith("impressao!abrir!")) {
-//								impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1]));
-//							}
-						impressaoPresenter.go(container);
+					} catch (Exception ex) {
+						logger.log(Level.SEVERE, "Falha ao responder a requisicao", ex);
+						Window.alert("Falha ao responder a requisicao\n" + ex);
 					}
 				}
 

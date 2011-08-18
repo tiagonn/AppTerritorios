@@ -24,6 +24,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 		super(service, eventBus);
 		this.view = view;
 		this.view.setPresenter(this);
+		populaRegioes();
 	}
 
 	@Override

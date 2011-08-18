@@ -37,11 +37,12 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 		super(service, eventBus);
 		this.view = view;
 		this.view.setPresenter(this);
+		populaRegioes();
+		populaBairros();
 	}
 	
 	@Override
 	public void initView() {
-		populaBairros();
 		super.initView();
 	}
 	

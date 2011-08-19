@@ -14,6 +14,7 @@ import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
+import com.google.gwt.maps.client.base.HasLatLng;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.overlay.HasMarker;
 import com.google.gwt.maps.client.overlay.HasMarkerOptions;
@@ -167,8 +168,7 @@ public class ImpressaoViewImpl extends Composite implements
 		opt.setNavigationControl(false);
 		opt.setScrollwheel(true);
 		opt.setDisableDefaultUI(true);
-		//TODO: Determinar o centro do mapa - tratar quando lista de surdos for vazia
-		opt.setCenter(new LatLng(surdos.get(0).getLatitude(), surdos.get(0).getLongitude()));
+		opt.setCenter(this.obterCentroMapa(surdos));
 		MapWidget mapa = new MapWidget(opt);
 		mapa.setSize("850px", "600px");
 		
@@ -240,10 +240,11 @@ public class ImpressaoViewImpl extends Composite implements
 		//TODO: implementar feature de imprimir mapa em modo paisagem
 		
 		this.impressaoDecoratedPopupPanel.setAnimationEnabled(true);
-		this.impressaoDecoratedPopupPanel.setAutoHideEnabled(true);
 		this.impressaoDecoratedPopupPanel.setGlassEnabled(true);
 		this.impressaoDecoratedPopupPanel.setTitle("Impressao de mapas");
 		this.impressaoDecoratedPopupPanel.setVisible(true);
+		this.impressaoDecoratedPopupPanel.setHeight("100%");
+//		this.impressaoDecoratedPopupPanel.set
 		this.impressaoDecoratedPopupPanel.show();		
 	}
 	
@@ -254,6 +255,18 @@ public class ImpressaoViewImpl extends Composite implements
 		HasMarker marker = new Marker(markerOpt);
 		marker.setPosition(new LatLng(surdo.getLatitude(), surdo.getLongitude()));
 		marker.setMap(mapa.getMap());
+		//TODO: utilizar icone homem/mulher
+	}
+	
+	private HasLatLng obterCentroMapa(List<SurdoVO> surdos) {
+		Double latitude = 0d;
+		Double longitude = 0d;
+		for (SurdoVO surdo : surdos) {
+			latitude += surdo.getLatitude();
+			longitude += surdo.getLongitude();
+		}
+		
+		return new LatLng(latitude/surdos.size(), longitude/surdos.size());
 	}
 	
 	@UiHandler("impressaoVoltarButton")

@@ -307,21 +307,23 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
-					<g:DecoratedPopupPanel
-						ui:field="impressaoDecoratedPopupPanel" 
-						visible="false" 
-						autoHideEnabled="false" 
-						animationEnabled="true" 
-						glassEnabled="true"
-						styleName="impressao-popup-panel">
-						<g:VerticalPanel>
-							<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
-							<g:HTML wordWrap="true"><br /><br /></g:HTML>
-							<g:LayoutPanel ui:field="impressaoMapaLayoutPanel"></g:LayoutPanel>
-							<g:HTML wordWrap="true"><br /></g:HTML>
-							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>
-						</g:VerticalPanel>
-					</g:DecoratedPopupPanel>
+					<g:ScrollPanel styleName="painel-impressao">
+						<g:DecoratedPopupPanel
+							ui:field="impressaoDecoratedPopupPanel" 
+							visible="false" 
+							autoHideEnabled="false" 
+							animationEnabled="true" 
+							glassEnabled="true"
+							styleName="impressao-popup-panel">						
+								<g:VerticalPanel>
+								<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
+								<g:HTML wordWrap="true"><br /><br /></g:HTML>
+								<g:LayoutPanel ui:field="impressaoMapaLayoutPanel"></g:LayoutPanel>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+								<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>
+							</g:VerticalPanel>
+						</g:DecoratedPopupPanel>
+					</g:ScrollPanel>
 					<g:PopupPanel 
 								ui:field="waitingPopUpPanel" 
 								visible="false" 

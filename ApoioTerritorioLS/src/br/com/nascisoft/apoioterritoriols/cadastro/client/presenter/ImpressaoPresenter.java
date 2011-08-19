@@ -45,8 +45,12 @@ public class ImpressaoPresenter extends AbstractPresenter
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
-				result.addAll(result);
-				view.onAbrirImpressao(result);
+				if (result == null || result.size() == 0) {
+					Window.alert("Este mapa nao possui surdo associado");
+					eventBus.fireEvent(new AbrirImpressaoEvent());					
+				} else {
+					view.onAbrirImpressao(result);
+				}
 				getView().hideWaitingPanel();
 			}
 			

@@ -38,6 +38,11 @@ a, a:visited, a:hover {
 	height: 100%;
 }
 
+.painel-impressao {
+	width: 950px;
+	height: 2000px;
+}
+
 .impressao-tabela {
 	width:850px;
 }

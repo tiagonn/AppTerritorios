@@ -26,11 +26,11 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -43,8 +43,8 @@ public class ImpressaoViewImpl extends Composite implements
 	
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField ListBox pesquisaImpressaoRegiaoListBox;
-	@UiField ListBox pesquisaImpressaoMapaListBox;	
-	@UiField DecoratedPopupPanel impressaoDecoratedPopupPanel;
+	@UiField ListBox pesquisaImpressaoMapaListBox;
+	@UiField SimplePanel impressaoSimplePanel;
 	@UiField FlexTable impressaoSurdoFlexTable;
 	@UiField LayoutPanel impressaoMapaLayoutPanel;
 	@UiField Button impressaoVoltarButton;
@@ -92,7 +92,7 @@ public class ImpressaoViewImpl extends Composite implements
 	}
 	
 	private void limparImpressao() {
-		this.impressaoDecoratedPopupPanel.hide();
+		this.impressaoSimplePanel.setVisible(false);
 		this.impressaoSurdoFlexTable.removeAllRows();
 	}
 
@@ -170,7 +170,7 @@ public class ImpressaoViewImpl extends Composite implements
 		opt.setDisableDefaultUI(true);
 		opt.setCenter(this.obterCentroMapa(surdos));
 		MapWidget mapa = new MapWidget(opt);
-		mapa.setSize("850px", "600px");
+		mapa.setSize("850px", "400px");
 		
 		for (int i = 0; i < surdos.size();i++) {
 			if (i == 0) {
@@ -232,20 +232,15 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTable.setCellSpacing(0);
 		}
 		
-		this.impressaoMapaLayoutPanel.setSize("850px", "600px");
+		this.impressaoMapaLayoutPanel.setSize("850px", "400px");
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
-		//TODO: Checar scrooling (verificar se a impressão contém a página toda ou apenas o que está visível)
+		//TODO: checar tamanho de impressão/nível de zoom do mapa/impressão de div no IE
 		//TODO: implementar feature de imprimir mapa em modo paisagem
+
 		
-		this.impressaoDecoratedPopupPanel.setAnimationEnabled(true);
-		this.impressaoDecoratedPopupPanel.setGlassEnabled(true);
-		this.impressaoDecoratedPopupPanel.setTitle("Impressao de mapas");
-		this.impressaoDecoratedPopupPanel.setVisible(true);
-		this.impressaoDecoratedPopupPanel.setHeight("100%");
-//		this.impressaoDecoratedPopupPanel.set
-		this.impressaoDecoratedPopupPanel.show();		
+		this.impressaoSimplePanel.setVisible(true);
 	}
 	
 	private void adicionarMarcadorSurdo(SurdoVO surdo, MapWidget mapa) {

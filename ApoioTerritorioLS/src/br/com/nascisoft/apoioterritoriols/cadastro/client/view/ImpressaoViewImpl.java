@@ -27,6 +27,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -49,6 +50,11 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField LayoutPanel impressaoMapaLayoutPanel;
 	@UiField Button impressaoVoltarButton;
 	@UiField PopupPanel waitingPopUpPanel;
+	@UiField Image impressaoReverseImage;
+	
+	private boolean estaHorizontal = true;
+	private final static String ALTURA_MAPA = "420px";
+	private final static String LARGURA_MAPA = "850px";
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 
@@ -155,6 +161,8 @@ public class ImpressaoViewImpl extends Composite implements
 			}
 		}
 	}
+	
+	private MapWidget mapa;
 
 	@Override
 	public void onAbrirImpressao(List<SurdoVO> surdos) {
@@ -169,8 +177,8 @@ public class ImpressaoViewImpl extends Composite implements
 		opt.setScrollwheel(true);
 		opt.setDisableDefaultUI(true);
 		opt.setCenter(this.obterCentroMapa(surdos));
-		MapWidget mapa = new MapWidget(opt);
-		mapa.setSize("850px", "400px");
+		mapa = new MapWidget(opt);
+		mapa.setSize(LARGURA_MAPA, ALTURA_MAPA);
 		
 		for (int i = 0; i < surdos.size();i++) {
 			if (i == 0) {
@@ -232,7 +240,7 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTable.setCellSpacing(0);
 		}
 		
-		this.impressaoMapaLayoutPanel.setSize("850px", "400px");
+		this.impressaoMapaLayoutPanel.setSize(LARGURA_MAPA, ALTURA_MAPA);
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
@@ -267,5 +275,22 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiHandler("impressaoVoltarButton")
 	public void onImpressaovoltarButtonClick(ClickEvent event) {
 		this.presenter.onVoltar();
+	}
+	
+
+	@UiHandler("impressaoReverseImage")
+	void onImpressaoReverseImageClick(ClickEvent event) {
+		this.estaHorizontal = !this.estaHorizontal;
+		String altura = null;
+		String largura = null;
+		if (this.estaHorizontal) {
+			altura = ALTURA_MAPA;
+			largura = LARGURA_MAPA;
+		} else {
+			altura = "670px";
+			largura = ALTURA_MAPA;
+		}
+		mapa.setSize(largura, altura);
+		this.impressaoMapaLayoutPanel.setSize(largura, altura);
 	}
 }

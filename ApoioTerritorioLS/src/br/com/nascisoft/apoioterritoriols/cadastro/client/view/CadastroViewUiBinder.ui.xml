@@ -311,7 +311,10 @@
 						<g:VerticalPanel>
 							<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
 							<g:HTML wordWrap="true"><br /><br /></g:HTML>
-							<g:LayoutPanel ui:field="impressaoMapaLayoutPanel" styleName="impressao-tabela"></g:LayoutPanel>
+							<g:HorizontalPanel>
+								<g:LayoutPanel ui:field="impressaoMapaLayoutPanel" styleName="impressao-tabela"></g:LayoutPanel>
+								<g:Image ui:field="impressaoReverseImage" url="images/inverter.gif" altText="Inverter" styleName="impressao-imagem"></g:Image> 
+							</g:HorizontalPanel>
 							<g:HTML wordWrap="true"><br /><br /><br /><br /></g:HTML>
 							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>
 						</g:VerticalPanel>
@@ -323,7 +326,7 @@
 								animationEnabled="true" 
 								glassEnabled="true"
 								styleName="imagem-div-centro">
-								<g:HTML><img src="images/waiting.gif" alt="Esperando..."/></g:HTML>
+								<g:HTML><img src="images/esperando.gif" alt="Esperando..."/></g:HTML>
 					</g:PopupPanel>
 				</g:VerticalPanel>
 			</g:ScrollPanel>

@@ -27,6 +27,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		usuariosValidos.add("tiagonn@gmail.com");
 		usuariosValidos.add("monteiro.camila@gmail.com");
 		usuariosValidos.add("ls.centralcampinas@gmail.com");
+		usuariosValidos.add("rogeriocarvalho.carvalho98@gmail.com");
+		usuariosValidos.add("jchf89@gmail.com");
 	}
 
 	@Override
@@ -47,13 +49,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 				usuario.setAutorizado(true);
 				usuario.setLogoutURL(userService.createLogoutURL(requestURI));
 			} else {
-				logger.info("Usuario " + user.getEmail() + "n„o autorizado");
+				logger.info("Usuario " + user.getEmail() + "n√£o autorizado");
 				usuario.setEmail(user.getEmail());
 				usuario.setLogado(true);
 				usuario.setAutorizado(false);
 			}
 		} else {
-			logger.info("Usu·rio n„o logado, redirecionando para tela de login");
+			logger.info("Usu√°rio n√£o logado, redirecionando para tela de login");
 			usuario.setLogado(false);
 			usuario.setAutorizado(false);
 			usuario.setLoginURL(userService.createLoginURL(requestURI));

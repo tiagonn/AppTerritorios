@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <regioes>
 	<regiao>
-		<nome>Região do Anhumas</nome>
-		<letra></letra>
-		<centro>
-			<latitude>-22.854664</latitude>
-			<longitude>-47.042484</longitude>
-		</centro>
-	</regiao>
-	<regiao>
 		<nome>Região de Barão Geraldo</nome>
 		<letra>H</letra>
 		<centro>
@@ -26,7 +18,7 @@
 	</regiao>
 	<regiao>
 		<nome>Região do Carlos Lourenço</nome>
-		<letra></letra>
+		<letra>D</letra>
 		<centro>
 			<latitude>-22.923615</latitude>
 			<longitude>-47.021198</longitude>
@@ -42,15 +34,23 @@
 	</regiao>
 	<regiao>
 		<nome>Região do Chapadão - Guanabara</nome>
-		<letra></letra>
+		<letra>K</letra>
 		<centro>
 			<latitude>-22.891674</latitude>
 			<longitude>-47.08128</longitude>
 		</centro>
 	</regiao>
 	<regiao>
+		<nome>Região do Costa e Silva</nome>
+		<letra>R</letra>
+		<centro>
+			<latitude>-22.854347</latitude>
+			<longitude>-47.06789</longitude>
+		</centro>
+	</regiao>
+	<regiao>
 		<nome>Região do Eulina</nome>
-		<letra></letra>
+		<letra>L</letra>
 		<centro>
 			<latitude>-22.891674</latitude>
 			<longitude>-47.104626</longitude>
@@ -58,7 +58,7 @@
 	</regiao>
 	<regiao>
 		<nome>Região do Flamboyant</nome>
-		<letra></letra>
+		<letra>F</letra>
 		<centro>
 			<latitude>-22.878389</latitude>
 			<longitude>-47.028751</longitude>
@@ -74,7 +74,7 @@
 	</regiao>
 	<regiao>
 		<nome>Região do Padre Anchieta</nome>
-		<letra></letra>
+		<letra>N</letra>
 		<centro>
 			<latitude>-22.869849</latitude>
 			<longitude>-47.145138</longitude>
@@ -97,8 +97,16 @@
 		</centro>
 	</regiao>
 	<regiao>
+		<nome>Região do Santana</nome>
+		<letra>I</letra>
+		<centro>
+			<latitude>-22.854664</latitude>
+			<longitude>-47.042484</longitude>
+		</centro>
+	</regiao>
+	<regiao>
 		<nome>Região do São Marcos</nome>
-		<letra></letra>
+		<letra>P</letra>
 		<centro>
 			<latitude>-22.847862</latitude>
 			<longitude>-47.115054</longitude>
@@ -106,7 +114,7 @@
 	</regiao>
 	<regiao>
 		<nome>Região de Sousas</nome>
-		<letra></letra>
+		<letra>B</letra>
 		<centro>
 			<latitude>-22.881236</latitude>
 			<longitude>-46.96661</longitude>
@@ -121,16 +129,8 @@
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Vicenti Cury</nome>
-		<letra></letra>
-		<centro>
-			<latitude>-22.854347</latitude>
-			<longitude>-47.06789</longitude>
-		</centro>
-	</regiao>
-	<regiao>
 		<nome>Região da Vila Brandina</nome>
-		<letra></letra>
+		<letra>C</letra>
 		<centro>
 			<latitude>-22.901162</latitude>
 			<longitude>-47.017078</longitude>
@@ -138,7 +138,7 @@
 	</regiao>
 	<regiao>
 		<nome>Região do Xangrila</nome>
-		<letra></letra>
+		<letra>G</letra>
 		<centro>
 			<latitude>-22.798338</latitude>
 			<longitude>-47.018795</longitude>

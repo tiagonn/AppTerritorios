@@ -8,11 +8,11 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 public interface ImpressaoView extends CadastroView {
 	
 	public interface Presenter extends CadastroView.Presenter {
-		void onAbrirImpressao(Long identificadorMapa);
-		void abrirImpressao(Long identificadorMapa);
+		void onAbrirImpressao(Long identificadorMapa, Boolean paisagem);
+		void abrirImpressao(Long identificadorMapa, Boolean paisagem);
 		void onVoltar();
 	}
 	
 	void setPresenter(Presenter presenter);
-	void onAbrirImpressao(List<SurdoVO> surdos);
+	void onAbrirImpressao(Long identificadorMapa, List<SurdoVO> surdos, Boolean paisagem);
 }

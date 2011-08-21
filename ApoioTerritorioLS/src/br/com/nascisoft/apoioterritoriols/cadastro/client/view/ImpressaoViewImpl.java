@@ -17,8 +17,10 @@ import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.HasLatLng;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.maps.client.overlay.HasMarker;
+import com.google.gwt.maps.client.overlay.HasMarkerImage;
 import com.google.gwt.maps.client.overlay.HasMarkerOptions;
 import com.google.gwt.maps.client.overlay.Marker;
+import com.google.gwt.maps.client.overlay.MarkerImage;
 import com.google.gwt.maps.client.overlay.MarkerOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -52,7 +54,8 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField Image impressaoReverseImage;
 	
-	private boolean estaHorizontal = true;
+	private Boolean paisagem = true;
+	private Long identificadorMapaAtual = null;
 	private final static String ALTURA_MAPA = "420px";
 	private final static String LARGURA_MAPA = "850px";
 	
@@ -100,6 +103,7 @@ public class ImpressaoViewImpl extends Composite implements
 	private void limparImpressao() {
 		this.impressaoSimplePanel.setVisible(false);
 		this.impressaoSurdoFlexTable.removeAllRows();
+		this.identificadorMapaAtual = null;
 	}
 
 	@Override
@@ -136,7 +140,7 @@ public class ImpressaoViewImpl extends Composite implements
 	}
 
 	@UiHandler("pesquisaImpressaoRegiaoListBox")
-	void onPesquisaMapaRegiaoListBoxChange(ChangeEvent event) {
+	void onPesquisaImpressaoRegiaoListBox(ChangeEvent event) {
 		if (presenter != null) {
 			if (!this.pesquisaImpressaoRegiaoListBox.getValue(this.pesquisaImpressaoRegiaoListBox.getSelectedIndex()).isEmpty()) {
 				this.pesquisaImpressaoMapaListBox.setEnabled(true);
@@ -150,22 +154,24 @@ public class ImpressaoViewImpl extends Composite implements
 	}
 	
 	@UiHandler("pesquisaImpressaoMapaListBox")
-	void pesquisaImpressaoMapaListBox(ChangeEvent event) {
+	void onPesquisaImpressaoMapaListBox(ChangeEvent event) {
 		if (presenter != null) {
 			String mapa = this.pesquisaImpressaoMapaListBox.getValue(this.pesquisaImpressaoMapaListBox.getSelectedIndex());
+			this.identificadorMapaAtual = Long.valueOf(mapa);
 			if (!"".equals(mapa)) {
-				this.presenter.abrirImpressao(Long.valueOf(mapa));
+				this.presenter.abrirImpressao(identificadorMapaAtual, paisagem);
 			}
 			else {
 				limparImpressao();
 			}
 		}
 	}
-	
-	private MapWidget mapa;
 
 	@Override
-	public void onAbrirImpressao(List<SurdoVO> surdos) {
+	public void onAbrirImpressao(Long identificadorMapa, List<SurdoVO> surdos, Boolean paisagem) {
+		this.paisagem = paisagem;
+		this.identificadorMapaAtual = identificadorMapa;
+		
 		String classe = " class=\"impressao-celula\"";
 		String classe1= " class=\"impressao-celula-titulo\"";
 		
@@ -177,8 +183,8 @@ public class ImpressaoViewImpl extends Composite implements
 		opt.setScrollwheel(true);
 		opt.setDisableDefaultUI(true);
 		opt.setCenter(this.obterCentroMapa(surdos));
-		mapa = new MapWidget(opt);
-		mapa.setSize(LARGURA_MAPA, ALTURA_MAPA);
+		MapWidget mapa = new MapWidget(opt);
+		defineTamanhoMapa(mapa);
 		
 		for (int i = 0; i < surdos.size();i++) {
 			if (i == 0) {
@@ -240,25 +246,41 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTable.setCellSpacing(0);
 		}
 		
-		this.impressaoMapaLayoutPanel.setSize(LARGURA_MAPA, ALTURA_MAPA);
+		defineTamanhoMapa(this.impressaoMapaLayoutPanel);
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
-		//TODO: checar tamanho de impressão/nível de zoom do mapa/impressão de div no IE
-		//TODO: implementar feature de imprimir mapa em modo paisagem
-
+		//TODO: bug de impressão de div no IE
 		
 		this.impressaoSimplePanel.setVisible(true);
+	}
+	
+	private void defineTamanhoMapa(Widget obj) {
+		if (paisagem) {
+			obj.setSize(LARGURA_MAPA, ALTURA_MAPA);
+		} else {
+			obj.setSize(ALTURA_MAPA, LARGURA_MAPA);
+		}
 	}
 	
 	private void adicionarMarcadorSurdo(SurdoVO surdo, MapWidget mapa) {
 		HasMarkerOptions markerOpt = new MarkerOptions();
 		markerOpt.setClickable(false);
 		markerOpt.setVisible(true);
+		HasMarkerImage icon = null;
+		if (!StringUtils.isEmpty(surdo.getSexo())) {
+			if ("Masculino".equals(surdo.getSexo())) {
+				icon = new MarkerImage.Builder("images/icone_homem.png").build();
+			} else if ("Feminino".equals(surdo.getSexo())) {
+				icon = new MarkerImage.Builder("images/icone_mulher.png").build();
+			} 
+		} else {
+			icon = new MarkerImage.Builder("images/icone_branco.png").build();
+		}
+		markerOpt.setIcon(icon);
 		HasMarker marker = new Marker(markerOpt);
 		marker.setPosition(new LatLng(surdo.getLatitude(), surdo.getLongitude()));
 		marker.setMap(mapa.getMap());
-		//TODO: utilizar icone homem/mulher
 	}
 	
 	private HasLatLng obterCentroMapa(List<SurdoVO> surdos) {
@@ -280,17 +302,8 @@ public class ImpressaoViewImpl extends Composite implements
 
 	@UiHandler("impressaoReverseImage")
 	void onImpressaoReverseImageClick(ClickEvent event) {
-		this.estaHorizontal = !this.estaHorizontal;
-		String altura = null;
-		String largura = null;
-		if (this.estaHorizontal) {
-			altura = ALTURA_MAPA;
-			largura = LARGURA_MAPA;
-		} else {
-			altura = "670px";
-			largura = ALTURA_MAPA;
+		if (presenter != null) {
+			this.presenter.abrirImpressao(identificadorMapaAtual, !paisagem);
 		}
-		mapa.setSize(largura, altura);
-		this.impressaoMapaLayoutPanel.setSize(largura, altura);
 	}
 }

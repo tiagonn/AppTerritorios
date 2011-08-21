@@ -6,9 +6,11 @@ public class AbrirImpressaoMapaEvent extends GwtEvent<AbrirImpressaoMapaEventHan
 	
 	public static Type<AbrirImpressaoMapaEventHandler> TYPE = new Type<AbrirImpressaoMapaEventHandler>();
 	private Long identificadorMapa;
+	private Boolean paisagem;
 	
-	public AbrirImpressaoMapaEvent(Long identificadorMapa) {
+	public AbrirImpressaoMapaEvent(Long identificadorMapa, Boolean paisagem) {
 		this.identificadorMapa = identificadorMapa;
+		this.paisagem = paisagem;
 	}
 
 	@Override
@@ -23,6 +25,10 @@ public class AbrirImpressaoMapaEvent extends GwtEvent<AbrirImpressaoMapaEventHan
 
 	public Long getIdentificadorMapa() {
 		return identificadorMapa;
+	}
+	
+	public Boolean isPaisagem() {
+		return paisagem;
 	}
 
 }

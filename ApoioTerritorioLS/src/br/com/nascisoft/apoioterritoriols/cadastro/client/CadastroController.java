@@ -142,7 +142,9 @@ public class CadastroController implements Presenter,
 			
 			@Override
 			public void onAbrirImpressaoMapa(AbrirImpressaoMapaEvent event) {
-				History.newItem("impressao!abrir#identificadorMapa=" + event.getIdentificadorMapa());
+				History.newItem("impressao!abrir#" +
+						"identificadorMapa=" + event.getIdentificadorMapa() +
+						"&paisagem="+event.isPaisagem());
 			}
 		});
 	}
@@ -229,7 +231,7 @@ public class CadastroController implements Presenter,
 							if ("mapas".equals(currentToken)) {
 								cadastroMapaPresenter.initView();
 							} else if (currentToken.startsWith("mapas!abrir")) {
-								cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("!")[1].split("=")[1]));
+								cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("#")[1].split("=")[1]));
 							}
 						
 							cadastroMapaPresenter.go(container);
@@ -247,7 +249,11 @@ public class CadastroController implements Presenter,
 							if ("impressao".equals(currentToken)) {
 								impressaoPresenter.initView();
 							} else if (currentToken.startsWith("impressao!abrir")) {
-								impressaoPresenter.onAbrirImpressao(Long.valueOf(currentToken.split("!")[1].split("=")[1]));
+								String queryString = currentToken.split("#")[1];
+								String[] parametros = queryString.split("&");
+								impressaoPresenter.onAbrirImpressao(
+										Long.valueOf(parametros[0].split("=")[1]),
+										Boolean.valueOf(parametros[1].split("=")[1]));
 							}
 							
 							impressaoPresenter.go(container);

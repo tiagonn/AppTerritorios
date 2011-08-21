@@ -39,7 +39,7 @@ public class ImpressaoPresenter extends AbstractPresenter
 	}
 
 	@Override
-	public void onAbrirImpressao(Long identificadorMapa) {
+	public void onAbrirImpressao(final Long identificadorMapa, final Boolean paisagem) {
 		getView().showWaitingPanel();
 		service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
 			
@@ -49,7 +49,7 @@ public class ImpressaoPresenter extends AbstractPresenter
 					Window.alert("Este mapa nao possui surdo associado");
 					eventBus.fireEvent(new AbrirImpressaoEvent());					
 				} else {
-					view.onAbrirImpressao(result);
+					view.onAbrirImpressao(identificadorMapa, result, paisagem);
 				}
 				getView().hideWaitingPanel();
 			}
@@ -63,8 +63,8 @@ public class ImpressaoPresenter extends AbstractPresenter
 	}
 
 	@Override
-	public void abrirImpressao(Long identificadorMapa) {
-		eventBus.fireEvent(new AbrirImpressaoMapaEvent(identificadorMapa));
+	public void abrirImpressao(Long identificadorMapa, Boolean paisagem) {
+		eventBus.fireEvent(new AbrirImpressaoMapaEvent(identificadorMapa, paisagem));
 	}
 
 	@Override

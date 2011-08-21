@@ -40,7 +40,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		
 		if (user != null) {
 			if (usuariosValidos.contains(user.getEmail())) {
-				logger.info("Tentando realizar o login do usuario " + 
+				logger.info("Tentando realizar o login do usuário " + 
 						user.getUserId() + ", e-mail: " + user.getEmail());
 				usuario.setEmail(user.getEmail());
 				usuario.setIdentificador(user.getUserId());
@@ -49,7 +49,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 				usuario.setAutorizado(true);
 				usuario.setLogoutURL(userService.createLogoutURL(requestURI));
 			} else {
-				logger.info("Usuario " + user.getEmail() + "não autorizado");
+				logger.info("Usuário " + user.getEmail() + "não autorizado");
 				usuario.setEmail(user.getEmail());
 				usuario.setLogado(true);
 				usuario.setAutorizado(false);

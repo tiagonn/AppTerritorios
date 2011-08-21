@@ -74,9 +74,9 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 								"WEB-INF/classes/META-INF/RegioesCampinas.xml")));
 				
 			} catch (Exception ex) {
-				logger.log(Level.SEVERE, "Erro ao recuperar lista de regioes",
+				logger.log(Level.SEVERE, "Erro ao recuperar lista de regiões",
 						ex);
-				throw new RuntimeException("Erro ao recuperar lista de regioes.", ex);
+				throw new RuntimeException("Erro ao recuperar lista de regiões.", ex);
 			}
 		}
 	}

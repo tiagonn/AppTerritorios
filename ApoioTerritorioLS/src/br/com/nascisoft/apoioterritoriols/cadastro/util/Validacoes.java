@@ -11,11 +11,11 @@ public class Validacoes extends ArrayList<String> {
 
 	public SafeHtml obterValidacoesSumarizadaHTML() {
 		SafeHtmlBuilder retorno = new SafeHtmlBuilder();
-		retorno.appendHtmlConstant("As seguintes validacoes nao foram satisfeitas: <ul>");
+		retorno.appendHtmlConstant("As seguintes validacoes não foram satisfeitas: <ul>");
 		for (String validacao : this) {
 			retorno.appendHtmlConstant("<li>" + validacao + "</li>");
 		}
-		retorno.appendHtmlConstant("</ul> Por favor, resolva as pendencias e continue<br/>");
+		retorno.appendHtmlConstant("</ul> Por favor, resolva as pendências e continue<br/>");
 		return retorno.toSafeHtml();
 	}
 	

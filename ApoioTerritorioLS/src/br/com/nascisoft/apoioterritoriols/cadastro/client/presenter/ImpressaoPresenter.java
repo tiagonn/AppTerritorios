@@ -46,7 +46,7 @@ public class ImpressaoPresenter extends AbstractPresenter
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
 				if (result == null || result.size() == 0) {
-					Window.alert("Este mapa nao possui surdo associado");
+					Window.alert("Este mapa não possui surdo associado");
 					eventBus.fireEvent(new AbrirImpressaoEvent());					
 				} else {
 					view.onAbrirImpressao(identificadorMapa, result, paisagem);
@@ -56,8 +56,8 @@ public class ImpressaoPresenter extends AbstractPresenter
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter informa��es para abrir o mapa.\n", caught);
-				Window.alert("Falha ao obter informacoes para abrir o mapa. \n" + caught.getMessage());				
+				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
+				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
 			}
 		});
 	}

@@ -99,7 +99,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	boolean buscaEndereco = true;
 	
 	//TODO: Parametrizar todos os dados fixos
-	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.878419,-47.070356);// endere�o do sal�o do reino
+	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.878419,-47.070356);// endereço do salão do reino
 
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder extends
@@ -159,10 +159,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@Override
 	public void setRegiaoList(List<String> regioes) {
 		this.pesquisaRegiaoListBox.clear();
-		this.pesquisaRegiaoListBox.addItem("-- Escolha uma regiao --", "");
+		this.pesquisaRegiaoListBox.addItem("-- Escolha uma região --", "");
 
 		this.manterRegiaoListBox.clear();
-		this.manterRegiaoListBox.addItem("-- Escolha uma regiao --", "");
+		this.manterRegiaoListBox.addItem("-- Escolha uma região --", "");
 		
 		this.pesquisaMapaListBox.clear();
 		this.pesquisaMapaListBox.addItem("-- Escolha um mapa --", "");
@@ -230,7 +230,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	private void mostrarResultadoPesquisa() {
 		if (this.pesquisaResultadoCellTable.getRowCount() == 0) {
-			this.pesquisaResultadoLabel.setText("Nao foram encontrados resultados para a pesquisa informada");
+			this.pesquisaResultadoLabel.setText("Não foram encontrados resultados para a pesquisa informada");
 			this.pesquisaResultadoSimplePager.setVisible(false);
 		} else {
 			this.pesquisaResultadoLabel.setText("Foram encontrados " + this.pesquisaResultadoCellTable.getRowCount() + " resultados.");
@@ -287,7 +287,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			};
 
 			this.pesquisaResultadoCellTable.addColumn(nomeColumn, "Nome");
-			this.pesquisaResultadoCellTable.addColumn(regiaoColumn, "Regiao");
+			this.pesquisaResultadoCellTable.addColumn(regiaoColumn, "Região");
 			this.pesquisaResultadoCellTable.addColumn(mapaColumn, "Mapa");
 			this.pesquisaResultadoCellTable.addColumn(editColumn, "");
 			this.pesquisaResultadoCellTable.addColumn(deletarColumn, "");
@@ -397,7 +397,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 
 	private Validacoes validaManterSurdo() {
-		//TODO: Validar tamanhos m�ximos (por conta da impress�o - validar na UI diretamente)
+		//TODO: Validar tamanhos máximos (por conta da impress�o - validar na UI diretamente)
 		Validacoes validacoes = new Validacoes();
 		
 		if (manterNomeTextBox.getText().isEmpty()) {
@@ -407,10 +407,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			validacoes.add("Logradouro precisa ser preenchido");
 		}
 		if (manterNumeroTextBox.getText().isEmpty()) {
-			validacoes.add("Numero precisa ser preenchido");
+			validacoes.add("Número precisa ser preenchido");
 		}
 		if (manterRegiaoListBox.getSelectedIndex() == 0) {
-			validacoes.add("Regiao precisa ser preenchida");
+			validacoes.add("Região precisa ser preenchida");
 		}
 		
 		return validacoes;
@@ -418,7 +418,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	private void limparResultadoPesquisa() {	
 		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
-		// portanto sempre � necess�rio remover a coluna 0.
+		// portanto sempre  é necessário remover a coluna 0.
 		int j = this.pesquisaResultadoCellTable.getColumnCount();
 		for (int i = 0; i < j; i++) {
 			this.pesquisaResultadoCellTable.removeColumn(0);
@@ -517,13 +517,13 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {
-		snListBox.addItem("-- Escolha uma opcao --", "");
+		snListBox.addItem("-- Escolha uma opção --", "");
 		snListBox.addItem("Sim");
-		snListBox.addItem("Nao");
+		snListBox.addItem("Não");
 	}
 	
 	private void iniciarSexoListBox(ListBox sexoListBox){
-		sexoListBox.addItem("-- Escolha uma opcao --", "");
+		sexoListBox.addItem("-- Escolha uma opção --", "");
 		sexoListBox.addItem("Masculino");
 		sexoListBox.addItem("Feminino");
 	}

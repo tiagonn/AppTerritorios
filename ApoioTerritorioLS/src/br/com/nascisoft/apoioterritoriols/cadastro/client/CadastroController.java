@@ -191,17 +191,17 @@ public class CadastroController implements Presenter,
 								try {
 									nomeSurdo = parametros[0].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
-									// n�o faz nada, o nome continua null
+									// não faz nada, o nome continua null
 								}
 								try {
 									nomeRegiao = parametros[1].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
-									// n�o faz nada, o nome continua null
+									// não faz nada, o nome continua null
 								}
 								try {
 									identificadorMapa = parametros[2].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
-									// n�o faz nada, o identificador continua null
+									// não faz nada, o identificador continua null
 								}
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
 										nomeSurdo,
@@ -259,14 +259,14 @@ public class CadastroController implements Presenter,
 							impressaoPresenter.go(container);
 						}
 					} catch (Exception ex) {
-						logger.log(Level.SEVERE, "Falha ao responder a requisicao", ex);
-						Window.alert("Falha ao responder a requisicao\n" + ex);
+						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);
+						Window.alert("Falha ao responder a requisição\n" + ex);
 					}
 				}
 
 				@Override
 				public void onFailure(Throwable reason) {
-					logger.log(Level.SEVERE, "Falha ao inicializar view",
+					logger.log(Level.SEVERE, "Falha ao inicializar view.\n",
 							reason);
 					Window.alert("Falha ao inicializar view\n"
 							+ reason.getMessage());

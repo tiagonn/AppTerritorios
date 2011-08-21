@@ -19,12 +19,12 @@ public class CadastroEntryPoint implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		//TODO: autentica��o
-		//TODO: ceder/revogar permiss�o para usu�rio
+		//TODO: autenticação
+		//TODO: ceder/revogar permissão para usuário
 		//TODO: feature de backup
 		//TODO: feature de import de backup
 		//TODO: feature de mudou-se
-		//TODO: feature de n�o visitar
+		//TODO: feature de não visitar
 		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginVO>() {
@@ -32,10 +32,15 @@ public class CadastroEntryPoint implements EntryPoint {
 			@Override
 			public void onSuccess(LoginVO result) {
 				if (result.isLogado()) {
-					CadastroServiceAsync service = GWT.create(CadastroService.class);
-					HandlerManager eventBus = new HandlerManager(null);
-					CadastroController controller = new CadastroController(service, eventBus);
-					controller.go(RootLayoutPanel.get());
+					if (result.isAutorizado()) {
+						CadastroServiceAsync service = GWT.create(CadastroService.class);
+						HandlerManager eventBus = new HandlerManager(null);
+						CadastroController controller = new CadastroController(service, eventBus);
+						controller.go(RootLayoutPanel.get());
+					} else {
+						Window.alert("Usuário não possui permissão de acesso. Entre em contato com o administrador de sua congregação.");
+						Window.open("http://www.watchtower.org/", "_self", "");
+					}
 				} else {
 					Window.open(result.getLoginURL(), "_self", "");
 				}
@@ -43,8 +48,8 @@ public class CadastroEntryPoint implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao tentar efetuar o login" + caught);
-				Window.alert("Falha ao tentar efetuar o login" + caught);
+				logger.log(Level.SEVERE, "Falha ao tentar efetuar o login\n\n" + caught);
+				Window.alert("Falha ao tentar efetuar o login\n\n" + caught);
 			}
 		});
 		

@@ -35,8 +35,8 @@ public abstract class AbstractPresenter implements Presenter, CadastroView.Prese
 
 				@Override
 				public void onFailure(Throwable caught) {
-					logger.log(Level.SEVERE, "Falha ao obter lista de regioes", caught);
-					Window.alert("Falha ao obter lista de regioes. \n" + caught.getMessage());					
+					logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+					Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
 				}
 
 				@Override
@@ -57,7 +57,7 @@ public abstract class AbstractPresenter implements Presenter, CadastroView.Prese
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de mapas", caught);
+				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
 				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
 			}
 

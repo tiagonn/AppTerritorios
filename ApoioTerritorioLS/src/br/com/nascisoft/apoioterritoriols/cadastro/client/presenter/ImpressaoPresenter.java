@@ -56,7 +56,7 @@ public class ImpressaoPresenter extends AbstractPresenter
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa", caught);
+				logger.log(Level.SEVERE, "Falha ao obter informaï¿½ï¿½es para abrir o mapa.\n", caught);
 				Window.alert("Falha ao obter informacoes para abrir o mapa. \n" + caught.getMessage());				
 			}
 		});

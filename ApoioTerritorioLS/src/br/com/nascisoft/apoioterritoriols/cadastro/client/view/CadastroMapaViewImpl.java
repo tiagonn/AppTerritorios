@@ -128,7 +128,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	@Override
 	public void setRegiaoList(List<String> regioes) {
 		this.pesquisaMapaRegiaoListBox.clear();
-		this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma regiao --", "");
+		this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma região --", "");
 
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
@@ -142,7 +142,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	public void setMapaList(List<Mapa> mapas) {
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
-		this.pesquisaMapaMapaListBox.addItem("Adicionar novo mapa na Regiao", OPERACAO_ADICIONAR_MAPA);
+		this.pesquisaMapaMapaListBox.addItem("Adicionar novo mapa na Região", OPERACAO_ADICIONAR_MAPA);
 		for (Mapa mapa : mapas) {
 			this.pesquisaMapaMapaListBox.addItem(mapa.getNome(), mapa.getId().toString());
 		}
@@ -223,6 +223,7 @@ public class CadastroMapaViewImpl extends Composite implements
 			}
 		}
 	}
+	//TODO: Ao clicar no surdo, fazer aparecer a sua infoWindow
 
 	@UiHandler("manterMapaSurdoRemoverButton")
 	void onManterMapaSurdoRemoverButtonClick(ClickEvent event) {

@@ -62,7 +62,7 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					logger.log(Level.SEVERE, "Falha ao obter lista de bairros", caught);
+					logger.log(Level.SEVERE, "Falha ao obter lista de bairros.\n", caught);
 					Window.alert("Falha ao obter lista de bairros. \n" + caught.getMessage());					
 				}
 			});
@@ -87,7 +87,7 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de surdos", caught);
+				logger.log(Level.SEVERE, "Falha ao obter lista de surdos.\n", caught);
 				Window.alert("Falha ao obter lista de surdos. \n" + caught.getMessage());		
 			}
 
@@ -106,7 +106,7 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar surdo", caught);
+				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar surdo.\n", caught);
 				Window.alert("Falha ao adicionar ou alterar surdo. \n" + caught.getMessage());
 			}
 
@@ -130,7 +130,7 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 		service.obterSurdo(id, new AsyncCallback<Surdo>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter surdo", caught);
+				logger.log(Level.SEVERE, "Falha ao obter surdo.\n", caught);
 				Window.alert("Falha ao obter surdo. \n" + caught.getMessage());
 			}
 
@@ -159,7 +159,7 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao apagar surdo", caught);
+				logger.log(Level.SEVERE, "Falha ao apagar surdo.\n", caught);
 				Window.alert("Falha ao apagar surdo. \n" + caught.getMessage());
 			}
 
@@ -203,8 +203,8 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 				if (status.equals("OK")) {
 					HasGeocoderResult result = responses.get(0);
 					HasLatLng retorno = result.getGeometry().getLocation();
-						// em caso de n„o encontrar o endereÁo, a api do google maps est· retornando o centro de Campinas, por conta da 
-						// Query String que foi usada. Neste caso vou tratar como se ele n„o tivesse encontrado o endereÁo.
+						// em caso de n√£o encontrar o endere√ßo, a api do google maps est√° retornando o centro de Campinas, por conta da 
+						// Query String que foi usada. Neste caso vou tratar como se ele n√£o tivesse encontrado o endere√ßo.
 					if (retorno.equals(LATITUDE_CENTRO_CAMPINAS)) {
 						retorno = null;
 					}

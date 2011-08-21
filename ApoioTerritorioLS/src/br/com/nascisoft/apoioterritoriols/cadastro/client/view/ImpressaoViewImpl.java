@@ -109,7 +109,7 @@ public class ImpressaoViewImpl extends Composite implements
 	@Override
 	public void setRegiaoList(List<String> regioes) {
 		this.pesquisaImpressaoRegiaoListBox.clear();
-		this.pesquisaImpressaoRegiaoListBox.addItem("-- Escolha uma regiao --", "");
+		this.pesquisaImpressaoRegiaoListBox.addItem("-- Escolha uma região --", "");
 
 		this.pesquisaImpressaoMapaListBox.clear();
 		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
@@ -200,7 +200,7 @@ public class ImpressaoViewImpl extends Composite implements
 					.append("<tr>")
 						.append("<td width=\"40px\"").append(classe1).append(">Nome:</td>")
 						.append("<td width=\"495px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
-						.append("<td width=\"150px\" ").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td width=\"150px\" ").append(classe1).append(">Última Visita:______</td>")
 						.append("<td width=\"60px\"").append(classe1).append(">Libras:</td>")
 						.append("<td width=\"15px\" ").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getLibras())).append("</td>")
 						.append("<td width=\"60px\"").append(classe1).append(">Idade:</td>")
@@ -213,7 +213,7 @@ public class ImpressaoViewImpl extends Composite implements
 							.append(surdo.getNumero()).append(" ")
 							.append(surdo.getComplemento())
 						.append("</td>")
-						.append("<td").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td").append(classe1).append(">Última Visita:______</td>")
 						.append("<td").append(classe1).append(">Crianca:</td>")
 						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getCrianca())).append("</td>")
 						.append("<td").append(classe1).append(">Sexo:</td>")
@@ -222,10 +222,10 @@ public class ImpressaoViewImpl extends Composite implements
 					.append("<tr>")
 						.append("<td").append(classe1).append(">Bairro:</td>")
 						.append("<td").append(classe).append(">").append(surdo.getBairro()).append("</td>")
-						.append("<td").append(classe1).append(">Ultima Visita:______</td>")
+						.append("<td").append(classe1).append(">Última Visita:______</td>")
 						.append("<td").append(classe1).append(">DVD:</td>")
 						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getDvd())).append("</td>")
-						.append("<td").append(classe1).append(">Onibus:</td>")
+						.append("<td").append(classe1).append(">Ônibus:</td>")
 						.append("<td").append(classe).append(">").append(surdo.getOnibus()).append("</td>")
 					.append("</tr>")
 					.append("<tr>")
@@ -235,7 +235,7 @@ public class ImpressaoViewImpl extends Composite implements
 					.append("<tr>")
 						.append("<td colspan=\"7\"><table width=\"100%\" cellspacing=0><tr>")
 						.append("<td width=\"130px\"").append(classe).append("><strong>Tel:</strong> ").append(surdo.getTelefone()).append("</td>")
-						.append("<td width=\"240px\"").append(classe).append("><strong>Horario:</strong> ").append(surdo.getHorario()).append("</td>")
+						.append("<td width=\"240px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
 						.append("<td width=\"240px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
 						.append("<td width=\"240px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
 					.append("</tr></table></td></tr>")
@@ -250,7 +250,7 @@ public class ImpressaoViewImpl extends Composite implements
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
-		//TODO: bug de impress�o de div no IE
+		//TODO: bug de impressão de div no IE
 		
 		this.impressaoSimplePanel.setVisible(true);
 	}

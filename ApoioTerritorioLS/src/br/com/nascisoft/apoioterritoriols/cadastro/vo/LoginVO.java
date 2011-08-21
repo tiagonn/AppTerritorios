@@ -7,13 +7,14 @@ public class LoginVO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	private String identificador;
 	private String email;
 	private String nickname;
 	private String loginURL;
 	private String logoutURL;
 	private Boolean logado = false;
+	private Boolean autorizado = false;
 	
 	public String getIdentificador() {
 		return identificador;
@@ -50,6 +51,12 @@ public class LoginVO implements Serializable {
 	}
 	public void setLogado(Boolean logado) {
 		this.logado = logado;
+	}
+	public void setAutorizado(Boolean autorizado) {
+		this.autorizado = autorizado;
+	}
+	public Boolean isAutorizado() {
+		return autorizado;
 	}
 
 }

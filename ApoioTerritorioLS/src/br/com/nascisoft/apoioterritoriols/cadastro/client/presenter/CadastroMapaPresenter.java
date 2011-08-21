@@ -44,7 +44,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 						
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao adicionar mapa", caught);
+				logger.log(Level.SEVERE, "Falha ao adicionar mapa.\n", caught);
 				Window.alert("Falha ao adicionar mapa. \n" + caught.getMessage());
 			}
 			
@@ -66,8 +66,8 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter informa��es para abrir o mapa", caught);
-				Window.alert("Falha ao obter informacoes para abrir o mapa. \n" + caught.getMessage());
+				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa. \n", caught);
+				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());
 			}
 
 			@Override
@@ -90,7 +90,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao adicionar surdos no mapa", caught);
+				logger.log(Level.SEVERE, "Falha ao adicionar surdos no mapa.\n", caught);
 				Window.alert("Falha ao adicionar surdos no mapa. \n" + caught.getMessage());
 			}
 			
@@ -110,7 +110,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao remover surdos no mapa", caught);
+				logger.log(Level.SEVERE, "Falha ao remover surdos no mapa.\n", caught);
 				Window.alert("Falha ao adicionar remover no mapa. \n" + caught.getMessage());
 			}
 
@@ -130,7 +130,7 @@ public class CadastroMapaPresenter extends AbstractPresenter
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao apagar o mapa", caught);
+				logger.log(Level.SEVERE, "Falha ao apagar o mapa.\n", caught);
 				Window.alert("Falha ao apagar o mapa. \n" + caught.getMessage());
 			}
 

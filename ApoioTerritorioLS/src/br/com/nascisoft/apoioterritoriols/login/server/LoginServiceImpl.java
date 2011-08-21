@@ -36,17 +36,26 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		User user = userService.getCurrentUser();		
 		LoginVO usuario = new LoginVO();
 		
-		if (user != null && usuariosValidos.contains(user.getEmail())) {
-			logger.info("Tentando realizar o login do usuario " + 
-					user.getUserId() + ", e-mail: " + user.getEmail());
-			usuario.setEmail(user.getEmail());
-			usuario.setIdentificador(user.getUserId());
-			usuario.setNickname(user.getNickname());
-			usuario.setLogado(true);
-			usuario.setLogoutURL(userService.createLogoutURL(requestURI));
+		if (user != null) {
+			if (usuariosValidos.contains(user.getEmail())) {
+				logger.info("Tentando realizar o login do usuario " + 
+						user.getUserId() + ", e-mail: " + user.getEmail());
+				usuario.setEmail(user.getEmail());
+				usuario.setIdentificador(user.getUserId());
+				usuario.setNickname(user.getNickname());
+				usuario.setLogado(true);
+				usuario.setAutorizado(true);
+				usuario.setLogoutURL(userService.createLogoutURL(requestURI));
+			} else {
+				logger.info("Usuario " + user.getEmail() + "não autorizado");
+				usuario.setEmail(user.getEmail());
+				usuario.setLogado(true);
+				usuario.setAutorizado(false);
+			}
 		} else {
 			logger.info("Usuário não logado, redirecionando para tela de login");
 			usuario.setLogado(false);
+			usuario.setAutorizado(false);
 			usuario.setLoginURL(userService.createLoginURL(requestURI));
 		}
 		return usuario;

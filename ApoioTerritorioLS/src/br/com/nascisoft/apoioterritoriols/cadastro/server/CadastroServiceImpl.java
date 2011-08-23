@@ -103,6 +103,7 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 		return retorno;
 	}
 	
+	//TODO: Ordenar lista por endereço - não usar notify, usar um comparator
 	@Override
 	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
 		List<SurdoVO> surdos = new ArrayList<SurdoVO>();

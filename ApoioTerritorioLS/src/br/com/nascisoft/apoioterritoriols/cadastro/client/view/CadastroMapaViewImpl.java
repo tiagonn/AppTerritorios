@@ -207,6 +207,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	}
 	
 	//TODO: alterar componente de multi-select box para box com labels selecionados ou avaliar outra possibilidade
+	//TODO: ao selecionar um surdo, fazer a infowindow dele aparecer no mapa.
 
 	@UiHandler("manterMapaSurdoAdicionarButton")
 	void onManterMapaSurdoAdicionarButtonClick(ClickEvent event) {

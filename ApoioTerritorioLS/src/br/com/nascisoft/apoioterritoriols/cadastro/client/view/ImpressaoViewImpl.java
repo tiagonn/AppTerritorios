@@ -166,6 +166,8 @@ public class ImpressaoViewImpl extends Composite implements
 			}
 		}
 	}
+	
+	//TODO: Relacionar por número o surdo com o marcador dele no mapa
 
 	@Override
 	public void onAbrirImpressao(Long identificadorMapa, List<SurdoVO> surdos, Boolean paisagem) {

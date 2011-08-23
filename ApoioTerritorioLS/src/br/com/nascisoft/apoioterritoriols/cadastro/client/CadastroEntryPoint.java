@@ -19,7 +19,6 @@ public class CadastroEntryPoint implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		//TODO: autenticação
 		//TODO: ceder/revogar permissão para usuário
 		//TODO: feature de backup
 		//TODO: feature de import de backup

@@ -1,16 +1,21 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.InfoWindowVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
@@ -68,6 +73,8 @@ public class CadastroMapaViewImpl extends Composite implements
 	
 	private Long identificadorMapaAtual;
 	
+	private Map<Long, InfoWindowVO> mapaInfoWindow;
+	
 	private static final String OPERACAO_ADICIONAR_MAPA = "adicionarMapa";
 	private static final int TIPO_SURDO_SEM_MAPA = 0;
 	private static final int TIPO_SURDO_MAPA_ATUAL = 1;
@@ -123,6 +130,7 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.manterMapaMapaLayoutPanel.clear();
 		this.manterMapaMapaLayoutPanel.setVisible(false);
 		this.manterMapaLegendaHorizontalPanel.setVisible(false);
+		this.mapaInfoWindow = new HashMap<Long, InfoWindowVO>();
 	}
 
 	@Override
@@ -207,7 +215,6 @@ public class CadastroMapaViewImpl extends Composite implements
 	}
 	
 	//TODO: alterar componente de multi-select box para box com labels selecionados ou avaliar outra possibilidade
-	//TODO: ao selecionar um surdo, fazer a infowindow dele aparecer no mapa.
 
 	@UiHandler("manterMapaSurdoAdicionarButton")
 	void onManterMapaSurdoAdicionarButtonClick(ClickEvent event) {
@@ -224,7 +231,6 @@ public class CadastroMapaViewImpl extends Composite implements
 			}
 		}
 	}
-	//TODO: Ao clicar no surdo, fazer aparecer a sua infoWindow
 
 	@UiHandler("manterMapaSurdoRemoverButton")
 	void onManterMapaSurdoRemoverButtonClick(ClickEvent event) {
@@ -333,10 +339,49 @@ public class CadastroMapaViewImpl extends Composite implements
 				infoWindow.open(mapa.getMap(), marker);				
 			}
 		});
+		
+		this.mapaInfoWindow.put(surdo.getId(), new InfoWindowVO(mapa.getMap(), marker, infoWindow));
 	}
 
 	@Override
 	public void onApagarMapa() {
 		this.onPesquisaMapaRegiaoListBoxChange(null);
+	}
+	
+	@UiHandler("manterMapaSurdoDeListBox")
+	void onManterMapaSurdoDeListMouseUp(MouseUpEvent event) {
+		abrirInfoWindowSurdosSelecionados();
+	}
+	
+	@UiHandler("manterMapaSurdoParaListBox")
+	void onManterMapaSurdoParaListMouseUp(MouseUpEvent event) {
+		abrirInfoWindowSurdosSelecionados();
+	}	
+	
+	private void abrirInfoWindowSurdosSelecionados() {
+		fecharTodosMarcadores();
+		
+		List<Long> surdosSelecionados = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
+		
+		for (Long id : surdosSelecionados) {
+			InfoWindowVO vo = this.mapaInfoWindow.get(id);
+			vo.getInfoWindow().open(vo.getMap(), vo.getMarker());
+		}		
+		
+		surdosSelecionados = mapearSurdosSelecionados(this.manterMapaSurdoParaListBox);
+		
+		for (Long id : surdosSelecionados) {
+			InfoWindowVO vo = this.mapaInfoWindow.get(id);
+			vo.getInfoWindow().open(vo.getMap(), vo.getMarker());
+		}
+		
+	}
+	
+	private void fecharTodosMarcadores() {
+		Set<Long> identificadores = this.mapaInfoWindow.keySet();
+		for (Long id : identificadores) {
+			InfoWindowVO vo = this.mapaInfoWindow.get(id);
+			vo.getInfoWindow().close();
+		}
 	}
 }

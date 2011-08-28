@@ -2,6 +2,7 @@ package br.com.nascisoft.apoioterritoriols.cadastro.server;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +104,6 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 		return retorno;
 	}
 	
-	//TODO: Ordenar lista por endereço - não usar notify, usar um comparator
 	@Override
 	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
 		List<SurdoVO> surdos = new ArrayList<SurdoVO>();
@@ -114,6 +114,7 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 			} 
 			surdos.add(new SurdoVO(surdo, mapa));
 		}
+		Collections.sort(surdos, SurdoVO.COMPARATOR_ENDERECO);
 		return surdos;
 	}
 	

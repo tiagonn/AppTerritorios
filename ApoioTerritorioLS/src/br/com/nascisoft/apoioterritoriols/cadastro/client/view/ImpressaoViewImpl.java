@@ -56,7 +56,7 @@ public class ImpressaoViewImpl extends Composite implements
 	
 	private Boolean paisagem = true;
 	private Long identificadorMapaAtual = null;
-	private final static String ALTURA_MAPA = "420px";
+	private final static String ALTURA_MAPA = "600px";
 	private final static String LARGURA_MAPA = "850px";
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
@@ -195,36 +195,35 @@ public class ImpressaoViewImpl extends Composite implements
 			}
 			SurdoVO surdo = surdos.get(i);
 			
-			adicionarMarcadorSurdo(surdo, mapa);
+			adicionarMarcadorSurdo(i+1, surdo, mapa);
 			
 			StringBuilder html = new StringBuilder();
 			html.append("<table width=\"100%\" cellspacing=0>")
 					.append("<tr>")
 						.append("<td width=\"40px\"").append(classe1).append(">Nome:</td>")
-						.append("<td width=\"495px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
-						.append("<td width=\"150px\" ").append(classe1).append(">Última Visita:______</td>")
+						.append("<td width=\"345px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
+						.append("<td width=\"150px\" ").append(classe1).append(">Data última visita:</td>")
+						.append("<td width=\"150px\" ").append(classe1).append(">Falou com o surdo:</td>")
 						.append("<td width=\"60px\"").append(classe1).append(">Libras:</td>")
 						.append("<td width=\"15px\" ").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getLibras())).append("</td>")
 						.append("<td width=\"60px\"").append(classe1).append(">Idade:</td>")
 						.append("<td width=\"30px\" ").append(classe).append(">").append(StringUtils.duasLetras(surdo.getIdade())).append("</td>")
 					.append("</tr>")
-					.append("<tr>")
+					.append("<tr height=\"22px\">")
 						.append("<td").append(classe1).append(">End:</td>")
 						.append("<td").append(classe).append(">")
-							.append(surdo.getLogradouro()).append(" ")
-							.append(surdo.getNumero()).append(" ")
-							.append(surdo.getComplemento())
+							.append(surdo.getEndereco())
 						.append("</td>")
-						.append("<td").append(classe1).append(">Última Visita:______</td>")
+						.append("<td colspan=\"2\"").append(classe1).append(">______ _________________________</td>")
 						.append("<td").append(classe1).append(">Crianca:</td>")
 						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getCrianca())).append("</td>")
 						.append("<td").append(classe1).append(">Sexo:</td>")
 						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getSexo())).append("</td>")
 					.append("</tr>")
-					.append("<tr>")
+					.append("<tr height=\"22px\">")
 						.append("<td").append(classe1).append(">Bairro:</td>")
 						.append("<td").append(classe).append(">").append(surdo.getBairro()).append("</td>")
-						.append("<td").append(classe1).append(">Última Visita:______</td>")
+						.append("<td colspan=\"2\"").append(classe1).append(">______ _________________________</td>")
 						.append("<td").append(classe1).append(">DVD:</td>")
 						.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getDvd())).append("</td>")
 						.append("<td").append(classe1).append(">Ônibus:</td>")
@@ -236,10 +235,10 @@ public class ImpressaoViewImpl extends Composite implements
 					.append("</tr>")
 					.append("<tr>")
 						.append("<td colspan=\"7\"><table width=\"100%\" cellspacing=0><tr>")
-						.append("<td width=\"130px\"").append(classe).append("><strong>Tel:</strong> ").append(surdo.getTelefone()).append("</td>")
-						.append("<td width=\"240px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
-						.append("<td width=\"240px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
-						.append("<td width=\"240px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
+						.append("<td width=\"250px\"").append(classe).append("><strong>Tel:</strong> ").append(surdo.getTelefone()).append("</td>")
+						.append("<td width=\"200px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
+						.append("<td width=\"200px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
+						.append("<td width=\"200px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
 					.append("</tr></table></td></tr>")
 				.append("</table>");
 						
@@ -265,19 +264,19 @@ public class ImpressaoViewImpl extends Composite implements
 		}
 	}
 	
-	private void adicionarMarcadorSurdo(SurdoVO surdo, MapWidget mapa) {
+	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa) {
 		HasMarkerOptions markerOpt = new MarkerOptions();
 		markerOpt.setClickable(false);
 		markerOpt.setVisible(true);
 		HasMarkerImage icon = null;
 		if (!StringUtils.isEmpty(surdo.getSexo())) {
 			if ("Masculino".equals(surdo.getSexo())) {
-				icon = new MarkerImage.Builder("images/icone_homem.png").build();
+				icon = new MarkerImage.Builder("images/icone_homem_"+surdoNro+".png").build();
 			} else if ("Feminino".equals(surdo.getSexo())) {
-				icon = new MarkerImage.Builder("images/icone_mulher.png").build();
+				icon = new MarkerImage.Builder("images/icone_mulher_"+surdoNro+".png").build();
 			} 
 		} else {
-			icon = new MarkerImage.Builder("images/icone_branco.png").build();
+			icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
 		}
 		markerOpt.setIcon(icon);
 		HasMarker marker = new Marker(markerOpt);

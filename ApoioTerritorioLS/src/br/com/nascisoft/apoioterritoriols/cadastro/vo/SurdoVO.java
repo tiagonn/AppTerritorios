@@ -1,9 +1,11 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 
 public class SurdoVO implements Serializable {
 
@@ -31,6 +33,13 @@ public class SurdoVO implements Serializable {
 	private String msn;
 	private Double latitude;	
 	private Double longitude;
+	
+	public static final Comparator<SurdoVO> COMPARATOR_ENDERECO = new Comparator<SurdoVO>() {
+		@Override
+		public int compare(SurdoVO o1, SurdoVO o2) {
+			return o1.getEndereco().compareTo(o2.getEndereco());
+		}
+	};
 	
 	public SurdoVO() {
 		super();
@@ -240,6 +249,15 @@ public class SurdoVO implements Serializable {
 
 	public Double getLongitude() {
 		return longitude;
+	}
+	
+	public String getEndereco() {
+		StringBuilder retorno = new StringBuilder();
+		retorno.append(this.getLogradouro()).append(" ").append(this.getNumero());
+		if (!StringUtils.isEmpty(this.getComplemento())) {
+			retorno.append(" ").append(this.getComplemento());
+		}
+		return retorno.toString();
 	}
 
 }

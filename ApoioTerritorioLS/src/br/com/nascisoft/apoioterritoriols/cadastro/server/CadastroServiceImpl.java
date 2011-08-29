@@ -106,7 +106,9 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
-		return this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, null);
+		List<SurdoVO> surdos = this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, null);
+		Collections.sort(surdos, SurdoVO.COMPARATOR_ENDERECO);
+		return surdos;
 	}
 
 	private List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
@@ -118,7 +120,6 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 			} 
 			surdos.add(new SurdoVO(surdo, mapa));
 		}
-		Collections.sort(surdos, SurdoVO.COMPARATOR_ENDERECO);
 		return surdos;
 	}
 	

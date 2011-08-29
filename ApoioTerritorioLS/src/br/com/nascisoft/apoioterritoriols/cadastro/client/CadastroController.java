@@ -214,7 +214,7 @@ public class CadastroController implements Presenter,
 										nomeSurdo,
 										nomeRegiao,
 										identificadorMapa,
-										estaAssociadoMapa);	
+										estaAssociadoMapa ? null : estaAssociadoMapa);	
 							} else if ("surdos!adicionar".equals(currentToken)) {
 								cadastroSurdoPresenter.onAdicionar();
 							} else if (currentToken.startsWith("surdos!editar")) {

@@ -200,8 +200,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	@UiHandler("pesquisaPesquisarButton")
 	void onPesquisaPesquisarButtonClick(ClickEvent event) {
-		if (this.presenter != null) {
-			
+		if (this.presenter != null) {			
 			this.presenter.onPesquisaPesquisarButtonClick(
 					this.pesquisaNomeTextBox.getText(), 
 					this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()),

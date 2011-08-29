@@ -223,6 +223,7 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	
 	private Centro obterCentroRegiao(String nomeRegiao) {
 		Centro centro = null;
+		initRegioes();
 		for (Regiao regiao : CadastroServiceImpl.regioes.getRegiao()) {
 			if (regiao.getNome().equals(nomeRegiao)) {
 				centro = regiao.getCentro();

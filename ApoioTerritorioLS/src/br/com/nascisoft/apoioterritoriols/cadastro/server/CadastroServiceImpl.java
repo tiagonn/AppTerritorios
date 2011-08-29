@@ -106,8 +106,12 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	
 	@Override
 	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
+		return this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, null);
+	}
+
+	private List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
 		List<SurdoVO> surdos = new ArrayList<SurdoVO>();
-		for (Surdo surdo : this.getDao().obterSurdos(nomeSurdo, nomeRegiao, identificadorMapa)) {
+		for (Surdo surdo : this.getDao().obterSurdos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa)) {
 			Mapa mapa = null;
 			if (surdo.getMapa() != null) {
 				mapa = this.getDao().obterMapa(surdo.getMapa());
@@ -119,9 +123,9 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	}
 	
 	@Override
-	public List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
+	public List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
 		List<SurdoDetailsVO> surdos = new ArrayList<SurdoDetailsVO>();
-		for (SurdoVO surdo : this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa)) {
+		for (SurdoVO surdo : this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa)) {
 			surdos.add(new SurdoDetailsVO(surdo));
 		}
 		
@@ -159,7 +163,7 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 		
 		vo.setMapa(mapa);
 		
-		List<SurdoDetailsVO> surdosPara = this.obterSurdos(null, mapa.getRegiao(), identificadorMapa);
+		List<SurdoDetailsVO> surdosPara = this.obterSurdos(null, mapa.getRegiao(), identificadorMapa, null);
 		
 		vo.setSurdosPara(surdosPara);
 		
@@ -202,7 +206,7 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public void apagarMapa(Long identificadorMapa) {
-		List<Surdo> surdos = this.getDao().obterSurdos(null, null, identificadorMapa);
+		List<Surdo> surdos = this.getDao().obterSurdos(null, null, identificadorMapa, null);
 		List<Long> lista = this.obterListaIds(surdos);
 		this.removerSurdosMapa(lista);
 		this.getDao().apagarMapa(identificadorMapa);

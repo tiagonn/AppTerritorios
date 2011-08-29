@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<g:TabLayoutPanel barUnit='EM' barHeight='3'
 		animationDuration="1" ui:field="cadastroSurdoTabLayoutPanel">
@@ -12,26 +13,34 @@
 					<g:Grid styleName="surdo-tabela">
 						<g:row>
 							<g:customCell>
-								<g:Label text="Nome: " />
+								<g:Label text="Nome:" />
 							</g:customCell>
-							<g:customCell>
-								<g:Label text="Região: " />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Mapa: " />
-							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:TextBox ui:field="pesquisaNomeTextBox"
 									visibleLength="25" />
 							</g:customCell>
 							<g:customCell>
+								<g:Label text="Região:" />
+							</g:customCell>
+							<g:customCell>
 								<g:ListBox ui:field="pesquisaRegiaoListBox" />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Mapa:" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaMapaListBox" />
-							</g:customCell>					
+							</g:customCell>
+							<g:customCell>
+								<g:VerticalPanel styleName="check-alinhado-direita" horizontalAlignment="ALIGN_RIGHT">
+									<g:CheckBox ui:field="pesquisaEstaAssociadoMapaCheckBox" name="pesquisaEstaAssociadoMapaCheckBox"></g:CheckBox>
+								</g:VerticalPanel>
+							</g:customCell>
+							<g:customCell>
+								<g:Label>Pesquisar apenas surdos sem mapa</g:Label>
+							</g:customCell>			
 							<g:customCell>
 								<g:Button ui:field="pesquisaPesquisarButton" text="Pesquisar" />
 							</g:customCell>

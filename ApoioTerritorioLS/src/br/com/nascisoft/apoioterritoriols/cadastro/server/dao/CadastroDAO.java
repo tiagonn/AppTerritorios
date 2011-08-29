@@ -31,7 +31,7 @@ public class CadastroDAO extends DAOBase {
 		return surdo.getId();
 	}
 	
-	public List<Surdo> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
+	public List<Surdo> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> query = ofy.query(Surdo.class);
 		if (nomeSurdo != null && nomeSurdo.length() > 0) {
@@ -43,6 +43,9 @@ public class CadastroDAO extends DAOBase {
 		if (identificadorMapa != null) {
 			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);
 			query.filter("mapa", key);
+		}
+		if (estaAssociadoMapa != null) {
+			query.filter("estaAssociadoMapa", estaAssociadoMapa);
 		}
 		query.order("nome");
 		return query.list();

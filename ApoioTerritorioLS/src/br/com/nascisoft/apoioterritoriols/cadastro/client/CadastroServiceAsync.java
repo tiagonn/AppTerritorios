@@ -14,7 +14,7 @@ public interface CadastroServiceAsync {
 	
 	void obterBairrosCampinas(AsyncCallback<List<String>> callback);
 
-	void obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa,
+	void obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa, 
 			AsyncCallback<List<SurdoDetailsVO>> callback);
 
 	void obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa,

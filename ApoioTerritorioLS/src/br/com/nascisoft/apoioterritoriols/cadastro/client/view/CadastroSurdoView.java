@@ -10,8 +10,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 public interface CadastroSurdoView extends CadastroView {
 	
 	public interface Presenter extends CadastroView.Presenter {
-		void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa);
-		void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa);
+		void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa);
+		void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa);
 		void adicionarOuAlterarSurdo(Surdo surdo);
 		void onEditarButtonClick(Long id);
 		void onEditar(Long id);

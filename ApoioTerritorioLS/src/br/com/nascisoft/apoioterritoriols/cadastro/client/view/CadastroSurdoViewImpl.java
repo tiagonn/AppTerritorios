@@ -14,6 +14,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
@@ -34,6 +35,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
@@ -90,6 +92,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField Button manterMapaConfirmarEnderecoButton;
 	@UiField Button manterMapaVoltarEnderecoButton;
 	@UiField PopupPanel waitingPopUpPanel;
+	@UiField CheckBox pesquisaEstaAssociadoMapaCheckBox;
 	
 	Long manterId;
 	Key<Mapa> manterMapa;
@@ -126,6 +129,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.pesquisaNomeTextBox.setText("");
 		this.pesquisaRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaMapaListBox.setSelectedIndex(0);
+		this.pesquisaEstaAssociadoMapaCheckBox.setValue(Boolean.FALSE);
 		this.manterSurdoGrid.setVisible(false);
 		this.manterWarningHTML.setHTML("");
 		this.manterMapaPopupPanel.hide();
@@ -202,7 +206,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					this.pesquisaNomeTextBox.getText(), 
 					this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()),
 					this.pesquisaMapaListBox.getValue(
-							this.pesquisaMapaListBox.getSelectedIndex()));
+							this.pesquisaMapaListBox.getSelectedIndex()), 
+					!this.pesquisaEstaAssociadoMapaCheckBox.getValue());
 		}
 		this.manterSurdoGrid.setVisible(false);
 	}
@@ -210,7 +215,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiHandler("pesquisaRegiaoListBox")
 	void onPesquisaRegiaoListBoxChange(ChangeEvent event) {
 		if (this.presenter != null) {
-			if (!this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()).isEmpty()) {
+			if (!this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()).isEmpty()
+					&& !this.pesquisaEstaAssociadoMapaCheckBox.getValue()) {
 				this.pesquisaMapaListBox.setEnabled(true);
 				this.presenter.onPesquisaRegiaoListBoxChange(pesquisaRegiaoListBox.getValue(pesquisaRegiaoListBox.getSelectedIndex()));
 			} else {
@@ -219,6 +225,17 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 	}	
+	
+	@UiHandler("pesquisaEstaAssociadoMapaCheckBox")
+	void onPesquisaEstaAssociadoMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		if (this.pesquisaEstaAssociadoMapaCheckBox.getValue()) {
+			this.pesquisaMapaListBox.setEnabled(false);
+			this.pesquisaMapaListBox.setSelectedIndex(0);
+		} else if (!this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()).isEmpty()) {
+			this.pesquisaMapaListBox.setEnabled(true);
+			this.presenter.onPesquisaRegiaoListBoxChange(pesquisaRegiaoListBox.getValue(pesquisaRegiaoListBox.getSelectedIndex()));
+		}
+	}
 		
 	@Override
 	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {

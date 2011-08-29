@@ -19,12 +19,12 @@ public class CadastroEntryPoint implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		//TODO: ceder/revogar permissão para usuário
+
 		//TODO: feature de backup
-		//TODO: feature de import de backup
+		//TODO: ceder/revogar permissão para usuário
 		//TODO: feature de mudou-se
 		//TODO: feature de não visitar
-		
+		//TODO: feature de import de backup		
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginVO>() {
 			

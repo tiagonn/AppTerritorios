@@ -92,7 +92,8 @@ public class CadastroController implements Presenter,
 						History.newItem("surdos!pesquisar#" +
 								"nomeSurdo="+event.getNomeSurdo()+
 								"&nomeRegiao="+event.getNomeRegiao()+
-								"&identificadorMapa="+event.getIdentificadorMapa());					
+								"&identificadorMapa="+event.getIdentificadorMapa()+
+								"&estaAssociadoMapa="+event.getEstaAssociadoMapa());					
 					}
 				});
 
@@ -188,6 +189,7 @@ public class CadastroController implements Presenter,
 								String nomeSurdo = null;
 								String nomeRegiao = null;
 								String identificadorMapa = null;
+								Boolean estaAssociadoMapa = null;
 								try {
 									nomeSurdo = parametros[0].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
@@ -203,10 +205,16 @@ public class CadastroController implements Presenter,
 								} catch (ArrayIndexOutOfBoundsException e) {
 									// não faz nada, o identificador continua null
 								}
+								try {
+									estaAssociadoMapa = Boolean.valueOf(parametros[3].split("=")[1]);
+								} catch (ArrayIndexOutOfBoundsException e) {
+									// não faz nada, a flag continua null
+								}
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
 										nomeSurdo,
 										nomeRegiao,
-										identificadorMapa);	
+										identificadorMapa,
+										estaAssociadoMapa);	
 							} else if ("surdos!adicionar".equals(currentToken)) {
 								cadastroSurdoPresenter.onAdicionar();
 							} else if (currentToken.startsWith("surdos!editar")) {

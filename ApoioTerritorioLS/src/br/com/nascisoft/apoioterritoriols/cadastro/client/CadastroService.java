@@ -18,7 +18,7 @@ public interface CadastroService extends RemoteService {
 
 	List<String> obterRegioesCampinas();
 	
-	List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa);
+	List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa);
 	
 	List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa);
 	

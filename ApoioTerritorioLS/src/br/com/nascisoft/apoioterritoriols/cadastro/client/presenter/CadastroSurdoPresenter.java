@@ -72,18 +72,18 @@ public class CadastroSurdoPresenter extends AbstractPresenter implements Cadastr
 	}
 
 	@Override
-	public void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa) {
-		eventBus.fireEvent(new PesquisarSurdoEvent(nomeSurdo, nomeRegiao, identificadorMapa));
+	public void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+		eventBus.fireEvent(new PesquisarSurdoEvent(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa));
 	}
 	
 	@Override
-	public void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa) {
+	public void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
 		getView().showWaitingPanel();
 		Long mapa = null;
 		if (!StringUtils.isEmpty(identificadorMapa)) {
 			mapa = Long.valueOf(identificadorMapa);
 		}
-		service.obterSurdos(nomeSurdo, nomeRegiao, mapa, new AsyncCallback<List<SurdoDetailsVO>>() {
+		service.obterSurdos(nomeSurdo, nomeRegiao, mapa, estaAssociadoMapa, new AsyncCallback<List<SurdoDetailsVO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

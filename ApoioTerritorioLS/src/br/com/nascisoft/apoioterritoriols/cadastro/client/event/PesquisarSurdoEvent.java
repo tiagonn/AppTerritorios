@@ -8,11 +8,13 @@ public class PesquisarSurdoEvent extends GwtEvent<PesquisarSurdoEventHandler> {
 	String nomeSurdo;
 	String nomeRegiao; 
 	String identificadorMapa;
-	
-	public PesquisarSurdoEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa) {
+	Boolean estaAssociadoMapa;
+
+	public PesquisarSurdoEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
 		this.nomeSurdo = nomeSurdo;
 		this.nomeRegiao = nomeRegiao;
 		this.identificadorMapa = identificadorMapa;
+		this.estaAssociadoMapa = estaAssociadoMapa;
 	}
 
 	@Override
@@ -47,6 +49,14 @@ public class PesquisarSurdoEvent extends GwtEvent<PesquisarSurdoEventHandler> {
 
 	public void setIdentificadorMapa(String identificadorMapa) {
 		this.identificadorMapa = identificadorMapa;
+	}
+	
+	public Boolean getEstaAssociadoMapa() {
+		return estaAssociadoMapa;
+	}
+
+	public void setEstaAssociadoMapa(Boolean estaAssociadoMapa) {
+		this.estaAssociadoMapa = estaAssociadoMapa;
 	}
 
 }

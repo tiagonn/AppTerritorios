@@ -76,6 +76,10 @@ a, a:visited, a:hover {
   width: 770px;
 }
 
+.check-alinhado-direita {
+	width: 100%;
+}
+
 .endereco-tabela {
 	width:100%;
 }

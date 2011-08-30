@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bairros>
+	<bairro>Arruamento Fain José Feres</bairro>
 	<bairro>Alphaville</bairro>
+	<bairro>Alto da Cidade Universitária</bairro>
 	<bairro>Bairro Boa Vista</bairro>
 	<bairro>Bairro Mendonça</bairro>
 	<bairro>Bairro Nova Aparecida</bairro>
@@ -69,6 +71,7 @@
 	<bairro>Jardim Boa Esperança</bairro>
 	<bairro>Jardim Bom Retiro</bairro>
 	<bairro>Jardim Botânico</bairro>
+	<bairro>Jardim Brasil</bairro>
 	<bairro>Jardim Campina Grande</bairro>
 	<bairro>Jardim Campinas</bairro>
 	<bairro>Jardim Campineiro</bairro>
@@ -121,6 +124,7 @@
 	<bairro>Jardim Magnólia</bairro>
 	<bairro>Jardim Maracanã</bairro>
 	<bairro>Jardim Marajó</bairro>
+	<bairro>Jardim Margarida</bairro>
 	<bairro>Jardim Maria Rosa</bairro>
 	<bairro>Jardim Marisa</bairro>
 	<bairro>Jardim Martinelli</bairro>
@@ -200,6 +204,7 @@
 	<bairro>Loteamento Center Santa Genebra</bairro>
 	<bairro>Loteamento Chácaras Vale das Garças</bairro>
 	<bairro>Loteamento Residencial Barão do Café</bairro>
+	<bairro>Loteamento Solar Campinas</bairro>
 	<bairro>Mansões Santo Antônio</bairro>
 	<bairro>Morada das Nascentes</bairro>
 	<bairro>Notre Dame</bairro>
@@ -299,7 +304,7 @@
 	<bairro>Vila Nogueira</bairro>
 	<bairro>Vila Nova</bairro>
 	<bairro>Vila Nova São José</bairro>
-	<bairro>Vila Olímpia</bairro>
+	<bairro>Vila Olândia</bairro>
 	<bairro>Vila Olímpia</bairro>
 	<bairro>Vila Orozimbo Maia</bairro>
 	<bairro>Vila Padre Anchieta</bairro>

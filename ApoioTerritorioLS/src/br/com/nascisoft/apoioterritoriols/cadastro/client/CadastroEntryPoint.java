@@ -21,6 +21,7 @@ public class CadastroEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 
 		//TODO: feature de backup
+		//TODO: passar a suportar cidade
 		//TODO: ceder/revogar permissão para usuário
 		//TODO: feature de mudou-se
 		//TODO: feature de não visitar

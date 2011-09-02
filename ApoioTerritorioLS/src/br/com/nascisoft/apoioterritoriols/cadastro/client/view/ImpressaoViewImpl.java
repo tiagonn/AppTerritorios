@@ -49,6 +49,7 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField ListBox pesquisaImpressaoMapaListBox;
 	@UiField SimplePanel impressaoSimplePanel;
 	@UiField FlexTable impressaoSurdoFlexTable;
+	@UiField FlexTable impressaoSurdoFlexTableInvertida;
 	@UiField LayoutPanel impressaoMapaLayoutPanel;
 	@UiField Button impressaoVoltarButton;
 	@UiField PopupPanel waitingPopUpPanel;
@@ -103,6 +104,7 @@ public class ImpressaoViewImpl extends Composite implements
 	private void limparImpressao() {
 		this.impressaoSimplePanel.setVisible(false);
 		this.impressaoSurdoFlexTable.removeAllRows();
+		this.impressaoSurdoFlexTableInvertida.removeAllRows();
 		this.identificadorMapaAtual = null;
 	}
 
@@ -190,6 +192,8 @@ public class ImpressaoViewImpl extends Composite implements
 			if (i == 0) {
 				this.impressaoSurdoFlexTable.setHTML(0, 0, surdos.get(i).getMapa());
 				this.impressaoSurdoFlexTable.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
+				this.impressaoSurdoFlexTableInvertida.setHTML(0, 0, surdos.get(i).getMapa());
+				this.impressaoSurdoFlexTableInvertida.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
 			}
 			SurdoVO surdo = surdos.get(i);
 			
@@ -245,6 +249,9 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());
 			this.impressaoSurdoFlexTable.setBorderWidth(1);
 			this.impressaoSurdoFlexTable.setCellSpacing(0);
+			this.impressaoSurdoFlexTableInvertida.setHTML(i+1, 0, html.toString());
+			this.impressaoSurdoFlexTableInvertida.setBorderWidth(1);
+			this.impressaoSurdoFlexTableInvertida.setCellSpacing(0);
 		}
 		
 		defineTamanhoMapa(this.impressaoMapaLayoutPanel);
@@ -252,6 +259,7 @@ public class ImpressaoViewImpl extends Composite implements
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
 		//TODO: bug de impressão de div no IE
+		//TODO: fazer rotacionar tabela de dados para paisagem em outros browsers além do Firefox
 		
 		this.impressaoSimplePanel.setVisible(true);
 	}
@@ -259,9 +267,11 @@ public class ImpressaoViewImpl extends Composite implements
 	private void defineTamanhoMapa(Widget obj) {
 		if (paisagem) {
 			obj.setSize(LARGURA_MAPA, ALTURA_MAPA);
-		} else {
+		} else {			
 			obj.setSize(ALTURA_MAPA, LARGURA_MAPA);
 		}
+		this.impressaoSurdoFlexTable.setVisible(paisagem);
+		this.impressaoSurdoFlexTableInvertida.setVisible(!paisagem);
 	}
 	
 	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa) {

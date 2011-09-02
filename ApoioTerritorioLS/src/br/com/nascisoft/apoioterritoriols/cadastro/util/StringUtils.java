@@ -31,11 +31,11 @@ public final class StringUtils {
 		return retorno;
 	}
 	
-	public static String duasLetras(String string) {
+	public static String primeirasLetras(String string, int quantidade) {
 		String retorno = "";
 		if (!StringUtils.isEmpty(string)) {
-			if (string.length() > 2) {
-				retorno = string.substring(0,2);
+			if (string.length() > quantidade) {
+				retorno = string.substring(0,quantidade);
 			} else {
 				retorno = string;
 			}

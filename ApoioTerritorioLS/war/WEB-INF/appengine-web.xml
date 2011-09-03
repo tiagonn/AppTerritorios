@@ -18,5 +18,8 @@
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
+  
+  <async-session-persistence enabled="true" queue-name="default"/>
+  <threadsafe>true</threadsafe>
 
 </appengine-web-app>

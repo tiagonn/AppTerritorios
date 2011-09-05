@@ -95,7 +95,7 @@
 								<g:Label text="Bairro:"/>
 							</g:customCell>
 							<g:customCell>
-								<g:ListBox ui:field="manterBairroListBox"/>
+								<g:SuggestBox ui:field="manterBairroSuggestBox"></g:SuggestBox>
 							</g:customCell>
 						</g:row>
 						<g:row>

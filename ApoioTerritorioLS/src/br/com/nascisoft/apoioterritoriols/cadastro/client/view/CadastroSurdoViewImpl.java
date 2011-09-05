@@ -13,6 +13,7 @@ import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.maps.client.HasMapOptions;
@@ -43,7 +44,9 @@ import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -69,7 +72,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField TextBox manterNumeroTextBox;
 	@UiField TextBox manterComplementoTextBox;
 	@UiField ListBox manterRegiaoListBox;
-	@UiField ListBox manterBairroListBox;
+	@UiField(provided=true) SuggestBox manterBairroSuggestBox;
 	@UiField TextBox manterCEPTextBox;
 	@UiField TextArea manterObservacaoTextArea;
 	@UiField TextBox manterTelefoneTextBox;
@@ -94,6 +97,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField CheckBox pesquisaEstaAssociadoMapaCheckBox;
 	
+	MultiWordSuggestOracle bairroOracle;
+	
 	Long manterId;
 	Key<Mapa> manterMapa;
 	Double manterLongitude;
@@ -114,6 +119,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	private ListDataProvider<SurdoDetailsVO> resultadoPesquisa;
 
 	public CadastroSurdoViewImpl() {
+		this.bairroOracle = new MultiWordSuggestOracle();
+		this.manterBairroSuggestBox = new SuggestBox(this.bairroOracle);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.iniciarSNListBox(this.manterLibrasListBox);
 		this.iniciarSNListBox(this.manterCriancaListBox);
@@ -189,11 +196,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void setBairroList(List<String> bairros) {
-		this.manterBairroListBox.clear();
-		this.manterBairroListBox.addItem("-- Escolha um bairro --", "");
-				
 		for (String bairro : bairros) {
-			this.manterBairroListBox.addItem(bairro);
+			this.bairroOracle.add(bairro);
 		}
 	}
 
@@ -324,7 +328,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				this.presenter.buscarEndereco(
 						this.manterLogradouroTextBox.getValue(), 
 						this.manterNumeroTextBox.getValue(),
-						this.manterBairroListBox.getValue(this.manterBairroListBox.getSelectedIndex()),
+						this.manterBairroSuggestBox.getValue(),
 						this.manterCEPTextBox.getValue());
 			} else {
 				HasLatLng position = new LatLng(this.manterLatitude, this.manterLongitude);
@@ -381,8 +385,13 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		manterMapaPopupPanel.hide();
 	}
 	
-	@UiHandler(value={"manterLogradouroTextBox", "manterNumeroTextBox", "manterBairroListBox", "manterCEPTextBox"})
+	@UiHandler(value={"manterLogradouroTextBox", "manterNumeroTextBox", "manterCEPTextBox"})
 	void onEnderecoChange(ChangeEvent event) {
+		this.buscaEndereco = true;
+	}
+	
+	@UiHandler("manterBairroSuggestBox")
+	void onManterBairroSuggestBoxKeyPress(KeyPressEvent event) {
 		this.buscaEndereco = true;
 	}
 
@@ -455,7 +464,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterNumeroTextBox.setText("");       
 		this.manterComplementoTextBox.setText("");  
 		this.manterRegiaoListBox.setSelectedIndex(0);       
-		this.manterBairroListBox.setSelectedIndex(0);       
+		this.manterBairroSuggestBox.setText("");       
 		this.manterCEPTextBox.setText("");          
 		this.manterObservacaoTextArea.setText("");  
 		this.manterTelefoneTextBox.setText("");     
@@ -479,7 +488,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setNumero(this.manterNumeroTextBox.getText());
 		surdo.setComplemento(this.manterComplementoTextBox.getText());
 		surdo.setRegiao(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()));
-		surdo.setBairro(this.manterBairroListBox.getValue(this.manterBairroListBox.getSelectedIndex()));
+		surdo.setBairro(this.manterBairroSuggestBox.getText());
 		surdo.setCep(this.manterCEPTextBox.getText());
 		surdo.setObservacao(this.manterObservacaoTextArea.getText());
 		surdo.setTelefone(this.manterTelefoneTextBox.getText());
@@ -508,8 +517,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterComplementoTextBox.setText(surdo.getComplemento());
 		this.manterRegiaoListBox.setSelectedIndex(
 				obterIndice(this.manterRegiaoListBox, surdo.getRegiao()));
-		this.manterBairroListBox.setSelectedIndex(
-				obterIndice(this.manterBairroListBox, surdo.getBairro()));
+		this.manterBairroSuggestBox.setText(surdo.getBairro());
 		this.manterCEPTextBox.setText(surdo.getCep());
 		this.manterObservacaoTextArea.setText(surdo.getObservacao());
 		this.manterTelefoneTextBox.setText(surdo.getTelefone());

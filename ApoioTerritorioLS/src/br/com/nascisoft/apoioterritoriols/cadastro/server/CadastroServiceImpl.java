@@ -3,7 +3,9 @@ package br.com.nascisoft.apoioterritoriols.cadastro.server;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,15 +114,21 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	}
 
 	private List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
-		List<SurdoVO> surdos = new ArrayList<SurdoVO>();
-		for (Surdo surdo : this.getDao().obterSurdos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa)) {
-			Mapa mapa = null;
+		List<Surdo> surdos = this.getDao().obterSurdos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa);
+		Map<Long, Key<Mapa>> chavesMapa = new HashMap<Long, Key<Mapa>>();
+		for (Surdo surdo : surdos) {
 			if (surdo.getMapa() != null) {
-				mapa = this.getDao().obterMapa(surdo.getMapa());
+				chavesMapa.put(surdo.getId(), surdo.getMapa());
 			} 
-			surdos.add(new SurdoVO(surdo, mapa));
 		}
-		return surdos;
+		
+		Map<Key<Mapa>, Mapa> mapas = this.getDao().obterMapas(chavesMapa.values());
+		
+		List<SurdoVO> surdosVO = new ArrayList<SurdoVO>();
+		for (Surdo surdo : surdos) {
+			surdosVO.add(new SurdoVO(surdo, mapas.get(surdo.getMapa())));
+		}
+		return surdosVO;
 	}
 	
 	@Override
@@ -232,5 +240,4 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 		}
 		return centro;
 	}
-
 }

@@ -1,6 +1,8 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server.dao;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,6 +54,11 @@ public class CadastroDAO extends DAOBase {
 	}
 	
 	public Mapa obterMapa(Key<Mapa> chave) {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.get(chave);
+	}
+	
+	public Map<Key<Mapa>, Mapa> obterMapas(Collection<Key<Mapa>> chave) {
 		Objectify ofy = ObjectifyService.begin();
 		return ofy.get(chave);
 	}

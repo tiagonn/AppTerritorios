@@ -53,7 +53,7 @@ a, a:visited, a:hover {
 .impressao-tabela-invertida {
 	width:800px;
 	left: -80px;
-	top: 180px;
+	top: 233px;
 	position: relative;
 	-moz-transform: rotate(90deg);
 	-webkit-transform:rotate(90deg);

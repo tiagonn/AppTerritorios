@@ -259,7 +259,6 @@ public class ImpressaoViewImpl extends Composite implements
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
 		//TODO: bug de impressão de div no IE
-		//TODO: fazer rotacionar tabela de dados para paisagem em outros browsers além do Firefox
 		
 		this.impressaoSimplePanel.setVisible(true);
 	}

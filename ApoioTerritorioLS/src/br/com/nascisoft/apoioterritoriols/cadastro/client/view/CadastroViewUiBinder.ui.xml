@@ -323,7 +323,7 @@
 							<g:HorizontalPanel>
 								<g:LayoutPanel ui:field="impressaoMapaLayoutPanel" styleName="impressao-tabela"></g:LayoutPanel>
 								<g:Image ui:field="impressaoReverseImage" url="images/inverter.gif" altText="Inverter" styleName="impressao-imagem"></g:Image>
-								 <g:FlexTable ui:field="impressaoSurdoFlexTableInvertida" styleName="impressao-tabela-invertida" visible="false"></g:FlexTable>
+								 <g:FlexTable ui:field="impressaoSurdoFlexTableInvertida" visible="false"></g:FlexTable>
 							</g:HorizontalPanel>
 							<g:HTML wordWrap="true"><br /><br /><br /><br /></g:HTML>
 							<g:Button ui:field="impressaoVoltarButton" text="Voltar"></g:Button>

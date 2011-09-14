@@ -50,11 +50,44 @@ a, a:visited, a:hover {
 	top: 20px;
 	position: relative;
 }
-.impressao-tabela-invertida {
+
+.impressao-tabela-invertida-1 {
 	width:800px;
-	left: -80px;
-	top: 233px;
-	position: relative;
+	left: 240px;
+	top: 386px;
+	position: absolute;
+	-moz-transform: rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+}
+
+.impressao-tabela-invertida-2 {
+	width:800px;
+	left: 290px;
+	top: 331px;
+	position: absolute;
+	-moz-transform: rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+}
+
+.impressao-tabela-invertida-3 {
+	width:800px;
+	left: 350px;
+	top: 276px;
+	position: absolute;
+	-moz-transform: rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	-o-transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+}
+.impressao-tabela-invertida-4 {
+	width:800px;
+	left: 400px;
+	top: 221px;
+	position: absolute;
 	-moz-transform: rotate(90deg);
 	-webkit-transform:rotate(90deg);
 	-o-transform:rotate(90deg);

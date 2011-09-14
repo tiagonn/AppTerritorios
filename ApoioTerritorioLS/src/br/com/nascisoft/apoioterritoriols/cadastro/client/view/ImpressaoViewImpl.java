@@ -254,6 +254,8 @@ public class ImpressaoViewImpl extends Composite implements
 			this.impressaoSurdoFlexTableInvertida.setCellSpacing(0);
 		}
 		
+		this.impressaoSurdoFlexTableInvertida.setStyleName("impressao-tabela-invertida-"+surdos.size());
+		
 		defineTamanhoMapa(this.impressaoMapaLayoutPanel);
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);

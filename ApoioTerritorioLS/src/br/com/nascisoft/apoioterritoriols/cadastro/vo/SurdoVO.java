@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
-import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 public class SurdoVO implements Serializable {
 

@@ -1,4 +1,4 @@
-package br.com.nascisoft.apoioterritoriols.cadastro.util;
+package br.com.nascisoft.apoioterritoriols.login.util;
 
 import java.util.ArrayList;
 

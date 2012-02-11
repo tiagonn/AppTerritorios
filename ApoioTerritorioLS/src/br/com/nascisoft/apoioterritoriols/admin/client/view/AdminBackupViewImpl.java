@@ -1,11 +1,18 @@
 package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -20,6 +27,9 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField TabLayoutPanel adminTabLayoutPanel;
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField TextBox destinatario;
+	@UiField FileUpload arquivoUpload;
+	@UiField Button botaoBackup;
+	@UiField Button botaoRestaurar;
 
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -68,4 +78,19 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 		this.destinatario.setText("");
 	}
 
+	@UiHandler("botaoBackup")
+	void onBotaoBackupClick(ClickEvent event) {
+		//TODO: Validação de e-mail.
+		if (!StringUtils.isEmpty(destinatario.getText())) {
+			this.presenter.dispararBackup(destinatario.getText()); 
+		} else {
+			Window.alert("O campo destinatário deve ser preenchido com um e-mail.");
+		}
+	}
+	
+	@UiHandler("botaoRestaurar")
+	void onBotaoRestaurarClick(ClickEvent event) {
+		//TODO: Implementar método
+		Window.alert("Restauração disparada com sucesso.");
+	}
 }

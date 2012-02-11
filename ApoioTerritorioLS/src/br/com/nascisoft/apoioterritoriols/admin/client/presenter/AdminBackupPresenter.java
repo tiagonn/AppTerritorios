@@ -1,10 +1,14 @@
 package br.com.nascisoft.apoioterritoriols.admin.client.presenter;
 
+import java.util.logging.Level;
+
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBackupView;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AdminBackupPresenter extends AbstractAdminPresenter
 		implements AdminBackupView.Presenter {
@@ -26,6 +30,26 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 	@Override
 	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
 		this.view.setTabSelectionEventHandler(handler);
+	}
+
+	@Override
+	public void dispararBackup(String destinatario) {
+		this.getView().showWaitingPanel();
+		this.service.dispararBackup(destinatario, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				getView().hideWaitingPanel();
+				Window.alert("Backup disparado com sucesso");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());
+			}
+		});
 	}
 
 }

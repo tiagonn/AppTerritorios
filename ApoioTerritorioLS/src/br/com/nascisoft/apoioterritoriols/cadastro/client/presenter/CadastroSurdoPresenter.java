@@ -9,8 +9,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
-import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;

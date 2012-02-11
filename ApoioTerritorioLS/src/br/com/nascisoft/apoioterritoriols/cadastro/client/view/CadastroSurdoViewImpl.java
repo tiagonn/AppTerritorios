@@ -4,9 +4,9 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
-import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
-import br.com.nascisoft.apoioterritoriols.cadastro.util.Validacoes;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;

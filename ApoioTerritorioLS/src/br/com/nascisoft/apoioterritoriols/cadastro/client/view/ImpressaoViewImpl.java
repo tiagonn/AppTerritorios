@@ -3,8 +3,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;

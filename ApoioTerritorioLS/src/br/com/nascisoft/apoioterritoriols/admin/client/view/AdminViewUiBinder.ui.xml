@@ -6,7 +6,47 @@
 		<g:tab>
 			<g:header>Backup</g:header>
 			<g:ScrollPanel>
-				<g:VerticalPanel>
+				<g:VerticalPanel>					
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Backup" styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="E-mail destinatário: "/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="destinatario" visibleLength="25"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:Button ui:field="botaoBackup" text="Backup"></g:Button>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Restauração" styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Arquivo: "/>
+							</g:customCell>
+							<g:customCell>
+								<g:FileUpload ui:field="arquivoUpload" width="400px"></g:FileUpload>
+							</g:customCell>
+							<g:customCell>
+								<g:Button ui:field="botaoRestaurar" text="Restaurar"></g:Button>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					
 					<g:PopupPanel 
 						ui:field="waitingPopUpPanel" 
 						visible="false" 
@@ -16,20 +56,6 @@
 						styleName="imagem-div-centro">
 						<g:HTML><img src="images/esperando.gif" alt="Esperando..."/></g:HTML>
 					</g:PopupPanel>
-			
-					<g:InlineLabel text="Backup"></g:InlineLabel>
-					<g:HTML wordWrap="true"><br /></g:HTML>
-					
-					<g:Grid>
-						<g:row>
-							<g:customCell>
-								<g:Label text="E-mail destinatário: "/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="destinatario" visibleLength="25"></g:TextBox>
-							</g:customCell>
-						</g:row>
-					</g:Grid>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>

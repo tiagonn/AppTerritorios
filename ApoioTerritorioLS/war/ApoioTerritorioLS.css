@@ -32,6 +32,10 @@ a, a:visited, a:hover {
   color: #0000AA;
 }
 
+.negrito {
+	font-weight: bold;
+}
+
 .impressao-panel{
 	position: fixed;
 	top: 0;

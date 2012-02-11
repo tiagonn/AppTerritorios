@@ -29,6 +29,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		usuariosValidos.add("ls.centralcampinas@gmail.com");
 		usuariosValidos.add("rogeriocarvalho.carvalho98@gmail.com");
 		usuariosValidos.add("holz.julio@gmail.com");
+		usuariosValidos.add("carlos.h.marciano@gmail.com");
+		usuariosValidos.add("matheus.a.barreira@gmail.com");
 	}
 
 	@Override
@@ -40,6 +42,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		
 		if (user != null) {
 			if (usuariosValidos.contains(user.getEmail())) {
+//			if (true) {
 				logger.info("Tentando realizar o login do usuário " + 
 						user.getUserId() + ", e-mail: " + user.getEmail());
 				usuario.setEmail(user.getEmail());

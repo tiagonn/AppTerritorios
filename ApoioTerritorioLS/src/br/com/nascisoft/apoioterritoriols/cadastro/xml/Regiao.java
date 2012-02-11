@@ -1,10 +1,13 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.xml;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 
 
-public class Regiao {
-	
+public class Regiao implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String letra;
 	private Centro centro;

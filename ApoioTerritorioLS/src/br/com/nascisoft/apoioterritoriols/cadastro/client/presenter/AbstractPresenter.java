@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
@@ -15,7 +16,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public abstract class AbstractPresenter implements Presenter, CadastroView.Presenter {
 	
-	private static List<String> regioes = null;
+	private static List<Regiao> regioes = null;
 	protected final HandlerManager eventBus;
 	protected final CadastroServiceAsync service;
 	
@@ -31,7 +32,7 @@ public abstract class AbstractPresenter implements Presenter, CadastroView.Prese
 	protected void populaRegioes() {
 		if(regioes == null) {
 			getView().showWaitingPanel();
-			service.obterRegioesCampinas(new AsyncCallback<List<String>>() {
+			service.obterRegioesCampinas(new AsyncCallback<List<Regiao>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -40,7 +41,7 @@ public abstract class AbstractPresenter implements Presenter, CadastroView.Prese
 				}
 
 				@Override
-				public void onSuccess(List<String> result) {
+				public void onSuccess(List<Regiao> result) {
 					regioes = result;
 					getView().setRegiaoList(result);
 					getView().hideWaitingPanel();

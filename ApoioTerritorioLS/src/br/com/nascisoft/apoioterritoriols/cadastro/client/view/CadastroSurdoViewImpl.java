@@ -7,6 +7,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.util.Validacoes;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -168,7 +169,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 	
 	@Override
-	public void setRegiaoList(List<String> regioes) {
+	public void setRegiaoList(List<Regiao> regioes) {
 		this.pesquisaRegiaoListBox.clear();
 		this.pesquisaRegiaoListBox.addItem("-- Escolha uma região --", "");
 
@@ -179,9 +180,9 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.pesquisaMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaMapaListBox.setEnabled(false);
 		
-		for (String regiao : regioes) {
-			this.pesquisaRegiaoListBox.addItem(regiao);
-			this.manterRegiaoListBox.addItem(regiao);
+		for (Regiao regiao : regioes) {
+			this.pesquisaRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getNome());
+			this.manterRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getNome());
 		}	
 	}
 	

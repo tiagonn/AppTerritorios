@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -109,15 +110,15 @@ public class ImpressaoViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setRegiaoList(List<String> regioes) {
+	public void setRegiaoList(List<Regiao> regioes) {
 		this.pesquisaImpressaoRegiaoListBox.clear();
 		this.pesquisaImpressaoRegiaoListBox.addItem("-- Escolha uma região --", "");
 
 		this.pesquisaImpressaoMapaListBox.clear();
 		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
 		
-		for (String regiao : regioes) {
-			this.pesquisaImpressaoRegiaoListBox.addItem(regiao);
+		for (Regiao regiao : regioes) {
+			this.pesquisaImpressaoRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getNome());
 		}
 	}
 

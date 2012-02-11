@@ -30,7 +30,7 @@ public class CadastroTestCase extends TestCase {
 	public void testXMLFile2Bean() throws Exception {
 		JAXBContext context = JAXBContext.newInstance(Bairros.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Bairros bairros = (Bairros)unmarshaller.unmarshal(new File("META-INF/BairrosCampinas.xml"));
+		Bairros bairros = (Bairros)unmarshaller.unmarshal(new File("war/WEB-INF/classes/META-INF/BairrosCampinas.xml"));
 		assertNotNull(bairros);
 	}
 	

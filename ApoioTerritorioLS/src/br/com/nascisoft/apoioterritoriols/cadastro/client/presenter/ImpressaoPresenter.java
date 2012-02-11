@@ -15,7 +15,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class ImpressaoPresenter extends AbstractPresenter
+public class ImpressaoPresenter extends AbstractCadastroPresenter
 		implements ImpressaoView.Presenter {
 	
 	private final ImpressaoView view;

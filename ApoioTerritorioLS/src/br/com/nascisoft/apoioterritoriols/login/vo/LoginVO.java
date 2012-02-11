@@ -1,4 +1,4 @@
-package br.com.nascisoft.apoioterritoriols.cadastro.vo;
+package br.com.nascisoft.apoioterritoriols.login.vo;
 
 import java.io.Serializable;
 
@@ -15,6 +15,7 @@ public class LoginVO implements Serializable {
 	private String logoutURL;
 	private Boolean logado = false;
 	private Boolean autorizado = false;
+	private Boolean admin = false;
 	
 	public String getIdentificador() {
 		return identificador;
@@ -57,6 +58,12 @@ public class LoginVO implements Serializable {
 	}
 	public Boolean isAutorizado() {
 		return autorizado;
+	}
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+	public Boolean isAdmin() {
+		return admin;
 	}
 
 }

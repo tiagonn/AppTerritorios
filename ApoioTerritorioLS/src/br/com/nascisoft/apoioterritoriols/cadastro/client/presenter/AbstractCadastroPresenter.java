@@ -13,20 +13,20 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public abstract class AbstractPresenter implements Presenter, CadastroView.Presenter {
+public abstract class AbstractCadastroPresenter implements CadastroPresenter, CadastroView.Presenter {
 	
 	private static List<String> regioes = null;
 	protected final HandlerManager eventBus;
 	protected final CadastroServiceAsync service;
 	
-	public AbstractPresenter(CadastroServiceAsync service, HandlerManager eventBus) {
+	public AbstractCadastroPresenter(CadastroServiceAsync service, HandlerManager eventBus) {
 		this.service = service;
 		this.eventBus = eventBus;
 	}
 	
 	abstract CadastroView getView();
 	
-	protected static final Logger logger = Logger.getLogger(AbstractPresenter.class.getName());
+	protected static final Logger logger = Logger.getLogger(AbstractCadastroPresenter.class.getName());
 	
 	protected void populaRegioes() {
 		if(regioes == null) {

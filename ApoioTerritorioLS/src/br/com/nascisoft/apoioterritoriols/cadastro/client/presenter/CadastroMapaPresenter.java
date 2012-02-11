@@ -14,7 +14,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class CadastroMapaPresenter extends AbstractPresenter
+public class CadastroMapaPresenter extends AbstractCadastroPresenter
 		implements CadastroMapaView.Presenter {
 	
 	private final CadastroMapaView view;

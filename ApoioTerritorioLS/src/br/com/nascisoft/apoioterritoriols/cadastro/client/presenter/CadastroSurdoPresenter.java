@@ -25,7 +25,7 @@ import com.google.gwt.maps.client.geocoder.HasGeocoderResult;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class CadastroSurdoPresenter extends AbstractPresenter implements CadastroSurdoView.Presenter {
+public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements CadastroSurdoView.Presenter {
 
 	private final CadastroSurdoView view;
 	

@@ -1,6 +1,6 @@
-package br.com.nascisoft.apoioterritoriols.cadastro.client;
+package br.com.nascisoft.apoioterritoriols.login.client;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.LoginVO;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

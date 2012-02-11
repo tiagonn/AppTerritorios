@@ -22,7 +22,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEv
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroMapaPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroSurdoPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.ImpressaoPresenter;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.Presenter;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
@@ -38,7 +38,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class CadastroController implements Presenter,
+public class CadastroController implements CadastroPresenter,
 		ValueChangeHandler<String> {
 
 	private final HandlerManager eventBus;

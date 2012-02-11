@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<g:TabLayoutPanel barUnit='EM' barHeight='3'
+		animationDuration="1" ui:field="adminTabLayoutPanel">
+		<g:tab>
+			<g:header>Backup</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:PopupPanel 
+						ui:field="waitingPopUpPanel" 
+						visible="false" 
+						autoHideEnabled="false" 
+						animationEnabled="true" 
+						glassEnabled="true"
+						styleName="imagem-div-centro">
+						<g:HTML><img src="images/esperando.gif" alt="Esperando..."/></g:HTML>
+					</g:PopupPanel>
+			
+					<g:InlineLabel text="Backup"></g:InlineLabel>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:Label text="E-mail destinatário: "/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="destinatario" visibleLength="25"></g:TextBox>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+	</g:TabLayoutPanel>
+</ui:UiBinder> 

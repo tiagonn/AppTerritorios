@@ -4,6 +4,7 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.googlecode.objectify.Objectify" />
 	<inherits name='com.google.gwt.maps.Maps' />
+	<inherits name='br.com.nascisoft.apoioterritoriols.login.Login' />
 	<source path="client" />
 	<source path="util" />
 	<source path="entities" />

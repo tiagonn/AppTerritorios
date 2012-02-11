@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.LoginService;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.LoginVO;
+import br.com.nascisoft.apoioterritoriols.login.client.LoginService;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -22,6 +22,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	
 	private static final List<String> usuariosValidos;
 	
+	private static final List<String> usuariosAdministradores;
+	
 	static {
 		usuariosValidos = new ArrayList<String>();
 		usuariosValidos.add("tiagonn@gmail.com");
@@ -31,6 +33,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		usuariosValidos.add("holz.julio@gmail.com");
 		usuariosValidos.add("carlos.h.marciano@gmail.com");
 		usuariosValidos.add("matheus.a.barreira@gmail.com");
+		
+		usuariosAdministradores = new ArrayList<String>();
+		usuariosAdministradores.add("tiagonn@gmail.com");
 	}
 
 	@Override
@@ -51,6 +56,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 				usuario.setLogado(true);
 				usuario.setAutorizado(true);
 				usuario.setLogoutURL(userService.createLogoutURL(requestURI));
+				if (usuariosAdministradores.contains(user.getEmail())) {
+					usuario.setAdmin(true);
+				}
 			} else {
 				logger.info("Usuário " + user.getEmail() + "não autorizado");
 				usuario.setEmail(user.getEmail());
@@ -65,5 +73,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		}
 		return usuario;
 	}
+
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.nascisoft.com.br/apoioterritoriols/admin/xml"
+	xmlns:tns="http://www.nascisoft.com.br/apoioterritoriols/admin/xml"
+	elementFormDefault="qualified">
+
+    <complexType name="BackupType">
+    	<sequence>
+    		<element name="mapas" type="tns:MapasType" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+            <element name="surdos" type="tns:SurdosType" minOccurs="0" maxOccurs="1"></element>
+        </sequence>
+    </complexType>
+
+    <complexType name="SurdosType">
+    	<sequence>
+    		<element name="surdo" type="tns:SurdoType" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="MapasType">
+    	<sequence>
+    		<element name="mapa" type="tns:MapaType" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="MapaType">
+    	<sequence>
+    		<element name="id" type="long" minOccurs="1" maxOccurs="1"></element>
+    		<element name="numero" type="int" minOccurs="1" maxOccurs="1"></element>
+    		<element name="letra" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="regiao" type="string" minOccurs="1" maxOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="SurdoType">
+    	<sequence>
+    		<element name="id" type="long" minOccurs="1" maxOccurs="1"></element>
+    		<element name="regiao" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="nome" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="logradouro" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="numero" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="complemento" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="bairro" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="cep" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="observacao" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="telefone" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="libras" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="crianca" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="dvd" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="instrutor" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="idade" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="sexo" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="horario" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="melhorDia" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="onibus" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="mapa" type="long" minOccurs="0" maxOccurs="1"></element>
+    		<element name="estaAssociadoMapa" type="boolean" minOccurs="1" maxOccurs="1"></element>
+    		<element name="msn" type="string" minOccurs="0" maxOccurs="1"></element>
+    		<element name="possuiMSN" type="boolean" minOccurs="1" maxOccurs="1"></element>
+    		<element name="latitude" type="double" minOccurs="1" maxOccurs="1"></element>
+    		<element name="longitude" type="double" minOccurs="1" maxOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="backup" type="tns:BackupType"></element>
+</schema>

@@ -1,12 +1,16 @@
 package br.com.nascisoft.apoioterritoriols.admin.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Message;
 import javax.mail.Multipart;
 import javax.mail.Session;
@@ -15,6 +19,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,17 +69,26 @@ public class BackupServlet extends HttpServlet {
 				backup.getSurdos().getSurdo().add(obterSurdoXML(surdo));
 			}
 			
-			StringWriter writer = new StringWriter();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			try {
 				JAXBContext context = JAXBContext.newInstance(BackupType.class);
 				Marshaller marshaller = context.createMarshaller();
-				marshaller.marshal(backup, writer);
+				marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
+				marshaller.marshal(backup, out);
 			} catch (JAXBException e) {
 				logger.log(Level.SEVERE, "Erro ao gerar arquivo de backup", e);
 				throw new ServletException(e);
 			}
 			
+			ByteArrayOutputStream zipOut = new ByteArrayOutputStream();
+			ZipOutputStream zip = new ZipOutputStream(zipOut);
+			ZipEntry entry = new ZipEntry("backup.xml");
+			zip.putNextEntry(entry);
+			zip.write(out.toByteArray());
+			zip.close();
 			
+			DataSource ds = new ByteArrayDataSource(zipOut.toByteArray(), "aplication/zip");
+									
 			Properties props = new Properties();
 	        Session session = Session.getDefaultInstance(props, null);
 
@@ -86,10 +100,16 @@ public class BackupServlet extends HttpServlet {
 				msg.setSubject("Backup de mapas e surdos do ApoioTerritorioLS");
 				msg.setText("Segue em anexo o backup");
 				Multipart mp = new MimeMultipart();						
+				 
+				MimeBodyPart htmlPart = new MimeBodyPart();
+			    htmlPart.setContent("Segue em anexo o backup", "text/html");
+			    mp.addBodyPart(htmlPart);
+			    
 				MimeBodyPart attachment = new MimeBodyPart();
-				attachment.setFileName("backup.xml");
-				attachment.setContent(writer.getBuffer().toString(), "text/xml");
-				mp.addBodyPart(attachment);			
+				attachment.setFileName("backup.zipe");
+				attachment.setDataHandler(new DataHandler(ds));
+				mp.addBodyPart(attachment);
+				
 				msg.setContent(mp);
 				
 				Transport.send(msg);
@@ -130,7 +150,9 @@ public class BackupServlet extends HttpServlet {
 		xml.setLibras(surdo.getLibras());
 		xml.setLogradouro(surdo.getLogradouro());
 		xml.setLongitude(surdo.getLongitude());
-		xml.setMapa(surdo.getMapa().getId());
+		if (surdo.getMapa() != null) {
+			xml.setMapa(surdo.getMapa().getId());
+		}
 		xml.setMelhorDia(surdo.getMelhorDia());
 		xml.setMsn(surdo.getMsn());
 		xml.setNome(surdo.getNome());

@@ -2,8 +2,11 @@ package br.com.nascisoft.apoioterritoriols.login.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.client.LoginService;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
@@ -11,6 +14,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.googlecode.objectify.ObjectifyService;
 
 public class LoginServiceImpl extends RemoteServiceServlet implements
 		LoginService {
@@ -36,6 +40,16 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		
 		usuariosAdministradores = new ArrayList<String>();
 		usuariosAdministradores.add("tiagonn@gmail.com");
+	
+			// já que o LoginService é sempre chamado, vou registrar as classes 
+			// de persistência aqui. Quando o LoginService usar um DAO, vou repassar
+			// este bloco estático para o DAO.
+		logger.log(Level.INFO, "Registrando entidade Surdo");
+		ObjectifyService.register(Surdo.class);
+		logger.log(Level.INFO, "Registrando entidade Mapa");
+		ObjectifyService.register(Mapa.class);
+		logger.log(Level.INFO, "Entidades registradas com sucesso");
+
 	}
 
 	@Override

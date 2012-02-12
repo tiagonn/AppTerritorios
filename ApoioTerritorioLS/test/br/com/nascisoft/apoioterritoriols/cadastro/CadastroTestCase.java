@@ -1,9 +1,12 @@
 package br.com.nascisoft.apoioterritoriols.cadastro;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -56,5 +59,25 @@ public class CadastroTestCase extends TestCase {
 
 	        return result;
 	    }
+	 
+	 public void testZip() throws Exception {
+		 
+			JAXBContext context = JAXBContext.newInstance(Regioes.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+			Regioes regioes = (Regioes)unmarshaller.unmarshal(new File("war/WEB-INF/classes/META-INF/RegioesCampinas.xml"));
+
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
+			marshaller.marshal(regioes, out);
+			
+			ZipOutputStream zip = new ZipOutputStream(out);
+			ZipEntry entry = new ZipEntry("backup.xml");			
+			zip.putNextEntry(entry);
+			zip.close();
+			
+			assertNotNull(zip);
+		
+	}
 
 }

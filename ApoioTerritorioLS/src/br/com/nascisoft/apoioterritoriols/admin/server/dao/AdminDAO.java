@@ -16,14 +16,6 @@ public class AdminDAO extends DAOBase {
 	
 	private static final Logger logger = Logger.getLogger(AdminDAO.class.getName());
 	
-	static {
-		logger.log(Level.INFO, "Registrando entidade Surdo");
-		ObjectifyService.register(Surdo.class);
-		logger.log(Level.INFO, "Registrando entidade Mapa");
-		ObjectifyService.register(Mapa.class);
-		logger.log(Level.INFO, "Entidades registradas com sucesso");
-	}
-	
 	public List<Mapa> obterMapas() {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Mapa> mapas = ofy.query(Mapa.class);

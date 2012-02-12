@@ -169,7 +169,7 @@ public class Surdo implements Serializable {
 	}
 	public void setMsn(String msn) {
 		this.msn = msn;
-		this.setPossuiMSN(msn != null);
+		this.setPossuiMSN(msn != null && msn.length() > 0);
 	}
 	public String getMsn() {
 		return msn;

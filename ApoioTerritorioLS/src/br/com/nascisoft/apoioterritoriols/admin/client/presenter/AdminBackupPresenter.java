@@ -45,9 +45,9 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao disparar o backup.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());
+				Window.alert("Falha ao obter disparar o backup. \n" + caught.getMessage());
 			}
 		});
 	}

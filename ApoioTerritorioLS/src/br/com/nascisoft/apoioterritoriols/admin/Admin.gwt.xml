@@ -4,6 +4,8 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.googlecode.objectify.Objectify" />
 	<inherits name='br.com.nascisoft.apoioterritoriols.login.Login' />
+	<inherits name="gwtupload.GWTUpload"/>
+	<stylesheet src="Upload.css"/>	
 	<source path="client" />
 	<entry-point
 		class="br.com.nascisoft.apoioterritoriols.admin.client.AdminEntryPoint" />

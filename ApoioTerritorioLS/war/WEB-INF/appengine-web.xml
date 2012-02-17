@@ -20,6 +20,9 @@
   </system-properties>
   
   <async-session-persistence enabled="true" queue-name="default"/>
+  
   <threadsafe>true</threadsafe>
+  
+  <sessions-enabled>true</sessions-enabled>
 
 </appengine-web-app>

@@ -1,8 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.admin.server.dao;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
@@ -14,7 +12,7 @@ import com.googlecode.objectify.util.DAOBase;
 
 public class AdminDAO extends DAOBase {
 	
-	private static final Logger logger = Logger.getLogger(AdminDAO.class.getName());
+//	private static final Logger logger = Logger.getLogger(AdminDAO.class.getName());
 	
 	public List<Mapa> obterMapas() {
 		Objectify ofy = ObjectifyService.begin();
@@ -26,6 +24,16 @@ public class AdminDAO extends DAOBase {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> surdos = ofy.query(Surdo.class);
 		return surdos.list();
+	}
+	
+	public void adicionarMapa(Mapa mapa) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(mapa);
+	}
+
+	public void adicionarSurdo(Surdo surdo) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(surdo);
 	}
 
 }

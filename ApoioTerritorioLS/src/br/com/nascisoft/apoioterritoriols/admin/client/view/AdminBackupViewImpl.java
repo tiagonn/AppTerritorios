@@ -1,5 +1,8 @@
 package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
+import gwtupload.client.SingleUploader;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
@@ -12,7 +15,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -27,10 +29,9 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField TabLayoutPanel adminTabLayoutPanel;
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField TextBox destinatario;
-	@UiField FileUpload arquivoUpload;
+	@UiField SingleUploader arquivoUpload;
 	@UiField Button botaoBackup;
-	@UiField Button botaoRestaurar;
-
+	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
 			UiBinder<Widget, AdminBackupViewImpl> {
@@ -56,6 +57,16 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	public void initView() {
 		this.selectThisTab();
 		this.limparFormularios();
+		this.arquivoUpload.addOnFinishUploadHandler(new IUploader.OnFinishUploaderHandler() {			
+			@Override
+			public void onFinish(IUploader uploader) {
+				if (uploader.getStatus().equals(Status.SUCCESS)) {
+					Window.alert("Arquivo enviado com sucesso");
+				} else {
+					Window.alert("Falha ao enviar arquivo");
+				}				
+			}
+		});
 	}
 
 	@Override
@@ -86,11 +97,5 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 		} else {
 			Window.alert("O campo destinatário deve ser preenchido com um e-mail.");
 		}
-	}
-	
-	@UiHandler("botaoRestaurar")
-	void onBotaoRestaurarClick(ClickEvent event) {
-		//TODO: Implementar método
-		Window.alert("Restauração disparada com sucesso.");
 	}
 }

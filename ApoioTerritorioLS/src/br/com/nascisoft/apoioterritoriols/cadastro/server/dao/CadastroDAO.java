@@ -3,8 +3,6 @@ package br.com.nascisoft.apoioterritoriols.cadastro.server.dao;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
@@ -17,7 +15,7 @@ import com.googlecode.objectify.util.DAOBase;
 
 public class CadastroDAO extends DAOBase {
 	
-	private static final Logger logger = Logger.getLogger(CadastroDAO.class.getName());
+//	private static final Logger logger = Logger.getLogger(CadastroDAO.class.getName());
 	
 	public Long adicionarOuAlterarSurdo(Surdo surdo) {
 		Objectify ofy = ObjectifyService.begin();

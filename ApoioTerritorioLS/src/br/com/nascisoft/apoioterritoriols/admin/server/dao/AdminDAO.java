@@ -26,14 +26,14 @@ public class AdminDAO extends DAOBase {
 		return surdos.list();
 	}
 	
-	public void adicionarMapa(Mapa mapa) {
+	public Long adicionarMapa(Mapa mapa) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.put(mapa);
+		return ofy.put(mapa).getId();
 	}
 
-	public void adicionarSurdo(Surdo surdo) {
+	public Long adicionarSurdo(Surdo surdo) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.put(surdo);
+		return ofy.put(surdo).getId();
 	}
 
 }

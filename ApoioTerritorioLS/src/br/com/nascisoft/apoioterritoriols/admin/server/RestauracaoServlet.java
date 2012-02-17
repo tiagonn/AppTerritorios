@@ -2,6 +2,8 @@ package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipInputStream;
@@ -45,12 +47,13 @@ public class RestauracaoServlet extends HttpServlet {
 			BackupType backup = (BackupType) unmarshaller.unmarshal(zip);
 			
 			AdminDAO dao = new AdminDAO();
+			Map<Long, Long> mapaMapas = new HashMap<Long, Long>();
 			
 			for (MapaType mapa : backup.getMapas().getMapa()) {
-				dao.adicionarMapa(this.obterMapa(mapa));
+				mapaMapas.put(mapa.getId(), dao.adicionarMapa(this.obterMapa(mapa)));
 			}
 			for (SurdoType surdo : backup.getSurdos().getSurdo()) {	
-				dao.adicionarSurdo(this.obterSurdo(surdo));
+				dao.adicionarSurdo(this.obterSurdo(surdo, mapaMapas.get(surdo.getMapa())));
 			}
 		} catch (JAXBException e) {
 			logger.log(Level.SEVERE, "Erro ao processar arquivo xml", e);
@@ -60,14 +63,13 @@ public class RestauracaoServlet extends HttpServlet {
 	
 	private Mapa obterMapa(MapaType mapa) {
 		Mapa retorno = new Mapa();
-		retorno.setId(mapa.getId());
 		retorno.setLetra(mapa.getLetra());
 		retorno.setNumero(mapa.getNumero());
 		retorno.setRegiao(mapa.getRegiao());
 		return retorno;
 	}
 	
-	private Surdo obterSurdo(SurdoType surdo) {
+	private Surdo obterSurdo(SurdoType surdo, Long mapaId) {
 		Surdo retorno = new Surdo();		
 		
 		retorno.setBairro(surdo.getBairro());
@@ -77,15 +79,14 @@ public class RestauracaoServlet extends HttpServlet {
 		retorno.setDvd(surdo.getDvd());
 		retorno.setEstaAssociadoMapa(surdo.isEstaAssociadoMapa());
 		retorno.setHorario(surdo.getHorario());
-		retorno.setId(surdo.getId());
 		retorno.setIdade(surdo.getIdade());
 		retorno.setInstrutor(surdo.getInstrutor());
 		retorno.setLatitude(surdo.getLatitude());
 		retorno.setLibras(surdo.getLibras());
 		retorno.setLogradouro(surdo.getLogradouro());
 		retorno.setLongitude(surdo.getLongitude());
-		if (surdo.getMapa() != null) {
-			retorno.setMapa(new Key<Mapa>(Mapa.class, surdo.getMapa()));
+		if (mapaId != null) {
+			retorno.setMapa(new Key<Mapa>(Mapa.class, mapaId));
 		}
 		retorno.setMelhorDia(surdo.getMelhorDia());
 		retorno.setMsn(surdo.getMsn());

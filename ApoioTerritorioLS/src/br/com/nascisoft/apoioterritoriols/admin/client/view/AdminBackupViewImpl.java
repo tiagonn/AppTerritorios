@@ -91,7 +91,6 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 
 	@UiHandler("botaoBackup")
 	void onBotaoBackupClick(ClickEvent event) {
-		//TODO: Validação de e-mail.
 		if (!StringUtils.isEmpty(destinatario.getText())) {
 			this.presenter.dispararBackup(destinatario.getText()); 
 		} else {

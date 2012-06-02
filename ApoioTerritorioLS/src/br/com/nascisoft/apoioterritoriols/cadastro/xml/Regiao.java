@@ -12,6 +12,9 @@ public class Regiao implements Serializable {
 	private String letra;
 	private Centro centro;
 	
+	public Regiao () {
+	}
+	
 	@XmlElement
 	public void setNome(String nome) {
 		this.nome = nome;

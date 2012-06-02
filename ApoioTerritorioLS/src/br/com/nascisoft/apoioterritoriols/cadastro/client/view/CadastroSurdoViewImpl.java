@@ -423,7 +423,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 
 	private Validacoes validaManterSurdo() {
-		//TODO: Validar tamanhos máximos (por conta da impressão - validar na UI diretamente)
 		Validacoes validacoes = new Validacoes();
 		
 		if (manterNomeTextBox.getText().isEmpty()) {

@@ -261,8 +261,6 @@ public class ImpressaoViewImpl extends Composite implements
 		this.impressaoMapaLayoutPanel.setVisible(true);
 		this.impressaoMapaLayoutPanel.add(mapa);
 		
-		//TODO: bug de impressão de div no IE
-		
 		this.impressaoSimplePanel.setVisible(true);
 	}
 	

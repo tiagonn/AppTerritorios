@@ -214,8 +214,6 @@ public class CadastroMapaViewImpl extends Composite implements
 		}
 		return 0;
 	}
-	
-	//TODO: alterar componente de multi-select box para box com labels selecionados ou avaliar outra possibilidade
 
 	@UiHandler("manterMapaSurdoAdicionarButton")
 	void onManterMapaSurdoAdicionarButtonClick(ClickEvent event) {

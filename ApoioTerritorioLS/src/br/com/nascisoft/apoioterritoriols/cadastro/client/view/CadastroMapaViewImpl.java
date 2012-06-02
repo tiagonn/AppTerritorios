@@ -11,6 +11,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.InfoWindowVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -134,15 +135,15 @@ public class CadastroMapaViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setRegiaoList(List<String> regioes) {
+	public void setRegiaoList(List<Regiao> regioes) {
 		this.pesquisaMapaRegiaoListBox.clear();
 		this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma região --", "");
 
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		
-		for (String regiao : regioes) {
-			this.pesquisaMapaRegiaoListBox.addItem(regiao);
+		for (Regiao regiao : regioes) {
+			this.pesquisaMapaRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getNome());
 		}
 	}
 

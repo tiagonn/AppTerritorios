@@ -97,13 +97,9 @@ public class CadastroServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public List<String> obterRegioesCampinas() {
+	public List<Regiao> obterRegioesCampinas() {
 		initRegioes();
-		List<String> retorno = new ArrayList<String>();
-		for (Regiao regiao : regioes.getRegiao()) {
-			retorno.add(regiao.getNome());
-		}
-		return retorno;
+		return regioes.getRegiao();
 	}
 	
 	@Override

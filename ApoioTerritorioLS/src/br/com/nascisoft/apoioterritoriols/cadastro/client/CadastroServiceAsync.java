@@ -7,6 +7,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -29,7 +30,7 @@ public interface CadastroServiceAsync {
 
 	void adicionarMapa(String nomeRegiao, AsyncCallback<Long> callback);
 
-	void obterRegioesCampinas(AsyncCallback<List<String>> callback);
+	void obterRegioesCampinas(AsyncCallback<List<Regiao>> callback);
 
 	void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa,
 			AsyncCallback<Long> callback);

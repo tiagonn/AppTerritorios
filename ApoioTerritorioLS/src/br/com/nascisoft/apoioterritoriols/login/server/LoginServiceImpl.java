@@ -34,8 +34,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		usuariosValidos.add("monteiro.camila@gmail.com");
 		usuariosValidos.add("ls.centralcampinas@gmail.com");
 		usuariosValidos.add("rogeriocarvalho.carvalho98@gmail.com");
-		usuariosValidos.add("holz.julio@gmail.com");
-		usuariosValidos.add("carlos.h.marciano@gmail.com");
 		usuariosValidos.add("matheus.a.barreira@gmail.com");
 		
 		usuariosAdministradores = new ArrayList<String>();

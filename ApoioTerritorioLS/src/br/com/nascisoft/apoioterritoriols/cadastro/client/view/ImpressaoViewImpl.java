@@ -191,9 +191,9 @@ public class ImpressaoViewImpl extends Composite implements
 		
 		for (int i = 0; i < surdos.size();i++) {
 			if (i == 0) {
-				this.impressaoSurdoFlexTable.setHTML(0, 0, surdos.get(i).getMapa());
+				this.impressaoSurdoFlexTable.setHTML(0, 0, surdos.get(i).getRegiao() + " - " + surdos.get(i).getMapa());
 				this.impressaoSurdoFlexTable.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
-				this.impressaoSurdoFlexTableInvertida.setHTML(0, 0, surdos.get(i).getMapa());
+				this.impressaoSurdoFlexTableInvertida.setHTML(0, 0, surdos.get(i).getRegiao() + " - " + surdos.get(i).getMapa());
 				this.impressaoSurdoFlexTableInvertida.getCellFormatter().addStyleName(0,0,"impressao-tabela-centro");
 			}
 			SurdoVO surdo = surdos.get(i);

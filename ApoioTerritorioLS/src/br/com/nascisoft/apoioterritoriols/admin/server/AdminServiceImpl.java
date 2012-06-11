@@ -2,12 +2,12 @@ package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminService;
+import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-public class AdminServiceImpl extends RemoteServiceServlet implements
+public class AdminServiceImpl extends AbstractApoioTerritorioLSService implements
 		AdminService {
 
 	private static final long serialVersionUID = 1L;

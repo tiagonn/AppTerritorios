@@ -23,11 +23,11 @@ import br.com.nascisoft.apoioterritoriols.cadastro.xml.Bairros;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regioes;
+import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Key;
 
-public class CadastroServiceImpl extends RemoteServiceServlet implements
+public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implements
 		CadastroService {
 
 	private static final long serialVersionUID = 1L;

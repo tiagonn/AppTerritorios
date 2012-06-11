@@ -1,0 +1,50 @@
+<!-- Indices written at Mon, 11 Jun 2012 00:30:05 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 8 times in query history -->
+    <datastore-index kind="Mapa" ancestor="false" source="auto">
+        <property name="regiao" direction="asc"/>
+        <property name="numero" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="regiao" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="mapa" direction="asc"/>
+        <property name="regiao" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="estaAssociadoMapa" direction="asc"/>
+        <property name="regiao" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 2 times in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="estaAssociadoMapa" direction="asc"/>
+        <property name="regiao" direction="asc"/>
+        <property name="mapa" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="mapa" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Surdo" ancestor="false" source="auto">
+        <property name="estaAssociadoMapa" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

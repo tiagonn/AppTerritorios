@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -157,5 +158,19 @@ public class CadastroDAO extends DAOBase {
 		Objectify ofy = ObjectifyService.begin();
 		ofy.delete(Mapa.class, identificadorMapa);
 	}
-
+	
+	public List<Surdo> obterSurdosNaoVisitar() {
+		List<Surdo> retorno = new ArrayList<Surdo>();
+		Objectify ofy = ObjectifyService.begin();
+		
+		Query<Surdo> mudouSe = ofy.query(Surdo.class);		
+		mudouSe.filter("mudouSe", Boolean.TRUE);
+		retorno.addAll(mudouSe.list());
+		
+		Query<Surdo> visitarSomentePorAnciaos = ofy.query(Surdo.class);
+		visitarSomentePorAnciaos.filter("visitarSomentePorAnciaos", Boolean.TRUE);
+		retorno.addAll(visitarSomentePorAnciaos.list());
+		
+		return retorno;
+	}
 }

@@ -3,29 +3,35 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEvent;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroMapaEventHandler;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEvent;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoMapaEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirMapaEventHandler;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirNaoVisitarEvent;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirNaoVisitarEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AdicionarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AdicionarSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEventHandler;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.RetornarVisitarSurdoEvent;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.event.RetornarVisitarSurdoEventHandler;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroMapaPresenter;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroSurdoPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.ImpressaoPresenter;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroPresenter;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.NaoVisitarPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -50,6 +56,9 @@ public class CadastroController implements CadastroPresenter,
 	private CadastroMapaViewImpl cadastroMapaView = null;
 	private ImpressaoPresenter impressaoPresenter = null;
 	private ImpressaoViewImpl impressaoView = null;
+	private NaoVisitarPresenter naoVisitarPresenter = null;
+	private NaoVisitarViewImpl naoVisitarView = null;
+	
 	private String currentToken = null;
 	private SelectionHandler<Integer> selectionHandler = new SelectionHandler<Integer>() {
 		@Override
@@ -60,6 +69,8 @@ public class CadastroController implements CadastroPresenter,
 				eventBus.fireEvent(new AbrirCadastroMapaEvent());
 			} else if (event.getSelectedItem() == 2) {
 				eventBus.fireEvent(new AbrirImpressaoEvent());
+			} else if (event.getSelectedItem() == 3) {
+				eventBus.fireEvent(new AbrirNaoVisitarEvent());
 			}
 		}
 	};;
@@ -146,6 +157,22 @@ public class CadastroController implements CadastroPresenter,
 				History.newItem("impressao!abrir#" +
 						"identificadorMapa=" + event.getIdentificadorMapa() +
 						"&paisagem="+event.isPaisagem());
+			}
+		});
+		
+		eventBus.addHandler(AbrirNaoVisitarEvent.TYPE, new AbrirNaoVisitarEventHandler() {
+			
+			@Override
+			public void onAbrirNaoVisitar(AbrirNaoVisitarEvent event) {
+				History.newItem("naoVisitar");				
+			}
+		});
+		
+		eventBus.addHandler(RetornarVisitarSurdoEvent.TYPE, new RetornarVisitarSurdoEventHandler() {
+			
+			@Override
+			public void onRetornarVisitarSurdo(RetornarVisitarSurdoEvent event) {
+				History.newItem("naoVisitar!retornar#"+event.getId());
 			}
 		});
 	}
@@ -265,6 +292,24 @@ public class CadastroController implements CadastroPresenter,
 							}
 							
 							impressaoPresenter.go(container);
+						} else if (currentToken.startsWith("naoVisitar")) {
+							if (naoVisitarView == null) {
+								naoVisitarView = new NaoVisitarViewImpl();
+							}
+							if (naoVisitarPresenter == null) {
+								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView);
+								naoVisitarPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							naoVisitarPresenter.selectThisTab();
+							
+							if ("naoVisitar".equals(currentToken)) {
+								naoVisitarPresenter.initView();
+								naoVisitarPresenter.obterSurdosNaoVisitar();
+							} else if (currentToken.startsWith("naoVisitar!retornar")) {
+								String queryString = currentToken.split("#")[1];
+								naoVisitarPresenter.onRetornar(Long.valueOf(queryString));
+							}
+							naoVisitarPresenter.go(container);
 						}
 					} catch (Exception ex) {
 						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);

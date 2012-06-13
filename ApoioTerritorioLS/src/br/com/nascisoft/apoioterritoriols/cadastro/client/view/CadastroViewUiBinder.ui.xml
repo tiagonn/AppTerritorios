@@ -357,5 +357,17 @@
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>
+		<g:tab>
+			<g:header>Não Visitar</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:Label text="Surdos que estão marcados para não serem visitados."/>
+					<g:HTML wordWrap="true"><br /><br /></g:HTML>
+					<c:CellTable ui:field="naoVisitarResultadoCellTable" pageSize="10" styleName="surdo-tabela"/>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					<c:SimplePager location="CENTER" ui:field="naoVisitarSimplePager" pageSize="10"/>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
 	</g:TabLayoutPanel>
 </ui:UiBinder> 

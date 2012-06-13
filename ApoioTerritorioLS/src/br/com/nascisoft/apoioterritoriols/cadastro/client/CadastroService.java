@@ -6,6 +6,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
@@ -40,5 +41,9 @@ public interface CadastroService extends RemoteService {
 	Long apagarSurdo(Long id);
 	
 	void apagarMapa(Long identificadorMapa);
+	
+	List<SurdoNaoVisitarDetailsVO> obterSurdosNaoVisitar();
+	
+	void retornarSurdoNaoVisitar(Long id);
 	
 }

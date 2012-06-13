@@ -18,6 +18,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Bairros;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
@@ -238,5 +239,23 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 			}
 		}
 		return centro;
+	}
+
+	@Override
+	public List<SurdoNaoVisitarDetailsVO> obterSurdosNaoVisitar() {
+		List<SurdoNaoVisitarDetailsVO> retorno = new ArrayList<SurdoNaoVisitarDetailsVO>();
+		for (Surdo surdo : getDao().obterSurdosNaoVisitar()) {
+			retorno.add(new SurdoNaoVisitarDetailsVO(surdo));
+		}
+		Collections.sort(retorno, SurdoNaoVisitarDetailsVO.COMPARATOR_NOME);
+		return retorno;
+	}
+
+	@Override
+	public void retornarSurdoNaoVisitar(Long id) {
+		Surdo surdo = getDao().obterSurdo(id);
+		surdo.setMudouSe(Boolean.FALSE);
+		surdo.setVisitarSomentePorAnciaos(Boolean.FALSE);
+		getDao().adicionarOuAlterarSurdo(surdo);
 	}
 }

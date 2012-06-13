@@ -6,6 +6,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
@@ -43,5 +44,10 @@ public interface CadastroServiceAsync {
 	void apagarSurdo(Long id, AsyncCallback<Long> callback);
 
 	void apagarMapa(Long identificadorMapa, AsyncCallback<Void> callback);
+
+	void obterSurdosNaoVisitar(
+			AsyncCallback<List<SurdoNaoVisitarDetailsVO>> callback);
+
+	void retornarSurdoNaoVisitar(Long id, AsyncCallback<Void> callback);
 
 }

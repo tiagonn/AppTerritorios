@@ -141,7 +141,6 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 		Delegate<String> mostrarObservacaoDelegate = new Delegate<String>() {
 			@Override
 			public void execute(String object) {
-				//TODO: melhorar mostrar observação
 				Window.alert(object);
 			}				
 		};

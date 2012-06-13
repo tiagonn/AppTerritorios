@@ -5,13 +5,14 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -97,6 +98,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField Button manterMapaVoltarEnderecoButton;
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField CheckBox pesquisaEstaAssociadoMapaCheckBox;
+	@UiField CheckBox manterMudouSe;
+	@UiField CheckBox manterVisitarSomentePorAnciaos;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -334,6 +337,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			} else {
 				HasLatLng position = new LatLng(this.manterLatitude, this.manterLongitude);
 				this.setPosition(position);
+				onManterMapaConfirmarEnderecoButtonClick(null);
 			}
 		}		
 	}
@@ -395,10 +399,36 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	void onManterBairroSuggestBoxKeyPress(KeyPressEvent event) {
 		this.buscaEndereco = true;
 	}
+	
+	@UiHandler(value={"manterMudouSe", "manterVisitarSomentePorAnciaos"})
+	void onNaoVisitarChangeValue(ValueChangeEvent<Boolean> event) {
+		if (event.getValue()) {
+			Window.alert("Ao selecionar mudou-se ou visitar somente por anciãos, este surdo será removido " +
+					"da listagem e do mapa que ele está associado, se é que ele está associado a algum mapa, " + 
+					"até que ele seja desmarcado como não visitar na aba própria para este fim.\n\n" +
+					"Por favor, detalhe porque você está marcando este surdo para não ser visitado no campo observação.");
+			if ("manterMudouSe".equals(((CheckBox)event.getSource()).getName())) {
+				this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
+			} else {
+				this.manterMudouSe.setValue(Boolean.FALSE);
+			}
+		}
+	}
 
 	@Override
 	public void onEditar(Surdo surdo) {
 		this.manterSurdoGrid.setVisible(true);
+			// setando colspan no campo observação
+		Element e = this.manterSurdoGrid.getCellFormatter().getElement(9, 1);
+		e.setAttribute("colspan", "3");
+		e = this.manterSurdoGrid.getCellFormatter().getElement(9,3);
+		if (e != null) {
+			e.removeFromParent();
+		}
+		e = this.manterSurdoGrid.getCellFormatter().getElement(9,2);
+		if (e != null) {
+			e.removeFromParent();
+		}
 		this.limparResultadoPesquisa();
 		this.populaManter(surdo);
 	}
@@ -478,6 +508,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMelhorDiaTextBox.setText("");    
 		this.manterOnibusTextBox.setText("");       
 		this.manterMSNTextBox.setText("");
+		this.manterMudouSe.setValue(Boolean.FALSE);
+		this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 	}
 	
 	private Surdo populaSurdo() {
@@ -505,6 +537,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setMapa(this.manterMapa);
 		surdo.setLongitude(this.manterLongitude);
 		surdo.setLatitude(this.manterLatitude);
+		surdo.setMudouSe(this.manterMudouSe.getValue());
+		surdo.setVisitarSomentePorAnciaos(this.manterVisitarSomentePorAnciaos.getValue());
 		return surdo;
 	}
 	
@@ -538,6 +572,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMapa = surdo.getMapa();
 		this.manterLongitude = surdo.getLongitude();
 		this.manterLatitude = surdo.getLatitude();
+		this.manterMudouSe.setValue(surdo.isMudouSe());
+		this.manterVisitarSomentePorAnciaos.setValue(surdo.isVisitarSomentePorAnciaos());
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {

@@ -39,6 +39,8 @@ public class Surdo implements Serializable {
 	@Indexed private boolean possuiMSN = Boolean.FALSE;
 	@Indexed private Double latitude;
 	@Indexed private Double longitude;
+	@Indexed private boolean mudouSe = Boolean.FALSE;
+	@Indexed private boolean visitarSomentePorAnciaos = Boolean.FALSE;
 	
 	public Long getId() {
 		return id;
@@ -191,6 +193,19 @@ public class Surdo implements Serializable {
 	}
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	public boolean isMudouSe() {
+		return mudouSe;
+	}
+	public void setMudouSe(boolean mudouSe) {
+		this.mudouSe = mudouSe;
+	}
+	public boolean isVisitarSomentePorAnciaos() {
+		return visitarSomentePorAnciaos;
+	}
+	public void setVisitarSomentePorAnciaos(boolean visitarSomenteAnciaos) {
+		this.visitarSomentePorAnciaos = visitarSomenteAnciaos;
 	}
 	
 }

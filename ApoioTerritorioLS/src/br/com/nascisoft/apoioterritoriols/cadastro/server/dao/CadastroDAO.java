@@ -39,6 +39,8 @@ public class CadastroDAO extends DAOBase {
 		if (estaAssociadoMapa != null) {
 			query.filter("estaAssociadoMapa", estaAssociadoMapa);
 		}
+		query.filter("mudouSe", Boolean.FALSE);
+		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
 		query.order("nome");
 		return query.list();
 	}
@@ -98,6 +100,9 @@ public class CadastroDAO extends DAOBase {
 			query.filter("regiao", nomeRegiao);
 		}
 		query.filter("estaAssociadoMapa", Boolean.FALSE);
+		query.filter("mudouSe", Boolean.FALSE);
+		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
+
 		query.order("nome");
 		return query.list();
 	}
@@ -113,6 +118,9 @@ public class CadastroDAO extends DAOBase {
 			query.filter("mapa !=", key);
 		}
 		query.filter("estaAssociadoMapa", Boolean.TRUE);
+		query.filter("mudouSe", Boolean.FALSE);
+		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
+		
 		return query.list();
 	}
 	

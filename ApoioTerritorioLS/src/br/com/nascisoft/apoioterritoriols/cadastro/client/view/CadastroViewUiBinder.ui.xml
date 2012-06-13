@@ -106,88 +106,104 @@
 								<g:TextBox ui:field="manterCEPTextBox" visibleLength="20"/>
 							</g:customCell>
 							<g:customCell>
-								<g:Label text="Observação:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextArea ui:field="manterObservacaoTextArea" characterWidth="35"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
 								<g:Label text="Telefone:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20"/>
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
 								<g:Label text="Libras:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterLibrasListBox"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:Label text="Criança:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterCriancaListBox"/>
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
 								<g:Label text="DVD:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterDVDListBox"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:Label text="Instrutor:"/>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="30"/>
+								<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="20"/>
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
 								<g:Label text="Idade:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterIdadeIntegerBox" visibleLength="20"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:Label text="Sexo:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterSexoListBox"/>
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
 								<g:Label text="Horário:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:Label text="Melhor dia:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20"/>
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
 								<g:Label text="Ônibus:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterOnibusTextBox" visibleLength="20"/>
 							</g:customCell>
-						</g:row>
-						<g:row>
 							<g:customCell>
 								<g:Label text="MSN:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="manterMSNTextBox" visibleLength="20"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Observação:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextArea ui:field="manterObservacaoTextArea" characterWidth="78" visibleLines="7"/>
+							</g:customCell>							
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true">&nbsp;</g:HTML>
+							</g:customCell>
+							<g:customCell>
+								<g:CheckBox ui:field="manterMudouSe" name="manterMudouSe" text="Mudou-se"></g:CheckBox>
+							</g:customCell>
+						</g:row>
+						<g:row>						
+							<g:customCell>
+								<g:HTML wordWrap="true">&nbsp;</g:HTML>
+							</g:customCell>
+							<g:customCell>
+								<g:CheckBox ui:field="manterVisitarSomentePorAnciaos" name="manterVisitarSomentePorAnciaos" text="Visitar somente por anciãos"></g:CheckBox>
 							</g:customCell>
 						</g:row>
 						<g:row>

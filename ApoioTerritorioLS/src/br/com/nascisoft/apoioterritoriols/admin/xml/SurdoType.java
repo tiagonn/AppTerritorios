@@ -49,6 +49,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="possuiMSN" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="mudouSe" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="visitarSomentePorAnciaos" type="{http://www.w3.org/2001/XMLSchema}boolean"/>        
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -83,7 +85,9 @@ import javax.xml.bind.annotation.XmlType;
     "msn",
     "possuiMSN",
     "latitude",
-    "longitude"
+    "longitude",
+    "mudouSe",
+    "visitarSomentePorAnciaos"
 })
 public class SurdoType {
 
@@ -116,6 +120,8 @@ public class SurdoType {
     protected boolean possuiMSN;
     protected double latitude;
     protected double longitude;
+    protected boolean mudouSe;
+    protected boolean visitarSomentePorAnciaos;
 
     /**
      * Gets the value of the id property.
@@ -677,4 +683,36 @@ public class SurdoType {
         this.longitude = value;
     }
 
+    /**
+     * Gets the value of the possuiMSN property.
+     * 
+     */
+    public boolean isMudouSe() {
+        return mudouSe;
+    }
+
+    /**
+     * Sets the value of the possuiMSN property.
+     * 
+     */
+    public void setMudouSe(boolean value) {
+        this.mudouSe = value;
+    }
+    
+    /**
+     * Gets the value of the possuiMSN property.
+     * 
+     */
+    public boolean isVisitarSomentePorAnciaos() {
+        return visitarSomentePorAnciaos;
+    }
+
+    /**
+     * Sets the value of the possuiMSN property.
+     * 
+     */
+    public void setVisitarSomentePorAnciaos(boolean value) {
+        this.visitarSomentePorAnciaos = value;
+    }
+    
 }

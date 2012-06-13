@@ -145,6 +145,9 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	@Override
 	public Long adicionarOuAlterarSurdo(Surdo surdo) {
 		String operacao = surdo.getId() != null ? " alterado" : " adicionado";
+		if (surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos()) {
+			surdo.setMapa(null);
+		}
 		Long id = this.getDao().adicionarOuAlterarSurdo(surdo);
 		logger.log(Level.INFO, "Surdo " + id + operacao + " com sucesso");
 		return id;

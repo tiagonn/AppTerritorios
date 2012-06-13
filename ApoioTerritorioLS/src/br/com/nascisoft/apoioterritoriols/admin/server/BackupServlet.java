@@ -163,6 +163,8 @@ public class BackupServlet extends HttpServlet {
 		xml.setRegiao(surdo.getRegiao());
 		xml.setSexo(surdo.getSexo());
 		xml.setTelefone(surdo.getTelefone());
+		xml.setMudouSe(surdo.isMudouSe());
+		xml.setVisitarSomentePorAnciaos(surdo.isVisitarSomentePorAnciaos());
 		
 		return xml;		
 	}

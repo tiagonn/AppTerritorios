@@ -98,6 +98,8 @@ public class RestauracaoServlet extends HttpServlet {
 		retorno.setRegiao(surdo.getRegiao());
 		retorno.setSexo(surdo.getSexo());
 		retorno.setTelefone(surdo.getTelefone());
+		retorno.setMudouSe(surdo.isMudouSe());
+		retorno.setVisitarSomentePorAnciaos(surdo.isVisitarSomentePorAnciaos());
 		
 		return retorno;
 	}

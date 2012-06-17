@@ -417,18 +417,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void onEditar(Surdo surdo) {
+		this.acertarCampoObservacao();
 		this.manterSurdoGrid.setVisible(true);
-			// setando colspan no campo observação
-		Element e = this.manterSurdoGrid.getCellFormatter().getElement(9, 1);
-		e.setAttribute("colspan", "3");
-		e = this.manterSurdoGrid.getCellFormatter().getElement(9,3);
-		if (e != null) {
-			e.removeFromParent();
-		}
-		e = this.manterSurdoGrid.getCellFormatter().getElement(9,2);
-		if (e != null) {
-			e.removeFromParent();
-		}
 		this.limparResultadoPesquisa();
 		this.populaManter(surdo);
 	}
@@ -599,9 +589,24 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void onAdicionar() {
+		this.acertarCampoObservacao();
 		this.manterSurdoGrid.setVisible(true);
 		this.limparResultadoPesquisa();
 		this.limparManter();
 	}	
+	
+	private void acertarCampoObservacao() {
+		// setando colspan no campo observação
+		Element e = this.manterSurdoGrid.getCellFormatter().getElement(9, 1);
+		e.setAttribute("colspan", "3");
+		e = this.manterSurdoGrid.getCellFormatter().getElement(9,3);
+		if (e != null) {
+			e.removeFromParent();
+		}
+		e = this.manterSurdoGrid.getCellFormatter().getElement(9,2);
+		if (e != null) {
+			e.removeFromParent();
+		}
+	}
 	
 }

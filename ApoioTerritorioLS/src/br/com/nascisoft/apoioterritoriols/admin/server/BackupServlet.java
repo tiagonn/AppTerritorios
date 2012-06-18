@@ -21,7 +21,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
@@ -38,8 +37,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
-public class BackupServlet extends HttpServlet {
-
+public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	
 	private static final Logger logger = Logger
@@ -49,7 +48,7 @@ public class BackupServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
+		
 		String destinatarios = req.getParameter("destinatarios");
 		
 		if (!StringUtils.isEmpty(destinatarios)) {

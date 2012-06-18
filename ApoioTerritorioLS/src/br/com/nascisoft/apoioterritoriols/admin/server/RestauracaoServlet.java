@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
@@ -26,7 +25,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 
 import com.googlecode.objectify.Key;
 
-public class RestauracaoServlet extends HttpServlet {
+public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -36,7 +35,7 @@ public class RestauracaoServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+			
 		byte[] arquivoBackup = (byte[]) CacheManager.getInstance().getCache("ARQUIVO_UPLOAD").get("BACKUP");
 				
 		try {

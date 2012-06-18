@@ -108,6 +108,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	Double manterLongitude;
 	Double manterLatitude;
 	HasMarker marker;
+	String manterRegiao;
 	boolean buscaEndereco = true;
 	
 	//TODO: Parametrizar todos os dados fixos
@@ -231,7 +232,17 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				this.pesquisaMapaListBox.setSelectedIndex(0);
 			}
 		}
-	}	
+	}
+	
+	@UiHandler("manterRegiaoListBox")
+	void onManterRegiaoListBoxChange(ChangeEvent event) {
+		if (!StringUtils.isEmpty(this.manterRegiao) 
+				&& !this.manterRegiao.equals(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()))
+				&& this.manterMapa != null) {
+			Window.alert("Ao alterar a região do surdo ele perderá a associação que tem com o mapa atual.");
+		}
+	}
+
 	
 	@UiHandler("pesquisaEstaAssociadoMapaCheckBox")
 	void onPesquisaEstaAssociadoMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
@@ -479,6 +490,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMapa = null;
 		this.manterLongitude = null;
 		this.manterLatitude = null;
+		this.manterRegiao = null;
 		this.manterNomeTextBox.setText("");         
 		this.manterLogradouroTextBox.setText("");   
 		this.manterNumeroTextBox.setText("");       
@@ -524,7 +536,9 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setMelhorDia(this.manterMelhorDiaTextBox.getText());
 		surdo.setOnibus(this.manterOnibusTextBox.getText());
 		surdo.setMsn(this.manterMSNTextBox.getText());
-		surdo.setMapa(this.manterMapa);
+		if (this.manterRegiao.equals(surdo.getRegiao())) {
+			surdo.setMapa(this.manterMapa);
+		}
 		surdo.setLongitude(this.manterLongitude);
 		surdo.setLatitude(this.manterLatitude);
 		surdo.setMudouSe(this.manterMudouSe.getValue());
@@ -535,6 +549,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	private void populaManter(Surdo surdo) {
 		this.buscaEndereco = false;
 		this.manterId = surdo.getId();
+		this.manterRegiao = surdo.getRegiao();
 		this.manterNomeTextBox.setText(StringUtils.toCamelCase(surdo.getNome()));
 		this.manterLogradouroTextBox.setText(surdo.getLogradouro());
 		this.manterNumeroTextBox.setText(surdo.getNumero());

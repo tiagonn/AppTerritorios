@@ -272,7 +272,7 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.identificadorMapaAtual = vo.getMapa().getId();
 		
 		HasMapOptions opt = new MapOptions();
-		opt.setZoom(14);
+		opt.setZoom(13);
 		opt.setCenter(new LatLng(vo.getCentroRegiao().getLatitude(),vo.getCentroRegiao().getLongitude()));
 		opt.setMapTypeId(new MapTypeId().getRoadmap());
 		opt.setDraggable(true);

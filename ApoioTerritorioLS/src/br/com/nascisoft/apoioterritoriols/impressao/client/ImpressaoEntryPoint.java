@@ -33,7 +33,7 @@ public class ImpressaoEntryPoint implements EntryPoint {
 				if (result.isLogado()) {
 					if (result.isAutorizado()) {
 						CadastroServiceAsync service = GWT.create(CadastroService.class);
-						((ServiceDefTarget)service).setServiceEntryPoint("/cadastro/cadastroService");
+						((ServiceDefTarget)service).setServiceEntryPoint("/cadastro/CadastroService");
 						ImpressaoController controller = new ImpressaoController(service);
 						controller.go(RootLayoutPanel.get());
 					} else {

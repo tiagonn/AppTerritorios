@@ -154,9 +154,19 @@ public class CadastroController implements CadastroPresenter,
 			
 			@Override
 			public void onAbrirImpressaoMapa(AbrirImpressaoMapaEvent event) {
-				History.newItem("impressao!abrir#" +
-						"identificadorMapa=" + event.getIdentificadorMapa() +
-						"&paisagem="+event.isPaisagem());
+				
+				// Impressao - pattern de URL: 
+				// impressao!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
+				
+				StringBuilder page = new StringBuilder();
+				page.append(GWT.getHostPageBaseURL())
+					.append("Impressao.html#impressao!identificadorMapa=")
+					.append(event.getIdentificadorMapa())
+					.append("&paisagem=")
+					.append(event.isPaisagem())
+					.append("&imprimirCabecalho=true&imprimirMapa=true");
+
+				Window.open(page.toString(), "_blank", "");
 			}
 		});
 		
@@ -283,13 +293,14 @@ public class CadastroController implements CadastroPresenter,
 							
 							if ("impressao".equals(currentToken)) {
 								impressaoPresenter.initView();
-							} else if (currentToken.startsWith("impressao!abrir")) {
-								String queryString = currentToken.split("#")[1];
-								String[] parametros = queryString.split("&");
-								impressaoPresenter.onAbrirImpressao(
-										Long.valueOf(parametros[0].split("=")[1]),
-										Boolean.valueOf(parametros[1].split("=")[1]));
-							}
+							} 
+//							else if (currentToken.startsWith("impressao!abrir")) {
+//								String queryString = currentToken.split("#")[1];
+//								String[] parametros = queryString.split("&");
+//								impressaoPresenter.onAbrirImpressao(
+//										Long.valueOf(parametros[0].split("=")[1]),
+//										Boolean.valueOf(parametros[1].split("=")[1]));
+//							}
 							
 							impressaoPresenter.go(container);
 						} else if (currentToken.startsWith("naoVisitar")) {

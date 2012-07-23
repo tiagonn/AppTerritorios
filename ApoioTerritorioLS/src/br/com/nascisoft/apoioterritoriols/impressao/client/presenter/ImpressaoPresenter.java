@@ -42,7 +42,7 @@ public class ImpressaoPresenter implements IImpressaoPresenter {
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
-				
+				Window.alert("sucesso");
 			}
 			
 			@Override

@@ -35,7 +35,8 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 
 	public void go(HasWidgets container) {
 		this.container = container;
-		if ("".equals(History.getToken())) {
+		String token = History.getToken();
+		if (token == null || !token.startsWith("impressao")) {
 			Window.open(GWT.getHostPageBaseURL()+"Cadastro.html" , "_self", "");
 		} else {
 			History.fireCurrentHistoryState();

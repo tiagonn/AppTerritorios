@@ -220,8 +220,9 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (this.presenter != null) {
 			List<Long> lista = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
 			if (lista.size() > 0) {
-				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > 4) {
-					Window.alert("Apenas 4 surdos podem compor um mapa. Voce esta tentando adicionar uma quantidade maior do que o mapa permite");
+					// TODO: parametrizar tamanho máximo
+				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > 3) {
+					Window.alert("Apenas 3 surdos podem compor um mapa. Voce esta tentando adicionar uma quantidade maior do que o mapa permite");
 				} else {
 					this.presenter.adicionarSurdosMapa(lista, 
 							Long.valueOf(this.pesquisaMapaMapaListBox.getValue(

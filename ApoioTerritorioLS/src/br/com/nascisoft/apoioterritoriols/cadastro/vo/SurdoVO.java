@@ -249,10 +249,61 @@ public class SurdoVO implements Serializable {
 	
 	public String getEndereco() {
 		StringBuilder retorno = new StringBuilder();
-		retorno.append(this.getLogradouro()).append(" ").append(this.getNumero());
+		retorno.append(this.getLogradouro()).append(", ").append(this.getNumero());
 		if (!StringUtils.isEmpty(this.getComplemento())) {
-			retorno.append(" ").append(this.getComplemento());
+			retorno.append(", ").append(this.getComplemento());
+		} 
+		if (!StringUtils.isEmpty(this.getBairro())) {
+			retorno.append(", ").append(this.getBairro());
 		}
+		if (!StringUtils.isEmpty(this.getCep())) {
+			retorno.append(", ").append(this.getCep());
+		}
+		return retorno.toString();
+	}
+	
+	public String getObservacaoConsolidada() {
+		StringBuilder retorno = new StringBuilder();
+		
+		if (!StringUtils.isEmpty(this.getSexo())) {
+			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getIdade())) {
+			retorno.append("Possui aproximadamente ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+		}
+		if (!StringUtils.isEmpty(this.getLibras())) {
+			if ("Sim".equals(this.getLibras())) {
+				retorno.append("<u>").append("Sabe</u> LIBRAS; ");
+			} else {
+				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getDvd())) {
+			if ("Sim".equals(this.getDvd())) {
+				retorno.append("<u>").append("Possui</u> DVD; ");
+			} else {
+				retorno.append("<u>").append("Não possui</u> DVD; ");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
+			retorno.append("Possui a(s) seguinte(s) publicações: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMelhorDia())) {
+			retorno.append("Melhor(es) dia(s) para ser contactado(a): ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getHorario())) {
+			retorno.append("Melhor horário para ser contactado(a): ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getOnibus())) {
+			retorno.append("Ônibus que pode(m) ser usado(s): ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMsn())) {
+			retorno.append("E-mail/MSN: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getObservacao())) {
+			retorno.append("</br><strong>Demais observações: </strong>").append(this.getObservacao());
+		}
+		
 		return retorno.toString();
 	}
 

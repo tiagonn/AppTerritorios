@@ -21,11 +21,15 @@ import com.google.gwt.maps.client.overlay.MarkerOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 
 public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 
@@ -41,10 +45,15 @@ public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 	@UiField FlexTable impressaoSurdoFlexTable;
 	@UiField Label impressaoLocalidadeLabel;
 	@UiField Label impressaoTerritorioLabel;
+	@UiField VerticalPanel impressaoMapaVerticalPanel;
+	@UiField CheckBox imprimirMapaCheckBox;
 	
 	
+	@SuppressWarnings("unused")
 	private Boolean paisagem;
+	@SuppressWarnings("unused")
 	private Boolean imprimirCabecalho;
+	@SuppressWarnings("unused")
 	private Boolean imprimirMapa;
 	private Boolean mapaIndividual;
 	
@@ -53,10 +62,6 @@ public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 
 
 	public ImpressaoViewImpl() {
-		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	public ImpressaoViewImpl(String firstName) {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -103,7 +108,108 @@ public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 			
 			if (mapaIndividual) {
 			
-				
+				html.append("<table width=100% cellspacing=0 border=1>")
+					.append("<tr><td width=100%>")
+						.append("<table width=100% cellspacing=2 border=0>")
+							.append("<tr>")
+								.append("<td width=27px ").append(classe1).append(">Nome:</td>")
+								.append("<td width=386px ").append(classe).append(">")
+									.append(StringUtils.toCamelCase(surdo.getNome()))
+								.append("</td>")
+								.append("<td width=27px ").append(classe1).append(">Tel:</td>")
+								.append("<td width=100px ").append(classe).append(">")
+									.append(surdo.getTelefone())
+								.append("</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td ").append(classe1).append(">End:</td>")
+								.append("<td ").append(classe).append(">").append(surdo.getEndereco()).append("</td>")
+								.append("<td ").append(classe1).append(">Lat:</td>")
+								.append("<td ").append(classe).append(">")
+								.append(surdo.getLatitude())
+								.append("</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td ").append(classe1).append(">Instr:</td>")
+								.append("<td ").append(classe).append(">").append(surdo.getInstrutor()).append("</td>")
+								.append("<td ").append(classe1).append(">Long:</td>")
+								.append("<td ").append(classe).append(">")
+									.append(surdo.getLongitude())
+								.append("</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td colspan=4 ").append(classe)
+									.append("><strong>Observações: </strong>")
+									.append(surdo.getObservacaoConsolidada())
+								.append("</td>")
+							.append("</tr>")
+						.append("</table>")
+					.append("</td></tr>")
+					.append("<tr><td>")
+						.append("<table width=100% cellspacing=0 border=0>")
+							.append("<tr>")
+								.append("<td width=70px").append(classe1).append(">Data</td>")
+								.append("<td width=70px").append(classe1).append(">Período</td>")
+								.append("<td width=70px").append(classe1).append(">Encontrou?</td>")
+								.append("<td width=330px").append(classe1).append(">Resumo da conversa</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>_________</td>")
+								.append("<td>___________________________________________</td>")
+							.append("</tr>")
+						.append("</table>")
+					.append("</td></tr>")
+					.append("</table>");				
 				
 			} else {
 			
@@ -199,4 +305,8 @@ public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 	}
 	
 
+	@UiHandler("imprimirMapaCheckBox")
+	void onImprimirMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		this.impressaoMapaVerticalPanel.setVisible(event.getValue());
+	}
 }

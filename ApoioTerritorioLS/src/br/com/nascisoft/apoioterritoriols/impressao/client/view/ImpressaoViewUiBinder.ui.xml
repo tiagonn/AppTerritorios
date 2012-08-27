@@ -4,17 +4,22 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:SimplePanel ui:field="impressaoSimplePanel" styleName="impressao-panel">
 		<g:VerticalPanel styleName="impressao-panel-vertical">
-			<g:Label styleName="impressao-cabecalho-titulo">Cartão de Mapa de Território</g:Label>
-			<g:HorizontalPanel styleName="impressao-cabecalho-subtitulo">
-				<g:Label styleName="impressao-cabecalho-fixo">Localidade: </g:Label>
-				<g:Label ui:field="impressaoLocalidadeLabel" styleName="impressao-cabecalho-texto"></g:Label>
-				<g:Label styleName="impressao-cabecalho-fixo">Terr. Nº </g:Label>
-				<g:Label ui:field="impressaoTerritorioLabel" styleName="impressao-cabecalho-texto"></g:Label>
-			</g:HorizontalPanel>
-			<g:SimplePanel ui:field="impressaoMapaSimplePanel" styleName="impressao-tabela"></g:SimplePanel>
-			<g:Label styleName="impressao-cabecalho-rodape">Guarde este cartão no envelope. Tome cuidado para não o manchar, marcar ou dobrar. Cada vez que o território for coberto, queira informar disso o irmão que cuida do arquivo de territórios.</g:Label>
+			<g:VerticalPanel ui:field="impressaoMapaVerticalPanel" styleName="impressao-panel-mapa">
+				<g:Label styleName="impressao-cabecalho-titulo">Cartão de Mapa de Território</g:Label>
+				<g:HorizontalPanel styleName="impressao-cabecalho-subtitulo">
+					<g:Label styleName="impressao-cabecalho-fixo">Localidade: </g:Label>
+					<g:Label ui:field="impressaoLocalidadeLabel" styleName="impressao-cabecalho-texto"></g:Label>
+					<g:Label styleName="impressao-cabecalho-fixo">Terr. Nº </g:Label>
+					<g:Label ui:field="impressaoTerritorioLabel" styleName="impressao-cabecalho-texto"></g:Label>
+				</g:HorizontalPanel>
+				<g:SimplePanel ui:field="impressaoMapaSimplePanel" styleName="impressao-tabela"></g:SimplePanel>
+				<g:Label styleName="impressao-cabecalho-rodape">Guarde este cartão no envelope. Tome cuidado para não o manchar, marcar ou dobrar. Cada vez que o território for coberto, queira informar disso o irmão que cuida do arquivo de territórios.</g:Label>
+			</g:VerticalPanel>
+			<g:SimplePanel styleName="impressao-panel-dados">
+				<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
+			</g:SimplePanel>
 			<g:HTML><br/></g:HTML>
-			<g:FlexTable ui:field="impressaoSurdoFlexTable" styleName="impressao-tabela"></g:FlexTable>
+			<g:CheckBox ui:field="imprimirMapaCheckBox" checked="true" text="Imprimir Mapa"></g:CheckBox>
 		</g:VerticalPanel>
 	</g:SimplePanel>
 </ui:UiBinder>

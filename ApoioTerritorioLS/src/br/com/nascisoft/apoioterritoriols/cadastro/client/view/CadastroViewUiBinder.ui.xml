@@ -148,7 +148,7 @@
 								<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
 							</g:customCell>
 							<g:customCell>
-								<g:Label text="Sexo:"/>
+								<g:Label text="Tipo:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterSexoListBox"/>
@@ -332,6 +332,16 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
+					<g:HTML styleName="label-instrucoes">
+						<br/><br/>
+						Instruções para a impressão: <ul>
+							<li>Os browsers suportados para a impressão de mapas é Internet Explorer (versão 8 ou superior) e Mozilla Firefox (versão 11 ou superior).</li>
+							<li>Por favor, verifique se o bloqueador de popup do browser está desativado, ou adicione uma regra de exceção para este site.</li>
+							<li>Também se deseja imprimir o plano de fundo amarelo do mapa é necessário configurar o seu browser para isto.</li>
+							<li>No Internet Explorer, vá em Arquivo (alt + f) -> Configurar página e marque a opção Imprimir Cores e Imagens de Plano de Fundo.</li>
+							<li>No Firefox vá em Imprimir -> Configurar Página e marque a opção Imprimir cores e imagens do plano de fundo.</li>
+						</ul>  
+					</g:HTML>
 					<g:PopupPanel 
 								ui:field="waitingPopUpPanel" 
 								visible="false" 

@@ -47,6 +47,21 @@ a, a:visited, a:hover {
 	display: block;
 }
 
+.impressao-panel-mapa {
+	background: #fff339;
+	padding: 5px;
+}
+
+.impressao-panel-dados {
+	padding: 5px;
+}
+
+.label-instrucoes {
+	width:100%;
+	font-size: small;
+	color: grey;
+}
+
 .impressao-panel-vertical {
 	border-spacing: 5px;
 }

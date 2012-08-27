@@ -594,10 +594,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	private void iniciarSexoListBox(ListBox sexoListBox){
 		sexoListBox.addItem("-- Escolha uma opção --", "");
-		sexoListBox.addItem("Homem");
-		sexoListBox.addItem("Mulher");
-		sexoListBox.addItem("Casal");
-		sexoListBox.addItem("Família");
+		sexoListBox.addItem("Masculino");
+		sexoListBox.addItem("Feminino");
 	}
 	
 	private int obterIndice(ListBox list, String valor) {

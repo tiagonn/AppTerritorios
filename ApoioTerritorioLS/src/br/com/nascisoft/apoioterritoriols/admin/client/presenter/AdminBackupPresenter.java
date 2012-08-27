@@ -52,4 +52,24 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 		});
 	}
 
+	@Override
+	public void dispararMapeamentoNovosAtributos() {
+		this.getView().showWaitingPanel();
+		this.service.dispararMapeamentoNovosAtributos(new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				getView().hideWaitingPanel();
+				Window.alert("Mapeamento de novos atributos disparado com sucesso");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao disparar o mapeamento de novos atributos.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter disparar o mapeamento de novos atributos. \n" + caught.getMessage());
+			}
+		});
+	}
+
 }

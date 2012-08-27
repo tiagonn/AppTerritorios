@@ -43,6 +43,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineHyperlink;
+import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
@@ -79,10 +80,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField TextArea manterObservacaoTextArea;
 	@UiField TextBox manterTelefoneTextBox;
 	@UiField ListBox manterLibrasListBox;
-	@UiField ListBox manterCriancaListBox;
+	@UiField TextBox manterPublicacoesTextBox;
 	@UiField ListBox manterDVDListBox;
 	@UiField TextBox manterInstrutorTextBox;
-	@UiField TextBox manterIdadeIntegerBox;
+	@UiField IntegerBox manterAnoNascimentoIntegerBox;
 	@UiField ListBox manterSexoListBox;
 	@UiField TextBox manterHorarioTextBox;
 	@UiField TextBox manterMelhorDiaTextBox;
@@ -128,7 +129,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterBairroSuggestBox = new SuggestBox(this.bairroOracle);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.iniciarSNListBox(this.manterLibrasListBox);
-		this.iniciarSNListBox(this.manterCriancaListBox);
 		this.iniciarSNListBox(this.manterDVDListBox);
 		this.iniciarSexoListBox(this.manterSexoListBox); 
 		this.resultadoPesquisa = new ListDataProvider<SurdoDetailsVO>();
@@ -501,10 +501,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterObservacaoTextArea.setText("");  
 		this.manterTelefoneTextBox.setText("");     
 		this.manterLibrasListBox.setSelectedIndex(0);       
-		this.manterCriancaListBox.setSelectedIndex(0);      
 		this.manterDVDListBox.setSelectedIndex(0);          
 		this.manterInstrutorTextBox.setText("");    
-		this.manterIdadeIntegerBox.setText("");     
+		this.manterPublicacoesTextBox.setText("");    
+		this.manterAnoNascimentoIntegerBox.setText("");     
 		this.manterSexoListBox.setSelectedIndex(0);         
 		this.manterHorarioTextBox.setText("");      
 		this.manterMelhorDiaTextBox.setText("");    
@@ -527,16 +527,16 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setObservacao(this.manterObservacaoTextArea.getText());
 		surdo.setTelefone(this.manterTelefoneTextBox.getText());
 		surdo.setLibras(this.manterLibrasListBox.getValue(this.manterLibrasListBox.getSelectedIndex()));
-		surdo.setCrianca(this.manterCriancaListBox.getValue(this.manterCriancaListBox.getSelectedIndex()));
+		surdo.setPublicacoesPossui(this.manterPublicacoesTextBox.getText());
 		surdo.setDvd(this.manterDVDListBox.getValue(this.manterDVDListBox.getSelectedIndex()));
 		surdo.setInstrutor(this.manterInstrutorTextBox.getText());
-		surdo.setIdade(this.manterIdadeIntegerBox.getText());
+		surdo.setAnoNascimento(this.manterAnoNascimentoIntegerBox.getValue());
 		surdo.setSexo(this.manterSexoListBox.getValue(this.manterSexoListBox.getSelectedIndex()));
 		surdo.setHorario(this.manterHorarioTextBox.getText());
 		surdo.setMelhorDia(this.manterMelhorDiaTextBox.getText());
 		surdo.setOnibus(this.manterOnibusTextBox.getText());
 		surdo.setMsn(this.manterMSNTextBox.getText());
-		if (this.manterRegiao.equals(surdo.getRegiao())) {
+		if (this.manterRegiao != null && this.manterRegiao.equals(surdo.getRegiao())) {
 			surdo.setMapa(this.manterMapa);
 		}
 		surdo.setLongitude(this.manterLongitude);
@@ -562,12 +562,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterTelefoneTextBox.setText(surdo.getTelefone());
 		this.manterLibrasListBox.setSelectedIndex(
 				obterIndice(this.manterLibrasListBox, surdo.getLibras()));
-		this.manterCriancaListBox.setSelectedIndex(
-				obterIndice(this.manterCriancaListBox, surdo.getCrianca()));
+		this.manterPublicacoesTextBox.setText(surdo.getPublicacoesPossui());
 		this.manterDVDListBox.setSelectedIndex(
 				obterIndice(this.manterDVDListBox, surdo.getDvd()));
 		this.manterInstrutorTextBox.setText(surdo.getInstrutor());
-		this.manterIdadeIntegerBox.setText(surdo.getIdade());
+		this.manterAnoNascimentoIntegerBox.setValue(surdo.getAnoNascimento());
 		this.manterSexoListBox.setSelectedIndex(
 				obterIndice(this.manterSexoListBox, surdo.getSexo()));
 		this.manterHorarioTextBox.setText(surdo.getHorario());

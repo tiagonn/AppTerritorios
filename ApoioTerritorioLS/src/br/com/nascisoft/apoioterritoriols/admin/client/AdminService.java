@@ -8,4 +8,6 @@ public interface AdminService extends RemoteService {
 	
 	void dispararBackup(String destinatarios);
 
+	void dispararMapeamentoNovosAtributos();
+
 }

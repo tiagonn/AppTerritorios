@@ -20,4 +20,10 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		queue.add(withUrl("/tasks/backup").param("destinatarios", destinatarios));	
 	}
 
+	@Override
+	public void dispararMapeamentoNovosAtributos() {
+		Queue queue = QueueFactory.getDefaultQueue();
+		queue.add(withUrl("/tasks/mapeamentoNovosAtributos"));		
+	}
+
 }

@@ -46,8 +46,22 @@
 									width="400px"></u:SingleUploader>
 							</g:customCell>
 						</g:row>
-					</g:Grid>
-					
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Mapeamento de novos atributos" styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Button ui:field="botaoMapearNovosAtributos" text="Mapear novos atributos"></g:Button>
+							</g:customCell>
+						</g:row>						
+					</g:Grid>					
 					<g:PopupPanel 
 						ui:field="waitingPopUpPanel" 
 						visible="false" 

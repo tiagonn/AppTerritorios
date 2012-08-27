@@ -120,18 +120,18 @@
 								<g:ListBox ui:field="manterLibrasListBox"/>
 							</g:customCell>
 							<g:customCell>
-								<g:Label text="Criança:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="manterCriancaListBox"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
 								<g:Label text="DVD:"/>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="manterDVDListBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Label text="Publicações que possui:"/>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="manterPublicacoesTextBox" visibleLength="20"/>
 							</g:customCell>
 							<g:customCell>
 								<g:Label text="Instrutor:"/>
@@ -142,10 +142,10 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:Label text="Idade:"/>
+								<g:Label text="Ano de nascimento:"/>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="manterIdadeIntegerBox" visibleLength="20"/>
+								<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
 							</g:customCell>
 							<g:customCell>
 								<g:Label text="Sexo:"/>

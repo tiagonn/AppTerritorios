@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="observacao" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="telefone" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="libras" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="crianca" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="publicacoesPossui" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="dvd" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="instrutor" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="idade" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -51,6 +51,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="mudouSe" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="visitarSomentePorAnciaos" type="{http://www.w3.org/2001/XMLSchema}boolean"/>        
+ *         &lt;element name="anoNascimento" type="{http://www.w3.org/2001/XMLSchema}int"/>        
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -72,10 +73,9 @@ import javax.xml.bind.annotation.XmlType;
     "observacao",
     "telefone",
     "libras",
-    "crianca",
+    "publicacoesPossui",
     "dvd",
     "instrutor",
-    "idade",
     "sexo",
     "horario",
     "melhorDia",
@@ -87,7 +87,8 @@ import javax.xml.bind.annotation.XmlType;
     "latitude",
     "longitude",
     "mudouSe",
-    "visitarSomentePorAnciaos"
+    "visitarSomentePorAnciaos",
+    "anoNascimento"
 })
 public class SurdoType {
 
@@ -106,10 +107,9 @@ public class SurdoType {
     protected String observacao;
     protected String telefone;
     protected String libras;
-    protected String crianca;
+    protected String publicacoesPossui;
     protected String dvd;
     protected String instrutor;
-    protected String idade;
     protected String sexo;
     protected String horario;
     protected String melhorDia;
@@ -122,6 +122,7 @@ public class SurdoType {
     protected double longitude;
     protected boolean mudouSe;
     protected boolean visitarSomentePorAnciaos;
+    protected int anoNascimento;
 
     /**
      * Gets the value of the id property.
@@ -380,27 +381,27 @@ public class SurdoType {
     }
 
     /**
-     * Gets the value of the crianca property.
+     * Gets the value of the publicacoesPossui property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCrianca() {
-        return crianca;
+    public String getPublicacoesPossui() {
+        return publicacoesPossui;
     }
 
     /**
-     * Sets the value of the crianca property.
+     * Sets the value of the publicacoesPossui property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCrianca(String value) {
-        this.crianca = value;
+    public void setPublicacoesPossui(String value) {
+        this.publicacoesPossui = value;
     }
 
     /**
@@ -449,30 +450,6 @@ public class SurdoType {
      */
     public void setInstrutor(String value) {
         this.instrutor = value;
-    }
-
-    /**
-     * Gets the value of the idade property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIdade() {
-        return idade;
-    }
-
-    /**
-     * Sets the value of the idade property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIdade(String value) {
-        this.idade = value;
     }
 
     /**
@@ -714,5 +691,31 @@ public class SurdoType {
     public void setVisitarSomentePorAnciaos(boolean value) {
         this.visitarSomentePorAnciaos = value;
     }
+    
+
+    /**
+     * Gets the value of the anoNascimento property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public int getAnoNascimento() {
+        return anoNascimento;
+    }
+
+    /**
+     * Sets the value of the anoNascimento property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAnoNascimento(int value) {
+        this.anoNascimento = value;
+    }
+
     
 }

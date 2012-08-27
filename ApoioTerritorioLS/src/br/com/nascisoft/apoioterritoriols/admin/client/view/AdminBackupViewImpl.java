@@ -31,6 +31,7 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField TextBox destinatario;
 	@UiField SingleUploader arquivoUpload;
 	@UiField Button botaoBackup;
+	@UiField Button botaoMapearNovosAtributos;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -96,5 +97,10 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 		} else {
 			Window.alert("O campo destinatário deve ser preenchido com um e-mail.");
 		}
+	}
+	
+	@UiHandler("botaoMapearNovosAtributos")
+	void onBotaoMapearNovosAtributosClick(ClickEvent event) {
+		this.presenter.dispararMapeamentoNovosAtributos();
 	}
 }

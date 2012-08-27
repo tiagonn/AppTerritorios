@@ -138,12 +138,12 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		xml.setBairro(surdo.getBairro());
 		xml.setCep(surdo.getCep());
 		xml.setComplemento(surdo.getComplemento());
-		xml.setCrianca(surdo.getCrianca());
+		xml.setPublicacoesPossui(surdo.getPublicacoesPossui());
 		xml.setDvd(surdo.getDvd());
 		xml.setEstaAssociadoMapa(surdo.getEstaAssociadoMapa());
 		xml.setHorario(surdo.getHorario());
 		xml.setId(surdo.getId());
-		xml.setIdade(surdo.getIdade());
+		xml.setAnoNascimento(surdo.getAnoNascimento());
 		xml.setInstrutor(surdo.getInstrutor());
 		xml.setLatitude(surdo.getLatitude());
 		xml.setLibras(surdo.getLibras());

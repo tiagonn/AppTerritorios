@@ -25,10 +25,12 @@ public class Surdo implements Serializable {
 	private String observacao;
 	private String telefone;
 	private String libras;
-	private String crianca;
+	private String publicacoesPossui;
 	private String dvd;
 	private String instrutor;
+		//TODO: depois de mapear ano de nascimento, remover atributo idade
 	private String idade;
+	private Integer anoNascimento;
 	private String sexo;
 	private String horario;
 	private String melhorDia;
@@ -108,11 +110,11 @@ public class Surdo implements Serializable {
 	public void setLibras(String libras) {
 		this.libras = libras;
 	}
-	public String getCrianca() {
-		return crianca;
+	public String getPublicacoesPossui() {
+		return publicacoesPossui;
 	}
-	public void setCrianca(String crianca) {
-		this.crianca = crianca;
+	public void setPublicacoesPossui(String publicacoesPossui) {
+		this.publicacoesPossui = publicacoesPossui;
 	}
 	public String getDvd() {
 		return dvd;
@@ -131,6 +133,24 @@ public class Surdo implements Serializable {
 	}
 	public void setIdade(String idade) {
 		this.idade = idade;
+	}
+	public Integer getAnoNascimento() {
+		Integer retorno = null;
+		if (anoNascimento == null) {
+			String idade = this.getIdade();
+			try {
+				retorno = 2012 - Integer.valueOf(idade);
+			} catch (NumberFormatException ex) {
+				// não foi possível mapear a idade, não faça nada
+			}
+		} else {
+			retorno = anoNascimento;
+		}
+			
+		return retorno;
+	}
+	public void setAnoNascimento(Integer anoNascimento) {
+		this.anoNascimento = anoNascimento;
 	}
 	public String getSexo() {
 		return sexo;

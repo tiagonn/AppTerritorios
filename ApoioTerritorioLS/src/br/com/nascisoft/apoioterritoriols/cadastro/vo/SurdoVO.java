@@ -2,6 +2,9 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Date;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
@@ -22,10 +25,10 @@ public class SurdoVO implements Serializable {
 	private String observacao;
 	private String telefone;
 	private String libras;
-	private String crianca;
+	private String publicacoesPossui;
+	private Integer anoNascimento;
 	private String dvd;
 	private String instrutor;
-	private String idade;
 	private String sexo;
 	private String horario;
 	private String melhorDia;
@@ -61,10 +64,10 @@ public class SurdoVO implements Serializable {
 		this.setObservacao(surdo.getObservacao());
 		this.setTelefone(surdo.getTelefone());
 		this.setLibras(surdo.getLibras());
-		this.setCrianca(surdo.getCrianca());
+		this.setPublicacoesPossui(surdo.getPublicacoesPossui());
+		this.setAnoNascimento(surdo.getAnoNascimento());
 		this.setDvd(surdo.getDvd());
 		this.setInstrutor(surdo.getInstrutor());
-		this.setIdade(surdo.getIdade());
 		this.setSexo(surdo.getSexo());
 		this.setHorario(surdo.getHorario());
 		this.setMelhorDia(surdo.getMelhorDia());
@@ -136,14 +139,6 @@ public class SurdoVO implements Serializable {
 		this.libras = libras;
 	}
 
-	public String getCrianca() {
-		return crianca;
-	}
-
-	public void setCrianca(String crianca) {
-		this.crianca = crianca;
-	}
-
 	public String getDvd() {
 		return dvd;
 	}
@@ -161,11 +156,12 @@ public class SurdoVO implements Serializable {
 	}
 
 	public String getIdade() {
-		return idade;
-	}
-
-	public void setIdade(String idade) {
-		this.idade = idade;
+		String retorno = null;
+		if (anoNascimento != null) {			
+			retorno = String.valueOf(Integer.valueOf(
+					DateTimeFormat.getFormat("yyyy").format(new Date())) - this.anoNascimento);
+		}
+		return retorno;
 	}
 
 	public String getSexo() {
@@ -258,6 +254,22 @@ public class SurdoVO implements Serializable {
 			retorno.append(" ").append(this.getComplemento());
 		}
 		return retorno.toString();
+	}
+
+	public String getPublicacoesPossui() {
+		return publicacoesPossui;
+	}
+
+	public void setPublicacoesPossui(String publicacoesPossui) {
+		this.publicacoesPossui = publicacoesPossui;
+	}
+
+	public Integer getAnoNascimento() {
+		return anoNascimento;
+	}
+
+	public void setAnoNascimento(Integer anoNascimento) {
+		this.anoNascimento = anoNascimento;
 	}
 
 }

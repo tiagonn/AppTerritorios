@@ -249,10 +249,65 @@ public class SurdoVO implements Serializable {
 	
 	public String getEndereco() {
 		StringBuilder retorno = new StringBuilder();
-		retorno.append(this.getLogradouro()).append(" ").append(this.getNumero());
+		retorno.append(this.getLogradouro()).append(", ").append(this.getNumero());
 		if (!StringUtils.isEmpty(this.getComplemento())) {
-			retorno.append(" ").append(this.getComplemento());
+			retorno.append(", ").append(this.getComplemento());
+		} 
+		if (!StringUtils.isEmpty(this.getBairro())) {
+			retorno.append(", ").append(this.getBairro());
 		}
+		return retorno.toString();
+	}
+	
+	public String getObservacaoConsolidada() {
+		StringBuilder retorno = new StringBuilder();
+		
+		if (!StringUtils.isEmpty(this.getSexo())) {
+			if ("Masculino".equals(this.getSexo()))  {
+				retorno.append("<strong>Homem; </strong>") ;
+			} else {
+				retorno.append("<strong>Mulher; </strong>");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getInstrutor())) {
+			retorno.append("<strong>Estuda com </strong>").append(this.getInstrutor()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getIdade())) {
+			retorno.append("<strong>Possui aproximadamente </strong>").append(this.getIdade()).append(" anos; ");
+		}
+		if (!StringUtils.isEmpty(this.getLibras())) {
+			if ("Sim".equals(this.getLibras())) {
+				retorno.append("<strong>Sabe LIBRAS; </strong>");
+			} else {
+				retorno.append("<strong>Não sabe LIBRAS; </strong>");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getDvd())) {
+			if ("Sim".equals(this.getDvd())) {
+				retorno.append("<strong>Possui DVD; </strong>");
+			} else {
+				retorno.append("<strong>Não possui DVD; </strong>");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
+			retorno.append("<strong>Possui a(s) seguinte(s) publicações: </strong>").append(this.getPublicacoesPossui()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMelhorDia())) {
+			retorno.append("<strong>Melhor(es) dia(s) para ser contactado(a): </strong>").append(this.getMelhorDia()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getHorario())) {
+			retorno.append("<strong>Melhor horário para ser contactado(a): </strong>").append(this.getHorario()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getOnibus())) {
+			retorno.append("<strong>Ônibus que pode(m) ser usado(s): </strong>").append(this.getOnibus()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMsn())) {
+			retorno.append("<strong>E-mail/MSN: </strong>").append(this.getMsn()).append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getObservacao())) {
+			retorno.append("<strong>Demais observações: </strong>").append(this.getObservacao());
+		}
+		
 		return retorno.toString();
 	}
 

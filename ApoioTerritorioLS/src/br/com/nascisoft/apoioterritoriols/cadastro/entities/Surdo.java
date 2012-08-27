@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Indexed;
+import com.googlecode.objectify.annotation.NotSaved;
 import com.googlecode.objectify.annotation.Unindexed;
 
 @Unindexed
@@ -43,6 +44,7 @@ public class Surdo implements Serializable {
 	@Indexed private Double longitude;
 	@Indexed private boolean mudouSe = Boolean.FALSE;
 	@Indexed private boolean visitarSomentePorAnciaos = Boolean.FALSE;
+	@NotSaved private Long mapaAnterior;
 	
 	public Long getId() {
 		return id;
@@ -226,6 +228,12 @@ public class Surdo implements Serializable {
 	}
 	public void setVisitarSomentePorAnciaos(boolean visitarSomenteAnciaos) {
 		this.visitarSomentePorAnciaos = visitarSomenteAnciaos;
+	}
+	public Long getMapaAnterior() {
+		return mapaAnterior;
+	}
+	public void setMapaAnterior(Long mapaAnterior) {
+		this.mapaAnterior = mapaAnterior;
 	}
 	
 }

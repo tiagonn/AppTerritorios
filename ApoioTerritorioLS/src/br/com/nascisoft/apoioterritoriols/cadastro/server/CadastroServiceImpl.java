@@ -151,6 +151,12 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		}
 		Long id = this.getDao().adicionarOuAlterarSurdo(surdo);
 		logger.log(Level.INFO, "Surdo " + id + operacao + " com sucesso");
+		
+		if (surdo.getMapaAnterior() != null &&
+				dao.obterSurdos(null, null, surdo.getMapaAnterior(), null).size() == 0) {
+			dao.apagarMapa(surdo.getMapaAnterior());			
+		}
+		
 		return id;
 	}
 

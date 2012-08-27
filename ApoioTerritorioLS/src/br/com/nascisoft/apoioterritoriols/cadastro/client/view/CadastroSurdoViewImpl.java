@@ -538,11 +538,17 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setMsn(this.manterMSNTextBox.getText());
 		if (this.manterRegiao != null && this.manterRegiao.equals(surdo.getRegiao())) {
 			surdo.setMapa(this.manterMapa);
+		} else if (this.manterMapa != null){
+			surdo.setMapaAnterior(this.manterMapa.getId());
 		}
 		surdo.setLongitude(this.manterLongitude);
 		surdo.setLatitude(this.manterLatitude);
 		surdo.setMudouSe(this.manterMudouSe.getValue());
 		surdo.setVisitarSomentePorAnciaos(this.manterVisitarSomentePorAnciaos.getValue());
+		if (surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos()
+				&& this.manterMapa != null) {
+			surdo.setMapaAnterior(this.manterMapa.getId());
+		}
 		return surdo;
 	}
 	

@@ -42,7 +42,8 @@ public class ImpressaoPresenter implements IImpressaoPresenter {
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
-				Window.alert("sucesso");
+				view.abrirImpressaoMapa(result);
+				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			}
 			
 			@Override

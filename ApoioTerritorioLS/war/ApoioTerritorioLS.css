@@ -45,13 +45,40 @@ a, a:visited, a:hover {
 	height: 100%;
 	overflow: auto;
 	display: block;
-	z-index: 3000;
+}
+
+.impressao-panel-vertical {
+	border-spacing: 5px;
+}
+
+.impressao-cabecalho-titulo {
+	font-family: sans-serif;
+	font-size: large;
+	width: 540px;
+	text-align: center;
+}
+
+.impressao-cabecalho-subtitulo {
+	width: 540px;
+}
+
+.impressao-cabecalho-rodape {
+	font-size: x-small;
+	width: 540px;
+}
+
+.impressao-cabecalho-texto {
+	color: red;
+	text-align: left;
+	font-size: medium;
+}
+
+.impressao-cabecalho-fixo {
+	font-size: medium;
 }
 
 .impressao-tabela {
-	width:800px;
-	left: 20px;
-	top: 20px;
+	width:540px;
 	position: relative;
 }
 
@@ -107,11 +134,13 @@ a, a:visited, a:hover {
 
 .impressao-celula {
 	font-family: Tahoma;
+	font-size: x-small;
 }
 
 .impressao-celula-titulo {
 	font-family: Tahoma;
 	font-weight: bold;
+	font-size: x-small;
 }
 
 .impressao-tabela-centro{

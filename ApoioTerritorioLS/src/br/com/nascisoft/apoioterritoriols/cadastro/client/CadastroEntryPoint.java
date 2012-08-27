@@ -32,6 +32,7 @@ public class CadastroEntryPoint implements EntryPoint {
 				if (result.isLogado()) {
 					if (result.isAutorizado()) {
 						CadastroServiceAsync service = GWT.create(CadastroService.class);
+						((ServiceDefTarget)service).setServiceEntryPoint("/cadastro/CadastroService");
 						HandlerManager eventBus = new HandlerManager(null);
 						CadastroController controller = new CadastroController(service, eventBus);
 						controller.go(RootLayoutPanel.get());

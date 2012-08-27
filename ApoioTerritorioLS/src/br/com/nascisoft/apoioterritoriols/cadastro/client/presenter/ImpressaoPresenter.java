@@ -31,38 +31,9 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 		this.view.setTabSelectionEventHandler(handler);
 	}
 
-//	@Override
-//	public void onAbrirImpressao(final Long identificadorMapa, final Boolean paisagem) {
-//		getView().showWaitingPanel();
-//		service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
-//			
-//			@Override
-//			public void onSuccess(List<SurdoVO> result) {
-//				if (result == null || result.size() == 0) {
-//					Window.alert("Este mapa não possui surdo associado");
-//					eventBus.fireEvent(new AbrirImpressaoEvent());					
-//				} else {
-//					view.onAbrirImpressao(identificadorMapa, result, paisagem);
-//				}
-//				getView().hideWaitingPanel();
-//			}
-//			
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
-//				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
-//			}
-//		});
-//	}
-
 	@Override
 	public void abrirImpressao(Long identificadorMapa, Boolean paisagem) {
 		eventBus.fireEvent(new AbrirImpressaoMapaEvent(identificadorMapa, paisagem));
 	}
-
-//	@Override
-//	public void onVoltar() {
-//		eventBus.fireEvent(new AbrirImpressaoEvent());
-//	}
 
 }

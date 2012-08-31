@@ -3,8 +3,6 @@ package br.com.nascisoft.apoioterritoriols.impressao.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroService;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.login.client.LoginService;
 import br.com.nascisoft.apoioterritoriols.login.client.LoginServiceAsync;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
@@ -32,9 +30,9 @@ public class ImpressaoEntryPoint implements EntryPoint {
 			public void onSuccess(LoginVO result) {
 				if (result.isLogado()) {
 					if (result.isAutorizado()) {
-						CadastroServiceAsync service = GWT.create(CadastroService.class);
-						((ServiceDefTarget)service).setServiceEntryPoint("/cadastro/CadastroService");
+						ImpressaoServiceAsync service = GWT.create(ImpressaoService.class);
 						ImpressaoController controller = new ImpressaoController(service);
+						RootLayoutPanel.get().clear();
 						controller.go(RootLayoutPanel.get());
 					} else {
 						Window.alert("Usuário não possui permissão de acesso. Entre em contato com o administrador de sua congregação.");

@@ -6,6 +6,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
@@ -20,6 +21,7 @@ import com.google.gwt.maps.client.overlay.MarkerImage;
 import com.google.gwt.maps.client.overlay.MarkerOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -28,17 +30,15 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 
-public class ImpressaoViewImpl extends Composite implements ImpressaoView {
+public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaView {
 
 	private static ImpressaoViewImplUiBinder uiBinder = GWT
 			.create(ImpressaoViewImplUiBinder.class);
 
 	@UiTemplate("ImpressaoViewUiBinder.ui.xml")
 	interface ImpressaoViewImplUiBinder extends
-			UiBinder<Widget, ImpressaoViewImpl> {
+			UiBinder<Widget, ImpressaoMapaViewImpl> {
 	}
 	
 	@UiField SimplePanel impressaoMapaSimplePanel;
@@ -61,7 +61,7 @@ public class ImpressaoViewImpl extends Composite implements ImpressaoView {
 	private final static String LARGURA_MAPA = "540px";
 
 
-	public ImpressaoViewImpl() {
+	public ImpressaoMapaViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

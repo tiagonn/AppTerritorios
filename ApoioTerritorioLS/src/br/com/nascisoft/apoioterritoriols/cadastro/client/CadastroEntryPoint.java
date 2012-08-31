@@ -32,9 +32,9 @@ public class CadastroEntryPoint implements EntryPoint {
 				if (result.isLogado()) {
 					if (result.isAutorizado()) {
 						CadastroServiceAsync service = GWT.create(CadastroService.class);
-						((ServiceDefTarget)service).setServiceEntryPoint("/cadastro/CadastroService");
 						HandlerManager eventBus = new HandlerManager(null);
 						CadastroController controller = new CadastroController(service, eventBus);
+						RootLayoutPanel.get().clear();
 						controller.go(RootLayoutPanel.get());
 					} else {
 						Window.alert("Usuário não possui permissão de acesso. Entre em contato com o administrador de sua congregação.");

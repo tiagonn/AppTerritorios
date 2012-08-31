@@ -156,11 +156,11 @@ public class CadastroController implements CadastroPresenter,
 			public void onAbrirImpressaoMapa(AbrirImpressaoMapaEvent event) {
 				
 				// Impressao - pattern de URL: 
-				// impressao!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
+				// imprimir!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
 				
 				StringBuilder page = new StringBuilder();
 				page.append(GWT.getHostPageBaseURL())
-					.append("Impressao.html#impressao!identificadorMapa=")
+					.append("Impressao.html#imprimir!identificadorMapa=")
 					.append(event.getIdentificadorMapa())
 					.append("&paisagem=")
 					.append(event.isPaisagem())

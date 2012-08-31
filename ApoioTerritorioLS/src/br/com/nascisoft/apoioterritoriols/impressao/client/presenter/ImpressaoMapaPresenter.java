@@ -4,23 +4,23 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
-import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoView;
-import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoView.IImpressaoPresenter;
+import br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoServiceAsync;
+import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView;
+import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView.IImpressaoPresenter;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-public class ImpressaoPresenter implements IImpressaoPresenter {
+public class ImpressaoMapaPresenter implements IImpressaoPresenter {
 
-	private CadastroServiceAsync service;
-	private ImpressaoView view;
+	private ImpressaoServiceAsync service;
+	private ImpressaoMapaView view;
 	protected static final Logger logger = Logger
-			.getLogger(ImpressaoPresenter.class.getName());
+			.getLogger(ImpressaoMapaPresenter.class.getName());
 
-	public ImpressaoPresenter(CadastroServiceAsync service, ImpressaoView view) {
+	public ImpressaoMapaPresenter(ImpressaoServiceAsync service, ImpressaoMapaView view) {
 		this.service = service;
 		this.view = view;
 	}

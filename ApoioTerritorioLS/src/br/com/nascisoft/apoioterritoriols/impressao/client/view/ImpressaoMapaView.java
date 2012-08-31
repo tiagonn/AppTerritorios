@@ -9,7 +9,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 
-public interface ImpressaoView {
+public interface ImpressaoMapaView {
 	
 	public interface IImpressaoPresenter {
 		public void go(final HasWidgets container);

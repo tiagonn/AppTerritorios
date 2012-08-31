@@ -3,11 +3,10 @@ package br.com.nascisoft.apoioterritoriols.impressao.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
-import br.com.nascisoft.apoioterritoriols.impressao.client.presenter.ImpressaoPresenter;
-import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoView;
-import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoView.IImpressaoPresenter;
-import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoViewImpl;
+import br.com.nascisoft.apoioterritoriols.impressao.client.presenter.ImpressaoMapaPresenter;
+import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView;
+import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView.IImpressaoPresenter;
+import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -19,16 +18,16 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class ImpressaoController implements ValueChangeHandler<String> {
 	
-	private final CadastroServiceAsync service;
+	private final ImpressaoServiceAsync service;
 	private HasWidgets container;	
 	private String currentToken = null;
-	private ImpressaoView view;
+	private ImpressaoMapaView view;
 	private IImpressaoPresenter presenter;
 
 	private static final Logger logger = Logger
 			.getLogger(ImpressaoController.class.getName());
 
-	public ImpressaoController(CadastroServiceAsync service) {
+	public ImpressaoController(ImpressaoServiceAsync service) {
 		this.service = service;
 		History.addValueChangeHandler(this);
 	}
@@ -36,7 +35,7 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 	public void go(HasWidgets container) {
 		this.container = container;
 		String token = History.getToken();
-		if (token == null || !token.startsWith("impressao")) {
+		if (token == null || !token.startsWith("imprimir")) {
 			Window.open(GWT.getHostPageBaseURL()+"Cadastro.html" , "_self", "");
 		} else {
 			History.fireCurrentHistoryState();
@@ -52,13 +51,13 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 				public void onSuccess() {
 					try {
 							// Impressao - pattern de URL: 
-							// impressao!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
-						if (currentToken.startsWith("impressao")) {
+							// imprimir!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
+						if (currentToken.startsWith("imprimir")) {
 							if (view == null) {
-								view = new ImpressaoViewImpl();
+								view = new ImpressaoMapaViewImpl();
 							}
 							if (presenter == null) {
-								presenter = new ImpressaoPresenter(service, view);
+								presenter = new ImpressaoMapaPresenter(service, view);
 							}	
 							String queryString = currentToken.split("!")[1];
 							String[] parametros = queryString.split("&");

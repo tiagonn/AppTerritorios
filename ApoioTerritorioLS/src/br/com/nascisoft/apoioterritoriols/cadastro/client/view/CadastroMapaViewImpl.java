@@ -81,6 +81,9 @@ public class CadastroMapaViewImpl extends Composite implements
 	private static final int TIPO_SURDO_MAPA_ATUAL = 1;
 	private static final int TIPO_SURDO_MAPA_OUTROS = 2;
 	
+	//TODO: Parametrizar
+	private static final boolean mapaIndividual = true;
+	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 
 		extends UiBinder<Widget, CadastroMapaViewImpl> {
@@ -220,9 +223,9 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (this.presenter != null) {
 			List<Long> lista = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
 			if (lista.size() > 0) {
-					// TODO: parametrizar tamanho máximo
-				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > 3) {
-					Window.alert("Apenas 3 surdos podem compor um mapa. Voce esta tentando adicionar uma quantidade maior do que o mapa permite");
+				int tamanhoMapa = mapaIndividual ? 1 : 4;
+				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > tamanhoMapa) {
+					Window.alert("Apenas tamanhoMapa surdo(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
 				} else {
 					this.presenter.adicionarSurdosMapa(lista, 
 							Long.valueOf(this.pesquisaMapaMapaListBox.getValue(

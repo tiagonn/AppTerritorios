@@ -33,6 +33,7 @@ public class AdminEntryPoint implements EntryPoint {
 						AdminServiceAsync service = GWT.create(AdminService.class);
 						HandlerManager eventBus = new HandlerManager(null);
 						AdminController controller = new AdminController(service, eventBus);
+						RootLayoutPanel.get().clear();
 						controller.go(RootLayoutPanel.get());
 					} else {
 						Window.alert("Usuário não possui permissão de acesso para a interface administrativa. Entre em contato com o administrador de sua congregação.");

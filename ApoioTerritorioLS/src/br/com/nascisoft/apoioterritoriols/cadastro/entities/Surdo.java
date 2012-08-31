@@ -155,6 +155,11 @@ public class Surdo implements Serializable {
 		this.anoNascimento = anoNascimento;
 	}
 	public String getSexo() {
+		if ("Masculino".equals(sexo)) {
+			this.setSexo("Homem");
+		} else if ("Feminino".equals(sexo) ) {
+			this.setSexo("Mulher");
+		}
 		return sexo;
 	}
 	public void setSexo(String sexo) {

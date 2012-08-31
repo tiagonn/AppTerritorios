@@ -149,7 +149,7 @@
 									<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
 								</g:customCell>
 								<g:customCell>
-									<g:Label text="Sexo:"/>
+									<g:Label text="Tipo:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:ListBox ui:field="manterSexoListBox"/>

@@ -12,7 +12,6 @@ import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -40,7 +39,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.IntegerBox;
@@ -53,6 +51,7 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.googlecode.objectify.Key;
@@ -69,7 +68,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField CellTable<SurdoDetailsVO> pesquisaResultadoCellTable;
 	@UiField Label pesquisaResultadoLabel;
 	@UiField HTML manterWarningHTML;
-	@UiField Grid manterSurdoGrid;
+	@UiField VerticalPanel manterSurdoPanel;
 	@UiField TextBox manterNomeTextBox;
 	@UiField TextBox manterLogradouroTextBox;
 	@UiField TextBox manterNumeroTextBox;
@@ -142,7 +141,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.pesquisaRegiaoListBox.setSelectedIndex(0);
 		this.pesquisaMapaListBox.setSelectedIndex(0);
 		this.pesquisaEstaAssociadoMapaCheckBox.setValue(Boolean.FALSE);
-		this.manterSurdoGrid.setVisible(false);
+		this.manterSurdoPanel.setVisible(false);
 		this.manterWarningHTML.setHTML("");
 		this.manterMapaPopupPanel.hide();
 		this.limparResultadoPesquisa();
@@ -217,7 +216,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 							this.pesquisaMapaListBox.getSelectedIndex()), 
 					!this.pesquisaEstaAssociadoMapaCheckBox.getValue());
 		}
-		this.manterSurdoGrid.setVisible(false);
+		this.manterSurdoPanel.setVisible(false);
 	}
 	
 	@UiHandler("pesquisaRegiaoListBox")
@@ -330,7 +329,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			this.pesquisaResultadoSimplePager.setVisible(true);
 		}
 		this.manterWarningHTML.setHTML("");
-		this.manterSurdoGrid.setVisible(false);
+		this.manterSurdoPanel.setVisible(false);
 	}
 	
 	@UiHandler("manterSalvarButton")
@@ -428,8 +427,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void onEditar(Surdo surdo) {
-		this.acertarCampoObservacao();
-		this.manterSurdoGrid.setVisible(true);
+		this.manterSurdoPanel.setVisible(true);
 		this.limparResultadoPesquisa();
 		this.populaManter(surdo);
 	}
@@ -609,24 +607,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void onAdicionar() {
-		this.acertarCampoObservacao();
-		this.manterSurdoGrid.setVisible(true);
+		this.manterSurdoPanel.setVisible(true);
 		this.limparResultadoPesquisa();
 		this.limparManter();
 	}	
 	
-	private void acertarCampoObservacao() {
-		// setando colspan no campo observação
-		Element e = this.manterSurdoGrid.getCellFormatter().getElement(9, 1);
-		e.setAttribute("colspan", "3");
-		e = this.manterSurdoGrid.getCellFormatter().getElement(9,3);
-		if (e != null) {
-			e.removeFromParent();
-		}
-		e = this.manterSurdoGrid.getCellFormatter().getElement(9,2);
-		if (e != null) {
-			e.removeFromParent();
-		}
-	}
 	
 }

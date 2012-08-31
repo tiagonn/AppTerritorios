@@ -55,168 +55,172 @@
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:HTML ui:field="manterWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"><br/></g:HTML>
-					<g:Grid ui:field="manterSurdoGrid" visible="false" styleName="surdo-tabela">
-						<g:row>
-							<g:customCell>
-								<g:Label text="Nome:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox visibleLength="30" ui:field="manterNomeTextBox"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Logradouro:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterLogradouroTextBox" visibleLength="40"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Número:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterNumeroTextBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Complemento:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterComplementoTextBox" visibleLength="20"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Regiao:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="manterRegiaoListBox"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Bairro:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:SuggestBox ui:field="manterBairroSuggestBox"></g:SuggestBox>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="CEP:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterCEPTextBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Telefone:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Libras:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="manterLibrasListBox"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="DVD:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="manterDVDListBox"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Publicações que possui:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterPublicacoesTextBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Instrutor:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="20"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Ano de nascimento:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Sexo:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="manterSexoListBox"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Horário:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Melhor dia:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Ônibus:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterOnibusTextBox" visibleLength="20"/>
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="MSN:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextBox ui:field="manterMSNTextBox" visibleLength="20"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Observação:"/>
-							</g:customCell>
-							<g:customCell>
-								<g:TextArea ui:field="manterObservacaoTextArea" characterWidth="78" visibleLines="7"/>
-							</g:customCell>							
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:HTML wordWrap="true">&nbsp;</g:HTML>
-							</g:customCell>
-							<g:customCell>
-								<g:CheckBox ui:field="manterMudouSe" name="manterMudouSe" text="Mudou-se"></g:CheckBox>
-							</g:customCell>
-						</g:row>
-						<g:row>						
-							<g:customCell>
-								<g:HTML wordWrap="true">&nbsp;</g:HTML>
-							</g:customCell>
-							<g:customCell>
-								<g:CheckBox ui:field="manterVisitarSomentePorAnciaos" name="manterVisitarSomentePorAnciaos" text="Visitar somente por anciãos"></g:CheckBox>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
-							</g:customCell>							
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Button ui:field="manterSalvarButton" text="Salvar"/>
-							</g:customCell>
-						</g:row>					
-					</g:Grid>
+					<g:VerticalPanel ui:field="manterSurdoPanel" visible="false" styleName="surdo-tabela">
+						<g:Grid>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Nome:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox visibleLength="30" ui:field="manterNomeTextBox"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Logradouro:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterLogradouroTextBox" visibleLength="40"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Número:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterNumeroTextBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Complemento:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterComplementoTextBox" visibleLength="20"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Regiao:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterRegiaoListBox"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Bairro:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:SuggestBox ui:field="manterBairroSuggestBox"></g:SuggestBox>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="CEP:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterCEPTextBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Telefone:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Libras:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterLibrasListBox"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="DVD:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterDVDListBox"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Publicações:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterPublicacoesTextBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Instrutor:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="20"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Ano nasc.:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Sexo:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterSexoListBox"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Horário:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Melhor dia:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20"/>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Ônibus:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterOnibusTextBox" visibleLength="20"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="MSN:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterMSNTextBox" visibleLength="20"/>
+								</g:customCell>
+							</g:row>
+						</g:Grid>
+						<g:Grid>
+							<g:row>
+								<g:customCell>
+									<g:Label text="Observação:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextArea ui:field="manterObservacaoTextArea" characterWidth="78" visibleLines="7"/>
+								</g:customCell>							
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:HTML wordWrap="true">&nbsp;</g:HTML>
+								</g:customCell>
+								<g:customCell>
+									<g:CheckBox ui:field="manterMudouSe" name="manterMudouSe" text="Mudou-se"></g:CheckBox>
+								</g:customCell>
+							</g:row>
+							<g:row>						
+								<g:customCell>
+									<g:HTML wordWrap="true">&nbsp;</g:HTML>
+								</g:customCell>
+								<g:customCell>
+									<g:CheckBox ui:field="manterVisitarSomentePorAnciaos" name="manterVisitarSomentePorAnciaos" text="Visitar somente por anciãos"></g:CheckBox>
+								</g:customCell>
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
+								</g:customCell>							
+							</g:row>
+							<g:row>
+								<g:customCell>
+									<g:Button ui:field="manterSalvarButton" text="Salvar"/>
+								</g:customCell>
+							</g:row>					
+						</g:Grid>
+					</g:VerticalPanel>
 					<g:PopupPanel 
 						ui:field="manterMapaPopupPanel" 
 						visible="false" 

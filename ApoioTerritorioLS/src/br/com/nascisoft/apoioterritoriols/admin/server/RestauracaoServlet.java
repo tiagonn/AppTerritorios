@@ -80,6 +80,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setHorario(surdo.getHorario());
 		retorno.setAnoNascimento(surdo.getAnoNascimento());
 		retorno.setInstrutor(surdo.getInstrutor());
+		retorno.setIdade(surdo.getIdade());
 		retorno.setLatitude(surdo.getLatitude());
 		retorno.setLibras(surdo.getLibras());
 		retorno.setLogradouro(surdo.getLogradouro());

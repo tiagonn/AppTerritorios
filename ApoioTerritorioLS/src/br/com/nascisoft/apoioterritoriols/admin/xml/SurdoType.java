@@ -76,6 +76,7 @@ import javax.xml.bind.annotation.XmlType;
     "publicacoesPossui",
     "dvd",
     "instrutor",
+    "idade",
     "sexo",
     "horario",
     "melhorDia",
@@ -110,6 +111,7 @@ public class SurdoType {
     protected String publicacoesPossui;
     protected String dvd;
     protected String instrutor;
+    protected String idade;
     protected String sexo;
     protected String horario;
     protected String melhorDia;
@@ -122,7 +124,7 @@ public class SurdoType {
     protected double longitude;
     protected boolean mudouSe;
     protected boolean visitarSomentePorAnciaos;
-    protected int anoNascimento;
+    protected Integer anoNascimento;
 
     /**
      * Gets the value of the id property.
@@ -427,6 +429,30 @@ public class SurdoType {
     public void setDvd(String value) {
         this.dvd = value;
     }
+    
+    /**
+     * Gets the value of the idade property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getIdade() {
+    	return idade;
+    }
+    
+    /**
+     * Sets the value of the instrutor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setIdade(String value) {
+    	this.idade = value;
+    }
 
     /**
      * Gets the value of the instrutor property.
@@ -701,7 +727,7 @@ public class SurdoType {
      *     {@link String }
      *     
      */
-    public int getAnoNascimento() {
+    public Integer getAnoNascimento() {
         return anoNascimento;
     }
 
@@ -713,7 +739,7 @@ public class SurdoType {
      *     {@link String }
      *     
      */
-    public void setAnoNascimento(int value) {
+    public void setAnoNascimento(Integer value) {
         this.anoNascimento = value;
     }
 

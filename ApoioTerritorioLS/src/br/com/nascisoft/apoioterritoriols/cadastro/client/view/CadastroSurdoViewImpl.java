@@ -543,7 +543,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		surdo.setLatitude(this.manterLatitude);
 		surdo.setMudouSe(this.manterMudouSe.getValue());
 		surdo.setVisitarSomentePorAnciaos(this.manterVisitarSomentePorAnciaos.getValue());
-		if (surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos()
+		if ((surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos())
 				&& this.manterMapa != null) {
 			surdo.setMapaAnterior(this.manterMapa.getId());
 		}
@@ -596,6 +596,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		sexoListBox.addItem("Mulher");
 		sexoListBox.addItem("Casal");
 		sexoListBox.addItem("Família");
+		sexoListBox.addItem("Amigos/Grupo");
 	}
 	
 	private int obterIndice(ListBox list, String valor) {

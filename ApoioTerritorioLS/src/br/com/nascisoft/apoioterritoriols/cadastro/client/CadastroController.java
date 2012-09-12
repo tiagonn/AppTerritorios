@@ -32,6 +32,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaViewI
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarViewImpl;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -245,15 +246,21 @@ public class CadastroController implements CadastroPresenter,
 									// não faz nada, o identificador continua null
 								}
 								try {
-									estaAssociadoMapa = Boolean.valueOf(parametros[3].split("=")[1]);
+									String estaAssociadoMapaString = parametros[3].split("=")[1];
+									if (!StringUtils.isEmpty(estaAssociadoMapaString) && !"null".equals(estaAssociadoMapaString)) {
+										estaAssociadoMapa = Boolean.valueOf(estaAssociadoMapaString);
+									}
 								} catch (ArrayIndexOutOfBoundsException e) {
 									// não faz nada, a flag continua null
+								}
+								if (estaAssociadoMapa != null && estaAssociadoMapa) {
+									estaAssociadoMapa = null;
 								}
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
 										nomeSurdo,
 										nomeRegiao,
 										identificadorMapa,
-										estaAssociadoMapa ? null : estaAssociadoMapa);	
+										estaAssociadoMapa);	
 							} else if ("surdos!adicionar".equals(currentToken)) {
 								cadastroSurdoPresenter.onAdicionar();
 							} else if (currentToken.startsWith("surdos!editar")) {

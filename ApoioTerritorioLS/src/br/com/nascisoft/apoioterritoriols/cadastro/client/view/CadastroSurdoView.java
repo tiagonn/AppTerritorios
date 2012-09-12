@@ -1,11 +1,12 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.List;
-
-import com.google.gwt.maps.client.base.HasLatLng;
+import java.util.Map;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+
+import com.google.gwt.maps.client.base.HasLatLng;
 
 public interface CadastroSurdoView extends CadastroView {
 	
@@ -24,8 +25,10 @@ public interface CadastroSurdoView extends CadastroView {
 	void setBairroList(List<String> bairros);
 	void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa);
 	void onAdicionar();
-	void setPosition(HasLatLng position);
+	void setPosition(HasLatLng position, Boolean mostraMapa);
 	void onEditar(Surdo surdo);
 	void onApagarSurdo(Long id);
+	Map<String, String> getDadosFiltro();
+	void setDadosFiltro(Map<String, String> filtros);
 
 }

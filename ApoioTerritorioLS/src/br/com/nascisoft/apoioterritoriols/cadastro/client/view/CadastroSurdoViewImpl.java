@@ -1,6 +1,8 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
@@ -110,6 +112,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	HasMarker marker;
 	String manterRegiao;
 	boolean buscaEndereco = true;
+	private Map<String, String> dadosFiltro;
 	
 	//TODO: Parametrizar todos os dados fixos
 	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.878419,-47.070356);// endereço do salão do reino
@@ -346,13 +349,13 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 						this.manterCEPTextBox.getValue());
 			} else {
 				HasLatLng position = new LatLng(this.manterLatitude, this.manterLongitude);
-				this.setPosition(position);
-				onManterMapaConfirmarEnderecoButtonClick(null);
+				this.setPosition(position, false);
+				onManterMapaConfirmarEnderecoButtonClick(event);
 			}
 		}		
 	}
 	
-	public void setPosition(HasLatLng position) {
+	public void setPosition(HasLatLng position, Boolean mostraMapa) {
 		
 		int zoom = 17;
 		this.manterWarningEnderecoHTML.setVisible(false);
@@ -363,34 +366,38 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		} 
 		this.manterLatitude = position.getLatitude();
 		this.manterLongitude = position.getLongitude();
-		HasMapOptions opt = new MapOptions();
-		opt.setZoom(zoom);
-		opt.setCenter(new LatLng(this.manterLatitude,this.manterLongitude));
-		opt.setMapTypeId(new MapTypeId().getRoadmap());
-		opt.setDraggable(true);
-		opt.setNavigationControl(true);
-		opt.setScrollwheel(true);
-		MapWidget mapa = new MapWidget(opt);
-		mapa.setSize("635px", "480px");
 		HasMarkerOptions markerOpt = new MarkerOptions();
 		markerOpt.setClickable(true);
 		markerOpt.setDraggable(true);
 		markerOpt.setVisible(true);
 		this.marker = new Marker(markerOpt);
 		this.marker.setPosition(position);
-		this.marker.setMap(mapa.getMap());
-		manterMapaLayoutPanel.clear();
-		manterMapaLayoutPanel.setSize("635px", "480px");
-		manterMapaLayoutPanel.add(mapa);		
-		manterMapaPopupPanel.setPopupPosition(this.pesquisaNomeTextBox.getAbsoluteLeft()+50,20);
-		manterMapaPopupPanel.setVisible(true);
-		manterMapaPopupPanel.show();
+
+		if (mostraMapa) {		
+			HasMapOptions opt = new MapOptions();
+			opt.setZoom(zoom);
+			opt.setCenter(new LatLng(this.manterLatitude,this.manterLongitude));
+			opt.setMapTypeId(new MapTypeId().getRoadmap());
+			opt.setDraggable(true);
+			opt.setNavigationControl(true);
+			opt.setScrollwheel(true);
+			MapWidget mapa = new MapWidget(opt);
+			mapa.setSize("635px", "480px");
+			this.marker.setMap(mapa.getMap());
+			manterMapaLayoutPanel.clear();
+			manterMapaLayoutPanel.setSize("635px", "480px");
+			manterMapaLayoutPanel.add(mapa);		
+			manterMapaPopupPanel.setPopupPosition(this.pesquisaNomeTextBox.getAbsoluteLeft()+50,20);
+			manterMapaPopupPanel.setVisible(true);
+			manterMapaPopupPanel.show();
+		}
 	}
 	
 	@UiHandler("manterMapaConfirmarEnderecoButton")
 	void onManterMapaConfirmarEnderecoButtonClick(ClickEvent event) {
 		this.manterLatitude = marker.getPosition().getLatitude();
 		this.manterLongitude = marker.getPosition().getLongitude();
+		this.manterMapaPopupPanel.hide();
 		Surdo surdo = populaSurdo();
 		this.presenter.adicionarOuAlterarSurdo(surdo);
 	}
@@ -613,6 +620,37 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterSurdoPanel.setVisible(true);
 		this.limparResultadoPesquisa();
 		this.limparManter();
+	}
+
+	@Override
+	public Map<String, String> getDadosFiltro() {
+		if (dadosFiltro == null) {
+			dadosFiltro = new HashMap<String, String>();
+		}
+		dadosFiltro.put("Nome", this.pesquisaNomeTextBox.getText());
+		dadosFiltro.put("Regiao", this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()));
+		dadosFiltro.put("Mapa", this.pesquisaMapaListBox.getValue(this.pesquisaMapaListBox.getSelectedIndex()));
+		dadosFiltro.put("EstaAssociadoMapa", String.valueOf(this.pesquisaEstaAssociadoMapaCheckBox.getValue()));
+		
+		return dadosFiltro;
+	}
+
+	@Override
+	public void setDadosFiltro(Map<String, String> filtros) {
+		this.pesquisaNomeTextBox.setText(filtros.get("Nome"));
+		String regiao = filtros.get("Regiao");
+		if (!StringUtils.isEmpty(regiao)) {
+			this.pesquisaRegiaoListBox.setSelectedIndex(obterIndice(this.pesquisaRegiaoListBox, regiao));
+		}
+		String mapa = filtros.get("Mapa");
+		if (!StringUtils.isEmpty(mapa)) {
+			this.pesquisaMapaListBox.setSelectedIndex(obterIndice(this.pesquisaMapaListBox, mapa));
+		}
+		String estaAssociadoMapa = filtros.get("EstaAssociadoMapa");
+		if (!StringUtils.isEmpty(estaAssociadoMapa) && !"null".equals(estaAssociadoMapa)) {
+			this.pesquisaEstaAssociadoMapaCheckBox.setValue(!Boolean.valueOf(estaAssociadoMapa));
+		}
+		
 	}	
 	
 	

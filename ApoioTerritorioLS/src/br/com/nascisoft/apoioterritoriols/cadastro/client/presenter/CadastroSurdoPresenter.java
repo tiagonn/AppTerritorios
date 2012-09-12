@@ -1,10 +1,11 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.presenter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirCadastroSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
@@ -78,7 +79,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	}
 	
 	@Override
-	public void onPesquisaPesquisarEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+	public void onPesquisaPesquisarEvent(final String nomeSurdo, final String nomeRegiao, final String identificadorMapa, final Boolean estaAssociadoMapa) {
 		getView().showWaitingPanel();
 		Long mapa = null;
 		if (!StringUtils.isEmpty(identificadorMapa)) {
@@ -96,6 +97,12 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onSuccess(List<SurdoDetailsVO> result) {
 				view.setResultadoPesquisa(result);
+				Map<String, String> filtros = new HashMap<String, String>();
+				filtros.put("Nome", nomeSurdo);
+				filtros.put("Regiao", nomeRegiao);
+				filtros.put("Mapa", identificadorMapa);
+				filtros.put("EstaAssociadoMapa", String.valueOf(estaAssociadoMapa));
+				view.setDadosFiltro(filtros);
 				getView().hideWaitingPanel();
 			}
 		});			
@@ -115,9 +122,15 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Surdo id " + result + " salvo com sucesso.");
-				eventBus.fireEvent(new AbrirCadastroSurdoEvent());
 				getView().hideWaitingPanel();
+				Window.alert("Surdo id " + result + " salvo com sucesso.");
+				Map<String, String> filtros = getView().getDadosFiltro();
+				String estaAssociadoMapa = filtros.get("EstaAssociadoMapa");
+				Boolean estaAssociadoMapaBoolean = null;
+				if (!StringUtils.isEmpty(estaAssociadoMapa) && !"null".equals(estaAssociadoMapa)) {
+					estaAssociadoMapaBoolean = Boolean.valueOf(estaAssociadoMapa);
+				}
+				eventBus.fireEvent(new PesquisarSurdoEvent(filtros.get("Nome"), filtros.get("Regiao"), filtros.get("Mapa"), estaAssociadoMapaBoolean));
 			}
 		});
 	}
@@ -213,9 +226,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 					if (retorno.equals(LATITUDE_CENTRO_CAMPINAS)) {
 						retorno = null;
 					}
-					view.setPosition(retorno);
+					view.setPosition(retorno, true);
 				} else {
-					view.setPosition(null);
+					view.setPosition(null, true);
 				}				
 				getView().hideWaitingPanel();
 			}

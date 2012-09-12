@@ -50,6 +50,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações de surdos que estão marcados para não serem visitados.\n", caught);
+				view.hideWaitingPanel();
 				Window.alert("Falha ao obter informações de surdos que estão marcados para não serem visitados\n" + caught.getMessage());
 			}
 		});
@@ -68,6 +69,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			
 			@Override
 			public void onSuccess(Void result) {
+				view.hideWaitingPanel();
 				Window.alert("Surdo retornado para a lista de visitas com sucesso");
 				eventBus.fireEvent(new AbrirNaoVisitarEvent());
 			}
@@ -75,6 +77,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao retornar surdo para serem visitados.\n", caught);
+				view.hideWaitingPanel();
 				Window.alert("Falha ao retornar surdo para serem visitados\n" + caught.getMessage());
 			}
 		});

@@ -39,11 +39,12 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 
 	@Override
 	public void abrirImpressao(final Long identificadorMapa, final Boolean paisagem) {
-		
+		getView().showWaitingPanel();
 		this.service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {
+				getView().hideWaitingPanel();
 				if (result == null || result.size() == 0) {
 					Window.alert("Não existe surdo associado a este mapa");
 				} else {
@@ -55,6 +56,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
 			}
 		});

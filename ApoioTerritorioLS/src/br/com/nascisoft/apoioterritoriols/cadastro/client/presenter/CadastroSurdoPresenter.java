@@ -63,6 +63,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				@Override
 				public void onFailure(Throwable caught) {
 					logger.log(Level.SEVERE, "Falha ao obter lista de bairros.\n", caught);
+					getView().hideWaitingPanel();
 					Window.alert("Falha ao obter lista de bairros. \n" + caught.getMessage());					
 				}
 			});
@@ -88,13 +89,14 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de surdos.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao obter lista de surdos. \n" + caught.getMessage());		
 			}
 
 			@Override
 			public void onSuccess(List<SurdoDetailsVO> result) {
-				getView().hideWaitingPanel();
 				view.setResultadoPesquisa(result);
+				getView().hideWaitingPanel();
 			}
 		});			
 	}
@@ -107,14 +109,15 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar surdo.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao adicionar ou alterar surdo. \n" + caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
-				getView().hideWaitingPanel();
 				Window.alert("Surdo id " + result + " salvo com sucesso.");
 				eventBus.fireEvent(new AbrirCadastroSurdoEvent());
+				getView().hideWaitingPanel();
 			}
 		});
 	}
@@ -131,6 +134,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter surdo.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao obter surdo. \n" + caught.getMessage());
 			}
 
@@ -160,6 +164,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao apagar surdo.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao apagar surdo. \n" + caught.getMessage());
 			}
 

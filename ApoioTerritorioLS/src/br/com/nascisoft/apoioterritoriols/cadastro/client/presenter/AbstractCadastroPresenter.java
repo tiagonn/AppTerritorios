@@ -37,6 +37,7 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 				@Override
 				public void onFailure(Throwable caught) {
 					logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+					getView().hideWaitingPanel();
 					Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
 				}
 
@@ -59,6 +60,7 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
+				getView().hideWaitingPanel();
 				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
 			}
 

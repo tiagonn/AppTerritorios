@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Id;
 
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Indexed;
@@ -239,6 +241,21 @@ public class Surdo implements Serializable {
 	}
 	public void setMapaAnterior(Long mapaAnterior) {
 		this.mapaAnterior = mapaAnterior;
+	}
+	
+	public String getEndereco() {
+		StringBuilder retorno = new StringBuilder();
+		retorno.append(this.getLogradouro()).append(", ").append(this.getNumero());
+		if (!StringUtils.isEmpty(this.getComplemento())) {
+			retorno.append(", ").append(this.getComplemento());
+		} 
+		if (!StringUtils.isEmpty(this.getBairro())) {
+			retorno.append(", ").append(this.getBairro());
+		}
+		if (!StringUtils.isEmpty(this.getCep())) {
+			retorno.append(", ").append(this.getCep());
+		}
+		return retorno.toString();
 	}
 	
 }

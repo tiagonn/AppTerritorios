@@ -10,8 +10,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.InfoWindowVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
-import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -71,12 +71,12 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiField LayoutPanel manterMapaMapaLayoutPanel;
 	@UiField HorizontalPanel manterMapaLegendaHorizontalPanel;
 	@UiField PopupPanel waitingPopUpPanel;
+	@UiField Button pesquisaMapaAdicionarMapaButton;
 	
 	private Long identificadorMapaAtual;
 	
 	private Map<Long, InfoWindowVO> mapaInfoWindow;
 	
-	private static final String OPERACAO_ADICIONAR_MAPA = "adicionarMapa";
 	private static final int TIPO_SURDO_SEM_MAPA = 0;
 	private static final int TIPO_SURDO_MAPA_ATUAL = 1;
 	private static final int TIPO_SURDO_MAPA_OUTROS = 2;
@@ -124,6 +124,8 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaMapaMapaListBox.setSelectedIndex(0);
 		this.pesquisaMapaMapaListBox.setEnabled(false);
+		this.pesquisaMapaAdicionarMapaButton.setEnabled(false);
+		this.pesquisaMapaAdicionarMapaButton.setVisible(false);
 		this.identificadorMapaAtual = null;
 	}
 	
@@ -154,7 +156,6 @@ public class CadastroMapaViewImpl extends Composite implements
 	public void setMapaList(List<Mapa> mapas) {
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
-		this.pesquisaMapaMapaListBox.addItem("Adicionar novo mapa na Região", OPERACAO_ADICIONAR_MAPA);
 		for (Mapa mapa : mapas) {
 			this.pesquisaMapaMapaListBox.addItem(mapa.getNome(), mapa.getId().toString());
 		}
@@ -183,26 +184,32 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (presenter != null) {
 			if (!this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()).isEmpty()) {
 				this.pesquisaMapaMapaListBox.setEnabled(true);
+				this.pesquisaMapaAdicionarMapaButton.setVisible(true);
+				this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
 				this.presenter.onPesquisaRegiaoListBoxChange(pesquisaMapaRegiaoListBox.getValue(pesquisaMapaRegiaoListBox.getSelectedIndex()));
 			} else {
 				this.pesquisaMapaMapaListBox.setEnabled(false);
 				this.pesquisaMapaMapaListBox.setSelectedIndex(0);
+				this.pesquisaMapaAdicionarMapaButton.setEnabled(false);
+				this.pesquisaMapaAdicionarMapaButton.setVisible(false);
 			}
 		}
 		limparManter();
 	}
 	
+	@UiHandler("pesquisaMapaAdicionarMapaButton")
+	void onPesquisaMapaAdicionarMapaButtonClick(ClickEvent event) {
+		this.presenter.adicionarMapa(
+				this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()));
+	}
+	
+
 	@UiHandler("pesquisaMapaMapaListBox")
 	void onPesquisaMapaMapaListBoxChange(ChangeEvent event) {
 		if (presenter != null) {
 			String mapa = this.pesquisaMapaMapaListBox.getValue(this.pesquisaMapaMapaListBox.getSelectedIndex());
 			if (!"".equals(mapa)) {
-				if (OPERACAO_ADICIONAR_MAPA.equals(mapa)) {
-					this.presenter.adicionarMapa(
-							this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()));
-				} else {
-					this.presenter.abrirMapa(Long.valueOf(mapa));
-				}
+				this.presenter.abrirMapa(Long.valueOf(mapa));
 			} else {
 				limparManter();
 			}
@@ -326,11 +333,18 @@ public class CadastroMapaViewImpl extends Composite implements
 		}
 		HasInfoWindowOptions infoOpt = new InfoWindowOptions();
 		StringBuilder info = new StringBuilder();
-		info.append("<span><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome()));
+		info.append("<span><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome())).append("</span><br/>");
+		info.append("<span><strong>Endereço:</strong> ").append(surdo.getEndereco()).append("</span><br/>");
+		if (!StringUtils.isEmpty(surdo.getObservacao())) {
+			info.append("<span width=80px><strong>Observação:</strong> ").append(surdo.getObservacao()).append("</span><br/>");
+		}
 		if (!StringUtils.isEmpty(surdo.getMapa())) {
-			info.append("<br/><br/><span><strong>Mapa:</strong> ").append(surdo.getMapa());
+			info.append("<span><strong>Mapa:</strong> ").append(surdo.getMapa()).append("</span><br/>");
 		}		
+		info.append("<span><a href=\"Cadastro.html#surdos!editar#identificadorSurdo=")
+			.append(surdo.getId()).append("\">Editar surdo</a></span>");
 		infoOpt.setContent(info.toString());
+		infoOpt.setMaxWidth(300);
 		final HasInfoWindow infoWindow = new InfoWindow(infoOpt);
 		final HasMarker marker = new Marker(markerOpt);
 		marker.setPosition(new LatLng(surdo.getLatitude(), surdo.getLongitude()));

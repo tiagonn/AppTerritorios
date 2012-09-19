@@ -266,6 +266,16 @@
 								<g:ListBox ui:field="pesquisaMapaMapaListBox" enabled="false" />
 							</g:customCell>
 						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML>&nbsp;</g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:Button ui:field="pesquisaMapaAdicionarMapaButton" enabled="false" text="Adicionar Mapa na Região" visible="false"></g:Button>
+							</g:customCell>
+						</g:row>
 					</g:Grid>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="manterMapaSurdoNomeMapaLabel" visible="false"/>

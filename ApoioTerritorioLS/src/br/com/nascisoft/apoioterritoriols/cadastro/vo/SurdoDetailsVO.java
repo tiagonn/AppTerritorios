@@ -14,6 +14,8 @@ public class SurdoDetailsVO implements Serializable {
 	private String mapa;
 	private Double latitude;
 	private Double longitude;
+	private String endereco;
+	private String observacao;
 	
 	public SurdoDetailsVO() {
 		super();
@@ -27,6 +29,8 @@ public class SurdoDetailsVO implements Serializable {
 		this.setLatitude(surdo.getLatitude());
 		this.setLongitude(surdo.getLongitude());
 		this.setMapa(mapa != null ? mapa.getNome() : "");
+		this.setEndereco(surdo.getEndereco());
+		this.setObservacao(surdo.getObservacao());
 	}
 	
 	public SurdoDetailsVO(SurdoVO surdo) {
@@ -36,6 +40,8 @@ public class SurdoDetailsVO implements Serializable {
 		this.setLatitude(surdo.getLatitude());
 		this.setLongitude(surdo.getLongitude());
 		this.setMapa(surdo.getMapa());
+		this.setEndereco(surdo.getEndereco());
+		this.setObservacao(surdo.getObservacao());
 	}
 	
 	public Long getId() {
@@ -79,6 +85,22 @@ public class SurdoDetailsVO implements Serializable {
 
 	public Double getLongitude() {
 		return longitude;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }

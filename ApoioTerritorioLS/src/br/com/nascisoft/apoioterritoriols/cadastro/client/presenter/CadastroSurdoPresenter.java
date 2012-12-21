@@ -31,7 +31,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	private final CadastroSurdoView view;
 	
 	//TODO: Parametrizar todos os dados fixos
-	private static final HasLatLng LATITUDE_CENTRO_CAMPINAS = new LatLng(-22.9071048, -47.06323910000003);
+	private static final HasLatLng LATITUDE_CENTRO_CAMPINAS = new LatLng(-22.761653, -47.15407419999997);
 	
 	public CadastroSurdoPresenter(CadastroServiceAsync service,
 			HandlerManager eventBus, CadastroSurdoView view) {
@@ -207,7 +207,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 		}
 		
 		//TODO: Parametrizar todos os dados fixos
-		sb.append("Campinas, Sao Paulo, Brasil");
+		sb.append("Paulínia, Sao Paulo, Brasil");
 		
 		HasGeocoderRequest request = new GeocoderRequest();
 		request.setRegion("BR");

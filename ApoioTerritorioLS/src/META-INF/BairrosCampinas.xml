@@ -1,331 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bairros>
-	<bairro>Arruamento Fain José Feres</bairro>
-	<bairro>Alphaville</bairro>
-	<bairro>Alto da Cidade Universitária</bairro>
-	<bairro>Bairro Boa Vista</bairro>
-	<bairro>Bairro Mendonça</bairro>
-	<bairro>Bairro Nova Aparecida</bairro>
-	<bairro>Bairro Rural do Pari</bairro>
-	<bairro>Bairro San Martin</bairro>
-	<bairro>Bananal</bairro>
+	<bairro>Alto dos Pinheiros</bairro>
+	<bairro>Betel</bairro>
+	<bairro>Boa Esperança</bairro>
 	<bairro>Bonfim</bairro>
-	<bairro>Bosque</bairro>
-	<bairro>Bosque das Palmeiras</bairro>
-	<bairro>Bosque de Barão Geraldo</bairro>
-	<bairro>Botafogo</bairro>
-	<bairro>Cambuí</bairro>
-	<bairro>Campo dos Amarais Mapa</bairro>
-	<bairro>Carlos Gomes</bairro>
-	<bairro>CDHU Campinas F</bairro>
-	<bairro>CDHU Edivaldo Orsi</bairro>
-	<bairro>Centro</bairro>
-	<bairro>Chácara Belvedere</bairro>
-	<bairro>Chácara da Barra</bairro>
-	<bairro>Chácara Gargantilha</bairro>
-	<bairro>Chácara Primavera</bairro>
-	<bairro>Chácara Santa Margarida</bairro>
-	<bairro>Chácaras Anhanguera</bairro>
-	<bairro>Chácaras Boa Vista</bairro>
-	<bairro>Chácaras Cruzeiro do Sul</bairro>
-	<bairro>Chácaras Leandro</bairro>
-	<bairro>Chácaras Três Marias</bairro>
-	<bairro>Cidade Jardim</bairro>
-	<bairro>Cidade Satélite Íris</bairro>
-	<bairro>Cidade Satélite Íris II</bairro>
-	<bairro>Cidade Satélite Íris III</bairro>
-	<bairro>Cidade Singer</bairro>
-	<bairro>Cidade Universitária</bairro>
-	<bairro>Colinas do Ermitage</bairro>
-	<bairro>Conjunto Mauro Marcondes</bairro>
-	<bairro>Conjunto Residencial Sousa Queirós</bairro>
-	<bairro>DIC I (Monsenhor Luís Fernando Abreu)</bairro>
-	<bairro>DIC II (Doutor Antônio Mendonça de Barros)</bairro>
-	<bairro>DIC III (Rui Novais)</bairro>
-	<bairro>DIC IV (Lech Walesa)</bairro>
-	<bairro>DIC V (Chico Mendes)</bairro>
-	<bairro>DIC VI (Santo Dias da Silva)</bairro>
-	<bairro>Distrito Industrial</bairro>
-	<bairro>Fundação da Casa Popular</bairro>
-	<bairro>Gramado</bairro>
-	<bairro>Guanabara</bairro>
-	<bairro>Guará</bairro>
-	<bairro>Imperial Parque</bairro>
-	<bairro>Jardim Ademar de Barros</bairro>
-	<bairro>Jardim Aeronave</bairro>
-	<bairro>Jardim Aeroporto</bairro>
-	<bairro>Jardim Afife</bairro>
-	<bairro>Jardim Aires da Costa</bairro>
-	<bairro>Jardim Alto da Cidade Universitária</bairro>
-	<bairro>Jardim Amazonas</bairro>
+	<bairro>Cascata</bairro>
+	<bairro>Da. Edith de Campos Favaro</bairro>
 	<bairro>Jardim América</bairro>
-	<bairro>Jardim Amoreiras</bairro>
-	<bairro>Jardim Atibaia</bairro>
-	<bairro>Jardim Aurélia</bairro>
-	<bairro>Jardim Bandeirantes</bairro>
-	<bairro>Jardim Baronesa</bairro>
-	<bairro>Jardim Bassoli</bairro>
-	<bairro>Jardim Bela Vista</bairro>
-	<bairro>Jardim Belmonte</bairro>
-	<bairro>Jardim Belo Horizonte</bairro>
-	<bairro>Jardim Boa Esperança</bairro>
-	<bairro>Jardim Bom Retiro</bairro>
-	<bairro>Jardim Botânico</bairro>
-	<bairro>Jardim Brasil</bairro>
-	<bairro>Jardim Campina Grande</bairro>
-	<bairro>Jardim Campinas</bairro>
-	<bairro>Jardim Campineiro</bairro>
-	<bairro>Jardim Campo Belo I</bairro>
-	<bairro>Jardim Campo Belo II</bairro>
-	<bairro>Jardim Campos Elíseos</bairro>
-	<bairro>Jardim Capivari</bairro>
-	<bairro>Jardim Carlos Lourenço</bairro>
-	<bairro>Jardim Chapadão</bairro>
-	<bairro>Jardim Conceição</bairro>
-	<bairro>Jardim Conceição</bairro>
-	<bairro>Jardim Cristina</bairro>
-	<bairro>Jardim das Andorinhas</bairro>
-	<bairro>Jardim das Oliveiras</bairro>
-	<bairro>Jardim das Paineiras</bairro>
-	<bairro>Jardim das Palmeiras</bairro>
-	<bairro>Jardim do Lago I</bairro>
-	<bairro>Jardim do Lago II</bairro>
-	<bairro>Jardim do Sol</bairro>
-	<bairro>Jardim do Trevo</bairro>
-	<bairro>Jardim do Vovô</bairro>
-	<bairro>Jardim Dom Bosco</bairro>
-	<bairro>Jardim Esmeraldina</bairro>
-	<bairro>Jardim Esplanada</bairro>
-	<bairro>Jardim Estoril</bairro>
-	<bairro>Jardim Eulina</bairro>
-	<bairro>Jardim Fernanda I</bairro>
-	<bairro>Jardim Fernanda II</bairro>
+	<bairro>Jardim de Harmonia</bairro>
+	<bairro>Jardim de Itapoan</bairro>
+	<bairro>Jardim dos Calegaris</bairro>
 	<bairro>Jardim Flamboyant</bairro>
-	<bairro>Jardim Florence</bairro>
-	<bairro>Jardim Garcia</bairro>
-	<bairro>Jardim Icaraí</bairro>
-	<bairro>Jardim Independência</bairro>
-	<bairro>Jardim Interlagos</bairro>
-	<bairro>Jardim Ipaussurama</bairro>
-	<bairro>Jardim Ipiranga</bairro>
-	<bairro>Jardim Irmãos Sigrist</bairro>
-	<bairro>Jardim Itaiú</bairro>
-	<bairro>Jardim Itamarati</bairro>
-	<bairro>Jardim Itatiaia</bairro>
-	<bairro>Jardim Itatinga</bairro>
-	<bairro>Jardim IV Centenário</bairro>
-	<bairro>Jardim José Martins</bairro>
-	<bairro>Jardim José Martins</bairro>
 	<bairro>Jardim Leonor</bairro>
-	<bairro>Jardim Liliza</bairro>
-	<bairro>Jardim Lisa</bairro>
-	<bairro>Jardim Londres</bairro>
-	<bairro>Jardim Madalena</bairro>
-	<bairro>Jardim Magnólia</bairro>
-	<bairro>Jardim Maracanã</bairro>
-	<bairro>Jardim Marajó</bairro>
-	<bairro>Jardim Margarida</bairro>
-	<bairro>Jardim Maria Rosa</bairro>
-	<bairro>Jardim Marisa</bairro>
-	<bairro>Jardim Martinelli</bairro>
-	<bairro>Jardim Melina</bairro>
-	<bairro>Jardim Mercedes</bairro>
-	<bairro>Jardim Miranda</bairro>
-	<bairro>Jardim Mirassol</bairro>
-	<bairro>Jardim Míriam</bairro>
-	<bairro>Jardim Monte Belo I</bairro>
-	<bairro>Jardim Monte Belo II</bairro>
-	<bairro>Jardim Morumbi</bairro>
-	<bairro>Jardim Nova Iorque</bairro>
-	<bairro>Jardim Nilópolis</bairro>
-	<bairro>Jardim Nossa Senhora Auxiliadora</bairro>
-	<bairro>Jardim Nossa Senhora de Lourdes</bairro>
-	<bairro>Jardim Nova América</bairro>
-	<bairro>Jardim Nova Esperança</bairro>
-	<bairro>Jardim Nova Europa</bairro>
-	<bairro>Jardim Nova Mercedes</bairro>
-	<bairro>Jardim Novo Campos Elíseos</bairro>
-	<bairro>Jardim Novo Maracanã</bairro>
-	<bairro>Jardim Novo São José</bairro>
-	<bairro>Jardim Novo Taquaral</bairro>
-	<bairro>Jardim Ouro Branco</bairro>
-	<bairro>Jardim Ouro Verde</bairro>
-	<bairro>Jardim Pacaembu</bairro>
-	<bairro>Jardim Paraíso</bairro>
-	<bairro>Jardim Paraíso de Viracopos</bairro>
-	<bairro>Jardim Paranapanema</bairro>
-	<bairro>Jardim Pauliceia</bairro>
-	<bairro>Jardim Paulistano</bairro>
-	<bairro>Jardim Petrópolis</bairro>
 	<bairro>Jardim Planalto</bairro>
-	<bairro>Jardim Planalto de Viracopos</bairro>
-	<bairro>Jardim Primavera</bairro>
-	<bairro>Jardim Proença</bairro>
-	<bairro>Jardim Professora Tarcilla</bairro>
-	<bairro>Jardim Rosália I</bairro>
-	<bairro>Jardim Rosália II</bairro>
-	<bairro>Jardim Roseira</bairro>
-	<bairro>Jardim Rossin</bairro>
-	<bairro>Jardim Samambaia</bairro>
-	<bairro>Jardim Santa Cândida</bairro>
-	<bairro>Jardim Santa Clara</bairro>
-	<bairro>Jardim Santa Cruz</bairro>
-	<bairro>Jardim Santa Eudóxia</bairro>
-	<bairro>Jardim Santa Genebra</bairro>
-	<bairro>Jardim Santa Genebra</bairro>
-	<bairro>Jardim Santa Lúcia</bairro>
-	<bairro>Jardim Santa Marcelina</bairro>
-	<bairro>Jardim Santa Mônica</bairro>
-	<bairro>Jardim Santa Odila</bairro>
-	<bairro>Jardim Santa Rita de Cássia</bairro>
-	<bairro>Jardim Santa Rosa</bairro>
-	<bairro>Jardim Santa Terezinha</bairro>
-	<bairro>Jardim Santana</bairro>
-	<bairro>Jardim São Carlos</bairro>
-	<bairro>Jardim São Cristóvão</bairro>
-	<bairro>Jardim São Domingos</bairro>
-	<bairro>Jardim São Fernando</bairro>
-	<bairro>Jardim São Gabriel</bairro>
-	<bairro>Jardim São Gonçalo</bairro>
-	<bairro>Jardim São João</bairro>
-	<bairro>Jardim São José</bairro>
-	<bairro>Jardim São Judas Tadeu</bairro>
-	<bairro>Jardim São Marcos</bairro>
-	<bairro>Jardim São Pedro</bairro>
-	<bairro>Jardim São Rafael</bairro>
-	<bairro>Jardim São Vicente</bairro>
-	<bairro>Jardim Shangai</bairro>
-	<bairro>Jardim Sorirama</bairro>
-	<bairro>Jardim Tamoio</bairro>
-	<bairro>Jardim Von Zuben</bairro>
-	<bairro>Jardim Yeda</bairro>
-	<bairro>Joaquim Egídio</bairro>
-	<bairro>Loteamento Caminhos de São Conrado</bairro>
-	<bairro>Loteamento Center Santa Genebra</bairro>
-	<bairro>Loteamento Chácaras Vale das Garças</bairro>
-	<bairro>Loteamento Residencial Barão do Café</bairro>
-	<bairro>Loteamento Solar Campinas</bairro>
-	<bairro>Mansões Santo Antônio</bairro>
-	<bairro>Morada das Nascentes</bairro>
-	<bairro>Notre Dame</bairro>
-	<bairro>Nova Campinas</bairro>
-	<bairro>Nova Sousas</bairro>
-	<bairro>Núcleo Residencial Beira Rio</bairro>
-	<bairro>Núcleo Residencial Padre Josimo</bairro>
-	<bairro>Núcleo Residencial Renascença</bairro>
-	<bairro>Núcleo Residencial Rosália IV</bairro>
-	<bairro>Núcleo Residencial São Luiz</bairro>
-	<bairro>Núcleo Residencial Sete de Setembro</bairro>
-	<bairro>Núcleo Residencial Vila Francisca</bairro>
-	<bairro>Núcleo Residencial Vila Vitória</bairro>
-	<bairro>Parque Alto Taquaral</bairro>
-	<bairro>Parque Brasília</bairro>
-	<bairro>Parque Camélias</bairro>
-	<bairro>Parque Ceasa</bairro>
-	<bairro>Parque Cidade de Campinas</bairro>
-	<bairro>Parque Cidade de Campinas</bairro>
+	<bairro>Jardim Vista Alegre</bairro>
+	<bairro>Jardim Ypê</bairro>
+	<bairro>João Aranha</bairro>
+	<bairro>Monte Alegre</bairro>
+	<bairro>Morumbi</bairro>
+	<bairro>Nova Paulínia</bairro>
+	<bairro>Nova Veneza</bairro>
+	<bairro>Parque Bom Retiro</bairro>
+	<bairro>Parque Brasil 500</bairro>
 	<bairro>Parque da Figueira</bairro>
-	<bairro>Parque da Hípica</bairro>
-	<bairro>Parque das Flores</bairro>
-	<bairro>Parque das Indústrias</bairro>
-	<bairro>Parque das Universidades</bairro>
-	<bairro>Parque das Universidades</bairro>
-	<bairro>Parque Dom Pedro</bairro>
-	<bairro>Parque dos Cisnes</bairro>
-	<bairro>Parque dos Pomares</bairro>
-	<bairro>Parque Família</bairro>
-	<bairro>Parque Fazendinha</bairro>
-	<bairro>Parque Floresta</bairro>
-	<bairro>Parque Imperador</bairro>
-	<bairro>Parque Industrial</bairro>
-	<bairro>Parque Itajaí</bairro>
-	<bairro>Parque Jambeiro</bairro>
-	<bairro>Parque Jatibaia</bairro>
-	<bairro>Parque Maria Helena</bairro>
-	<bairro>Parque Montreal</bairro>
-	<bairro>Parque Pinheiros</bairro>
-	<bairro>Parque Prado</bairro>
-	<bairro>Parque Santa Bárbara</bairro>
-	<bairro>Parque São Bento</bairro>
-	<bairro>Parque São Jorge</bairro>
-	<bairro>Parque São Martinho</bairro>
-	<bairro>Parque São Quirino</bairro>
-	<bairro>Parque Taquaral</bairro>
-	<bairro>Parque Tropical</bairro>
-	<bairro>Parque Universitário de Viracopos</bairro>
-	<bairro>Parque Valença I</bairro>
-	<bairro>Parque Valença II</bairro>
-	<bairro>Parque Via Norte</bairro>
-	<bairro>Parque Vista Alegre</bairro>
-	<bairro>Ponte Preta</bairro>
-	<bairro>Real Parque</bairro>
-	<bairro>Recanto dos Dourados</bairro>
-	<bairro>Residencial Burato</bairro>
-	<bairro>Residencial Colina das Nascentes</bairro>
-	<bairro>Residencial Cosmos</bairro>
-	<bairro>Residencial Novo Mundo</bairro>
-	<bairro>Residencial Parque Bandeirantes</bairro>
-	<bairro>Residencial Parque Rio das Pedras</bairro>
-	<bairro>Residencial São José</bairro>
-	<bairro>Residencial São Luís</bairro>
-	<bairro>Residencial Shangrilá</bairro>
-	<bairro>Residencial Terra Nova</bairro>
-	<bairro>São Bernardo</bairro>
-	<bairro>Sousas</bairro>
-	<bairro>Swift</bairro>
-	<bairro>Taquaral</bairro>
-	<bairro>Terminal Intermodal de Cargas (TIC)</bairro>
-	<bairro>Vida Nova</bairro>
-	<bairro>Vila 31 de Março</bairro>
-	<bairro>Vila Aeroporto</bairro>
-	<bairro>Vila Aurocan</bairro>
-	<bairro>Vila Boa Vista</bairro>
-	<bairro>Vila Bourbon</bairro>
-	<bairro>Vila Brandina</bairro>
-	<bairro>Vila Campos Sales</bairro>
-	<bairro>Vila Castelo Branco</bairro>
-	<bairro>Vila Costa e Silva</bairro>
-	<bairro>Vila Formosa</bairro>
-	<bairro>Vila Gênesis</bairro>
-	<bairro>Vila Georgina</bairro>
-	<bairro>Vila IAPI</bairro>
-	<bairro>Vila Industrial</bairro>
-	<bairro>Vila Ipê</bairro>
-	<bairro>Vila Itapura</bairro>
-	<bairro>Vila Iza</bairro>
-	<bairro>Vila Joaquim Inácio</bairro>
-	<bairro>Vila Lemos</bairro>
-	<bairro>Vila Marieta</bairro>
-	<bairro>Vila Marta</bairro>
-	<bairro>Vila Miguel Vicente Cury</bairro>
-	<bairro>Vila Mimosa</bairro>
-	<bairro>Vila Mingone</bairro>
-	<bairro>Vila Modesto Fernandes</bairro>
-	<bairro>Vila Nogueira</bairro>
-	<bairro>Vila Nova</bairro>
-	<bairro>Vila Nova São José</bairro>
-	<bairro>Vila Olândia</bairro>
-	<bairro>Vila Olímpia</bairro>
-	<bairro>Vila Orozimbo Maia</bairro>
-	<bairro>Vila Padre Anchieta</bairro>
-	<bairro>Vila Padre Manuel da Nóbrega</bairro>
-	<bairro>Vila Palmeiras</bairro>
-	<bairro>Vila Penteado</bairro>
-	<bairro>Vila Perseu Leite de Barros</bairro>
-	<bairro>Vila Pompeia</bairro>
-	<bairro>Vila Proost de Sousa</bairro>
-	<bairro>Vila Réggio</bairro>
-	<bairro>Vila Rica</bairro>
-	<bairro>Vila Rossi e Siqueira</bairro>
-	<bairro>Vila San Martin</bairro>
-	<bairro>Vila Santa Isabel</bairro>
-	<bairro>Vila Santa Luísa</bairro>
-	<bairro>Vila Santana</bairro>
-	<bairro>Vila Santana</bairro>
-	<bairro>Vila São Bento</bairro>
-	<bairro>Vila São João</bairro>
-	<bairro>Vila São José</bairro>
-	<bairro>Vila Teixeira</bairro>
-	<bairro>Vila União</bairro>
-	<bairro>Village Campinas</bairro>
+	<bairro>Parque das Árvores</bairro>
+	<bairro>Parque da Represa</bairro>
+	<bairro>Parque dos Jequitibás</bairro>
+	<bairro>Poço Fundo</bairro>
+	<bairro>Recanto dos Pássaros</bairro>
+	<bairro>Santa Cecília</bairro>
+	<bairro>Santa Terezinha</bairro>
+	<bairro>São Bento</bairro>
+	<bairro>São Domingos</bairro>
+	<bairro>São José</bairro>
+	<bairro>São Luiz</bairro>
+	<bairro>Vila Bressani</bairro>
+	<bairro>Vila José Paulino Nogueira</bairro>
+	<bairro>Vila Monte Alegre</bairro>
+	<bairro>Vila Presidente Médici</bairro>
 </bairros>

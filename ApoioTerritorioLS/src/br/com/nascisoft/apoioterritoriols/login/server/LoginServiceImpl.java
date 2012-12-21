@@ -25,13 +25,11 @@ public class LoginServiceImpl extends AbstractApoioTerritorioLSService implement
 	
 	static {
 		usuariosValidos = new ArrayList<String>();
-		usuariosValidos.add("tiagonn@gmail.com");
-		usuariosValidos.add("ls.centralcampinas@gmail.com");
-		usuariosValidos.add("lscentralcps.territorios@gmail.com");
-//		usuariosValidos.add("testadorapoioterritoriols@gmail.com");
+		usuariosValidos.add("lspaulinia@gmail.com");
+		usuariosValidos.add("lspaulinia.territorios@gmail.com");
 		
 		usuariosAdministradores = new ArrayList<String>();
-		usuariosAdministradores.add("tiagonn@gmail.com");
+		usuariosAdministradores.add("lspaulinia@gmail.com");
 
 	}
 

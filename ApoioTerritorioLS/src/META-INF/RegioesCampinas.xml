@@ -1,155 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <regioes>
 	<regiao>
-		<nome>Região de Barão Geraldo</nome>
+		<nome>Região do João Aranha</nome>
 		<letra>A</letra>
 		<centro>
-			<latitude>-22.810207</latitude>
-			<longitude>-47.07902</longitude>
+			<latitude>-22.734746</latitude>
+			<longitude>-47.175986</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Xangrila</nome>
+		<nome>Região do Nova Veneza</nome>
 		<letra>B</letra>
 		<centro>
-			<latitude>-22.807833</latitude>
-			<longitude>-47.018938</longitude>
+			<latitude>-22.757899</latitude>
+			<longitude>-47.195991</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do São Marcos</nome>
+		<nome>Região dos Jardins dos Calegaris</nome>
 		<letra>C</letra>
 		<centro>
-			<latitude>-22.847703</latitude>
-			<longitude>-47.124681</longitude>
+			<latitude>-22.757583</latitude>
+			<longitude>-47.154449</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Taquaral</nome>
+		<nome>Região da Vila Monte Alegre</nome>
 		<letra>D</letra>
 		<centro>
-			<latitude>-22.864471</latitude>
-			<longitude>-47.05739</longitude>
+			<latitude>-22.776498</latitude>
+			<longitude>-47.17007</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Flamboyant/São Quirino</nome>
+		<nome>Região do Jardim de Itapoan</nome>
 		<letra>E</letra>
 		<centro>
-			<latitude>-22.876808</latitude>
-			<longitude>-47.030468</longitude>
+			<latitude>-22.768149</latitude>
+			<longitude>-47.14852</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região de Sousas</nome>
+		<nome>Região do Morumbi</nome>
 		<letra>F</letra>
 		<centro>
-			<latitude>-22.882185</latitude>
-			<longitude>-46.972933</longitude>
+			<latitude>-22.779426</latitude>
+			<longitude>-47.13857</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Padre Anchieta/Via Norte</nome>
+		<nome>Região do Bom Retiro</nome>
 		<letra>G</letra>
 		<centro>
-			<latitude>-22.877124</latitude>
-			<longitude>-47.137384</longitude>
+			<latitude>-22.79003</latitude>
+			<longitude>-47.183546</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Eulina/Guanabara</nome>
+		<nome>Região do Parque Brasil 500</nome>
 		<letra>H</letra>
 		<centro>
-			<latitude>-22.890251</latitude>
-			<longitude>-47.087088</longitude>
+			<latitude>-22.802057</latitude>
+			<longitude>-47.135395</longitude>
 		</centro>
 	</regiao>
 	<regiao>
-		<nome>Região do Centro</nome>
+		<nome>Região do Betel</nome>
 		<letra>I</letra>
 		<centro>
-			<latitude>-22.901992</latitude>
-			<longitude>-47.061832</longitude>
+			<latitude>-22.795885</latitude>
+			<longitude>-47.114881</longitude>
 		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do Guarani/Itatiaia</nome>
-		<letra>J</letra>
-		<centro>
-			<latitude>-22.9165</latitude>
-			<longitude>-47.027349</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do São Bernardo/Nova Europa</nome>
-		<letra>K</letra>
-		<centro>
-			<latitude>-22.925354</latitude>
-			<longitude>-47.064428</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região dos Campos Elíseos/Vila União</nome>
-		<letra>L</letra>
-		<centro>
-			<latitude>-22.939978</latitude>
-			<longitude>-47.114453</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região das Amoreiras/Nova Mercedes</nome>
-		<letra>M</letra>
-		<centro>
-			<latitude>-22.967561</latitude>
-			<longitude>-47.110777</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região da Vila Mimosa</nome>
-		<letra>N</letra>
-		<centro>
-			<latitude>-22.946064</latitude>
-			<longitude>-47.093954</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do Oziel</nome>
-		<letra>O</letra>
-		<centro>
-			<latitude>-22.955548</latitude>
-			<longitude>-47.082453</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do Shangai/Vida Nova</nome>
-		<letra>P</letra>
-		<centro>
-			<latitude>-22.974989</latitude>
-			<longitude>-47.173777</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região dos Dic's</nome>
-		<letra>Q</letra>
-		<centro>
-			<latitude>-22.973567</latitude>
-			<longitude>-47.131748</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do Admar de Barros/Santo Antonio</nome>
-		<letra>R</letra>
-		<centro>
-			<latitude>-22.991583</latitude>
-			<longitude>-47.135181</longitude>
-		</centro>
-	</regiao>	
-	<regiao>
-		<nome>Região do Campo Belo</nome>
-		<letra>S</letra>
-		<centro>
-			<latitude>-23.035506</latitude>
-			<longitude>-47.117329</longitude>
-		</centro>
-	</regiao>	
+	</regiao>
 </regioes>

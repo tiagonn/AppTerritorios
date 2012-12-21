@@ -115,7 +115,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	private Map<String, String> dadosFiltro;
 	
 	//TODO: Parametrizar todos os dados fixos
-	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.878419,-47.070356);// endereço do salão do reino
+	private static final HasLatLng POSICAO_INICIAL = new LatLng(-22.774275,-47.168422);// endereço do salão do reino
 
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder extends

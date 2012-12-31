@@ -33,8 +33,8 @@ import br.com.nascisoft.apoioterritoriols.admin.xml.MapaType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.MapasType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.SurdoType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.SurdosType;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {

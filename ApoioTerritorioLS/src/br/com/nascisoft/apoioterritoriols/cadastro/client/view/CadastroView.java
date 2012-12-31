@@ -2,8 +2,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.List;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Widget;

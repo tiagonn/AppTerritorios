@@ -2,8 +2,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class SurdoDetailsVO implements Serializable {
 

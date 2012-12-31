@@ -6,8 +6,8 @@ import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 public class SurdoVO implements Serializable {

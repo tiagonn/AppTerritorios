@@ -3,8 +3,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 import java.util.List;
 import java.util.Map;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 import com.google.gwt.maps.client.base.HasLatLng;
 

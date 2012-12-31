@@ -5,9 +5,13 @@ import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBackupEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBackupEventHandler;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEvent;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminBackupPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminPresenter;
+import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminUsuarioPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBackupViewImpl;
+import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminUsuarioViewImpl;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -32,11 +36,15 @@ public class AdminController implements AdminPresenter,
 		public void onSelection(SelectionEvent<Integer> event) {
 			if (event.getSelectedItem() == 0) {
 				eventBus.fireEvent(new AbrirBackupEvent());
+			} else if (event.getSelectedItem() == 1) {
+				eventBus.fireEvent(new AbrirUsuarioEvent());
 			}
 		}
 	};
 	private AdminBackupPresenter adminBackupPresenter;
 	private AdminBackupViewImpl adminBackupViewImpl;
+	private AdminUsuarioPresenter adminUsuarioPresenter;
+	private AdminUsuarioViewImpl adminUsuarioViewImpl;
 
 	private static final Logger logger = Logger
 			.getLogger(AdminController.class.getName());
@@ -58,6 +66,16 @@ public class AdminController implements AdminPresenter,
 					public void onAbrirBackup(AbrirBackupEvent event) {
 						History.newItem("backup");
 					}
+				});
+		
+		eventBus.addHandler(AbrirUsuarioEvent.TYPE, 
+				new AbrirUsuarioEventHandler() {
+
+					@Override
+					public void onAbrirUsuario(AbrirUsuarioEvent event) {
+						History.newItem("usuario");
+					}
+					
 				});
 	}
 
@@ -97,6 +115,21 @@ public class AdminController implements AdminPresenter,
 							}
 							
 							adminBackupPresenter.go(container);
+						} else if (currentToken.startsWith("usuario")) {
+							if (adminUsuarioViewImpl == null) {
+								adminUsuarioViewImpl = new AdminUsuarioViewImpl();
+							}
+							if (adminUsuarioPresenter == null) {
+								adminUsuarioPresenter = new AdminUsuarioPresenter(service, eventBus, adminUsuarioViewImpl);
+								adminUsuarioPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							adminUsuarioPresenter.selectThisTab();
+							
+								// aba USUARIO
+							if ("usuario".equals(currentToken)) {
+								adminUsuarioPresenter.initView();
+							}
+							adminUsuarioPresenter.go(container);
 						}
 					} catch (Exception ex) {
 						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);

@@ -1,10 +1,10 @@
 package br.com.nascisoft.apoioterritoriols.login.server;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.login.client.LoginService;
+import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
+import br.com.nascisoft.apoioterritoriols.login.server.dao.LoginDAO;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.appengine.api.users.User;
@@ -18,23 +18,16 @@ public class LoginServiceImpl extends AbstractApoioTerritorioLSService implement
 
 	private static final Logger logger = Logger
 			.getLogger(LoginServiceImpl.class.getName());
-	
-	private static final List<String> usuariosValidos;
-	
-	private static final List<String> usuariosAdministradores;
-	
-	static {
-		usuariosValidos = new ArrayList<String>();
-		usuariosValidos.add("tiagonn@gmail.com");
-		usuariosValidos.add("ls.centralcampinas@gmail.com");
-		usuariosValidos.add("lscentralcps.territorios@gmail.com");
-//		usuariosValidos.add("testadorapoioterritoriols@gmail.com");
-		
-		usuariosAdministradores = new ArrayList<String>();
-		usuariosAdministradores.add("tiagonn@gmail.com");
 
+	private LoginDAO dao = null;
+	
+	private LoginDAO getDao() {
+		if (dao == null) {
+			dao = new LoginDAO();
+		}
+		return dao;
 	}
-
+	
 	@Override
 	public LoginVO login(String requestURI) {
 		
@@ -43,20 +36,22 @@ public class LoginServiceImpl extends AbstractApoioTerritorioLSService implement
 		LoginVO usuario = new LoginVO();
 		
 		if (user != null) {
-			if (usuariosValidos.contains(user.getEmail())) {
-				logger.info("Tentando realizar o login do usuário " + 
-						user.getUserId() + ", e-mail: " + user.getEmail());
+			
+			logger.info("Tentando realizar o login do usuário " + 
+					user.getUserId() + ", e-mail: " + user.getEmail());
+			
+			Usuario usuarioAutenticado = getDao().obterUsuario(user.getEmail());
+			
+			if (usuarioAutenticado != null) {			
 				usuario.setEmail(user.getEmail());
 				usuario.setIdentificador(user.getUserId());
 				usuario.setNickname(user.getNickname());
 				usuario.setLogado(true);
 				usuario.setAutorizado(true);
 				usuario.setLogoutURL(userService.createLogoutURL(requestURI));
-				if (usuariosAdministradores.contains(user.getEmail())) {
-					usuario.setAdmin(true);
-				}
+				usuario.setAdmin(usuarioAutenticado.getAdmin());				
 			} else {
-				logger.info("Usuário " + user.getEmail() + "não autorizado");
+				logger.info("Usuário " + user.getEmail() + " não autorizado");
 				usuario.setEmail(user.getEmail());
 				usuario.setLogado(true);
 				usuario.setAutorizado(false);

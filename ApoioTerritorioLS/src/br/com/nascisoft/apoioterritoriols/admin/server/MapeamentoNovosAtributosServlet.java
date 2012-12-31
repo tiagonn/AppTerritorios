@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class MapeamentoNovosAtributosServlet extends AbstractApoioTerritorioLSHttpServlet {
 	

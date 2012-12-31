@@ -3,8 +3,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 
 public class AbrirMapaVO implements Serializable {
 

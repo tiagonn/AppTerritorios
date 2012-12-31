@@ -103,4 +103,7 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	void onBotaoMapearNovosAtributosClick(ClickEvent event) {
 		this.presenter.dispararMapeamentoNovosAtributos();
 	}
+	@UiHandler("usuarioAdicionarButton")
+	void onUsuarioAdicionarButtonClick(ClickEvent event) {
+	}
 }

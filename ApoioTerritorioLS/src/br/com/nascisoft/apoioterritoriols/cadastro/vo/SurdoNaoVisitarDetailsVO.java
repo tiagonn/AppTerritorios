@@ -3,7 +3,7 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class SurdoNaoVisitarDetailsVO implements Serializable {
 	

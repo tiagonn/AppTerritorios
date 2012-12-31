@@ -20,8 +20,8 @@ import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.admin.xml.BackupType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.MapaType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.SurdoType;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 import com.googlecode.objectify.Key;
 

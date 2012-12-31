@@ -13,8 +13,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroService;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
@@ -24,6 +22,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.xml.Bairros;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
 import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regioes;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 
 import com.googlecode.objectify.Key;

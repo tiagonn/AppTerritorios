@@ -38,7 +38,7 @@ public class CadastroEntryPoint implements EntryPoint {
 						controller.go(RootLayoutPanel.get());
 					} else {
 						Window.alert("Usuário não possui permissão de acesso. Entre em contato com o administrador de sua congregação.");
-						Window.open("http://www.watchtower.org/", "_self", "");
+						Window.open("http://www.jw.org/", "_self", "");
 					}
 				} else {
 					Window.open(result.getLoginURL(), "_self", "");

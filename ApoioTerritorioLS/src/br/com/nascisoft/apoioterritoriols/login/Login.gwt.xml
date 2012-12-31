@@ -4,5 +4,6 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path="client"/>
 	<source path="vo"/>
+	<source path="entities"/>
 	<source path="util"/>
 </module>

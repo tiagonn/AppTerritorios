@@ -2,8 +2,9 @@ package br.com.nascisoft.apoioterritoriols.admin.server.dao;
 
 import java.util.List;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.cadastro.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
@@ -34,6 +35,22 @@ public class AdminDAO extends DAOBase {
 	public Long adicionarSurdo(Surdo surdo) {
 		Objectify ofy = ObjectifyService.begin();
 		return ofy.put(surdo).getId();
+	}
+	
+	public void adicionarOuAtualizarUsuario(Usuario usuario) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(usuario);
+	}
+	
+	public List<Usuario> buscarUsuarios() {
+		Objectify ofy = ObjectifyService.begin();
+		Query<Usuario> usuarios = ofy.query(Usuario.class);
+		return usuarios.list();
+	}
+	
+	public void apagarUsuario(String email) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.delete(Usuario.class, email);
 	}
 
 }

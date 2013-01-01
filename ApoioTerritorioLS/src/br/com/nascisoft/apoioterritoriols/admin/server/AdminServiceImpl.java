@@ -83,9 +83,10 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	}
 
 	@Override
-	public void apagarCidade(String nome) {
+	public Boolean apagarCidade(String nome) {
 		logger.info("Apagando cidade " + nome);
 		List<Regiao> regioes = getDao().buscarRegioes(nome);
+		Boolean retorno = false;
 		if (regioes == null || regioes.size() == 0) {
 			List<Bairro> bairros = getDao().buscarBairros(nome);
 			List<Key<Bairro>> keyBairros = new ArrayList<Key<Bairro>>();
@@ -94,9 +95,10 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 			}
 			getDao().apagarBairros(keyBairros);
 			getDao().apagarCidade(nome);
-		} else {
-			throw new RuntimeException("Não é possivel apagar esta cidade já que ela possui bairros associados a mesma");
-		}		
+			retorno = true;
+		} 
+		
+		return retorno;
 	}
 	
 	@Override

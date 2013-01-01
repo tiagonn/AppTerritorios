@@ -27,7 +27,7 @@ public interface AdminService extends RemoteService {
 	
 	List<Cidade> buscarCidades();
 	
-	void apagarCidade(String nome);
+	Boolean apagarCidade(String nome);
 	
 	void adicionarOuAtualizarRegiao(Regiao regiao, String nomeCidade);
 	

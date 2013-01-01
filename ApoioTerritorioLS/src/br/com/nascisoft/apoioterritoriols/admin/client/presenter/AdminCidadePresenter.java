@@ -79,12 +79,16 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 	@Override
 	public void apagarCidade(String nome) {
 		getView().showWaitingPanel();
-		this.service.apagarCidade(nome, new AsyncCallback<Void>() {
+		this.service.apagarCidade(nome, new AsyncCallback<Boolean>() {
 			
 			@Override
-			public void onSuccess(Void result) {
+			public void onSuccess(Boolean result) {
 				getView().hideWaitingPanel();
-				Window.alert("Cidade apagada com sucesso");
+				if (result) {
+					Window.alert("Cidade apagada com sucesso");
+				} else {
+					Window.alert("Não é possível apagar esta cidade pois ela possui regiões associadas");
+				}
 				getView().initView();
 			}
 			

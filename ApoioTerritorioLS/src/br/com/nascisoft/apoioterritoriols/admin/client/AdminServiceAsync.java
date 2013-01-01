@@ -27,7 +27,7 @@ public interface AdminServiceAsync {
 
 	void buscarCidades(AsyncCallback<List<Cidade>> callback);
 
-	void apagarCidade(String nome, AsyncCallback<Void> callback);
+	void apagarCidade(String nome, AsyncCallback<Boolean> callback);
 
 	void adicionarOuAtualizarRegiao(Regiao regiao, String nomeCidade,
 			AsyncCallback<Void> callback);

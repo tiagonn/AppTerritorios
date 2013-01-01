@@ -78,5 +78,10 @@
         <property name="visitarSomentePorAnciaos" direction="asc"/>
         <property name="mapa" direction="asc"/>
     </datastore-index>
+    
+    <datastore-index kind="Regiao" ancestor="false" source="auto">
+        <property name="cidade" direction="asc"/>
+        <property name="letra" direction="asc"/>
+    </datastore-index>
 
 </datastore-indexes>

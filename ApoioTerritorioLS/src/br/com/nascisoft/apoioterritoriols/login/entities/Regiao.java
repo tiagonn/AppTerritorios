@@ -18,7 +18,7 @@ public class Regiao implements Serializable {
 	
 	@Id private String nome;
 	@Indexed private Key<Cidade> cidade;
-	private String letra;
+	@Indexed private String letra;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
 	

@@ -86,6 +86,8 @@ public class AdminDAO extends DAOBase {
 			query.filter("cidade", new Key<Cidade>(Cidade.class, nomeCidade));
 		}
 		
+		query.order("letra");
+		
 		return query.list();
 	}
 	

@@ -2,6 +2,7 @@ package br.com.nascisoft.apoioterritoriols.admin.client;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
@@ -34,5 +35,12 @@ public interface AdminServiceAsync {
 	void buscarRegioes(AsyncCallback<List<Regiao>> callback);
 
 	void apagarRegiao(String nome, AsyncCallback<Void> callback);
+
+	void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade,
+			AsyncCallback<Void> callback);
+
+	void buscarBairros(AsyncCallback<List<Bairro>> callback);
+
+	void apagarBairro(String nome, AsyncCallback<Void> callback);
 	
 }

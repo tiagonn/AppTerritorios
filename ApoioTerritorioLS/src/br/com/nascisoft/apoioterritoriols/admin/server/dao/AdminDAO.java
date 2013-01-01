@@ -2,12 +2,14 @@ package br.com.nascisoft.apoioterritoriols.admin.server.dao;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
@@ -75,14 +77,48 @@ public class AdminDAO extends DAOBase {
 		ofy.put(regiao);
 	}
 	
-	public List<Regiao> buscarRegioes() {
+	public List<Regiao> buscarRegioes(String nomeCidade) {
 		Objectify ofy = ObjectifyService.begin();
-		return ofy.query(Regiao.class).list();
+		
+		Query<Regiao> query = ofy.query(Regiao.class);
+		
+		if (nomeCidade != null && nomeCidade.length() > 0) {
+			query.filter("cidade", new Key<Cidade>(Cidade.class, nomeCidade));
+		}
+		
+		return query.list();
 	}
 	
 	public void apagarRegiao(String nome) {
 		Objectify ofy = ObjectifyService.begin();
 		ofy.delete(Regiao.class, nome);
+	}
+	
+	public void adicionarOuAtualizarBairro(Bairro bairro) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(bairro);
+	}
+	
+	public List<Bairro> buscarBairros(String nomeCidade) {
+		Objectify ofy = ObjectifyService.begin();
+		
+		Query<Bairro> query = ofy.query(Bairro.class);
+		
+		if (nomeCidade != null && nomeCidade.length() > 0) {
+			query.filter("cidade", new Key<Cidade>(Cidade.class, nomeCidade));
+		}
+		
+		return query.list();
+	}
+	
+	public void apagarBairro(String nome) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.delete(Bairro.class, nome);
+	}
+	
+	public void apagarBairros(Iterable<Key<Bairro>> bairros) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.delete(bairros);
 	}
 
 }

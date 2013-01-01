@@ -2,6 +2,7 @@ package br.com.nascisoft.apoioterritoriols.admin.client;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
@@ -33,5 +34,11 @@ public interface AdminService extends RemoteService {
 	List<Regiao> buscarRegioes();
 	
 	void apagarRegiao(String nome);
+	
+	void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade);
+	
+	List<Bairro> buscarBairros();
+	
+	void apagarBairro(String nome);
 
 }

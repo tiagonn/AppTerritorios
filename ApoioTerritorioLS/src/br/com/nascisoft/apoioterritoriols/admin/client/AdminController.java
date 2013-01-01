@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBackupEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBackupEventHandler;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBairroEvent;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirBairroEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirCidadeEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirCidadeEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRegiaoEvent;
@@ -12,11 +14,13 @@ import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRegiaoEventHan
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminBackupPresenter;
+import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminBairroPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminCidadePresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminRegiaoPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminUsuarioPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBackupViewImpl;
+import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBairroViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminCidadeViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRegiaoViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminUsuarioViewImpl;
@@ -50,6 +54,8 @@ public class AdminController implements AdminPresenter,
 				eventBus.fireEvent(new AbrirCidadeEvent());
 			} else if (event.getSelectedItem() == 3) {
 				eventBus.fireEvent(new AbrirRegiaoEvent());
+			} else if (event.getSelectedItem() == 4) {
+				eventBus.fireEvent(new AbrirBairroEvent());
 			}
 		}
 	};
@@ -61,6 +67,8 @@ public class AdminController implements AdminPresenter,
 	private AdminCidadeViewImpl adminCidadeViewImpl;
 	private AdminRegiaoPresenter adminRegiaoPresenter;
 	private AdminRegiaoViewImpl adminRegiaoViewImpl;
+	private AdminBairroPresenter adminBairroPresenter;
+	private AdminBairroViewImpl adminBairroViewImpl;
 
 	private static final Logger logger = Logger
 			.getLogger(AdminController.class.getName());
@@ -105,10 +113,19 @@ public class AdminController implements AdminPresenter,
 		
 		eventBus.addHandler(AbrirRegiaoEvent.TYPE, 
 				new AbrirRegiaoEventHandler() {
-					
+			
 					@Override
 					public void onAbrirRegiao(AbrirRegiaoEvent event) {
 						History.newItem("regiao");
+					}
+				});
+	
+		eventBus.addHandler(AbrirBairroEvent.TYPE, 
+				new AbrirBairroEventHandler() {
+					
+					@Override
+					public void onAbrirBairro(AbrirBairroEvent event) {
+						History.newItem("bairro");
 					}
 				});
 		}
@@ -196,6 +213,22 @@ public class AdminController implements AdminPresenter,
 								adminRegiaoPresenter.initView();
 							}
 							adminRegiaoPresenter.go(container);
+
+							// aba REGIÕES
+						} else if (currentToken.startsWith("bairro")) {
+							if (adminBairroViewImpl == null) {
+								adminBairroViewImpl = new AdminBairroViewImpl();
+							}
+							if (adminBairroPresenter == null) {
+								adminBairroPresenter = new AdminBairroPresenter(service, eventBus, adminBairroViewImpl);
+								adminBairroPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							adminBairroPresenter.selectThisTab();
+							
+							if ("bairro".equals(currentToken)) {
+								adminBairroPresenter.initView();
+							}
+							adminBairroPresenter.go(container);
 						}
 					} catch (Exception ex) {
 						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);

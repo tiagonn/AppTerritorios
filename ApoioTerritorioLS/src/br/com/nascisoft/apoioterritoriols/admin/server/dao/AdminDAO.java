@@ -1,6 +1,8 @@
 package br.com.nascisoft.apoioterritoriols.admin.server.dao;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -67,9 +69,9 @@ public class AdminDAO extends DAOBase {
 		return ofy.query(Cidade.class).list();
 	}
 	
-	public void apagarCidade(String nome) {
+	public void apagarCidade(Long id) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.delete(Cidade.class, nome);
+		ofy.delete(Cidade.class, id);
 	}
 	
 	public void adicionarOuAtualizarRegiao(Regiao regiao) {
@@ -77,13 +79,13 @@ public class AdminDAO extends DAOBase {
 		ofy.put(regiao);
 	}
 	
-	public List<Regiao> buscarRegioes(String nomeCidade) {
+	public List<Regiao> buscarRegioes(Long cidadeId) {
 		Objectify ofy = ObjectifyService.begin();
 		
 		Query<Regiao> query = ofy.query(Regiao.class);
 		
-		if (nomeCidade != null && nomeCidade.length() > 0) {
-			query.filter("cidade", new Key<Cidade>(Cidade.class, nomeCidade));
+		if (cidadeId != null) {
+			query.filter("cidade", new Key<Cidade>(Cidade.class, cidadeId));
 		}
 		
 		query.order("letra");
@@ -91,9 +93,9 @@ public class AdminDAO extends DAOBase {
 		return query.list();
 	}
 	
-	public void apagarRegiao(String nome) {
+	public void apagarRegiao(Long id) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.delete(Regiao.class, nome);
+		ofy.delete(Regiao.class, id);
 	}
 	
 	public void adicionarOuAtualizarBairro(Bairro bairro) {
@@ -101,26 +103,31 @@ public class AdminDAO extends DAOBase {
 		ofy.put(bairro);
 	}
 	
-	public List<Bairro> buscarBairros(String nomeCidade) {
+	public List<Bairro> buscarBairros(Long cidadeId) {
 		Objectify ofy = ObjectifyService.begin();
 		
 		Query<Bairro> query = ofy.query(Bairro.class);
 		
-		if (nomeCidade != null && nomeCidade.length() > 0) {
-			query.filter("cidade", new Key<Cidade>(Cidade.class, nomeCidade));
+		if (cidadeId != null) {
+			query.filter("cidade", new Key<Cidade>(Cidade.class, cidadeId));
 		}
 		
 		return query.list();
 	}
 	
-	public void apagarBairro(String nome) {
+	public void apagarBairro(Long id) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.delete(Bairro.class, nome);
+		ofy.delete(Bairro.class, id);
 	}
 	
 	public void apagarBairros(Iterable<Key<Bairro>> bairros) {
 		Objectify ofy = ObjectifyService.begin();
 		ofy.delete(bairros);
+	}
+	
+	public Map<Key<Cidade>, Cidade> obterCidades(Collection<Key<Cidade>> chaves) {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.get(chaves);
 	}
 
 }

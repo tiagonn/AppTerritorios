@@ -2,8 +2,8 @@ package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 
 
 
@@ -11,13 +11,13 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 public interface AdminBairroView extends AdminView {
 	
 	public interface Presenter extends AdminView.Presenter {
-		void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade);
+		void adicionarOuAtualizarBairro(BairroVO bairro);
 		void buscarBairros();
 		void buscarCidades();
-		void apagarBairro(String nome);
+		void apagarBairro(Long id);
 	}
 	
 	void setPresenter(Presenter presenter);
-	void setBairros(List<Bairro> bairros);
+	void setBairros(List<BairroVO> bairros);
 	void setCidades(List<Cidade> cidades);
 }

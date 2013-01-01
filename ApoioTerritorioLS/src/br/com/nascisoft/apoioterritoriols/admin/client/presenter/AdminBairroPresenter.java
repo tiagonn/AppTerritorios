@@ -5,8 +5,8 @@ import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBairroView;
+import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -36,9 +36,9 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade) {
+	public void adicionarOuAtualizarBairro(BairroVO bairro) {
 		getView().showWaitingPanel();
-		this.service.adicionarOuAtualizarBairro(bairro, nomeCidade, new AsyncCallback<Void>() {
+		this.service.adicionarOuAtualizarBairro(bairro, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
@@ -60,10 +60,10 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 	@Override
 	public void buscarBairros() {
 		getView().showWaitingPanel();
-		this.service.buscarBairros(new AsyncCallback<List<Bairro>>() {
+		this.service.buscarBairros(new AsyncCallback<List<BairroVO>>() {
 			
 			@Override
-			public void onSuccess(List<Bairro> result) {
+			public void onSuccess(List<BairroVO> result) {
 				getView().hideWaitingPanel();
 				getView().setBairros(result);
 			}
@@ -78,9 +78,9 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void apagarBairro(String nome) {
+	public void apagarBairro(Long id) {
 		getView().showWaitingPanel();
-		this.service.apagarBairro(nome, new AsyncCallback<Void>() {
+		this.service.apagarBairro(id, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {

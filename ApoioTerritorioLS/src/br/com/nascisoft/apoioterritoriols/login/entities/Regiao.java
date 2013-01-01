@@ -16,12 +16,19 @@ public class Regiao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id private String nome;
+	@Id private Long id;
+	private String nome;
 	@Indexed private Key<Cidade> cidade;
 	@Indexed private String letra;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}

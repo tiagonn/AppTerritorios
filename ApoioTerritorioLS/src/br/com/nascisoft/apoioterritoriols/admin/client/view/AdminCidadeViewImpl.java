@@ -53,6 +53,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	@UiField Label pesquisaCidadeResultadoLabel;
 	@UiField SimplePager pesquisaCidadeResultadoSimplePager;
 	private ListDataProvider<Cidade> resultadoPesquisaCidade;
+	private Long idSelecionado;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -124,6 +125,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	private Cidade populaCidade() {
 		Cidade cidade = new Cidade();
 		
+		cidade.setId(idSelecionado);
 		cidade.setNome(this.cidadeNomeTextBox.getText());
 		cidade.setUF(this.cidadeUFTextBox.getText());
 		cidade.setPais(this.cidadePaisTextBox.getText());
@@ -139,6 +141,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	}
 
 	private void limparFormularios() {
+		this.idSelecionado = null;
 		this.cidadeUtilizarBairroBuscaEnderecoCheckBox.setValue(false);
 		this.cidadeNomeTextBox.setText("");
 		this.cidadesWarningHTML.setHTML("");
@@ -183,19 +186,19 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 				}
 			};			
 			
-			Delegate<String> deletarDelegate = new Delegate<String>() {
+			Delegate<Long> deletarDelegate = new Delegate<Long>() {
 				@Override
-				public void execute(String object) {
+				public void execute(Long object) {
 					if (Window.confirm("Deseja realmente apagar esta cidade?")) {
 						presenter.apagarCidade(object);
 					}
 				}				
 			};
-			ActionCell<String> deletarCell = new ActionCell<String>("Apagar", deletarDelegate);
-			Column<Cidade, String> deletarColumn = new Column<Cidade, String>(deletarCell) {
+			ActionCell<Long> deletarCell = new ActionCell<Long>("Apagar", deletarDelegate);
+			Column<Cidade, Long> deletarColumn = new Column<Cidade, Long>(deletarCell) {
 				@Override
-				public String getValue(Cidade object) {
-					return object.getNome();
+				public Long getValue(Cidade object) {
+					return object.getId();
 				}
 			};
 			
@@ -223,6 +226,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	}
 
 	private void popularManterCidade(Cidade cidade) {
+		this.idSelecionado = cidade.getId();
 		this.cidadeNomeTextBox.setText(cidade.getNome());
 		this.cidadeLatitudeTextBox.setText(cidade.getLatitudeCentro().toString());
 		this.cidadeLongitudeTextBox.setText(cidade.getLongitudeCentro().toString());

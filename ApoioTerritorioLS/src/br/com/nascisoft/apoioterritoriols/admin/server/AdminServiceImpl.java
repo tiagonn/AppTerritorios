@@ -3,12 +3,17 @@ package br.com.nascisoft.apoioterritoriols.admin.server;
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminService;
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
@@ -83,18 +88,18 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	}
 
 	@Override
-	public Boolean apagarCidade(String nome) {
-		logger.info("Apagando cidade " + nome);
-		List<Regiao> regioes = getDao().buscarRegioes(nome);
+	public Boolean apagarCidade(Long id) {
+		logger.info("Apagando cidade " + id);
+		List<Regiao> regioes = getDao().buscarRegioes(id);
 		Boolean retorno = false;
 		if (regioes == null || regioes.size() == 0) {
-			List<Bairro> bairros = getDao().buscarBairros(nome);
+			List<Bairro> bairros = getDao().buscarBairros(id);
 			List<Key<Bairro>> keyBairros = new ArrayList<Key<Bairro>>();
 			for (Bairro bairro : bairros) {
-				keyBairros.add(new Key<Bairro>(Bairro.class, bairro.getNome()));
+				keyBairros.add(new Key<Bairro>(Bairro.class, bairro.getId()));
 			}
 			getDao().apagarBairros(keyBairros);
-			getDao().apagarCidade(nome);
+			getDao().apagarCidade(id);
 			retorno = true;
 		} 
 		
@@ -102,44 +107,73 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	}
 	
 	@Override
-	public void adicionarOuAtualizarRegiao(Regiao regiao, String nomeCidade) {
-		Key<Cidade> keyCidade = new Key<Cidade>(Cidade.class, nomeCidade);
-		regiao.setCidade(keyCidade);
+	public void adicionarOuAtualizarRegiao(RegiaoVO regiao) {
 		logger.info("Adicionando ou atualizando regiao " + regiao.getNome());
-		getDao().adicionarOuAtualizarRegiao(regiao);
+		Regiao reg = regiao.getRegiao();
+		reg.setCidade(new Key<Cidade>(Cidade.class, regiao.getCidadeId()));
+		getDao().adicionarOuAtualizarRegiao(reg);
 	}
 	
 	@Override
-	public List<Regiao> buscarRegioes() {
+	public List<RegiaoVO> buscarRegioes() {
 		logger.info("Obtendo lista de regioes");
-		return getDao().buscarRegioes(null);
+		List<Regiao> regioes = getDao().buscarRegioes(null);
+		
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+		for (Regiao regiao : regioes) {
+			chavesCidade.add(regiao.getCidade());
+		}
+		
+		Map<Key<Cidade>, Cidade> mapaCidades = getDao().obterCidades(chavesCidade);
+		List<RegiaoVO> retorno = new ArrayList<RegiaoVO>();
+		
+		for (Regiao regiao : regioes) {
+			retorno.add(new RegiaoVO(regiao, mapaCidades.get(regiao.getCidade())));
+		}
+		
+		return retorno;
 	}
 	
 	@Override
-	public void apagarRegiao(String nome) {
-		logger.info("Apagando regiao " + nome);
-		getDao().apagarRegiao(nome);
+	public Boolean apagarRegiao(Long id) {
+		logger.info("Apagando regiao " + id);
+		getDao().apagarRegiao(id);
+		return true;
 		//TODO consistência para não apagar regioes que possuam surdos associados
 	}
 
 	@Override
-	public void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade) {
-		Key<Cidade> keyCidade = new Key<Cidade>(Cidade.class, nomeCidade);
-		bairro.setCidade(keyCidade);
+	public void adicionarOuAtualizarBairro(BairroVO bairro) {
 		logger.info("Adicionando ou atualizando bairro " + bairro.getNome());
-		getDao().adicionarOuAtualizarBairro(bairro);
+		Bairro bar = bairro.getBairro();
+		bar.setCidade(new Key<Cidade>(Cidade.class, bairro.getCidadeId()));
+		getDao().adicionarOuAtualizarBairro(bar);
 	}
 
 	@Override
-	public List<Bairro> buscarBairros() {
+	public List<BairroVO> buscarBairros() {
 		logger.info("Obtendo lista de bairros");
-		return getDao().buscarBairros(null);
+		List<Bairro> bairros = getDao().buscarBairros(null);
+		List<BairroVO> retorno = new ArrayList<BairroVO>();
+		
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+		for (Bairro bairro : bairros) {
+			chavesCidade.add(bairro.getCidade());
+		}
+		
+		Map<Key<Cidade>, Cidade> mapaCidades = getDao().obterCidades(chavesCidade);
+		
+		for (Bairro bairro : bairros) {
+			retorno.add(new BairroVO(bairro, mapaCidades.get(bairro.getCidade())));
+		}
+		
+		return retorno;
 	}
 
 	@Override
-	public void apagarBairro(String nome) {
-		logger.info("Apagando bairro " + nome);
-		getDao().apagarBairro(nome);
+	public void apagarBairro(Long id) {
+		logger.info("Apagando bairro " + id);
+		getDao().apagarBairro(id);
 	}
 
 }

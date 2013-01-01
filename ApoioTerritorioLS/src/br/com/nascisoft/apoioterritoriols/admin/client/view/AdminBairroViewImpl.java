@@ -2,8 +2,8 @@ package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
 
 import com.google.gwt.cell.client.ActionCell;
@@ -43,10 +43,11 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 	@UiField TextBox bairroNomeTextBox;
 	@UiField Button bairroAdicionarButton;
 	@UiField HTML bairrosWarningHTML;
-	@UiField CellTable<Bairro> pesquisaBairroResultadoCellTable;
+	@UiField CellTable<BairroVO> pesquisaBairroResultadoCellTable;
 	@UiField Label pesquisaBairroResultadoLabel;
 	@UiField SimplePager pesquisaBairroResultadoSimplePager;
-	private ListDataProvider<Bairro> resultadoPesquisaBairro;
+	private ListDataProvider<BairroVO> resultadoPesquisaBairro;
+	private Long bairroSelecionado;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -55,7 +56,7 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 
 	public AdminBairroViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.resultadoPesquisaBairro = new ListDataProvider<Bairro>();
+		this.resultadoPesquisaBairro = new ListDataProvider<BairroVO>();
 		this.resultadoPesquisaBairro.addDataDisplay(this.pesquisaBairroResultadoCellTable);
 		this.pesquisaBairroResultadoSimplePager.setDisplay(this.pesquisaBairroResultadoCellTable);
 	}
@@ -103,12 +104,12 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 		if (validacoes.size() > 0) {
 			this.bairrosWarningHTML.setHTML(validacoes.obterValidacoesSumarizadaHTML());
 		} else {
-			this.presenter.adicionarOuAtualizarBairro(populaBairro(), this.bairroCidadeListBox.getValue(this.bairroCidadeListBox.getSelectedIndex()));
+			this.presenter.adicionarOuAtualizarBairro(populaBairro());
 		}
 	}
 
 	@Override
-	public void setBairros(List<Bairro> bairros) {
+	public void setBairros(List<BairroVO> bairros) {
 		this.limparResultadoPesquisa();
 		this.pesquisaBairroResultadoCellTable.setRowCount(bairros.size());
 		this.resultadoPesquisaBairro.setList(bairros);
@@ -119,19 +120,22 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 		this.bairroCidadeListBox.clear();
 		this.bairroCidadeListBox.addItem("-- Escolha uma opção --", "");
 		for (Cidade cidade : cidades) {
-			this.bairroCidadeListBox.addItem(cidade.getNome());
+			this.bairroCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 		}
 	}
 	
-	private Bairro populaBairro() {
-		Bairro bairro = new Bairro();
+	private BairroVO populaBairro() {
+		BairroVO bairro = new BairroVO();
 		
+		bairro.setId(this.bairroSelecionado);
 		bairro.setNome(this.bairroNomeTextBox.getText());
+		bairro.setCidadeId(Long.valueOf(this.bairroCidadeListBox.getValue(this.bairroCidadeListBox.getSelectedIndex())));
 		
 		return bairro;
 	}
 
 	private void limparFormularios() {
+		this.bairroSelecionado = null;
 		this.bairroNomeTextBox.setText("");
 		this.bairrosWarningHTML.setHTML("");
 		this.bairroCidadeListBox.setSelectedIndex(0);
@@ -158,46 +162,46 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 			this.pesquisaBairroResultadoCellTable.setStyleName("surdo-tabela");
 			this.pesquisaBairroResultadoCellTable.setVisible(true);
 			
-			TextColumn<Bairro> nome = new TextColumn<Bairro>() {
+			TextColumn<BairroVO> nome = new TextColumn<BairroVO>() {
 				@Override
-				public String getValue(Bairro object) {
+				public String getValue(BairroVO object) {
 					return object.getNome();
 				}
 			};				
 			
-			TextColumn<Bairro> cidade = new TextColumn<Bairro>() {
+			TextColumn<BairroVO> cidade = new TextColumn<BairroVO>() {
 				@Override
-				public String getValue(Bairro object) {
-					return object.getCidade().getName();
+				public String getValue(BairroVO object) {
+					return object.getCidadeNome();
 				}
 			};			
 			
-			Delegate<String> deletarDelegate = new Delegate<String>() {
+			Delegate<Long> deletarDelegate = new Delegate<Long>() {
 				@Override
-				public void execute(String object) {
+				public void execute(Long object) {
 					if (Window.confirm("Deseja realmente apagar esta bairro?")) {
 						presenter.apagarBairro(object);
 					}
 				}				
 			};
-			ActionCell<String> deletarCell = new ActionCell<String>("Apagar", deletarDelegate);
-			Column<Bairro, String> deletarColumn = new Column<Bairro, String>(deletarCell) {
+			ActionCell<Long> deletarCell = new ActionCell<Long>("Apagar", deletarDelegate);
+			Column<BairroVO, Long> deletarColumn = new Column<BairroVO, Long>(deletarCell) {
 				@Override
-				public String getValue(Bairro object) {
-					return object.getNome();
+				public Long getValue(BairroVO object) {
+					return object.getId();
 				}
 			};
 			
-			Delegate<Bairro> editarDelegate = new Delegate<Bairro>() {
+			Delegate<BairroVO> editarDelegate = new Delegate<BairroVO>() {
 				@Override
-				public void execute(Bairro object) {
+				public void execute(BairroVO object) {
 					popularManterBairro(object);
 				}				
 			};
-			ActionCell<Bairro> editarCell = new ActionCell<Bairro>("Editar", editarDelegate);
-			Column<Bairro, Bairro> editarColumn = new Column<Bairro, Bairro>(editarCell) {
+			ActionCell<BairroVO> editarCell = new ActionCell<BairroVO>("Editar", editarDelegate);
+			Column<BairroVO, BairroVO> editarColumn = new Column<BairroVO, BairroVO>(editarCell) {
 				@Override
-				public Bairro getValue(Bairro object) {
+				public BairroVO getValue(BairroVO object) {
 					return object;
 				}
 			};
@@ -212,10 +216,11 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 		this.bairrosWarningHTML.setHTML("");
 	}
 
-	private void popularManterBairro(Bairro bairro) {
+	private void popularManterBairro(BairroVO bairro) {
+		this.bairroSelecionado =  bairro.getId();
 		this.bairroNomeTextBox.setText(bairro.getNome());
 		this.bairroCidadeListBox.setSelectedIndex(
-				obterIndice(this.bairroCidadeListBox, bairro.getCidade().getName()));
+				obterIndice(this.bairroCidadeListBox, bairro.getCidadeId().toString()));
 
 	}
 	

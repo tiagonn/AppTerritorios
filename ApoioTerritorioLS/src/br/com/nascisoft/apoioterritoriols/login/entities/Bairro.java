@@ -16,8 +16,17 @@ public class Bairro implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id private String nome;
+	@Id private Long id; 
+	private String nome;
 	@Indexed private Key<Cidade> cidade;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

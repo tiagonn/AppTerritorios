@@ -2,8 +2,8 @@ package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
 
 import com.google.gwt.cell.client.ActionCell;
@@ -46,10 +46,11 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	@UiField TextBox regiaoLongitudeTextBox;
 	@UiField Button regiaoAdicionarButton;
 	@UiField HTML regioesWarningHTML;
-	@UiField CellTable<Regiao> pesquisaRegiaoResultadoCellTable;
+	@UiField CellTable<RegiaoVO> pesquisaRegiaoResultadoCellTable;
 	@UiField Label pesquisaRegiaoResultadoLabel;
 	@UiField SimplePager pesquisaRegiaoResultadoSimplePager;
-	private ListDataProvider<Regiao> resultadoPesquisaRegiao;
+	private ListDataProvider<RegiaoVO> resultadoPesquisaRegiao;
+	private Long idSelecionado;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -58,7 +59,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 
 	public AdminRegiaoViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.resultadoPesquisaRegiao = new ListDataProvider<Regiao>();
+		this.resultadoPesquisaRegiao = new ListDataProvider<RegiaoVO>();
 		this.resultadoPesquisaRegiao.addDataDisplay(this.pesquisaRegiaoResultadoCellTable);
 		this.pesquisaRegiaoResultadoSimplePager.setDisplay(this.pesquisaRegiaoResultadoCellTable);
 	}
@@ -106,12 +107,12 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		if (validacoes.size() > 0) {
 			this.regioesWarningHTML.setHTML(validacoes.obterValidacoesSumarizadaHTML());
 		} else {
-			this.presenter.adicionarOuAtualizarRegiao(populaRegiao(), this.regiaoCidadeListBox.getValue(this.regiaoCidadeListBox.getSelectedIndex()));
+			this.presenter.adicionarOuAtualizarRegiao(populaRegiao());
 		}
 	}
 
 	@Override
-	public void setRegioes(List<Regiao> regioes) {
+	public void setRegioes(List<RegiaoVO> regioes) {
 		this.limparResultadoPesquisa();
 		this.pesquisaRegiaoResultadoCellTable.setRowCount(regioes.size());
 		this.resultadoPesquisaRegiao.setList(regioes);
@@ -122,22 +123,25 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regiaoCidadeListBox.clear();
 		this.regiaoCidadeListBox.addItem("-- Escolha uma opção --", "");
 		for (Cidade cidade : cidades) {
-			this.regiaoCidadeListBox.addItem(cidade.getNome());
+			this.regiaoCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 		}
 	}
 	
-	private Regiao populaRegiao() {
-		Regiao regiao = new Regiao();
+	private RegiaoVO populaRegiao() {
+		RegiaoVO regiao = new RegiaoVO();
 		
+		regiao.setId(this.idSelecionado);
 		regiao.setNome(this.regiaoNomeTextBox.getText());
 		regiao.setLatitudeCentro(Double.valueOf(this.regiaoLatitudeTextBox.getText()));
 		regiao.setLongitudeCentro(Double.valueOf(this.regiaoLongitudeTextBox.getText()));
 		regiao.setLetra(this.regiaoLetraTextBox.getText());
+		regiao.setCidadeId(Long.valueOf(this.regiaoCidadeListBox.getValue(this.regiaoCidadeListBox.getSelectedIndex())));
 		
 		return regiao;
 	}
 
 	private void limparFormularios() {
+		this.idSelecionado = null;
 		this.regiaoNomeTextBox.setText("");
 		this.regioesWarningHTML.setHTML("");
 		this.regiaoLetraTextBox.setText("");
@@ -167,53 +171,53 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 			this.pesquisaRegiaoResultadoCellTable.setStyleName("surdo-tabela");
 			this.pesquisaRegiaoResultadoCellTable.setVisible(true);
 			
-			TextColumn<Regiao> nome = new TextColumn<Regiao>() {
+			TextColumn<RegiaoVO> nome = new TextColumn<RegiaoVO>() {
 				@Override
-				public String getValue(Regiao object) {
+				public String getValue(RegiaoVO object) {
 					return object.getNome();
 				}
 			};			
 			
-			TextColumn<Regiao> letra = new TextColumn<Regiao>() {
+			TextColumn<RegiaoVO> letra = new TextColumn<RegiaoVO>() {
 				@Override
-				public String getValue(Regiao object) {
+				public String getValue(RegiaoVO object) {
 					return object.getLetra();
 				}
 			};			
 			
-			TextColumn<Regiao> cidade = new TextColumn<Regiao>() {
+			TextColumn<RegiaoVO> cidade = new TextColumn<RegiaoVO>() {
 				@Override
-				public String getValue(Regiao object) {
-					return object.getCidade().getName();
+				public String getValue(RegiaoVO object) {
+					return object.getCidadeNome();
 				}
 			};			
 			
-			Delegate<String> deletarDelegate = new Delegate<String>() {
+			Delegate<Long> deletarDelegate = new Delegate<Long>() {
 				@Override
-				public void execute(String object) {
+				public void execute(Long object) {
 					if (Window.confirm("Deseja realmente apagar esta regiao?")) {
 						presenter.apagarRegiao(object);
 					}
 				}				
 			};
-			ActionCell<String> deletarCell = new ActionCell<String>("Apagar", deletarDelegate);
-			Column<Regiao, String> deletarColumn = new Column<Regiao, String>(deletarCell) {
+			ActionCell<Long> deletarCell = new ActionCell<Long>("Apagar", deletarDelegate);
+			Column<RegiaoVO, Long> deletarColumn = new Column<RegiaoVO, Long>(deletarCell) {
 				@Override
-				public String getValue(Regiao object) {
-					return object.getNome();
+				public Long getValue(RegiaoVO object) {
+					return object.getId();
 				}
 			};
 			
-			Delegate<Regiao> editarDelegate = new Delegate<Regiao>() {
+			Delegate<RegiaoVO> editarDelegate = new Delegate<RegiaoVO>() {
 				@Override
-				public void execute(Regiao object) {
+				public void execute(RegiaoVO object) {
 					popularManterRegiao(object);
 				}				
 			};
-			ActionCell<Regiao> editarCell = new ActionCell<Regiao>("Editar", editarDelegate);
-			Column<Regiao, Regiao> editarColumn = new Column<Regiao, Regiao>(editarCell) {
+			ActionCell<RegiaoVO> editarCell = new ActionCell<RegiaoVO>("Editar", editarDelegate);
+			Column<RegiaoVO, RegiaoVO> editarColumn = new Column<RegiaoVO, RegiaoVO>(editarCell) {
 				@Override
-				public Regiao getValue(Regiao object) {
+				public RegiaoVO getValue(RegiaoVO object) {
 					return object;
 				}
 			};
@@ -229,13 +233,14 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regioesWarningHTML.setHTML("");
 	}
 
-	private void popularManterRegiao(Regiao regiao) {
+	private void popularManterRegiao(RegiaoVO regiao) {
+		this.idSelecionado = regiao.getId();
 		this.regiaoNomeTextBox.setText(regiao.getNome());
 		this.regiaoLatitudeTextBox.setText(regiao.getLatitudeCentro().toString());
 		this.regiaoLongitudeTextBox.setText(regiao.getLongitudeCentro().toString());
 		this.regiaoLetraTextBox.setText(regiao.getLetra());
 		this.regiaoCidadeListBox.setSelectedIndex(
-				obterIndice(this.regiaoCidadeListBox, regiao.getCidade().getName()));
+				obterIndice(this.regiaoCidadeListBox, regiao.getCidadeId().toString()));
 
 	}
 	

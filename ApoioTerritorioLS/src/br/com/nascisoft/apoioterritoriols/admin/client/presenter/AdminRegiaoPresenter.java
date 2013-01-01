@@ -5,8 +5,8 @@ import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRegiaoView;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -36,9 +36,9 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void adicionarOuAtualizarRegiao(Regiao regiao, String nomeCidade) {
+	public void adicionarOuAtualizarRegiao(RegiaoVO regiao) {
 		getView().showWaitingPanel();
-		this.service.adicionarOuAtualizarRegiao(regiao, nomeCidade, new AsyncCallback<Void>() {
+		this.service.adicionarOuAtualizarRegiao(regiao, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
@@ -60,10 +60,10 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 	@Override
 	public void buscarRegioes() {
 		getView().showWaitingPanel();
-		this.service.buscarRegioes(new AsyncCallback<List<Regiao>>() {
+		this.service.buscarRegioes(new AsyncCallback<List<RegiaoVO>>() {
 			
 			@Override
-			public void onSuccess(List<Regiao> result) {
+			public void onSuccess(List<RegiaoVO> result) {
 				getView().hideWaitingPanel();
 				getView().setRegioes(result);
 			}
@@ -78,14 +78,18 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void apagarRegiao(String nome) {
+	public void apagarRegiao(Long id) {
 		getView().showWaitingPanel();
-		this.service.apagarRegiao(nome, new AsyncCallback<Void>() {
+		this.service.apagarRegiao(id, new AsyncCallback<Boolean>() {
 			
 			@Override
-			public void onSuccess(Void result) {
+			public void onSuccess(Boolean result) {
 				getView().hideWaitingPanel();
-				Window.alert("Regiao apagada com sucesso");
+				if (result) {
+					Window.alert("Regiao apagada com sucesso");
+				} else {
+					Window.alert("Regiao não pode ser apagada pois possui surdos associados a ela");
+				}
 				getView().initView();
 			}
 			

@@ -8,6 +8,7 @@
 	<stylesheet src="Upload.css"/>	
 	<source path="client" />
 	<source path="enumeration" />
+	<source path="vo" />
 	<entry-point
 		class="br.com.nascisoft.apoioterritoriols.admin.client.AdminEntryPoint" />
 </module>

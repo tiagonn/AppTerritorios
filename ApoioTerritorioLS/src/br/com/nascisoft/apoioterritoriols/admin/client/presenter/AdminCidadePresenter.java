@@ -77,9 +77,9 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void apagarCidade(String nome) {
+	public void apagarCidade(Long id) {
 		getView().showWaitingPanel();
-		this.service.apagarCidade(nome, new AsyncCallback<Boolean>() {
+		this.service.apagarCidade(id, new AsyncCallback<Boolean>() {
 			
 			@Override
 			public void onSuccess(Boolean result) {

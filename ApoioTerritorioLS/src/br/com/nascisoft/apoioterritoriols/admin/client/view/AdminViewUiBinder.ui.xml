@@ -183,10 +183,6 @@
 				<g:VerticalPanel>
 					<g:InlineLabel text="Manter Regiões" styleName="negrito"></g:InlineLabel>
 					<g:HTML wordWrap="true"> <br/></g:HTML>
-					<g:HTML styleName="label-instrucoes">
-						Note que o nome da região deve ser único, mesmo para cidades distintas. Por exemplo, não é possível 
-						ter duas regiões utilizando o nome "Norte" mesmo que elas estejam em cidades distintas.
-					</g:HTML>
 					<g:HTML ui:field="regioesWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"> <br/></g:HTML>	
 					<g:Grid>

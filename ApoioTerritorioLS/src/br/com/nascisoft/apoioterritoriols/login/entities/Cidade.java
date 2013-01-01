@@ -14,7 +14,8 @@ public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id private String nome;
+	@Id private Long id; 
+	private String nome;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
 	private Integer quantidadeSurdosMapa;
@@ -22,6 +23,12 @@ public class Cidade implements Serializable {
 	private String UF;
 	private String pais;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNome() {
 		return nome;
 	}

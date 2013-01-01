@@ -2,9 +2,9 @@ package br.com.nascisoft.apoioterritoriols.admin.client;
 
 import java.util.List;
 
-import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
+import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -27,18 +27,18 @@ public interface AdminService extends RemoteService {
 	
 	List<Cidade> buscarCidades();
 	
-	Boolean apagarCidade(String nome);
+	Boolean apagarCidade(Long id);
 	
-	void adicionarOuAtualizarRegiao(Regiao regiao, String nomeCidade);
+	void adicionarOuAtualizarRegiao(RegiaoVO regiao);
 	
-	List<Regiao> buscarRegioes();
+	List<RegiaoVO> buscarRegioes();
 	
-	void apagarRegiao(String nome);
+	Boolean apagarRegiao(Long id);
 	
-	void adicionarOuAtualizarBairro(Bairro bairro, String nomeCidade);
+	void adicionarOuAtualizarBairro(BairroVO bairro);
 	
-	List<Bairro> buscarBairros();
+	List<BairroVO> buscarBairros();
 	
-	void apagarBairro(String nome);
+	void apagarBairro(Long id);
 
 }

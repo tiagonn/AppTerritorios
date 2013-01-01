@@ -42,10 +42,10 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 	@UiField CheckBox usuarioAdministradorCheckBox;
 	@UiField Button usuarioAdicionarButton;
 	@UiField HTML usuariosWarningHTML;
-	@UiField CellTable<Usuario> pesquisaResultadoCellTable;
-	@UiField Label pesquisaResultadoLabel;
-	@UiField SimplePager pesquisaResultadoSimplePager;
-	private ListDataProvider<Usuario> resultadoPesquisa;
+	@UiField CellTable<Usuario> pesquisaUsuarioResultadoCellTable;
+	@UiField Label pesquisaUsuarioResultadoLabel;
+	@UiField SimplePager pesquisaUsuarioResultadoSimplePager;
+	private ListDataProvider<Usuario> resultadoPesquisaUsuario;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -54,9 +54,9 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 
 	public AdminUsuarioViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-		this.resultadoPesquisa = new ListDataProvider<Usuario>();
-		this.resultadoPesquisa.addDataDisplay(this.pesquisaResultadoCellTable);
-		this.pesquisaResultadoSimplePager.setDisplay(this.pesquisaResultadoCellTable);
+		this.resultadoPesquisaUsuario = new ListDataProvider<Usuario>();
+		this.resultadoPesquisaUsuario.addDataDisplay(this.pesquisaUsuarioResultadoCellTable);
+		this.pesquisaUsuarioResultadoSimplePager.setDisplay(this.pesquisaUsuarioResultadoCellTable);
 	}
 
 	@Override
@@ -108,8 +108,8 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 	@Override
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.limparResultadoPesquisa();
-		this.pesquisaResultadoCellTable.setRowCount(usuarios.size());
-		this.resultadoPesquisa.setList(usuarios);
+		this.pesquisaUsuarioResultadoCellTable.setRowCount(usuarios.size());
+		this.resultadoPesquisaUsuario.setList(usuarios);
 		this.mostrarResultadoPesquisa();		
 	}
 
@@ -122,23 +122,23 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 	private void limparResultadoPesquisa() {	
 		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
 		// portanto sempre  é necessário remover a coluna 0.
-		int j = this.pesquisaResultadoCellTable.getColumnCount();
+		int j = this.pesquisaUsuarioResultadoCellTable.getColumnCount();
 		for (int i = 0; i < j; i++) {
-			this.pesquisaResultadoCellTable.removeColumn(0);
+			this.pesquisaUsuarioResultadoCellTable.removeColumn(0);
 		}
-		this.pesquisaResultadoLabel.setText("");
-		this.pesquisaResultadoCellTable.setVisible(false);
-		this.pesquisaResultadoSimplePager.setVisible(false);
+		this.pesquisaUsuarioResultadoLabel.setText("");
+		this.pesquisaUsuarioResultadoCellTable.setVisible(false);
+		this.pesquisaUsuarioResultadoSimplePager.setVisible(false);
 	}
 	
 	private void mostrarResultadoPesquisa() {
-		if (this.pesquisaResultadoCellTable.getRowCount() == 0) {
-			this.pesquisaResultadoLabel.setText("Não foram encontrados resultados para a pesquisa informada");
-			this.pesquisaResultadoSimplePager.setVisible(false);
+		if (this.pesquisaUsuarioResultadoCellTable.getRowCount() == 0) {
+			this.pesquisaUsuarioResultadoLabel.setText("Não foram encontrados resultados para a pesquisa informada");
+			this.pesquisaUsuarioResultadoSimplePager.setVisible(false);
 		} else {
-			this.pesquisaResultadoLabel.setText("Foram encontrados " + this.pesquisaResultadoCellTable.getRowCount() + " resultados.");
-			this.pesquisaResultadoCellTable.setStyleName("surdo-tabela");
-			this.pesquisaResultadoCellTable.setVisible(true);
+			this.pesquisaUsuarioResultadoLabel.setText("Foram encontrado(s) " + this.pesquisaUsuarioResultadoCellTable.getRowCount() + " resultado(s).");
+			this.pesquisaUsuarioResultadoCellTable.setStyleName("surdo-tabela");
+			this.pesquisaUsuarioResultadoCellTable.setVisible(true);
 			
 			TextColumn<Usuario> email = new TextColumn<Usuario>() {
 				@Override
@@ -170,11 +170,11 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 				}
 			};
 
-			this.pesquisaResultadoCellTable.addColumn(email, "E-mail");
-			this.pesquisaResultadoCellTable.addColumn(admin, "Administrador");
-			this.pesquisaResultadoCellTable.addColumn(deletarColumn, "");
+			this.pesquisaUsuarioResultadoCellTable.addColumn(email, "E-mail");
+			this.pesquisaUsuarioResultadoCellTable.addColumn(admin, "Administrador");
+			this.pesquisaUsuarioResultadoCellTable.addColumn(deletarColumn, "");
 			
-			this.pesquisaResultadoSimplePager.setVisible(true);
+			this.pesquisaUsuarioResultadoSimplePager.setVisible(true);
 		}
 		this.usuariosWarningHTML.setHTML("");
 	}

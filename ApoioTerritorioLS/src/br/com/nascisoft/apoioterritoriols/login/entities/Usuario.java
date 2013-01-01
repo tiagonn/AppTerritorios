@@ -5,7 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Id;
 
 import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Unindexed;
 
+@Unindexed
 @Cached
 public class Usuario implements Serializable {
 	

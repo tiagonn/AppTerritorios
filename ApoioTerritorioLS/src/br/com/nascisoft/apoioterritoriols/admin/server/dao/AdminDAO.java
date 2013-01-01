@@ -2,7 +2,9 @@ package br.com.nascisoft.apoioterritoriols.admin.server.dao;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
@@ -51,6 +53,36 @@ public class AdminDAO extends DAOBase {
 	public void apagarUsuario(String email) {
 		Objectify ofy = ObjectifyService.begin();
 		ofy.delete(Usuario.class, email);
+	}
+	
+	public void adicionarOuAtualizarCidade(Cidade cidade) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(cidade);
+	}
+	
+	public List<Cidade> buscarCidades() {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.query(Cidade.class).list();
+	}
+	
+	public void apagarCidade(String nome) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.delete(Cidade.class, nome);
+	}
+	
+	public void adicionarOuAtualizarRegiao(Regiao regiao) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.put(regiao);
+	}
+	
+	public List<Regiao> buscarRegioes() {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.query(Regiao.class).list();
+	}
+	
+	public void apagarRegiao(String nome) {
+		Objectify ofy = ObjectifyService.begin();
+		ofy.delete(Regiao.class, nome);
 	}
 
 }

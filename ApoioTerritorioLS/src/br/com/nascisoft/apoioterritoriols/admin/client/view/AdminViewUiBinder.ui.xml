@@ -79,7 +79,7 @@
 			<g:header>Usuarios</g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
-					<g:InlineLabel text="Adicionar Usuários" styleName="negrito"></g:InlineLabel>
+					<g:InlineLabel text="Manter Usuários" styleName="negrito"></g:InlineLabel>
 					<g:HTML wordWrap="true"> <br/></g:HTML>
 					<g:HTML ui:field="usuariosWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"> <br/></g:HTML>	
@@ -108,10 +108,150 @@
 						</g:row>
 					</g:Grid>
 					<g:HTML wordWrap="true"> <br/></g:HTML>
-					<g:Label ui:field="pesquisaResultadoLabel"/>					
+					<g:Label ui:field="pesquisaUsuarioResultadoLabel"/>					
 					<g:HTML wordWrap="true"> <br/></g:HTML>
-					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="15" />
-					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="15"/>
+					<c:CellTable ui:field="pesquisaUsuarioResultadoCellTable" pageSize="15" />
+					<c:SimplePager location="CENTER" ui:field="pesquisaUsuarioResultadoSimplePager" pageSize="15"/>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Cidades</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:InlineLabel text="Manter Cidades" styleName="negrito"></g:InlineLabel>
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<g:HTML ui:field="cidadesWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
+					<g:HTML wordWrap="true"> <br/></g:HTML>	
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Nome: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeNomeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Estado: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeUFTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="País: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadePaisTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Qtde de surdos por mapa: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="cidadeQuantidadeSurdosMapaListBox"/>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Latitude do centro: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLatitudeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Longitude do centro: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLongitudeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell><g:HTML>&nbsp;</g:HTML></g:customCell>
+							<g:customCell>
+								<g:CheckBox ui:field="cidadeUtilizarBairroBuscaEnderecoCheckBox" checked="false" text="Utilizar bairro na busca por endereço"></g:CheckBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell><g:HTML>&nbsp;</g:HTML></g:customCell>
+						</g:row>
+						<g:row>							
+							<g:customCell>
+								<g:Button ui:field="cidadeAdicionarButton" text="Adicionar"></g:Button>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<g:Label ui:field="pesquisaCidadeResultadoLabel"/>					
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<c:CellTable ui:field="pesquisaCidadeResultadoCellTable" pageSize="15" />
+					<c:SimplePager location="CENTER" ui:field="pesquisaCidadeResultadoSimplePager" pageSize="15"/>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Regiões</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:InlineLabel text="Manter Regiões" styleName="negrito"></g:InlineLabel>
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<g:HTML styleName="label-instrucoes">
+						Note que o nome da região deve ser único, mesmo para cidades distintas. Por exemplo, não é possível 
+						ter duas regiões utilizando o nome "Norte" mesmo que elas estejam em cidades distintas.
+					</g:HTML>
+					<g:HTML ui:field="regioesWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
+					<g:HTML wordWrap="true"> <br/></g:HTML>	
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Cidade: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="regiaoCidadeListBox"/>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Nome: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="regiaoNomeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Identificador/Letra: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="regiaoLetraTextBox" visibleLength="5"></g:TextBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Latitude do centro: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="regiaoLatitudeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Longitude do centro: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="regiaoLongitudeTextBox" visibleLength="25"></g:TextBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell><g:HTML>&nbsp;</g:HTML></g:customCell>
+						</g:row>
+						<g:row>							
+							<g:customCell>
+								<g:Button ui:field="regiaoAdicionarButton" text="Adicionar"></g:Button>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<g:Label ui:field="pesquisaRegiaoResultadoLabel"/>					
+					<g:HTML wordWrap="true"> <br/></g:HTML>
+					<c:CellTable ui:field="pesquisaRegiaoResultadoCellTable" pageSize="15" />
+					<c:SimplePager location="CENTER" ui:field="pesquisaRegiaoResultadoSimplePager" pageSize="15"/>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>

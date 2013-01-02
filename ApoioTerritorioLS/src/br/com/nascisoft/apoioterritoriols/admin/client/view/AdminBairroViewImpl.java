@@ -118,7 +118,6 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 	
 	public void setCidades(List<Cidade> cidades) {
 		this.bairroCidadeListBox.clear();
-		this.bairroCidadeListBox.addItem("-- Escolha uma opção --", "");
 		for (Cidade cidade : cidades) {
 			this.bairroCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 		}
@@ -236,10 +235,6 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 	private Validacoes validarAdicionarUsuario() {
 		Validacoes validacoes = new Validacoes();
 		
-
-		if (this.bairroCidadeListBox.getSelectedIndex() == 0) {
-			validacoes.add("Uma cidade precisa ser selecionada.");
-		}
 		if (bairroNomeTextBox.getText().isEmpty()) {
 			validacoes.add("Nome precisa ser preenchido");
 		}		

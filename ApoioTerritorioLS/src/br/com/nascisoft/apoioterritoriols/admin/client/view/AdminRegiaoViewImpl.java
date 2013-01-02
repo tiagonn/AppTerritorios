@@ -42,6 +42,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	@UiField ListBox regiaoCidadeListBox;
 	@UiField TextBox regiaoNomeTextBox;
 	@UiField TextBox regiaoLetraTextBox;
+	@UiField TextBox regiaoZoomTextBox;
 	@UiField TextBox regiaoLatitudeTextBox;
 	@UiField TextBox regiaoLongitudeTextBox;
 	@UiField Button regiaoAdicionarButton;
@@ -121,7 +122,6 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	
 	public void setCidades(List<Cidade> cidades) {
 		this.regiaoCidadeListBox.clear();
-		this.regiaoCidadeListBox.addItem("-- Escolha uma opção --", "");
 		for (Cidade cidade : cidades) {
 			this.regiaoCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 		}
@@ -135,6 +135,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		regiao.setLatitudeCentro(Double.valueOf(this.regiaoLatitudeTextBox.getText()));
 		regiao.setLongitudeCentro(Double.valueOf(this.regiaoLongitudeTextBox.getText()));
 		regiao.setLetra(this.regiaoLetraTextBox.getText());
+		regiao.setZoom(Integer.valueOf(this.regiaoZoomTextBox.getText()));
 		regiao.setCidadeId(Long.valueOf(this.regiaoCidadeListBox.getValue(this.regiaoCidadeListBox.getSelectedIndex())));
 		
 		return regiao;
@@ -145,6 +146,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regiaoNomeTextBox.setText("");
 		this.regioesWarningHTML.setHTML("");
 		this.regiaoLetraTextBox.setText("");
+		this.regiaoZoomTextBox.setText("");
 		this.regiaoLatitudeTextBox.setText("");
 		this.regiaoLongitudeTextBox.setText("");
 		this.regiaoCidadeListBox.setSelectedIndex(0);
@@ -239,6 +241,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regiaoLatitudeTextBox.setText(regiao.getLatitudeCentro().toString());
 		this.regiaoLongitudeTextBox.setText(regiao.getLongitudeCentro().toString());
 		this.regiaoLetraTextBox.setText(regiao.getLetra());
+		this.regiaoZoomTextBox.setText(regiao.getZoom().toString());
 		this.regiaoCidadeListBox.setSelectedIndex(
 				obterIndice(this.regiaoCidadeListBox, regiao.getCidadeId().toString()));
 
@@ -256,16 +259,21 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	private Validacoes validarAdicionarUsuario() {
 		Validacoes validacoes = new Validacoes();
 		
-
-		if (this.regiaoCidadeListBox.getSelectedIndex() == 0) {
-			validacoes.add("Uma cidade precisa ser selecionada.");
-		}
 		if (regiaoNomeTextBox.getText().isEmpty()) {
 			validacoes.add("Nome precisa ser preenchido");
 		}		
 		if (regiaoLetraTextBox.getText().isEmpty()) {
 			validacoes.add("Identificador/Letra precisa ser preenchido");
 		}	
+		if (regiaoZoomTextBox.getText().isEmpty()) {
+			validacoes.add("Nível de zoom precisa ser preenchido");
+		} else {
+			try {
+				Integer.valueOf(this.regiaoZoomTextBox.getText());
+			} catch (NumberFormatException ex) {
+				validacoes.add("Nível de zoom precisa ser numérico");
+			}
+		}
 		if (regiaoLatitudeTextBox.getText().isEmpty()) {
 			validacoes.add("Latitude precisa ser preenchido");
 		} else {

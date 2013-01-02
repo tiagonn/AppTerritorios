@@ -20,6 +20,7 @@ public class Regiao implements Serializable {
 	private String nome;
 	@Indexed private Key<Cidade> cidade;
 	@Indexed private String letra;
+	private Integer zoom;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
 	
@@ -46,6 +47,12 @@ public class Regiao implements Serializable {
 	}
 	public void setLetra(String letra) {
 		this.letra = letra;
+	}
+	public Integer getZoom() {
+		return zoom;
+	}
+	public void setZoom(Integer zoom) {
+		this.zoom = zoom;
 	}
 	public Double getLatitudeCentro() {
 		return latitudeCentro;

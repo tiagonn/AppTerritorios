@@ -207,6 +207,12 @@
 							<g:customCell>
 								<g:TextBox ui:field="regiaoLetraTextBox" visibleLength="5"></g:TextBox>
 							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Nível de zoom: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="regiaoZoomTextBox" visibleLength="5"></g:TextBox>
+							</g:customCell>
 						</g:row>
 						<g:row>
 							<g:customCell>

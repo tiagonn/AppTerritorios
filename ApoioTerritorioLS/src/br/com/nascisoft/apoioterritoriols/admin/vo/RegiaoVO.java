@@ -14,6 +14,7 @@ public class RegiaoVO implements Serializable{
 	private Long cidadeId;
 	private String cidadeNome;
 	private String letra;
+	private Integer zoom;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
 	
@@ -22,13 +23,14 @@ public class RegiaoVO implements Serializable{
 	}
 	
 	public RegiaoVO(Regiao regiao, Cidade cidade) {
-		this.id = regiao.getId();
-		this.nome = regiao.getNome();
-		this.letra = regiao.getLetra();
-		this.latitudeCentro = regiao.getLatitudeCentro();
-		this.longitudeCentro = regiao.getLongitudeCentro();
-		this.cidadeId = cidade.getId();
-		this.cidadeNome = cidade.getNome();
+		this.setId(regiao.getId());
+		this.setNome(regiao.getNome());
+		this.setLetra(regiao.getLetra());
+		this.setZoom(regiao.getZoom());
+		this.setLatitudeCentro(regiao.getLatitudeCentro());
+		this.setLongitudeCentro(regiao.getLongitudeCentro());
+		this.setCidadeId(cidade.getId());
+		this.setCidadeNome(cidade.getNome());
 	}
 	
 	public Long getId() {
@@ -61,6 +63,14 @@ public class RegiaoVO implements Serializable{
 	public void setLetra(String letra) {
 		this.letra = letra;
 	}
+	public Integer getZoom() {
+		return zoom;
+	}
+
+	public void setZoom(Integer zoom) {
+		this.zoom = zoom;
+	}
+
 	public Double getLatitudeCentro() {
 		return latitudeCentro;
 	}
@@ -80,6 +90,7 @@ public class RegiaoVO implements Serializable{
 		regiao.setId(this.getId());
 		regiao.setNome(this.getNome());
 		regiao.setLetra(this.getLetra());
+		regiao.setZoom(this.getZoom());
 		regiao.setLatitudeCentro(this.getLatitudeCentro());
 		regiao.setLongitudeCentro(this.getLongitudeCentro());
 		

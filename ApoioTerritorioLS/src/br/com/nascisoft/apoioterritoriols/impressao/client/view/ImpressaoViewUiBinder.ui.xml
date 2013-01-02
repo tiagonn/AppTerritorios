@@ -20,6 +20,7 @@
 			</g:SimplePanel>
 			<g:HTML><br/></g:HTML>
 			<g:CheckBox ui:field="imprimirMapaCheckBox" checked="true" text="Imprimir Mapa"></g:CheckBox>
+			<g:CheckBox ui:field="imprimirMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
 		</g:VerticalPanel>
 	</g:SimplePanel>
 </ui:UiBinder>

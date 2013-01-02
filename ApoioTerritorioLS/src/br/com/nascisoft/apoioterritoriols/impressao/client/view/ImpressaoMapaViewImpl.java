@@ -327,9 +327,18 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		return new LatLng(latitude/surdos.size(), longitude/surdos.size());
 	}
 	
-
+	
 	@UiHandler("imprimirMapaCheckBox")
 	void onImprimirMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
 		this.impressaoMapaVerticalPanel.setVisible(event.getValue());
+	}
+
+	@UiHandler("imprimirMapaSateliteCheckBox")
+	void onImprimirMapaSateliteCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		if (event.getValue()) {
+			((MapWidget)this.impressaoMapaSimplePanel.getWidget()).getMap().setMapTypeId(new MapTypeId().getSatellite());
+		} else {
+			((MapWidget)this.impressaoMapaSimplePanel.getWidget()).getMap().setMapTypeId(new MapTypeId().getRoadmap());
+		}
 	}
 }

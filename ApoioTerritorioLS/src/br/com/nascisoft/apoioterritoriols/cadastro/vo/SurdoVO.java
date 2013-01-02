@@ -269,7 +269,7 @@ public class SurdoVO implements Serializable {
 			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getIdade())) {
-			retorno.append("Possui aproximadamente ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+			retorno.append("Aproximadamente ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
 		}
 		if (!StringUtils.isEmpty(this.getLibras())) {
 			if ("Sim".equals(this.getLibras())) {
@@ -286,22 +286,22 @@ public class SurdoVO implements Serializable {
 			}
 		}
 		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
-			retorno.append("Possui a(s) seguinte(s) publicações: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+			retorno.append("Publicações que possui: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getMelhorDia())) {
-			retorno.append("Melhor(es) dia(s) para ser contactado(a): ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+			retorno.append("Melhor dia: ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getHorario())) {
-			retorno.append("Melhor horário para ser contactado(a): ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+			retorno.append("Melhor horário: ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
-			retorno.append("Ônibus que pode(m) ser usado(s): ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getMsn())) {
-			retorno.append("E-mail/MSN: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
 		}
 		if (!StringUtils.isEmpty(this.getObservacao())) {
-			retorno.append("</br><strong>Demais observações: </strong>").append(this.getObservacao());
+			retorno.append("</br><strong>Outras observações: </strong>").append(this.getObservacao());
 		}
 		
 		return retorno.toString();

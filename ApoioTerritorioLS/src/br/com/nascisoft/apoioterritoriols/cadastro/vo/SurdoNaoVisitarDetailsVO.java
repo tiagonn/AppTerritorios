@@ -3,6 +3,7 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class SurdoNaoVisitarDetailsVO implements Serializable {
@@ -11,10 +12,10 @@ public class SurdoNaoVisitarDetailsVO implements Serializable {
 		
 	}
 	
-	public SurdoNaoVisitarDetailsVO(Surdo surdo) {
+	public SurdoNaoVisitarDetailsVO(Surdo surdo, Regiao regiao) {
 		this.setId(surdo.getId());
 		this.setNome(surdo.getNome());
-		this.setRegiao(surdo.getRegiao());
+		this.setRegiao(regiao.getNomeRegiaoCompleta());
 		if (surdo.isMudouSe()) {
 			this.setMotivo("Mudou-se");
 		} else if (surdo.isVisitarSomentePorAnciaos()) {

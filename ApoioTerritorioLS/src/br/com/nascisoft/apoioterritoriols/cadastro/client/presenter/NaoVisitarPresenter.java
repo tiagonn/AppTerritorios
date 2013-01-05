@@ -83,4 +83,9 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 		});
 	}
 
+	@Override
+	void tratarCidadePopulada() {
+		//Não tem nenhum tratamento para este presenter
+	}
+
 }

@@ -19,17 +19,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</context-param>
 
 	<servlet>
-		<servlet-name>uploadServlet</servlet-name>
-		<!-- This is the default servlet, it puts files in session -->
-		<servlet-class>br.com.nascisoft.apoioterritoriols.admin.server.RestauracaoUploadServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>uploadServlet</servlet-name>
-		<url-pattern>*.gupld</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>CadastroServlet</servlet-name>
 		<servlet-class>br.com.nascisoft.apoioterritoriols.cadastro.server.CadastroServiceImpl</servlet-class>
 	</servlet>
@@ -69,6 +58,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/admin/AdminService</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 
+	<servlet>
+		<servlet-name>uploadServlet</servlet-name>
+		<servlet-class>br.com.nascisoft.apoioterritoriols.admin.server.RestauracaoUploadServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>uploadServlet</servlet-name>
+		<url-pattern>*.gupld</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>BackupServlet</servlet-name>
 		<servlet-class>br.com.nascisoft.apoioterritoriols.admin.server.BackupServlet</servlet-class>
@@ -98,6 +98,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>MapeamentoNovosAtributosServlet</servlet-name>
 		<url-pattern>/tasks/mapeamentoNovosAtributos</url-pattern>
 	</servlet-mapping>
+	-->
 	
 	<servlet>
 		<servlet-name>PrimeiroUsuarioServlet</servlet-name>

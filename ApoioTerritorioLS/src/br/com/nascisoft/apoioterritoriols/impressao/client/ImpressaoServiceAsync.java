@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ImpressaoServiceAsync {
 
-	void obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa,
+	void obterSurdosCompletos(Long identificadorMapa,
 			AsyncCallback<List<SurdoVO>> callback);
 	
 }

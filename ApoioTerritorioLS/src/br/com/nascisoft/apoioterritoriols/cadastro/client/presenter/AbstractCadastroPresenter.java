@@ -6,8 +6,9 @@ import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
@@ -16,7 +17,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public abstract class AbstractCadastroPresenter implements CadastroPresenter, CadastroView.Presenter {
 	
-	private static List<Regiao> regioes = null;
+	protected List<Cidade> cidades = null;
 	protected final HandlerManager eventBus;
 	protected final CadastroServiceAsync service;
 	
@@ -27,35 +28,58 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 	
 	abstract CadastroView getView();
 	
+	abstract void tratarCidadePopulada();
+	
 	protected static final Logger logger = Logger.getLogger(AbstractCadastroPresenter.class.getName());
 	
-	protected void populaRegioes() {
-		if(regioes == null) {
+	public void populaCidades() {
+		if (cidades == null) {
 			getView().showWaitingPanel();
-			service.obterRegioesCampinas(new AsyncCallback<List<Regiao>>() {
-
+			service.obterCidades(new AsyncCallback<List<Cidade>>() {
+				
+				@Override
+				public void onSuccess(List<Cidade> result) {
+					cidades = result;
+					tratarCidadePopulada();
+					getView().setCidadeList(result);
+					getView().hideWaitingPanel();
+				}
+				
 				@Override
 				public void onFailure(Throwable caught) {
-					logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+					logger.log(Level.SEVERE, "Falha ao obter lista de cidades.\n", caught);
 					getView().hideWaitingPanel();
-					Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
-				}
-
-				@Override
-				public void onSuccess(List<Regiao> result) {
-					regioes = result;
-					getView().setRegiaoList(result);
-					getView().hideWaitingPanel();
+					Window.alert("Falha ao obter lista de cidades. \n" + caught.getMessage());		
 				}
 			});
 		} else {
-			getView().setRegiaoList(regioes);
+			tratarCidadePopulada();
+			getView().setCidadeList(cidades);
 		}
 	}
 	
-	public void onPesquisaRegiaoListBoxChange(String nomeRegiao) {
+	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
 		getView().showWaitingPanel();
-		service.obterMapasRegiao(nomeRegiao, new AsyncCallback<List<Mapa>>() {
+		service.obterRegioes(cidadeId, new AsyncCallback<List<Regiao>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
+			}
+
+			@Override
+			public void onSuccess(List<Regiao> result) {
+				getView().setRegiaoList(result);
+				getView().hideWaitingPanel();
+			}
+		});
+	}
+	
+	public void onPesquisaRegiaoListBoxChange(Long regiaoId) {
+		getView().showWaitingPanel();
+		service.obterMapasRegiao(regiaoId, new AsyncCallback<List<Mapa>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

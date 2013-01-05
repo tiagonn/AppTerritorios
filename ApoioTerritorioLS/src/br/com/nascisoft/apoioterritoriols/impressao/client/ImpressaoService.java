@@ -10,6 +10,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("ImpressaoService")
 public interface ImpressaoService extends RemoteService {
 	
-	List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa);
+	List<SurdoVO> obterSurdosCompletos(Long identificadorMapa);
 	
 }

@@ -26,7 +26,7 @@ public class PrimeiroUsuarioServlet extends
 		
 		AdminDAO dao = new AdminDAO();
 		
-		List<Usuario> usuarios = dao.buscarUsuarios();
+		List<Usuario> usuarios = dao.obterUsuarios();
 		
 		if (usuarios == null || usuarios.size() == 0) {
 			String nome = req.getParameter("nome");

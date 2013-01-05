@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 import com.googlecode.objectify.Key;
@@ -24,14 +26,17 @@ public class CadastroDAO extends DAOBase {
 		return surdo.getId();
 	}
 	
-	public List<Surdo> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
+	public List<Surdo> obterSurdos(Long identificadorCidade, String nomeSurdo, Long regiaoId, Long identificadorMapa, Boolean estaAssociadoMapa) {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> query = ofy.query(Surdo.class);
+		if (identificadorCidade != null) {
+			query.filter("cidade", new Key<Cidade>(Cidade.class, identificadorCidade));
+		}
 		if (nomeSurdo != null && nomeSurdo.length() > 0) {
 			query.filter("nome >=", nomeSurdo.toUpperCase()).filter("nome <", nomeSurdo.toUpperCase() + '\uFFFD');
 		}
-		if (nomeRegiao != null && nomeRegiao.length() > 0) {
-			query.filter("regiao", nomeRegiao);
+		if (regiaoId != null) {
+			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
 		}
 		if (identificadorMapa != null) {
 			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);
@@ -61,9 +66,9 @@ public class CadastroDAO extends DAOBase {
 		return ofy.get(Surdo.class, id);
 	}
 	
-	public Long adicionarMapa(String nomeRegiao, String letra) {
+	public Long adicionarMapa(Long regiaoId, String letra) {
 		Objectify ofy = ObjectifyService.begin();
-		List<Mapa> mapas = this.obterMapasRegiao(nomeRegiao);
+		List<Mapa> mapas = this.obterMapasRegiao(regiaoId);
 		Integer i = 1;
 		for (Mapa mapa : mapas) {
 			if (i.equals(mapa.getNumero())) {
@@ -76,7 +81,7 @@ public class CadastroDAO extends DAOBase {
 		Mapa mapa = new Mapa();
 		mapa.setNumero(i);
 		mapa.setLetra(letra);
-		mapa.setRegiao(nomeRegiao);
+		mapa.setRegiao(new Key<Regiao>(Regiao.class, regiaoId));
 		
 		ofy.put(mapa);
 		
@@ -84,21 +89,21 @@ public class CadastroDAO extends DAOBase {
 		
 	}
 	
-	public List<Mapa> obterMapasRegiao(String nomeRegiao) {
+	public List<Mapa> obterMapasRegiao(Long regiaoId) {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Mapa> query = ofy.query(Mapa.class);
-		if (nomeRegiao != null && nomeRegiao.length() > 0) {
-			query.filter("regiao", nomeRegiao);
+		if (regiaoId != null) {
+			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
 		}
 		query.order("numero");
 		return query.list();
 	}
 	
-	public List<Surdo> obterSurdosSemMapa(String nomeRegiao) {
+	public List<Surdo> obterSurdosSemMapa(Long regiaoId) {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> query = ofy.query(Surdo.class);
-		if (nomeRegiao != null && nomeRegiao.length() > 0) {
-			query.filter("regiao", nomeRegiao);
+		if (regiaoId != null) {
+			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
 		}
 		query.filter("estaAssociadoMapa", Boolean.FALSE);
 		query.filter("mudouSe", Boolean.FALSE);
@@ -108,11 +113,11 @@ public class CadastroDAO extends DAOBase {
 		return query.list();
 	}
 	
-	public List<Surdo> obterSurdosOutrosMapas(String nomeRegiao, Long identificadorMapa) {
+	public List<Surdo> obterSurdosOutrosMapas(Long regiaoId, Long identificadorMapa) {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> query = ofy.query(Surdo.class);
-		if (nomeRegiao != null && nomeRegiao.length() > 0) {
-			query.filter("regiao", nomeRegiao);
+		if (regiaoId != null) {
+			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
 		}
 		if (identificadorMapa != null) {
 			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);

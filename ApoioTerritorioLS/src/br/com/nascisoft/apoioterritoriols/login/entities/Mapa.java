@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 @Cached
 public class Mapa implements Serializable {
@@ -12,7 +13,7 @@ public class Mapa implements Serializable {
 	@Id private Long id;
 	private Integer numero;
 	private String letra;
-	private String regiao;
+	private Key<Regiao> regiao;
 	
 	public Mapa() {
 		super();
@@ -40,11 +41,11 @@ public class Mapa implements Serializable {
 		this.numero = numero;
 	}
 
-	public void setRegiao(String regiao) {
+	public void setRegiao(Key<Regiao> regiao) {
 		this.regiao = regiao;
 	}
 
-	public String getRegiao() {
+	public Key<Regiao> getRegiao() {
 		return regiao;
 	}
 	

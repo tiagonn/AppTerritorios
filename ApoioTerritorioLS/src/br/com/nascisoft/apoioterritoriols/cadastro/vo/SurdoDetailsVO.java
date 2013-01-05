@@ -2,7 +2,9 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class SurdoDetailsVO implements Serializable {
@@ -16,21 +18,23 @@ public class SurdoDetailsVO implements Serializable {
 	private Double longitude;
 	private String endereco;
 	private String observacao;
+	private String nomeCidade;
 	
 	public SurdoDetailsVO() {
 		super();
 	}
 	
-	public SurdoDetailsVO(Surdo surdo, Mapa mapa) { 
+	public SurdoDetailsVO(Surdo surdo, Mapa mapa, Regiao regiao, Cidade cidade) { 
 		super();
 		this.setId(surdo.getId());
 		this.setNome(surdo.getNome());
-		this.setRegiao(surdo.getRegiao());
+		this.setRegiao(regiao.getNomeRegiaoCompleta());
 		this.setLatitude(surdo.getLatitude());
 		this.setLongitude(surdo.getLongitude());
 		this.setMapa(mapa != null ? mapa.getNome() : "");
 		this.setEndereco(surdo.getEndereco());
 		this.setObservacao(surdo.getObservacao());
+		this.setNomeCidade(cidade.getNome());
 	}
 	
 	public SurdoDetailsVO(SurdoVO surdo) {
@@ -42,6 +46,7 @@ public class SurdoDetailsVO implements Serializable {
 		this.setMapa(surdo.getMapa());
 		this.setEndereco(surdo.getEndereco());
 		this.setObservacao(surdo.getObservacao());
+		this.setNomeCidade(surdo.getNomeCidade());
 	}
 	
 	public Long getId() {
@@ -101,6 +106,14 @@ public class SurdoDetailsVO implements Serializable {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public String getNomeCidade() {
+		return nomeCidade;
+	}
+
+	public void setNomeCidade(String nomeCidade) {
+		this.nomeCidade = nomeCidade;
 	}
 
 }

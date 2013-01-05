@@ -5,12 +5,14 @@ import com.google.gwt.event.shared.GwtEvent;
 public class PesquisarSurdoEvent extends GwtEvent<PesquisarSurdoEventHandler> {
 	public static Type<PesquisarSurdoEventHandler> TYPE = new Type<PesquisarSurdoEventHandler>();
 	
+	String identificadorCidade;
 	String nomeSurdo;
 	String nomeRegiao; 
 	String identificadorMapa;
 	Boolean estaAssociadoMapa;
 
-	public PesquisarSurdoEvent(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+	public PesquisarSurdoEvent(String identificadorCidade, String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+		this.identificadorCidade = identificadorCidade;
 		this.nomeSurdo = nomeSurdo;
 		this.nomeRegiao = nomeRegiao;
 		this.identificadorMapa = identificadorMapa;
@@ -25,6 +27,14 @@ public class PesquisarSurdoEvent extends GwtEvent<PesquisarSurdoEventHandler> {
 	@Override
 	public com.google.gwt.event.shared.GwtEvent.Type<PesquisarSurdoEventHandler> getAssociatedType() {
 		return TYPE;
+	}
+
+	public String getIdentificadorCidade() {
+		return identificadorCidade;
+	}
+
+	public void setIdentificadorCidade(String identificadorCidade) {
+		this.identificadorCidade = identificadorCidade;
 	}
 
 	public String getNomeSurdo() {

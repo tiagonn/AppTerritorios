@@ -3,17 +3,20 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 
 public class AbrirMapaVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Mapa mapa;
-	private Centro centroRegiao;
+	private CentroVO centroRegiao;
 	private List<SurdoDetailsVO> surdosDe;
 	private List<SurdoDetailsVO> surdosPara;
 	private List<SurdoDetailsVO> surdosOutros;
+	private Regiao regiao;
+	private Cidade cidade;
 	
 	
 	public void setMapa(Mapa mapa) {
@@ -34,10 +37,13 @@ public class AbrirMapaVO implements Serializable {
 	public void setSurdosPara(List<SurdoDetailsVO> surdosPara) {
 		this.surdosPara = surdosPara;
 	}
-	public void setCentroRegiao(Centro centroRegiao) {
+	public void setCentroRegiao(CentroVO centroRegiao) {
 		this.centroRegiao = centroRegiao;
 	}
-	public Centro getCentroRegiao() {
+	public CentroVO getCentroRegiao() {
+		if (centroRegiao == null) {
+			centroRegiao = new CentroVO();
+		}
 		return centroRegiao;
 	}
 	public void setSurdosOutros(List<SurdoDetailsVO> surdosOutros) {
@@ -45,6 +51,18 @@ public class AbrirMapaVO implements Serializable {
 	}
 	public List<SurdoDetailsVO> getSurdosOutros() {
 		return surdosOutros;
+	}
+	public Regiao getRegiao() {
+		return regiao;
+	}
+	public void setRegiao(Regiao regiao) {
+		this.regiao = regiao;
+	}
+	public Cidade getCidade() {
+		return cidade;
+	}
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 }

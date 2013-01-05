@@ -24,7 +24,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 		super(service, eventBus);
 		this.view = view;
 		this.view.setPresenter(this);
-		populaRegioes();
+		populaCidades();
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	}
 
 	@Override
-	public void adicionarMapa(String nomeRegiao) {
+	public void adicionarMapa(Long identificadorRegiao) {
 		getView().showWaitingPanel();
-		service.adicionarMapa(nomeRegiao, new AsyncCallback<Long>() {
+		service.adicionarMapa(identificadorRegiao, new AsyncCallback<Long>() {
 						
 			@Override
 			public void onFailure(Throwable caught) {
@@ -146,6 +146,13 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 			}
 		});
+	}
+
+	@Override
+	void tratarCidadePopulada() {
+		if (this.cidades.size() == 1) {
+			this.onPesquisaCidadeListBoxChange(this.cidades.get(0).getId());
+		}
 	}
 
 }

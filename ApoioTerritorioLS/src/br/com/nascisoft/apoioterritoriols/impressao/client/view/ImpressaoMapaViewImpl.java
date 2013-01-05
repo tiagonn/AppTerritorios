@@ -100,7 +100,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			
 			SurdoVO surdo = surdos.get(i);
 			
-			this.impressaoLocalidadeLabel.setText(surdo.getRegiao());
+			this.impressaoLocalidadeLabel.setText(surdo.getNomeCidade() + "/" + surdo.getRegiao());
 			this.impressaoTerritorioLabel.setText(surdo.getMapa().substring(5));
 			
 			adicionarMarcadorSurdo(i+1, surdo, mapa);

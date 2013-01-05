@@ -6,8 +6,10 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -15,24 +17,28 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("CadastroService")
 public interface CadastroService extends RemoteService {
-
-	List<String> obterBairrosCampinas();
-
-	List<Regiao> obterRegioesCampinas();
 	
-	List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa);
+	List<Cidade> obterCidades();
 	
-	List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa);
+	Cidade obterCidade(Long identificadorCidade);
+
+	List<Bairro> obterBairros(Long cidadeId);
+
+	List<Regiao> obterRegioes(Long cidadeId);
+	
+	List<SurdoDetailsVO> obterSurdos(Long identificadorCidade, String nomeSurdo, Long regiaoId, Long identificadorMapa, Boolean estaAssociadoMapa);
+	
+	List<SurdoVO> obterSurdosCompletos(String nomeSurdo, Long regiaoId, Long identificadorMapa);
 	
 	AbrirMapaVO obterInformacoesAbrirMapa(Long identificadorMapa);
 	
-	List<Mapa> obterMapasRegiao(String nomeRegiao);
+	List<Mapa> obterMapasRegiao(Long regiaoId);
 	
 	Long adicionarOuAlterarSurdo(Surdo surdo);
 	
 	Surdo obterSurdo(Long id);
 	
-	Long adicionarMapa(String nomeRegiao);
+	Long adicionarMapa(Long regiaoId);
 	
 	Long adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa);
 

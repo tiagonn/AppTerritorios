@@ -3,6 +3,7 @@ package br.com.nascisoft.apoioterritoriols.login.entities;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
@@ -65,5 +66,9 @@ public class Regiao implements Serializable {
 	}
 	public void setLongitudeCentro(Double longitudeCentro) {
 		this.longitudeCentro = longitudeCentro;
+	}
+	@Transient
+	public String getNomeRegiaoCompleta() {
+		return this.getLetra() + " - " + this.getNome();
 	}
 }

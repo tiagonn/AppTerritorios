@@ -38,7 +38,7 @@ public class ImpressaoMapaPresenter implements IImpressaoPresenter {
 
 	@Override
 	public void abrirImpressaoMapa(Long identificadorMapa) {
-		this.service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
+		this.service.obterSurdosCompletos(identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
 			
 			@Override
 			public void onSuccess(List<SurdoVO> result) {

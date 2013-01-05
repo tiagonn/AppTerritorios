@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoService;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -47,7 +48,7 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 	}
 	
 	@Override
-	public List<SurdoVO> obterSurdosCompletos(Long identificadorMapa) {
+	public AbrirMapaVO obterSurdosCompletos(Long identificadorMapa) {
 		logger.log(Level.INFO, "Obtendo surdos para impressao");
 		
 		List<Surdo> surdos = this.getDao().obterSurdos(null, null, null, identificadorMapa, null);
@@ -79,7 +80,12 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 		
 		Collections.sort(surdosVO, SurdoVO.COMPARATOR_ENDERECO);
 		
-		return surdosVO;
+		AbrirMapaVO vo = new AbrirMapaVO();
+		
+		vo.setSurdosImprimir(surdosVO);
+		vo.setCidade(mapasCidade.get(surdos.get(0).getCidade()));
+		
+		return vo;
 	}
 
 		

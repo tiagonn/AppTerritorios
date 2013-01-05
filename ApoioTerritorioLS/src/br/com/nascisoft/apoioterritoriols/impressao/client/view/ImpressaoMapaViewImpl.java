@@ -2,6 +2,7 @@ package br.com.nascisoft.apoioterritoriols.impressao.client.view;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
@@ -55,7 +56,6 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 	private Boolean imprimirCabecalho;
 	@SuppressWarnings("unused")
 	private Boolean imprimirMapa;
-	private Boolean mapaIndividual;
 	
 	private final static String ALTURA_MAPA = "260px";
 	private final static String LARGURA_MAPA = "540px";
@@ -71,12 +71,13 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		this.paisagem = paisagem;
 		this.imprimirCabecalho = imprimirCabecalho;
 		this.imprimirMapa = imprimirMapa;
-			// TODO: parametrizar
-		this.mapaIndividual = true;
+
 	}
 
 	@Override
-	public void abrirImpressaoMapa(List<SurdoVO> surdos) {
+	public void abrirImpressaoMapa(AbrirMapaVO vo) {
+		
+		List<SurdoVO> surdos = vo.getSurdosImprimir();
 		
 		this.impressaoSurdoFlexTable.removeAllRows();
 		
@@ -94,16 +95,18 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		MapWidget mapa = new MapWidget(opt);
 		mapa.setSize(LARGURA_MAPA, ALTURA_MAPA);
 		
-		int j =  this.mapaIndividual ? 1 : surdos.size();
+		int j =  vo.getCidade().getQuantidadeSurdosMapa();
 		
 		for (int i = 0; i < j; i++) {
 			
 			SurdoVO surdo = surdos.get(i);
 			
-			this.impressaoLocalidadeLabel.setText(surdo.getNomeCidade() + "/" + surdo.getRegiao());
+			this.impressaoLocalidadeLabel.setText(surdo.getRegiao() + " / " + surdo.getNomeCidade());
 			this.impressaoTerritorioLabel.setText(surdo.getMapa().substring(5));
 			
-			adicionarMarcadorSurdo(i+1, surdo, mapa);
+			boolean mapaIndividual = vo.getCidade().getQuantidadeSurdosMapa() == 1;
+			
+			adicionarMarcadorSurdo(i+1, surdo, mapa, mapaIndividual);
 			StringBuilder html = new StringBuilder();
 			
 			if (mapaIndividual) {
@@ -264,10 +267,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 						.append("<tr>")
 							.append("<td").append(classe1).append(">Tel:</td>")
 							.append("<td").append(classe).append(">").append(surdo.getTelefone()).append("</td>")
-							.append("<td colspan=\"2\"").append(classe1).append(">_______ ______________________________</td>")
-							//TODO: rever layout, remoção de atributo criança							
-							.append("<td").append(classe1).append(">Criança:</td>")
-							.append("<td").append(classe).append(">")./*append(StringUtils.primeiraLetra(surdo.getCrianca())).*/append("</td>")
+							.append("<td colspan=\"4\"").append(classe1).append(">_______ _______________________________________</td>")
 						.append("</tr>")
 						.append("<tr>")
 							.append("<td").append(classe1).append(">Obs:</td>")
@@ -275,7 +275,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 						.append("</tr>")
 						.append("<tr>")
 							.append("<td colspan=\"6\"><table width=\"100%\" cellspacing=0><tr>")
-							.append("<td width=\"81px\"").append(classe).append("><strong>Idade:</strong> ").append(surdo.getIdade()).append("</td>")
+							.append("<td width=\"81px\"").append(classe).append("><strong>Idade:</strong> ").append(surdo.getIdade() == null ? "" : surdo.getIdade()).append("</td>")
 							.append("<td width=\"121px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
 							.append("<td width=\"121px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
 							.append("<td width=\"82px\"").append(classe).append("><strong>Ônibus:</strong> ").append(surdo.getOnibus()).append("</td>")
@@ -294,18 +294,20 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		this.impressaoMapaSimplePanel.add(mapa);
 	}
 	
-	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa) {
+	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa, boolean mapaIndividual) {
 		HasMarkerOptions markerOpt = new MarkerOptions();
 		markerOpt.setClickable(false);
 		markerOpt.setVisible(true);
 		if (!mapaIndividual) {
 			HasMarkerImage icon = null;
 			if (!StringUtils.isEmpty(surdo.getSexo())) {
-				if ("Masculino".equals(surdo.getSexo())) {
+				if ("Homem".equals(surdo.getSexo())) {
 					icon = new MarkerImage.Builder("images/icone_homem_"+surdoNro+".png").build();
-				} else if ("Feminino".equals(surdo.getSexo())) {
+				} else if ("Mulher".equals(surdo.getSexo())) {
 					icon = new MarkerImage.Builder("images/icone_mulher_"+surdoNro+".png").build();
-				} 
+				} else {
+					icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
+				}
 			} else {
 				icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
 			}
@@ -336,7 +338,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 	@UiHandler("imprimirMapaSateliteCheckBox")
 	void onImprimirMapaSateliteCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
 		if (event.getValue()) {
-			((MapWidget)this.impressaoMapaSimplePanel.getWidget()).getMap().setMapTypeId(new MapTypeId().getSatellite());
+			((MapWidget)this.impressaoMapaSimplePanel.getWidget()).getMap().setMapTypeId(new MapTypeId().getHybrid());
 		} else {
 			((MapWidget)this.impressaoMapaSimplePanel.getWidget()).getMap().setMapTypeId(new MapTypeId().getRoadmap());
 		}

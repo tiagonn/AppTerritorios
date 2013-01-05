@@ -17,6 +17,7 @@ public class AbrirMapaVO implements Serializable {
 	private List<SurdoDetailsVO> surdosOutros;
 	private Regiao regiao;
 	private Cidade cidade;
+	private List<SurdoVO> surdosImprimir;
 	
 	
 	public void setMapa(Mapa mapa) {
@@ -63,6 +64,12 @@ public class AbrirMapaVO implements Serializable {
 	}
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
+	}
+	public List<SurdoVO> getSurdosImprimir() {
+		return surdosImprimir;
+	}
+	public void setSurdosImprimir(List<SurdoVO> surdosImprimir) {
+		this.surdosImprimir = surdosImprimir;
 	}
 
 }

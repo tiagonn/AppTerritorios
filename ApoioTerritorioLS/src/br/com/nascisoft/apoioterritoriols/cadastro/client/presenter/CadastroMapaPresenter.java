@@ -150,9 +150,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 
 	@Override
 	void tratarCidadePopulada() {
-		if (this.cidades.size() == 1) {
-			this.onPesquisaCidadeListBoxChange(this.cidades.get(0).getId());
-		}
+		// não precisa de tratamento
 	}
 
 }

@@ -26,8 +26,12 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.RetornarVisitarS
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroMapaPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.CadastroSurdoPresenter;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.ImpressaoPresenter;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.presenter.NaoVisitarPresenter;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoViewImpl;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
+import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarViewImpl;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
@@ -49,13 +53,12 @@ public class CadastroController implements CadastroPresenter,
 	private HasWidgets container;
 	private CadastroSurdoViewImpl cadastroSurdoView = null;
 	private CadastroSurdoPresenter cadastroSurdoPresenter = null;
-	//TODO: impactar com a utilização da parametrizacão de cidade/regiao/bairro
 	private CadastroMapaPresenter cadastroMapaPresenter = null;
 	private CadastroMapaViewImpl cadastroMapaView = null;
-//	private ImpressaoPresenter impressaoPresenter = null;
-//	private ImpressaoViewImpl impressaoView = null;
-//	private NaoVisitarPresenter naoVisitarPresenter = null;
-//	private NaoVisitarViewImpl naoVisitarView = null;
+	private ImpressaoPresenter impressaoPresenter = null;
+	private ImpressaoViewImpl impressaoView = null;
+	private NaoVisitarPresenter naoVisitarPresenter = null;
+	private NaoVisitarViewImpl naoVisitarView = null;
 	
 	private String currentToken = null;
 	private SelectionHandler<Integer> selectionHandler = new SelectionHandler<Integer>() {
@@ -291,40 +294,40 @@ public class CadastroController implements CadastroPresenter,
 							}
 						
 							cadastroMapaPresenter.go(container);
-//							// Aba Impressao
-//						} else if (currentToken.startsWith("impressao")) {
-//							if (impressaoView == null) {
-//								impressaoView = new ImpressaoViewImpl();
-//							}
-//							if (impressaoPresenter == null) {
-//								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
-//								impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
-//							}
-//							impressaoPresenter.selectThisTab();
-//							
-//							if ("impressao".equals(currentToken)) {
-//								impressaoPresenter.initView();
-//							} 
-//							
-//							impressaoPresenter.go(container);
-//						} else if (currentToken.startsWith("naoVisitar")) {
-//							if (naoVisitarView == null) {
-//								naoVisitarView = new NaoVisitarViewImpl();
-//							}
-//							if (naoVisitarPresenter == null) {
-//								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView);
-//								naoVisitarPresenter.setTabSelectionEventHandler(selectionHandler);
-//							}
-//							naoVisitarPresenter.selectThisTab();
-//							
-//							if ("naoVisitar".equals(currentToken)) {
-//								naoVisitarPresenter.initView();
-//								naoVisitarPresenter.obterSurdosNaoVisitar();
-//							} else if (currentToken.startsWith("naoVisitar!retornar")) {
-//								String queryString = currentToken.split("#")[1];
-//								naoVisitarPresenter.onRetornar(Long.valueOf(queryString));
-//							}
-//							naoVisitarPresenter.go(container);
+							// Aba Impressao
+						} else if (currentToken.startsWith("impressao")) {
+							if (impressaoView == null) {
+								impressaoView = new ImpressaoViewImpl();
+							}
+							if (impressaoPresenter == null) {
+								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
+								impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							impressaoPresenter.selectThisTab();
+							
+							if ("impressao".equals(currentToken)) {
+								impressaoPresenter.initView();
+							} 
+							
+							impressaoPresenter.go(container);
+						} else if (currentToken.startsWith("naoVisitar")) {
+							if (naoVisitarView == null) {
+								naoVisitarView = new NaoVisitarViewImpl();
+							}
+							if (naoVisitarPresenter == null) {
+								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView);
+								naoVisitarPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							naoVisitarPresenter.selectThisTab();
+							
+							if ("naoVisitar".equals(currentToken)) {
+								naoVisitarPresenter.initView();
+								naoVisitarPresenter.obterSurdosNaoVisitar();
+							} else if (currentToken.startsWith("naoVisitar!retornar")) {
+								String queryString = currentToken.split("#")[1];
+								naoVisitarPresenter.onRetornar(Long.valueOf(queryString));
+							}
+							naoVisitarPresenter.go(container);
 						}
 					} catch (Exception ex) {
 						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);

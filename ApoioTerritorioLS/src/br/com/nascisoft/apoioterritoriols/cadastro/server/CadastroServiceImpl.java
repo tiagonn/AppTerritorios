@@ -238,17 +238,22 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		List<Surdo> surdos = getDao().obterSurdosNaoVisitar();
 		
 		Set<Key<Regiao>> chavesRegiao = new HashSet<Key<Regiao>>();
-
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+		
 		for (Surdo surdo : surdos) {
-			if (surdo.getMapa() != null) {
-				chavesRegiao.add(surdo.getRegiao());
-			} 
+			chavesRegiao.add(surdo.getRegiao());
+			chavesCidade.add(surdo.getCidade());
 		}
 		
 		Map<Key<Regiao>, Regiao> mapasRegiao = this.getAdminDao().obterRegioes(chavesRegiao);
+		Map<Key<Cidade>, Cidade> mapasCidade = this.getAdminDao().obterCidades(chavesCidade);
 		
 		for (Surdo surdo : surdos) {
-			retorno.add(new SurdoNaoVisitarDetailsVO(surdo, mapasRegiao.get(surdo.getRegiao())));
+			retorno.add(
+					new SurdoNaoVisitarDetailsVO(
+							surdo, 
+							mapasRegiao.get(surdo.getRegiao()),
+							mapasCidade.get(surdo.getCidade())));
 		}
 		
 		Collections.sort(retorno, SurdoNaoVisitarDetailsVO.COMPARATOR_NOME);

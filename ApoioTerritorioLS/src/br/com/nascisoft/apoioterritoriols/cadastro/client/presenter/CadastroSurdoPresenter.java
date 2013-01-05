@@ -56,9 +56,6 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	@Override
 	void tratarCidadePopulada() {
 		this.onManterCidadeListBoxChange(this.cidades.get(0).getId());
-		if (this.cidades.size() == 1) {
-			this.onPesquisaCidadeListBoxChange(this.cidades.get(0).getId());
-		}
 	}
 	
 	@Override

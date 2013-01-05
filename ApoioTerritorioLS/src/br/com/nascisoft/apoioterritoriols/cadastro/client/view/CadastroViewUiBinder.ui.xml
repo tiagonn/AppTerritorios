@@ -358,6 +358,9 @@
 					<g:Grid>
 						<g:row>
 							<g:customCell>
+								<g:Label text="Cidade: " />
+							</g:customCell>
+							<g:customCell>
 								<g:Label text="Região: " />
 							</g:customCell>
 							<g:customCell>
@@ -366,7 +369,10 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" />
+								<g:ListBox ui:field="pesquisaImpressaoCidadeListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" enabled="false" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" />

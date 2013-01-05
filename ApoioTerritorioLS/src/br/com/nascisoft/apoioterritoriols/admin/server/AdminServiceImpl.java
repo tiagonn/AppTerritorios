@@ -148,6 +148,10 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public Boolean apagarRegiao(Long id) {
 		logger.info("Apagando regiao " + id);
 		List<Surdo> surdos = this.getCadastroDao().obterSurdos(null, null, id, null, null);
+		if (surdos == null || surdos.size() == 0) {
+			surdos = this.getCadastroDao().obterSurdosNaoVisitar();
+		}
+		
 		Boolean apagar = surdos == null || surdos.size() == 0;
 		if (apagar) {
 			getDao().apagarRegiao(id);

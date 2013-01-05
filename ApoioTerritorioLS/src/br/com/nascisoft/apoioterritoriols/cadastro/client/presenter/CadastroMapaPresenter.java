@@ -24,9 +24,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 		super(service, eventBus);
 		this.view = view;
 		this.view.setPresenter(this);
-		populaCidades();
 	}
 
+	@Override
+	public void initView() {
+		populaCidades();
+		super.initView();
+	}
+	
 	@Override
 	CadastroView getView() {
 		return this.view;

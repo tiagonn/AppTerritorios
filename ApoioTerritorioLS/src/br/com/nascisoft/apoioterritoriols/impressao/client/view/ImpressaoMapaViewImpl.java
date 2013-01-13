@@ -79,9 +79,6 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		
 		List<SurdoVO> surdos = vo.getSurdosImprimir();
 		
-		surdos.addAll(surdos);
-		surdos.addAll(surdos);
-		
 		this.impressaoSurdoFlexTable.removeAllRows();
 
 		boolean mapaIndividual = vo.getCidade().getQuantidadeSurdosMapa() == 1;

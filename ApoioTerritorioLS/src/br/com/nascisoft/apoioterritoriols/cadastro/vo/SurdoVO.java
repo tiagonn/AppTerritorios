@@ -312,6 +312,44 @@ public class SurdoVO implements Serializable {
 		
 		return retorno.toString();
 	}
+	
+	public String getObservacaoConsolidadaResumida() {
+		StringBuilder retorno = new StringBuilder();
+		
+		if (!StringUtils.isEmpty(this.getSexo())) {
+			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getIdade())) {
+			retorno.append("Aprox. ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+		}
+		if (!StringUtils.isEmpty(this.getLibras())) {
+			if ("Sim".equals(this.getLibras())) {
+				retorno.append("<u>").append("Sabe</u> LIBRAS; ");
+			} else {
+				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
+			retorno.append("Publ: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMelhorDia())) {
+			retorno.append("Dia: ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getHorario())) {
+			retorno.append("Horário: ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getOnibus())) {
+			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMsn())) {
+			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getObservacao())) {
+			retorno.append("</br><strong>Outras obs: </strong>").append(this.getObservacao());
+		}
+		
+		return retorno.toString();
+	}
 
 	public String getPublicacoesPossui() {
 		return publicacoesPossui;

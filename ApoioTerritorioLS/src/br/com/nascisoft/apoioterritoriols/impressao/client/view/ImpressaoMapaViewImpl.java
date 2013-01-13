@@ -57,7 +57,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 	@SuppressWarnings("unused")
 	private Boolean imprimirMapa;
 	
-	private final static String ALTURA_MAPA = "260px";
+	private final static String ALTURA_MAPA = "280px";
 	private final static String LARGURA_MAPA = "540px";
 
 
@@ -79,13 +79,18 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		
 		List<SurdoVO> surdos = vo.getSurdosImprimir();
 		
-		this.impressaoSurdoFlexTable.removeAllRows();
+		surdos.addAll(surdos);
+		surdos.addAll(surdos);
 		
-		String classe = " class=\"impressao-celula\"";
-		String classe1= " class=\"impressao-celula-titulo\"";
+		this.impressaoSurdoFlexTable.removeAllRows();
+
+		boolean mapaIndividual = vo.getCidade().getQuantidadeSurdosMapa() == 1;
+		
+		String classe = mapaIndividual ? " class=\"impressao-celula\"" : " class=\"impressao-celula-pequena\"";
+		String classe1= mapaIndividual ? " class=\"impressao-celula-titulo\"" : " class=\"impressao-celula-titulo-pequena\"";
 		
 		HasMapOptions opt = new MapOptions();
-		opt.setZoom(16);
+		opt.setZoom(mapaIndividual ? 16 : 15);
 		opt.setMapTypeId(new MapTypeId().getRoadmap());
 		opt.setDraggable(true);
 		opt.setNavigationControl(false);
@@ -95,16 +100,14 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		MapWidget mapa = new MapWidget(opt);
 		mapa.setSize(LARGURA_MAPA, ALTURA_MAPA);
 		
-		int j =  vo.getCidade().getQuantidadeSurdosMapa();
-		
-		for (int i = 0; i < j; i++) {
+		for (int i = 0; i < surdos.size(); i++) {
 			
 			SurdoVO surdo = surdos.get(i);
 			
 			this.impressaoLocalidadeLabel.setText(surdo.getRegiao() + " / " + surdo.getNomeCidade());
 			this.impressaoTerritorioLabel.setText(surdo.getMapa().substring(5));
 			
-			boolean mapaIndividual = vo.getCidade().getQuantidadeSurdosMapa() == 1;
+			
 			
 			adicionarMarcadorSurdo(i+1, surdo, mapa, mapaIndividual);
 			StringBuilder html = new StringBuilder();
@@ -238,50 +241,90 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 					.append("</table>");				
 				
 			} else {
-			
-				html.append("<table width=\"100%\" cellspacing=0>")
+				
+				html.append("<table width=100% cellspacing=0 border=0>")
+				.append("<tr><td width=100%>")
+					.append("<table width=100% cellspacing=0 border=0>")
 						.append("<tr>")
-							.append("<td width=\"27px\"").append(classe1).append(">Nome:</td>")
-							.append("<td width=\"229px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
-							.append("<td width=\"95px\" ").append(classe1).append(">Data última visita:</td>")
-							.append("<td width=\"140px\" ").append(classe1).append(">Falou com o surdo:</td>")
-							.append("<td width=\"40px\"").append(classe1).append(">Libras:</td>")
-							.append("<td width=\"10px\" ").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getLibras())).append("</td>")
-						.append("</tr>")
-						.append("<tr>")
-							.append("<td").append(classe1).append(">End:</td>")
-							.append("<td").append(classe).append(">")
-								.append(surdo.getEndereco())
+							.append("<td width=27px ").append(classe1).append(">Nome:</td>")
+							.append("<td width=386px ").append(classe).append(">")
+								.append(StringUtils.toCamelCase(surdo.getNome()))
 							.append("</td>")
-							.append("<td colspan=\"2\"").append(classe1).append(">_______ ______________________________</td>")
-							.append("<td").append(classe1).append(">DVD:</td>")
-							.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getDvd())).append("</td>")
+							.append("<td width=27px ").append(classe1).append(">Tel:</td>")
+							.append("<td width=100px ").append(classe).append(">")
+								.append(surdo.getTelefone())
+							.append("</td>")
 						.append("</tr>")
 						.append("<tr>")
-							.append("<td").append(classe1).append(">Bairro:</td>")
-							.append("<td").append(classe).append(">").append(surdo.getBairro()).append("</td>")
-							.append("<td colspan=\"2\"").append(classe1).append(">_______ ______________________________</td>")
-							.append("<td").append(classe1).append(">Sexo:</td>")
-							.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getSexo())).append("</td>")
+							.append("<td ").append(classe1).append(">End:</td>")
+							.append("<td ").append(classe).append(">").append(surdo.getEndereco()).append("</td>")
+							.append("<td ").append(classe1).append(">Instr:</td>")
+							.append("<td ").append(classe).append(">")
+							.append(surdo.getInstrutor())
+							.append("</td>")
 						.append("</tr>")
 						.append("<tr>")
-							.append("<td").append(classe1).append(">Tel:</td>")
-							.append("<td").append(classe).append(">").append(surdo.getTelefone()).append("</td>")
-							.append("<td colspan=\"4\"").append(classe1).append(">_______ _______________________________________</td>")
+							.append("<td colspan=4 ").append(classe)
+								.append("><strong>Observações: </strong>")
+								.append(surdo.getObservacaoConsolidadaResumida())
+							.append("</td>")
 						.append("</tr>")
 						.append("<tr>")
-							.append("<td").append(classe1).append(">Obs:</td>")
-							.append("<td colspan=\"5\" ").append(classe).append(">").append(surdo.getObservacao()).append("</td>")
+							.append("<td colspan=4 ").append(classe).append(">")
+								.append("__/__ _________________,  ")
+								.append("__/__ _________________,  ")
+								.append("__/__ _________________,  ")
+								.append("__/__ ________________,  ")
+								.append("__/__ ________________")
+							.append("</td>")
 						.append("</tr>")
-						.append("<tr>")
-							.append("<td colspan=\"6\"><table width=\"100%\" cellspacing=0><tr>")
-							.append("<td width=\"81px\"").append(classe).append("><strong>Idade:</strong> ").append(surdo.getIdade() == null ? "" : surdo.getIdade()).append("</td>")
-							.append("<td width=\"121px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
-							.append("<td width=\"121px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
-							.append("<td width=\"82px\"").append(classe).append("><strong>Ônibus:</strong> ").append(surdo.getOnibus()).append("</td>")
-							.append("<td width=\"135px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
-						.append("</tr></table></td></tr>")
-					.append("</table>");
+					.append("</table>")
+				.append("</td></tr>")
+				.append("</table>");	
+			
+//				html.append("<table width=\"100%\" cellspacing=0>")
+//						.append("<tr>")
+//							.append("<td width=\"27px\"").append(classe1).append(">Nome:</td>")
+//							.append("<td width=\"229px\"").append(classe).append(">").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
+//							.append("<td width=\"95px\" ").append(classe1).append(">Data última visita:</td>")
+//							.append("<td width=\"140px\" ").append(classe1).append(">Falou com o surdo:</td>")
+//							.append("<td width=\"40px\"").append(classe1).append(">Libras:</td>")
+//							.append("<td width=\"10px\" ").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getLibras())).append("</td>")
+//						.append("</tr>")
+//						.append("<tr>")
+//							.append("<td").append(classe1).append(">End:</td>")
+//							.append("<td").append(classe).append(">")
+//								.append(surdo.getEndereco())
+//							.append("</td>")
+//							.append("<td colspan=\"2\"").append(classe1).append(">_______ ______________________________</td>")
+//							.append("<td").append(classe1).append(">DVD:</td>")
+//							.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getDvd())).append("</td>")
+//						.append("</tr>")
+//						.append("<tr>")
+//							.append("<td").append(classe1).append(">Bairro:</td>")
+//							.append("<td").append(classe).append(">").append(surdo.getBairro()).append("</td>")
+//							.append("<td colspan=\"2\"").append(classe1).append(">_______ ______________________________</td>")
+//							.append("<td").append(classe1).append(">Sexo:</td>")
+//							.append("<td").append(classe).append(">").append(StringUtils.primeiraLetra(surdo.getSexo())).append("</td>")
+//						.append("</tr>")
+//						.append("<tr>")
+//							.append("<td").append(classe1).append(">Tel:</td>")
+//							.append("<td").append(classe).append(">").append(surdo.getTelefone()).append("</td>")
+//							.append("<td colspan=\"4\"").append(classe1).append(">_______ _______________________________________</td>")
+//						.append("</tr>")
+//						.append("<tr>")
+//							.append("<td").append(classe1).append(">Obs:</td>")
+//							.append("<td colspan=\"5\" ").append(classe).append(">").append(surdo.getObservacao()).append("</td>")
+//						.append("</tr>")
+//						.append("<tr>")
+//							.append("<td colspan=\"6\"><table width=\"100%\" cellspacing=0><tr>")
+//							.append("<td width=\"81px\"").append(classe).append("><strong>Idade:</strong> ").append(surdo.getIdade() == null ? "" : surdo.getIdade()).append("</td>")
+//							.append("<td width=\"121px\"").append(classe).append("><strong>Melhor dia:</strong> ").append(surdo.getMelhorDia()).append("</td>")
+//							.append("<td width=\"121px\"").append(classe).append("><strong>Horário:</strong> ").append(surdo.getHorario()).append("</td>")
+//							.append("<td width=\"82px\"").append(classe).append("><strong>Ônibus:</strong> ").append(surdo.getOnibus()).append("</td>")
+//							.append("<td width=\"135px\"").append(classe).append("><strong>Instrutor:</strong> ").append(surdo.getInstrutor()).append("</td>")
+//						.append("</tr></table></td></tr>")
+//					.append("</table>");
 							
 			}
 				this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());

@@ -174,6 +174,8 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (abrirMapaVO != null) {
 			this.pesquisaMapaRegiaoListBox.setSelectedIndex(
 					obterIndice(this.pesquisaMapaRegiaoListBox, this.abrirMapaVO.getRegiao().getId().toString()));
+			this.pesquisaMapaAdicionarMapaButton.setVisible(true);
+			this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
 			this.presenter.onPesquisaRegiaoListBoxChange(this.abrirMapaVO.getRegiao().getId());
 		}
 	}

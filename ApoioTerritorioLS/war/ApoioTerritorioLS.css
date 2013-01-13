@@ -158,6 +158,17 @@ a, a:visited, a:hover {
 	font-size: x-small;
 }
 
+.impressao-celula-pequena {
+	font-family: Tahoma;
+	font-size: xx-small;
+}
+
+.impressao-celula-titulo-pequena {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: xx-small;
+}
+
 .impressao-tabela-centro{
 	font-family: Tahoma;
 	text-align: center;

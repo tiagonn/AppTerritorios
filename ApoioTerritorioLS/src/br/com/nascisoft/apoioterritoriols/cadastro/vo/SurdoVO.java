@@ -344,6 +344,12 @@ public class SurdoVO implements Serializable {
 		if (!StringUtils.isEmpty(this.getMsn())) {
 			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
 		}
+		if (!StringUtils.isEmpty(this.getTelefone())) {
+			retorno.append("Tel: ").append("<u>").append(this.getTelefone()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getInstrutor())) {
+			retorno.append("Instrutor: ").append("<u>").append(this.getInstrutor()).append("</u>").append("; ");
+		}
 		if (!StringUtils.isEmpty(this.getObservacao())) {
 			retorno.append("</br><strong>Outras obs: </strong>").append(this.getObservacao());
 		}

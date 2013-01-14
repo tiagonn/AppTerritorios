@@ -9,6 +9,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.Window;
@@ -20,10 +21,12 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 	protected List<Cidade> cidades = null;
 	protected final HandlerManager eventBus;
 	protected final CadastroServiceAsync service;
+	protected LoginVO login;
 	
-	public AbstractCadastroPresenter(CadastroServiceAsync service, HandlerManager eventBus) {
+	public AbstractCadastroPresenter(CadastroServiceAsync service, HandlerManager eventBus, LoginVO login) {
 		this.service = service;
 		this.eventBus = eventBus;
+		this.login = login;
 	}
 	
 	abstract CadastroView getView();
@@ -31,6 +34,11 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 	abstract void tratarCidadePopulada();
 	
 	protected static final Logger logger = Logger.getLogger(AbstractCadastroPresenter.class.getName());
+	
+	@Override
+	public LoginVO getLoginInformation() {
+		return login;
+	}
 	
 	public void populaCidades() {
 		if (cidades == null) {

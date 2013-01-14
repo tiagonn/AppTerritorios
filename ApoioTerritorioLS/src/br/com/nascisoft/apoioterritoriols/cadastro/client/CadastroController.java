@@ -33,6 +33,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarViewImpl;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -59,6 +60,7 @@ public class CadastroController implements CadastroPresenter,
 	private ImpressaoViewImpl impressaoView = null;
 	private NaoVisitarPresenter naoVisitarPresenter = null;
 	private NaoVisitarViewImpl naoVisitarView = null;
+	private LoginVO login;
 	
 	private String currentToken = null;
 	private SelectionHandler<Integer> selectionHandler = new SelectionHandler<Integer>() {
@@ -80,9 +82,10 @@ public class CadastroController implements CadastroPresenter,
 			.getLogger(CadastroController.class.getName());
 
 	public CadastroController(CadastroServiceAsync service,
-			HandlerManager eventBusParam) {
+			HandlerManager eventBusParam, LoginVO login) {
 		this.service = service;
 		this.eventBus = eventBusParam;
+		this.login = login;
 		bind();
 	}
 
@@ -214,7 +217,7 @@ public class CadastroController implements CadastroPresenter,
 							}
 							if (cadastroSurdoPresenter == null) {
 								cadastroSurdoPresenter = new CadastroSurdoPresenter(
-										service, eventBus, cadastroSurdoView);
+										service, eventBus, cadastroSurdoView, login);
 								cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
 							}	
 							
@@ -284,7 +287,7 @@ public class CadastroController implements CadastroPresenter,
 							}
 							if (cadastroMapaPresenter == null) {
 								cadastroMapaPresenter = new CadastroMapaPresenter(
-										service, eventBus, cadastroMapaView);
+										service, eventBus, cadastroMapaView, login);
 								cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							cadastroMapaPresenter.selectThisTab();
@@ -300,7 +303,7 @@ public class CadastroController implements CadastroPresenter,
 								impressaoView = new ImpressaoViewImpl();
 							}
 							if (impressaoPresenter == null) {
-								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
+								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView, login);
 								impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							impressaoPresenter.selectThisTab();
@@ -315,7 +318,7 @@ public class CadastroController implements CadastroPresenter,
 								naoVisitarView = new NaoVisitarViewImpl();
 							}
 							if (naoVisitarPresenter == null) {
-								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView);
+								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView, login);
 								naoVisitarPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							naoVisitarPresenter.selectThisTab();

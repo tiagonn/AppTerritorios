@@ -44,6 +44,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -97,6 +98,13 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.selectThisTab();	
 		this.limparPesquisa();
 		this.limparManter();
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
 	}
 	
 	@Override

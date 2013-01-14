@@ -16,6 +16,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -35,8 +36,8 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	private final CadastroSurdoView view;
 	
 	public CadastroSurdoPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, CadastroSurdoView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, CadastroSurdoView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
 		this.populaCidades();

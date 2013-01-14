@@ -33,7 +33,7 @@ public class CadastroEntryPoint implements EntryPoint {
 					if (result.isAutorizado()) {
 						CadastroServiceAsync service = GWT.create(CadastroService.class);
 						HandlerManager eventBus = new HandlerManager(null);
-						CadastroController controller = new CadastroController(service, eventBus);
+						CadastroController controller = new CadastroController(service, eventBus, result);
 						RootLayoutPanel.get().clear();
 						controller.go(RootLayoutPanel.get());
 					} else {

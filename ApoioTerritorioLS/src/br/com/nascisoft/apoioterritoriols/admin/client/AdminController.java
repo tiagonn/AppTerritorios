@@ -56,6 +56,8 @@ public class AdminController implements AdminPresenter,
 				eventBus.fireEvent(new AbrirRegiaoEvent());
 			} else if (event.getSelectedItem() == 4) {
 				eventBus.fireEvent(new AbrirBairroEvent());
+			} else if (event.getSelectedItem() == 5) {
+				Window.open("/Cadastro.html", "_self", "");
 			}
 		}
 	};

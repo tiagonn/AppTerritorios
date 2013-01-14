@@ -21,6 +21,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -67,6 +68,13 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	@Override
 	public void initView() {
 		this.selectThisTab();
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
 	}
 
 	@Override

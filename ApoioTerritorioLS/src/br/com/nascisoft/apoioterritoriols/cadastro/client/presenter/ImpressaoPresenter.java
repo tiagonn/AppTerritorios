@@ -8,6 +8,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoMa
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -20,8 +21,8 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 	private final ImpressaoView view;
 	
 	public ImpressaoPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, ImpressaoView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, ImpressaoView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
 	}

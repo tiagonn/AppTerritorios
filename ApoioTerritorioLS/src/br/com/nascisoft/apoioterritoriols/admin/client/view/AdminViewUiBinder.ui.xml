@@ -273,5 +273,9 @@
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>
+		<g:tab>
+			<g:header>Cadastro</g:header>
+			<g:HTML wordWrap="true"> <br/></g:HTML>
+		</g:tab>
 	</g:TabLayoutPanel>
 </ui:UiBinder> 

@@ -563,6 +563,14 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	} 
 	
 	private void limparResultadoPesquisa() {	
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
+
 		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
 		// portanto sempre  é necessário remover a coluna 0.
 		int j = this.pesquisaResultadoCellTable.getColumnCount();

@@ -8,6 +8,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -20,8 +21,8 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	private final CadastroMapaView view;
 	
 	public CadastroMapaPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, CadastroMapaView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, CadastroMapaView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
 	}

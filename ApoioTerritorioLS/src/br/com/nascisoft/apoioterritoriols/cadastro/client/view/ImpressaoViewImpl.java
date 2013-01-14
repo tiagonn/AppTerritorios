@@ -15,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
@@ -48,6 +49,13 @@ public class ImpressaoViewImpl extends Composite implements
 	public void initView() {
 		this.selectThisTab();	
 		this.limparPesquisa();
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
 	}
 	
 	@Override

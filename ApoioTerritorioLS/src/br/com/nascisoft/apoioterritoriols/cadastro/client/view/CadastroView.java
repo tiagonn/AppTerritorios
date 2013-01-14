@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Widget;
@@ -17,6 +18,7 @@ public interface CadastroView {
 		void selectThisTab();
 		void onPesquisaCidadeListBoxChange(Long cidadeId);
 		void onPesquisaRegiaoListBoxChange(Long regiaoId);
+		LoginVO getLoginInformation();
 	}
 	
 	void showWaitingPanel();

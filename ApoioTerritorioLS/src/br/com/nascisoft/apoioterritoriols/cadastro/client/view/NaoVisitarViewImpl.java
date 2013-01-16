@@ -69,9 +69,15 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	public void initView() {
 		this.selectThisTab();
 		if (this.presenter.getLoginInformation().isAdmin()) {
+			boolean existeAdmin = true;
 			try {
 				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
 			} catch (AssertionError ex) {
+				existeAdmin = false;
+			} catch (IndexOutOfBoundsException ex) {
+				existeAdmin = false;
+			}
+			if (!existeAdmin) {
 				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
 			}
 		}

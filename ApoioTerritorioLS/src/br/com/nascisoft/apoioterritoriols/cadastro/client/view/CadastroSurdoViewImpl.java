@@ -564,9 +564,15 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	private void limparResultadoPesquisa() {	
 		if (this.presenter.getLoginInformation().isAdmin()) {
+			boolean existeAdmin = true;
 			try {
 				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
 			} catch (AssertionError ex) {
+				existeAdmin = false;
+			} catch (IndexOutOfBoundsException ex) {
+				existeAdmin = false;
+			}
+			if (!existeAdmin) {
 				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
 			}
 		}

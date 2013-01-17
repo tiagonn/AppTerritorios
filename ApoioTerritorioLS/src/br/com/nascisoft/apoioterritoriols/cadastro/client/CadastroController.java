@@ -225,8 +225,6 @@ public class CadastroController implements CadastroPresenter,
 							
 							if ("surdos".equals(currentToken)) {
 								cadastroSurdoPresenter.initView();
-									// Disparando a pesquisa de surdos já na entrada da aba
-								eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null));
 							} else if (currentToken.startsWith("surdos!pesquisar")) {
 								String queryString = currentToken.split("#")[1];
 								String[] parametros = queryString.split("&");

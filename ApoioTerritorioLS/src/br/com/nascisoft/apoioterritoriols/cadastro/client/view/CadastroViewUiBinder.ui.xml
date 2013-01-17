@@ -9,7 +9,7 @@
 			<g:header>Surdos</g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
-					<g:Label text="Filtrar"/>
+					<g:Label text="Pesquisar"/>
 					<g:Grid styleName="surdo-tabela">
 						<g:row>
 							<g:customCell>
@@ -55,7 +55,7 @@
 							</g:customCell>
 						</g:row>
 						<g:row>	<g:customCell>
-								<g:Button ui:field="pesquisaPesquisarButton" text="Filtrar" />
+								<g:Button ui:field="pesquisaPesquisarButton" text="Pesquisar" />
 							</g:customCell>
 						</g:row>
 					</g:Grid>

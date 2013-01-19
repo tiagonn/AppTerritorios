@@ -117,7 +117,7 @@
 					<g:HTML wordWrap="true"> <br/></g:HTML>
 					<g:HTML ui:field="cidadesWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"> <br/></g:HTML>	
-					<g:Grid>
+					<g:Grid styleName="admin-cidade-table">
 						<g:row>
 							<g:customCell>
 								<g:InlineLabel text="Nome: " styleName="negrito"></g:InlineLabel>
@@ -168,7 +168,7 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>
-					<g:Grid>	
+					<g:Grid styleName="admin-cidade-table">	
 						<g:row>
 							<g:customCell>
 								<g:InlineLabel text="Latitude do centro do território: " styleName="negrito"></g:InlineLabel>

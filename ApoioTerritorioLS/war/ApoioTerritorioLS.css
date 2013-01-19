@@ -36,6 +36,14 @@ a, a:visited, a:hover {
 	font-weight: bold;
 }
 
+.admin-cidade-table {
+	
+}
+
+.admin-cidade-table td {
+	width: 193px;
+}
+
 .impressao-panel{
 	position: fixed;
 	top: 0;

@@ -250,6 +250,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void setBairroList(List<String> bairros) {
+		this.bairroOracle.clear();
 		for (String bairro : bairros) {
 			this.bairroOracle.add(bairro);
 		}

@@ -57,10 +57,11 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	@Override
 	void tratarCidadePopulada() {
 		this.onManterCidadeListBoxChange(this.cidades.get(0).getId());
+		this.populaBairros(this.cidades.get(0).getId());
 	}
 	
 	@Override
-	public void onManterCidadeListBoxChange(Long cidadeId) {
+	public void onManterCidadeListBoxChange(final Long cidadeId) {
 		getView().showWaitingPanel();
 		service.obterRegioes(cidadeId, new AsyncCallback<List<Regiao>>() {
 
@@ -74,6 +75,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			@Override
 			public void onSuccess(List<Regiao> result) {
 				getView().setManterRegiaoList(result);
+				populaBairros(cidadeId);
 				getView().hideWaitingPanel();
 			}
 		});

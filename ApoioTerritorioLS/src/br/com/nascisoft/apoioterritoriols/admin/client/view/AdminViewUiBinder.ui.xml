@@ -235,7 +235,7 @@
 								<g:InlineLabel text="Nível de zoom: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="regiaoZoomTextBox" visibleLength="5"></g:TextBox>
+								<g:ListBox ui:field="regiaoZoomListBox"/>
 							</g:customCell>
 						</g:row>
 						<g:row>

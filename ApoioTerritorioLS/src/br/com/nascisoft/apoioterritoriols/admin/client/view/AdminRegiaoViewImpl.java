@@ -42,7 +42,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	@UiField ListBox regiaoCidadeListBox;
 	@UiField TextBox regiaoNomeTextBox;
 	@UiField TextBox regiaoLetraTextBox;
-	@UiField TextBox regiaoZoomTextBox;
+	@UiField ListBox regiaoZoomListBox;
 	@UiField TextBox regiaoLatitudeTextBox;
 	@UiField TextBox regiaoLongitudeTextBox;
 	@UiField Button regiaoAdicionarButton;
@@ -135,7 +135,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		regiao.setLatitudeCentro(Double.valueOf(this.regiaoLatitudeTextBox.getText()));
 		regiao.setLongitudeCentro(Double.valueOf(this.regiaoLongitudeTextBox.getText()));
 		regiao.setLetra(this.regiaoLetraTextBox.getText());
-		regiao.setZoom(Integer.valueOf(this.regiaoZoomTextBox.getText()));
+		regiao.setZoom(Integer.valueOf(this.regiaoZoomListBox.getValue(this.regiaoZoomListBox.getSelectedIndex())));
 		regiao.setCidadeId(Long.valueOf(this.regiaoCidadeListBox.getValue(this.regiaoCidadeListBox.getSelectedIndex())));
 		
 		return regiao;
@@ -146,7 +146,14 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regiaoNomeTextBox.setText("");
 		this.regioesWarningHTML.setHTML("");
 		this.regiaoLetraTextBox.setText("");
-		this.regiaoZoomTextBox.setText("");
+		this.regiaoZoomListBox.clear();
+		this.regiaoZoomListBox.addItem(" -- Escolha um nível de zoom -- ", "");
+		this.regiaoZoomListBox.addItem("Muito aproximado", "16");
+		this.regiaoZoomListBox.addItem("Aproximado", "15");
+		this.regiaoZoomListBox.addItem("Médio", "14");
+		this.regiaoZoomListBox.addItem("Afastado", "13");
+		this.regiaoZoomListBox.addItem("Muito afastado", "12");
+		this.regiaoZoomListBox.setSelectedIndex(0);
 		this.regiaoLatitudeTextBox.setText("");
 		this.regiaoLongitudeTextBox.setText("");
 		this.regiaoCidadeListBox.setSelectedIndex(0);
@@ -241,7 +248,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		this.regiaoLatitudeTextBox.setText(regiao.getLatitudeCentro().toString());
 		this.regiaoLongitudeTextBox.setText(regiao.getLongitudeCentro().toString());
 		this.regiaoLetraTextBox.setText(regiao.getLetra());
-		this.regiaoZoomTextBox.setText(regiao.getZoom().toString());
+		this.regiaoZoomListBox.setSelectedIndex(obterIndice(this.regiaoZoomListBox, regiao.getZoom().toString()));
 		this.regiaoCidadeListBox.setSelectedIndex(
 				obterIndice(this.regiaoCidadeListBox, regiao.getCidadeId().toString()));
 
@@ -265,15 +272,9 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 		if (regiaoLetraTextBox.getText().isEmpty()) {
 			validacoes.add("Identificador/Letra precisa ser preenchido");
 		}	
-		if (regiaoZoomTextBox.getText().isEmpty()) {
+		if (regiaoZoomListBox.getSelectedIndex() == 0) {
 			validacoes.add("Nível de zoom precisa ser preenchido");
-		} else {
-			try {
-				Integer.valueOf(this.regiaoZoomTextBox.getText());
-			} catch (NumberFormatException ex) {
-				validacoes.add("Nível de zoom precisa ser numérico");
-			}
-		}
+		} 
 		if (regiaoLatitudeTextBox.getText().isEmpty()) {
 			validacoes.add("Latitude precisa ser preenchido");
 		} else {

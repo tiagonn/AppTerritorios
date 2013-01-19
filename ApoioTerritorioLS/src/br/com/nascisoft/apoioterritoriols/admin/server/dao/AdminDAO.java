@@ -103,13 +103,17 @@ public class AdminDAO extends DAOBase {
 		ofy.put(bairro);
 	}
 	
-	public List<Bairro> buscarBairros(Long cidadeId) {
+	public List<Bairro> buscarBairros(Long cidadeId, String nome) {
 		Objectify ofy = ObjectifyService.begin();
 		
 		Query<Bairro> query = ofy.query(Bairro.class);
 		
 		if (cidadeId != null) {
 			query.filter("cidade", new Key<Cidade>(Cidade.class, cidadeId));
+		}
+		
+		if (nome != null) {
+			query.filter("nome", nome);
 		}
 		
 		return query.list();

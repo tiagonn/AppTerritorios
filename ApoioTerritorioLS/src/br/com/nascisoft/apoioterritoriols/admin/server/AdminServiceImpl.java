@@ -103,7 +103,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		List<Regiao> regioes = getDao().buscarRegioes(id);
 		Boolean retorno = false;
 		if (regioes == null || regioes.size() == 0) {
-			List<Bairro> bairros = getDao().buscarBairros(id);
+			List<Bairro> bairros = getDao().buscarBairros(id, null);
 			List<Key<Bairro>> keyBairros = new ArrayList<Key<Bairro>>();
 			for (Bairro bairro : bairros) {
 				keyBairros.add(new Key<Bairro>(Bairro.class, bairro.getId()));
@@ -170,7 +170,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	@Override
 	public List<BairroVO> buscarBairros() {
 		logger.info("Obtendo lista de bairros");
-		List<Bairro> bairros = getDao().buscarBairros(null);
+		List<Bairro> bairros = getDao().buscarBairros(null, null);
 		List<BairroVO> retorno = new ArrayList<BairroVO>();
 		
 		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();

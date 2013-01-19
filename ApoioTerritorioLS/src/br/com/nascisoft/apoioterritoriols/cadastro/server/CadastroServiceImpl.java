@@ -63,7 +63,7 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	
 	@Override
 	public List<Bairro> obterBairros(Long cidadeId) {
-		return getAdminDao().buscarBairros(cidadeId);
+		return getAdminDao().buscarBairros(cidadeId, null);
 	}
 
 	
@@ -141,6 +141,13 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 			if (surdos.size() == 0) {
 				dao.apagarMapa(surdo.getMapaAnterior());			
 			}
+		}
+		
+		if (getAdminDao().buscarBairros(surdo.getCidadeId(), surdo.getBairro()).size() == 0) {
+			Bairro bairro = new Bairro();
+			bairro.setCidade(surdo.getCidade());
+			bairro.setNome(surdo.getBairro());
+			getAdminDao().adicionarOuAtualizarBairro(bairro);
 		}
 		
 		return id;

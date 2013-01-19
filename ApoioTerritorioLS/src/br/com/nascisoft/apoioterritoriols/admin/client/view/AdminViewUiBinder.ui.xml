@@ -148,20 +148,44 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:InlineLabel text="Latitude do centro: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Latitude do centro da cidade: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="cidadeLatitudeTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 							<g:customCell>
-								<g:InlineLabel text="Longitude do centro: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Longitude do centro da cidade: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="cidadeLongitudeTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 						</g:row>
+					</g:Grid>
+					<g:Grid>	
 						<g:row>
-							<g:customCell><g:HTML>&nbsp;</g:HTML></g:customCell>
+							<g:customCell>
+								<g:CheckBox ui:field="cidadeUtilizarMesmaLatitudeCheckBox" checked="true" text="Utilizar mesma latitude/longitude do centro da cidade e do centro do territorio?"></g:CheckBox>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Grid>	
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Latitude do centro do território: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLatitudeTerritorioTextBox" visibleLength="25" enabled="false"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Longitude do centro do território: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLongitudeTerritorioTextBox" visibleLength="25" enabled="false"></g:TextBox>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Grid>	
+						<g:row>
 							<g:customCell>
 								<g:CheckBox ui:field="cidadeUtilizarBairroBuscaEnderecoCheckBox" checked="false" text="Utilizar bairro na busca por endereço"></g:CheckBox>
 							</g:customCell>

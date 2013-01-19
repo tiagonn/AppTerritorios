@@ -262,13 +262,17 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				geo.geocode(request, new GeocoderCallback() {			
 					@Override
 					public void callback(List<HasGeocoderResult> responses, String status) {
-						HasLatLng centro = new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro());
+						HasLatLng centro = roundLatLng(new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro()));
 						if (status.equals("OK")) {
 							HasGeocoderResult result = responses.get(0);
-							HasLatLng retorno = result.getGeometry().getLocation();
-								// em caso de não encontrar o endereço, a api do google maps está retornando o centro de Campinas, por conta da 
+							HasLatLng retorno = roundLatLng(result.getGeometry().getLocation());
+								// em caso de não encontrar o endereço, a api do google maps está retornando o centro da cidade, por conta da 
 								// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
-							view.setPosition(retorno, !retorno.equals(centro), true);
+							boolean naoEncontrouEndereco = retorno.equals(centro);
+							if (naoEncontrouEndereco) {
+								retorno = roundLatLng(new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio()));
+							}
+							view.setPosition(retorno, !naoEncontrouEndereco, true);
 						} else {
 							view.setPosition(centro, false, true);
 						}				
@@ -286,6 +290,10 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			}
 		});
 		
+	}
+	
+	private HasLatLng roundLatLng(HasLatLng latlng) {
+		return new LatLng(Math.floor(latlng.getLatitude()*10000)/10000, Math.floor(latlng.getLongitude()*10000)/10000);
 	}
 
 	@Override

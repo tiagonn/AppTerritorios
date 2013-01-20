@@ -171,6 +171,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 		this.cidadeQuantidadeSurdosMapaListBox.addItem("-- Escolha uma opção --", "");
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.UM.getQtde()));
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.QUATRO.getQtde()));
+		this.cidadeQuantidadeSurdosMapaListBox.addItem("5 - Grande", String.valueOf(QuantidadeSurdosMapaEnum.CINCO.getQtde()));
 	}
 	
 	private void limparResultadoPesquisa() {	

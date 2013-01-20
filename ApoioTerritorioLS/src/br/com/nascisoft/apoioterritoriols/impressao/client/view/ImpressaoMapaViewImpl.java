@@ -60,6 +60,9 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 	private final static String ALTURA_MAPA = "280px";
 	private final static String LARGURA_MAPA = "540px";
 
+	private final static String ALTURA_MAPA_GRANDE = "455px";
+	private final static String LARGURA_MAPA_GRANDE = "745px";
+
 
 	public ImpressaoMapaViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -81,13 +84,51 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		
 		this.impressaoSurdoFlexTable.removeAllRows();
 
-		boolean mapaIndividual = vo.getCidade().getQuantidadeSurdosMapa() == 1;
+		int quantidadeMapa = vo.getCidade().getQuantidadeSurdosMapa();
 		
-		String classe = mapaIndividual ? " class=\"impressao-celula\"" : " class=\"impressao-celula-pequena\"";
-		String classe1= mapaIndividual ? " class=\"impressao-celula-titulo\"" : " class=\"impressao-celula-titulo-pequena\"";
+		String classe = null;
+		String classe1 = null;
+		int zoom = 0;
+		String altura = null;
+		String largura = null;
+		String cellspacing = null;
+		String resumo = null;
 		
+		switch (quantidadeMapa) {
+		case 1:
+			classe = " class=\"impressao-celula\"";
+			classe1 = " class=\"impressao-celula-titulo\"";
+			zoom = 16;
+			altura = ALTURA_MAPA;
+			largura = LARGURA_MAPA;
+			break;
+
+		case 4:
+			classe = " class=\"impressao-celula-pequena\"";
+			classe1 = " class=\"impressao-celula-titulo-pequena\"";
+			zoom = 15;
+			altura = ALTURA_MAPA;
+			largura = LARGURA_MAPA;
+			cellspacing="1px";
+			resumo = "________________________";
+			break;
+			
+		case 5:
+			classe = " class=\"impressao-celula\"";
+			classe1 = " class=\"impressao-celula-titulo\"";
+			zoom = 15;
+			altura = ALTURA_MAPA_GRANDE;
+			largura = LARGURA_MAPA_GRANDE;
+			cellspacing="5px";
+			resumo = "_________________________________";
+			break;
+			
+		default:
+			break;
+		}
+	
 		HasMapOptions opt = new MapOptions();
-		opt.setZoom(mapaIndividual ? 16 : 15);
+		opt.setZoom(zoom);
 		opt.setMapTypeId(new MapTypeId().getRoadmap());
 		opt.setDraggable(true);
 		opt.setNavigationControl(false);
@@ -95,7 +136,9 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		opt.setDisableDefaultUI(true);
 		opt.setCenter(this.obterCentroMapa(surdos));
 		MapWidget mapa = new MapWidget(opt);
-		mapa.setSize(LARGURA_MAPA, ALTURA_MAPA);
+		mapa.setSize(largura, altura);
+		
+		this.impressaoMapaVerticalPanel.setWidth(largura);
 		
 		for (int i = 0; i < surdos.size(); i++) {
 			
@@ -106,10 +149,10 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			
 			
 			
-			adicionarMarcadorSurdo(i+1, surdo, mapa, mapaIndividual);
+			adicionarMarcadorSurdo(i+1, surdo, mapa, quantidadeMapa == 1);
 			StringBuilder html = new StringBuilder();
 			
-			if (mapaIndividual) {
+			if (quantidadeMapa == 1) {
 			
 				html.append("<table width=100% cellspacing=0 border=1>")
 					.append("<tr><td width=100%>")
@@ -143,95 +186,102 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 					.append("<tr><td>")
 						.append("<table width=100% cellspacing=0 border=0>")
 							.append("<tr>")
-								.append("<td width=70px").append(classe1).append(">Data</td>")
-								.append("<td width=70px").append(classe1).append(">Período</td>")
-								.append("<td width=70px").append(classe1).append(">Encontrou?</td>")
-								.append("<td width=70px").append(classe1).append(">Publicador</td>")
-								.append("<td width=260px").append(classe1).append(">Resumo da conversa</td>")
+								.append("<td").append(classe1).append(">Data</td>")
+								.append("<td").append(classe1).append(">Período</td>")
+								.append("<td").append(classe1).append(">Encontrou?</td>")
+								.append("<td").append(classe1).append(">Publicador</td>")
+								.append("<td").append(classe1).append(">Resumo da conversa</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 							.append("<tr>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>_________</td>")
-								.append("<td>__________________________________</td>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
+							.append("</tr>")
+							.append("<tr>")
+							.append("<td>__/__</td>")
+							.append("<td>______</td>")
+							.append("<td>________</td>")
+							.append("<td>________</td>")
+							.append("<td>_______________________________________</td>")
 							.append("</tr>")
 						.append("</table>")
 					.append("</td></tr>")
@@ -240,58 +290,68 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			} else {
 				
 				html.append("<table width=100% cellspacing=3px cellpadding=0 border=0>")
-				.append("<tr><td width=100%>")
-					.append("<table width=100% cellspacing=0 cellpadding=0 border=0>")
-						.append("<tr>")
-							.append("<td width=27px ").append(classe1).append(">Nome:</td>")
-							.append("<td width=356px ").append(classe).append(">")
-								.append(StringUtils.toCamelCase(surdo.getNome()))
-							.append("</td>")
-							.append("<td width=27px ").append(classe1).append(">Data:</td>")
-							.append("<td width=130px ").append(classe1).append(">Detalhes da conversa:</td>")
-						.append("</tr>")
-						.append("<tr>")
-							.append("<td ").append(classe1).append(">End:</td>")
-							.append("<td ").append(classe).append(">").append(surdo.getEndereco()).append("</td>")
-							.append("<td ").append(classe).append(">__/__</td>")
-							.append("<td ").append(classe).append(">____________________________</td>")
-						.append("</tr>")
-						.append("<tr>")
-							.append("<td colspan=2 rowspan=4").append(classe)
-								.append("><strong>Obs: </strong>")
-								.append(surdo.getObservacaoConsolidadaResumida())
-							.append("</td>")
-							.append("<td colspan=2 rowspan=4><table cellspacing=0 border=0>")
-							.append("<tr>")
-								.append("<td width=27px").append(classe).append(">__/__</td>")
-								.append("<td width=130px").append(classe).append(">____________________________</td>")
-							.append("</tr>")
-							.append("<tr>")
-								.append("<td width=27px").append(classe).append(">__/__</td>")
-								.append("<td width=130px").append(classe).append(">____________________________</td>")
-							.append("</tr>")
-							.append("<tr>")
-								.append("<td width=27px").append(classe).append(">__/__</td>")
-								.append("<td width=130px").append(classe).append(">____________________________</td>")
-							.append("</tr>")
-							.append("<tr>")
-								.append("<td width=27px").append(classe).append(">__/__</td>")
-								.append("<td width=130px").append(classe).append(">____________________________</td>")
-							.append("</tr>")
-							.append("</table></td>")
-						.append("</tr>")
-					.append("</table>")
-				.append("</td></tr>")
-				.append("</table>");	
-							
+					.append("<tr>")
+						.append("<td width=70%>")
+							.append("<table width=100% cellspacing=").append(cellspacing).append(" cellpadding=0 border=0>")
+								.append("<tr>")
+									.append("<td").append(classe).append("><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append("><strong>End:</strong> ").append(surdo.getEndereco()).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append("><strong>Obs:</strong> ").append(surdo.getObservacaoConsolidadaResumida()).append("</td>")
+								.append("</tr>")
+							.append("</table>")
+						.append("</td>")
+						.append("<td width=30%>")
+							.append("<table width=100% cellspacing=0 cellpadding=0 border=0>")
+								.append("<tr>")
+									.append("<td").append(classe1).append(">Data</td>")
+									.append("<td").append(classe1).append(">Detalhes da conversa</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td ").append(classe).append(">__/__</td>")
+									.append("<td ").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append(">__/__</td>")
+									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append(">__/__</td>")
+									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append(">__/__</td>")
+									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>")
+								.append("<tr>")
+									.append("<td").append(classe).append(">__/__</td>")
+									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>");
+				if (quantidadeMapa == 5) {
+							html.append("<tr>")
+									.append("<td").append(classe).append(">__/__</td>")
+									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("</tr>");
+				}
+						html.append("</table>")
+						.append("</td>")
+					.append("</tr>")
+					.append("</table>");		
 			}
-				this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());
-				this.impressaoSurdoFlexTable.setBorderWidth(1);
-				this.impressaoSurdoFlexTable.setCellSpacing(0);
+			
+			//TODO: Terminar o layout da tabela e gerar o icone para o nro 5
+			
+			this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());
+			this.impressaoSurdoFlexTable.setBorderWidth(quantidadeMapa == 1 ? 0 : 1);
+			this.impressaoSurdoFlexTable.setCellSpacing(0);
+			this.impressaoSurdoFlexTable.setWidth(largura);
 		}
 		
 		this.impressaoMapaSimplePanel.clear();
-		this.impressaoMapaSimplePanel.setSize(LARGURA_MAPA, ALTURA_MAPA);
+		this.impressaoMapaSimplePanel.setSize(largura, altura);
 		this.impressaoMapaSimplePanel.add(mapa);
 	}
 	

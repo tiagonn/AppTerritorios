@@ -22,6 +22,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.googlecode.objectify.Key;
 
@@ -143,7 +144,8 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 			}
 		}
 		
-		if (getAdminDao().buscarBairros(surdo.getCidadeId(), surdo.getBairro()).size() == 0) {
+		if (!StringUtils.isEmpty(surdo.getBairro()) 
+				&& getAdminDao().buscarBairros(surdo.getCidadeId(), surdo.getBairro()).size() == 0) {
 			Bairro bairro = new Bairro();
 			bairro.setCidade(surdo.getCidade());
 			bairro.setNome(surdo.getBairro());

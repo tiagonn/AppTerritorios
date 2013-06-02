@@ -14,8 +14,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface AdminService extends RemoteService {
 	
 	void dispararBackup(String destinatarios);
-
-	void dispararMapeamentoNovosAtributos();
 	
 	void adicionarOuAtualizarUsuario(String email, Boolean admin);
 	

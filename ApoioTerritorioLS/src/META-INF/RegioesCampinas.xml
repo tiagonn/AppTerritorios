@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<regioes>
+<tns:regioes xmlns:tns="http://www.example.org/RegioesAntigas">
 	<regiao>
 		<nome>Região de Barão Geraldo</nome>
 		<letra>A</letra>
@@ -152,4 +152,4 @@
 			<longitude>-47.117329</longitude>
 		</centro>
 	</regiao>	
-</regioes>
+</tns:regioes>

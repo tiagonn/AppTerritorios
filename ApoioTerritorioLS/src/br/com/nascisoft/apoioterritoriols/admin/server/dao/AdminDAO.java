@@ -59,9 +59,9 @@ public class AdminDAO extends DAOBase {
 		ofy.delete(Usuario.class, email);
 	}
 	
-	public void adicionarOuAtualizarCidade(Cidade cidade) {
+	public Long adicionarOuAtualizarCidade(Cidade cidade) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.put(cidade);
+		return ofy.put(cidade).getId();
 	}
 	
 	public List<Cidade> obterCidades() {
@@ -69,14 +69,24 @@ public class AdminDAO extends DAOBase {
 		return ofy.query(Cidade.class).list();
 	}
 	
+	public List<Regiao> obterRegioes() {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.query(Regiao.class).list();
+	}
+	
+	public List<Bairro> obterBairros() {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.query(Bairro.class).list();
+	}
+	
 	public void apagarCidade(Long id) {
 		Objectify ofy = ObjectifyService.begin();
 		ofy.delete(Cidade.class, id);
 	}
 	
-	public void adicionarOuAtualizarRegiao(Regiao regiao) {
+	public Long adicionarOuAtualizarRegiao(Regiao regiao) {
 		Objectify ofy = ObjectifyService.begin();
-		ofy.put(regiao);
+		return ofy.put(regiao).getId();
 	}
 	
 	public List<Regiao> buscarRegioes(Long cidadeId) {

@@ -14,8 +14,6 @@ public interface AdminServiceAsync {
 
 	void dispararBackup(String destinatarios, AsyncCallback<Void> callback);
 
-	void dispararMapeamentoNovosAtributos(AsyncCallback<Void> callback);
-
 	void adicionarOuAtualizarUsuario(String email, Boolean admin,
 			AsyncCallback<Void> callback);
 

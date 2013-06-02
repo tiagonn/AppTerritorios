@@ -773,5 +773,13 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		
 	}
 	
+	@UiHandler("manterMapaSateliteCheckBox")
+	void onImprimirMapaSateliteCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		if (event.getValue()) {
+			((MapWidget)this.manterMapaLayoutPanel.getWidget(0)).getMap().setMapTypeId(new MapTypeId().getHybrid());
+		} else {
+			((MapWidget)this.manterMapaLayoutPanel.getWidget(0)).getMap().setMapTypeId(new MapTypeId().getRoadmap());
+		}
+	}
 	
 }

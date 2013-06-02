@@ -58,13 +58,6 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	}
 
 	@Override
-	public void dispararMapeamentoNovosAtributos() {
-		logger.log(Level.INFO, "Disparando queue de mapeamento de novos atributos");
-		Queue queue = QueueFactory.getDefaultQueue();
-		queue.add(withUrl("/tasks/mapeamentoNovosAtributos"));		
-	}
-
-	@Override
 	public void adicionarOuAtualizarUsuario(String email, Boolean admin) {
 		logger.log(Level.INFO, "Adicionando ou atualizando usuario " + email + " com flag de administrador " + admin);
 		Usuario usuario = new Usuario();

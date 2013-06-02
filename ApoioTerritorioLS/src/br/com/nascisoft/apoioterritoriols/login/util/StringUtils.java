@@ -8,9 +8,16 @@ public final class StringUtils {
 			String[] array = string.split(" ");
 			for (int i = 0; i < array.length; i++) {
 				if (!StringUtils.isEmpty(array[i])) {
-					String aposPrimeiraLetra = array[i].substring(1);
-					retorno.append(array[i].substring(0, 1)).append(
-							aposPrimeiraLetra.toLowerCase()).append(" ");
+					if ("E".equals(array[i])) {
+						retorno.append("e");
+					} else {
+						String aposPrimeiraLetra = array[i].substring(1);
+						retorno.append(array[i].substring(0, 1)).append(
+								aposPrimeiraLetra.toLowerCase());
+					}
+					if (i < array.length-1) {
+						retorno.append(" ");
+					}
 				}
 			}
 			return retorno.toString();

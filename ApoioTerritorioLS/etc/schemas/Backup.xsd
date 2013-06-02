@@ -6,11 +6,13 @@
 
     <complexType name="BackupType">
     	<sequence>
-    		<element name="mapas" type="tns:MapasType" minOccurs="0"
-    			maxOccurs="1">
-    		</element>
+            <element name="usuarios" type="tns:UsuariosType" minOccurs="0" maxOccurs="1"></element>
+            <element name="cidades" type="tns:CidadesType" maxOccurs="1"></element>
+    		<element name="regioes" type="tns:RegioesType" maxOccurs="1"></element>
+    		<element name="mapas" type="tns:MapasType" minOccurs="0" maxOccurs="1"></element>
+            <element name="bairros" type="tns:BairrosType" minOccurs="0" maxOccurs="1"></element>
             <element name="surdos" type="tns:SurdosType" minOccurs="0" maxOccurs="1"></element>
-        </sequence>
+    	</sequence>
     </complexType>
 
     <complexType name="SurdosType">
@@ -27,42 +29,167 @@
 
     <complexType name="MapaType">
     	<sequence>
-    		<element name="id" type="long" minOccurs="1" maxOccurs="1"></element>
-    		<element name="numero" type="int" minOccurs="1" maxOccurs="1"></element>
-    		<element name="letra" type="string" minOccurs="1" maxOccurs="1"></element>
-    		<element name="regiao" type="string" minOccurs="1" maxOccurs="1"></element>
+            <element name="identificador" type="long" minOccurs="1" maxOccurs="1"></element>
+            <element name="identificadorRegiao" type="long" minOccurs="1" maxOccurs="1"></element>
+            <element name="numero" type="int" minOccurs="1" maxOccurs="1"></element>
+    		<element name="letra" type="string" minOccurs="1" maxOccurs="1"></element>
     	</sequence>
     </complexType>
 
     <complexType name="SurdoType">
     	<sequence>
-    		<element name="id" type="long" minOccurs="1" maxOccurs="1"></element>
-    		<element name="regiao" type="string" minOccurs="1" maxOccurs="1"></element>
-    		<element name="nome" type="string" minOccurs="1" maxOccurs="1"></element>
-    		<element name="logradouro" type="string" minOccurs="1" maxOccurs="1"></element>
-    		<element name="numero" type="string" minOccurs="1" maxOccurs="1"></element>
-    		<element name="complemento" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="bairro" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="cep" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="observacao" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="telefone" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="libras" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="crianca" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="dvd" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="instrutor" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="idade" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="sexo" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="horario" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="melhorDia" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="onibus" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="mapa" type="long" minOccurs="0" maxOccurs="1"></element>
-    		<element name="estaAssociadoMapa" type="boolean" minOccurs="1" maxOccurs="1"></element>
-    		<element name="msn" type="string" minOccurs="0" maxOccurs="1"></element>
-    		<element name="possuiMSN" type="boolean" minOccurs="1" maxOccurs="1"></element>
-    		<element name="latitude" type="double" minOccurs="1" maxOccurs="1"></element>
-    		<element name="longitude" type="double" minOccurs="1" maxOccurs="1"></element>
+    		<element name="id" type="long" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="identificadorRegiao" type="long"
+    			minOccurs="1" maxOccurs="1">
+    		</element>
+    		<element name="identificadorCidade" type="long"
+    			minOccurs="1">
+    		</element>
+    		<element name="nome" type="string" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="logradouro" type="string" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="numero" type="string" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="complemento" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="bairro" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="cep" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="observacao" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="telefone" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="libras" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+
+    		<element name="publicacoesPossui" type="string"
+    			minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="dvd" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="instrutor" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="anoNascimento" type="int" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="sexo" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="horario" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="melhorDia" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="onibus" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="identificadorMapa" type="long" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="estaAssociadoMapa" type="boolean"
+    			minOccurs="1" maxOccurs="1">
+    		</element>
+    		<element name="msn" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="possuiMSN" type="boolean" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="latitude" type="double" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="longitude" type="double" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+
+    		<element name="mudouSe" type="boolean" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="visitarSomentePorAnciaos" type="boolean" minOccurs="1"></element>
     	</sequence>
     </complexType>
 
     <element name="backup" type="tns:BackupType"></element>
+
+    <complexType name="CidadesType">
+    	<sequence>
+    		<element name="cidade" type="tns:CidadeType" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="CidadeType">
+    	<sequence>
+    		<element name="identificador" type="long" minOccurs="1" maxOccurs="1"></element>
+    		<element name="nome" type="string" minOccurs="1"></element>
+    		<element name="latitudeCentro" type="double" minOccurs="1"></element>
+    		<element name="longitudeCentro" type="double" minOccurs="1"></element>
+    		<element name="latitudeCentroTerritorio" type="double" minOccurs="1"></element>
+    		<element name="longitudeCentroTerritorio" type="double" minOccurs="1"></element>
+    		<element name="quantidadeSurdosMapa" type="int" minOccurs="1"></element>
+    		<element name="utilizarBairroBuscaEndereco" type="boolean" minOccurs="1"></element>
+    		<element name="UF" type="string" minOccurs="1"></element>
+    		<element name="pais" type="string" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="RegioesType">
+    	<sequence>
+    		<element name="regiao" type="tns:RegiaoType" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="RegiaoType">
+    	<sequence>
+    		<element name="identificador" type="long" minOccurs="1"></element>
+            <element name="identificadorCidade" type="long" minOccurs="1"></element>
+            <element name="nome" type="string" minOccurs="1"></element>
+    		<element name="letra" type="string" minOccurs="1"></element>
+    		<element name="nivelZoom" type="int" minOccurs="1"></element>
+    		<element name="latitudeCentro" type="double" minOccurs="1"></element>
+    		<element name="longitudeCentro" type="double" maxOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="BairrosType">
+    	<sequence>
+    		<element name="bairro" type="tns:BairroType" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="UsuariosType">
+    	<sequence>
+    		<element name="usuario" type="tns:UsuarioType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="UsuarioType">
+    	<sequence>
+    		<element name="email" type="string" minOccurs="1"></element>
+    		<element name="admin" type="boolean" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="BairroType">
+    	<sequence>
+    		<element name="identificador" type="long" minOccurs="1"></element>
+    		<element name="identificadorCidade" type="long" minOccurs="1"></element>
+    		<element name="nome" type="string" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
 </schema>

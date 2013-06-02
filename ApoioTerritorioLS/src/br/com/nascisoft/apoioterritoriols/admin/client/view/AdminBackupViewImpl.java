@@ -31,7 +31,6 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField TextBox destinatario;
 	@UiField SingleUploader arquivoUpload;
 	@UiField Button botaoBackup;
-	@UiField Button botaoMapearNovosAtributos;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -99,10 +98,6 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 		}
 	}
 	
-	@UiHandler("botaoMapearNovosAtributos")
-	void onBotaoMapearNovosAtributosClick(ClickEvent event) {
-		this.presenter.dispararMapeamentoNovosAtributos();
-	}
 	@UiHandler("usuarioAdicionarButton")
 	void onUsuarioAdicionarButtonClick(ClickEvent event) {
 	}

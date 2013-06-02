@@ -256,6 +256,7 @@
 							<g:HTML><br/></g:HTML>
 							<g:HorizontalPanel styleName="endereco-tabela">
 								<g:Button ui:field="manterMapaConfirmarEnderecoButton" text="Confirmar Endereço"></g:Button>
+								<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
 								<g:HorizontalPanel styleName="endereco-tabela-direita">
 									<g:Button ui:field="manterMapaVoltarEnderecoButton" text="Voltar"></g:Button>
 								</g:HorizontalPanel>

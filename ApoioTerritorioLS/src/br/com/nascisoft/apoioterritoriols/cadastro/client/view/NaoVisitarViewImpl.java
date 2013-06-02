@@ -3,8 +3,9 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.cell.client.ActionCell;
@@ -20,6 +21,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -66,18 +68,38 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	@Override
 	public void initView() {
 		this.selectThisTab();
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			boolean existeAdmin = true;
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				existeAdmin = false;
+			} catch (IndexOutOfBoundsException ex) {
+				existeAdmin = false;
+			}
+			if (!existeAdmin) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
 	}
 
 	@Override
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(3, false);
 	}
+	
+	@Override
+	public void setCidadeList(List<Cidade> cidades) {
+		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
+		// apesar deste método estar implementado aqui ele não será chamado.
+		throw new RuntimeException("Método setCidadeList não é suportado pela view NaoVisitarViewImpl");
+	}
 
 	@Override
 	public void setMapaList(List<Mapa> mapas) {
 		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
 		// apesar deste método estar implementado aqui ele não será chamado.
-		throw new RuntimeException("Método setRegiaoList não é suportado pela view NaoVisitarViewImpl");
+		throw new RuntimeException("Método setMapaList não é suportado pela view NaoVisitarViewImpl");
 	}
 
 	@Override
@@ -107,6 +129,12 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 			@Override
 			public String getValue(SurdoNaoVisitarDetailsVO object) {
 				return StringUtils.toCamelCase(object.getNome());
+			}
+		};
+		TextColumn<SurdoNaoVisitarDetailsVO> cidadeColumn = new TextColumn<SurdoNaoVisitarDetailsVO>() {
+			@Override
+			public String getValue(SurdoNaoVisitarDetailsVO object) {
+				return object.getNomeCidade();
 			}
 		};
 		TextColumn<SurdoNaoVisitarDetailsVO> regiaoColumn = new TextColumn<SurdoNaoVisitarDetailsVO>() {
@@ -154,6 +182,7 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 		};
 		
 		this.naoVisitarResultadoCellTable.addColumn(nomeColumn, "Nome");
+		this.naoVisitarResultadoCellTable.addColumn(cidadeColumn, "Cidade");
 		this.naoVisitarResultadoCellTable.addColumn(regiaoColumn, "Região");
 		this.naoVisitarResultadoCellTable.addColumn(motivoColumn, "Motivo");
 		this.naoVisitarResultadoCellTable.addColumn(mostrarObservacaoColumn);

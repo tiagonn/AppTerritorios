@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.presenter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,12 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -30,16 +35,12 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 
 	private final CadastroSurdoView view;
 	
-	//TODO: Parametrizar todos os dados fixos
-	private static final HasLatLng LATITUDE_CENTRO_CAMPINAS = new LatLng(-22.9071048, -47.06323910000003);
-	
 	public CadastroSurdoPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, CadastroSurdoView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, CadastroSurdoView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
-		populaRegioes();
-		populaBairros();
+		this.populaCidades();
 	}
 	
 	@Override
@@ -47,45 +48,83 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 		super.initView();
 	}
 	
-	private static List<String> bairros = null;
+	@Override
+	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
+		super.onPesquisaCidadeListBoxChange(cidadeId);
+		populaBairros(cidadeId);
+	}
 	
-	protected void populaBairros() {
-		if (bairros == null) {
-			getView().showWaitingPanel();
-			service.obterBairrosCampinas(new AsyncCallback<List<String>>() {
-				
-				@Override
-				public void onSuccess(List<String> result) {
-					bairros = result;					
-					getView().setBairroList(bairros);
-					getView().hideWaitingPanel();
+	@Override
+	void tratarCidadePopulada() {
+		this.onManterCidadeListBoxChange(this.cidades.get(0).getId());
+		this.populaBairros(this.cidades.get(0).getId());
+	}
+	
+	@Override
+	public void onManterCidadeListBoxChange(final Long cidadeId) {
+		getView().showWaitingPanel();
+		service.obterRegioes(cidadeId, new AsyncCallback<List<Regiao>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
+			}
+
+			@Override
+			public void onSuccess(List<Regiao> result) {
+				getView().setManterRegiaoList(result);
+				populaBairros(cidadeId);
+				getView().hideWaitingPanel();
+			}
+		});
+	}
+	
+	protected void populaBairros(Long cidadeId) {
+		getView().showWaitingPanel();
+		service.obterBairros(cidadeId, new AsyncCallback<List<Bairro>>() {
+			
+			@Override
+			public void onSuccess(List<Bairro> result) {
+				List<String> bairros = new ArrayList<String>();
+				for (Bairro bairro : result) {
+					bairros.add(bairro.getNome());
 				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					logger.log(Level.SEVERE, "Falha ao obter lista de bairros.\n", caught);
-					getView().hideWaitingPanel();
-					Window.alert("Falha ao obter lista de bairros. \n" + caught.getMessage());					
-				}
-			});
-		} else {
-			this.view.setBairroList(bairros);
-		}
+				getView().setBairroList(bairros);
+				getView().hideWaitingPanel();
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de bairros.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter lista de bairros. \n" + caught.getMessage());					
+			}
+		});
 	}
 
 	@Override
-	public void onPesquisaPesquisarButtonClick(String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
-		eventBus.fireEvent(new PesquisarSurdoEvent(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa));
+	public void onPesquisaPesquisarButtonClick(String identificadorCidade, String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+		eventBus.fireEvent(new PesquisarSurdoEvent(identificadorCidade, nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa));
 	}
 	
 	@Override
-	public void onPesquisaPesquisarEvent(final String nomeSurdo, final String nomeRegiao, final String identificadorMapa, final Boolean estaAssociadoMapa) {
+	public void onPesquisaPesquisarEvent(final String identificadorCidade, final String nomeSurdo, final String regiaoId, final String identificadorMapa, final Boolean estaAssociadoMapa) {
 		getView().showWaitingPanel();
 		Long mapa = null;
+		Long cidade = null;
+		if (!StringUtils.isEmpty(identificadorCidade)) {
+			cidade = Long.valueOf(identificadorCidade);
+		}
 		if (!StringUtils.isEmpty(identificadorMapa)) {
 			mapa = Long.valueOf(identificadorMapa);
 		}
-		service.obterSurdos(nomeSurdo, nomeRegiao, mapa, estaAssociadoMapa, new AsyncCallback<List<SurdoDetailsVO>>() {
+		Long regiao = null;
+		if (!StringUtils.isEmpty(regiaoId)) {
+			regiao = Long.valueOf(regiaoId);
+		}
+		service.obterSurdos(cidade, nomeSurdo, regiao, mapa, estaAssociadoMapa, new AsyncCallback<List<SurdoDetailsVO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -98,8 +137,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onSuccess(List<SurdoDetailsVO> result) {
 				view.setResultadoPesquisa(result);
 				Map<String, String> filtros = new HashMap<String, String>();
+				filtros.put("Cidade", identificadorCidade);
 				filtros.put("Nome", nomeSurdo);
-				filtros.put("Regiao", nomeRegiao);
+				filtros.put("Regiao", regiaoId);
 				filtros.put("Mapa", identificadorMapa);
 				filtros.put("EstaAssociadoMapa", String.valueOf(estaAssociadoMapa));
 				view.setDadosFiltro(filtros);
@@ -130,7 +170,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				if (!StringUtils.isEmpty(estaAssociadoMapa) && !"null".equals(estaAssociadoMapa)) {
 					estaAssociadoMapaBoolean = Boolean.valueOf(estaAssociadoMapa);
 				}
-				eventBus.fireEvent(new PesquisarSurdoEvent(filtros.get("Nome"), filtros.get("Regiao"), filtros.get("Mapa"), estaAssociadoMapaBoolean));
+				eventBus.fireEvent(new PesquisarSurdoEvent(filtros.get("Cidade"), filtros.get("Nome"), filtros.get("Regiao"), filtros.get("Mapa"), estaAssociadoMapaBoolean));
 			}
 		});
 	}
@@ -190,50 +230,72 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	}
 
 	@Override
-	public void buscarEndereco(String logradouro, String numero, String bairro,
-			String cep) {
+	public void buscarEndereco(final Long identificadorCidade, final String logradouro, final String numero, final String bairro,
+			final String cep) {
 		getView().showWaitingPanel();
-		StringBuilder sb = new StringBuilder();
-		String separador = ", ";
-		sb.append(logradouro).append(separador).
-		   append(numero).append(separador);
-	
-		if (!StringUtils.isEmpty(bairro)) {
-			sb.append(bairro).append(separador);
-		}
 		
-		if (!StringUtils.isEmpty(cep)) {
-			sb.append(cep).append(separador);
-		}
 		
-		//TODO: Parametrizar todos os dados fixos
-		sb.append("Campinas, Sao Paulo, Brasil");
-		
-		HasGeocoderRequest request = new GeocoderRequest();
-		request.setRegion("BR");
-		request.setLanguage("pt-BR");
-		request.setAddress(sb.toString());
-		
-		HasGeocoder geo = new Geocoder();
-		geo.geocode(request, new GeocoderCallback() {			
+		service.obterCidade(identificadorCidade, new AsyncCallback<Cidade>() {
+			
 			@Override
-			public void callback(List<HasGeocoderResult> responses, String status) {
-				if (status.equals("OK")) {
-					HasGeocoderResult result = responses.get(0);
-					HasLatLng retorno = result.getGeometry().getLocation();
-						// em caso de não encontrar o endereço, a api do google maps está retornando o centro de Campinas, por conta da 
-						// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
-					if (retorno.equals(LATITUDE_CENTRO_CAMPINAS)) {
-						retorno = null;
+			public void onSuccess(final Cidade cidade) {
+				
+				StringBuilder sb = new StringBuilder();
+				String separador = ", ";
+				sb.append(logradouro).append(separador).
+				   append(numero).append(separador);
+			
+				if (!StringUtils.isEmpty(bairro) && cidade.getUtilizarBairroBuscaEndereco()) {
+					sb.append(bairro).append(separador);
+				}
+				
+				if (!StringUtils.isEmpty(cep)) {
+					sb.append(cep).append(separador);
+				}
+				
+				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador).append(cidade.getPais());
+				
+				HasGeocoderRequest request = new GeocoderRequest();
+				request.setRegion("BR");
+				request.setLanguage("pt-BR");
+				request.setAddress(sb.toString());
+				
+				HasGeocoder geo = new Geocoder();
+				geo.geocode(request, new GeocoderCallback() {			
+					@Override
+					public void callback(List<HasGeocoderResult> responses, String status) {
+						HasLatLng centro = roundLatLng(new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro()));
+						if (status.equals("OK")) {
+							HasGeocoderResult result = responses.get(0);
+							HasLatLng retorno = roundLatLng(result.getGeometry().getLocation());
+								// em caso de não encontrar o endereço, a api do google maps está retornando o centro da cidade, por conta da 
+								// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
+							boolean naoEncontrouEndereco = retorno.equals(centro);
+							if (naoEncontrouEndereco) {
+								retorno = roundLatLng(new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio()));
+							}
+							view.setPosition(retorno, !naoEncontrouEndereco, true);
+						} else {
+							view.setPosition(centro, false, true);
+						}				
+						getView().hideWaitingPanel();
 					}
-					view.setPosition(retorno, true);
-				} else {
-					view.setPosition(null, true);
-				}				
+				});
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao buscar cidade.\n", caught);
 				getView().hideWaitingPanel();
+				Window.alert("Falha ao buscar cidade. \n" + caught.getMessage());
 			}
 		});
 		
+	}
+	
+	private HasLatLng roundLatLng(HasLatLng latlng) {
+		return new LatLng(Math.floor(latlng.getLatitude()*10000)/10000, Math.floor(latlng.getLongitude()*10000)/10000);
 	}
 
 	@Override

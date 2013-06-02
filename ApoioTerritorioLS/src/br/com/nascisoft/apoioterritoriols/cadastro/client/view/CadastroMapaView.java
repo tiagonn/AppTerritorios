@@ -7,7 +7,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 public interface CadastroMapaView extends CadastroView {
 	
 	public interface Presenter extends CadastroView.Presenter {
-		void adicionarMapa(String nomeRegiao);
+		void adicionarMapa(Long identificadorRegiao);
 		void abrirMapa(Long identificadorMapa);
 		void onAbrirMapa(Long identificadorMapa);
 		void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa);

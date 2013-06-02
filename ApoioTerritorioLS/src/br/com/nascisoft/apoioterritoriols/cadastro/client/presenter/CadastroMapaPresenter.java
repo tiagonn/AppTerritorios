@@ -8,6 +8,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -20,13 +21,18 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	private final CadastroMapaView view;
 	
 	public CadastroMapaPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, CadastroMapaView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, CadastroMapaView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
-		populaRegioes();
 	}
 
+	@Override
+	public void initView() {
+		populaCidades();
+		super.initView();
+	}
+	
 	@Override
 	CadastroView getView() {
 		return this.view;
@@ -38,9 +44,9 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	}
 
 	@Override
-	public void adicionarMapa(String nomeRegiao) {
+	public void adicionarMapa(Long identificadorRegiao) {
 		getView().showWaitingPanel();
-		service.adicionarMapa(nomeRegiao, new AsyncCallback<Long>() {
+		service.adicionarMapa(identificadorRegiao, new AsyncCallback<Long>() {
 						
 			@Override
 			public void onFailure(Throwable caught) {
@@ -146,6 +152,11 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 			}
 		});
+	}
+
+	@Override
+	void tratarCidadePopulada() {
+		// não precisa de tratamento
 	}
 
 }

@@ -6,7 +6,9 @@ import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
@@ -36,6 +38,8 @@ public class SurdoVO implements Serializable {
 	private String msn;
 	private Double latitude;	
 	private Double longitude;
+	private Long regiaoId;
+	private String nomeCidade;
 	
 	public static final Comparator<SurdoVO> COMPARATOR_ENDERECO = new Comparator<SurdoVO>() {
 		@Override
@@ -48,11 +52,12 @@ public class SurdoVO implements Serializable {
 		super();
 	}
 	
-	public SurdoVO(Surdo surdo, Mapa mapa) { 
+	public SurdoVO(Surdo surdo, Mapa mapa, Regiao regiao, Cidade cidade) { 
 		super();
 		this.setId(surdo.getId());
 		this.setNome(surdo.getNome());
-		this.setRegiao(surdo.getRegiao());
+		this.setRegiao(regiao.getNomeRegiaoCompleta());
+		this.setRegiaoId(regiao.getId());
 		this.setLatitude(surdo.getLatitude());
 		this.setLongitude(surdo.getLongitude());
 		this.setMapa(mapa != null ? mapa.getNome() : "");
@@ -73,6 +78,7 @@ public class SurdoVO implements Serializable {
 		this.setMelhorDia(surdo.getMelhorDia());
 		this.setOnibus(surdo.getOnibus());
 		this.setMsn(surdo.getMsn());
+		this.setNomeCidade(cidade.getNome());
 	}
 	
 	public String getLogradouro() {
@@ -306,6 +312,50 @@ public class SurdoVO implements Serializable {
 		
 		return retorno.toString();
 	}
+	
+	public String getObservacaoConsolidadaResumida() {
+		StringBuilder retorno = new StringBuilder();
+		
+		if (!StringUtils.isEmpty(this.getSexo())) {
+			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getIdade())) {
+			retorno.append("Aprox. ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+		}
+		if (!StringUtils.isEmpty(this.getLibras())) {
+			if ("Sim".equals(this.getLibras())) {
+				retorno.append("<u>").append("Sabe</u> LIBRAS; ");
+			} else {
+				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
+			}
+		}
+		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
+			retorno.append("Publ: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMelhorDia())) {
+			retorno.append("Dia: ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getHorario())) {
+			retorno.append("Horário: ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getOnibus())) {
+			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getMsn())) {
+			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getTelefone())) {
+			retorno.append("Tel: ").append("<u>").append(this.getTelefone()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getInstrutor())) {
+			retorno.append("Instrutor: ").append("<u>").append(this.getInstrutor()).append("</u>").append("; ");
+		}
+		if (!StringUtils.isEmpty(this.getObservacao())) {
+			retorno.append("</br><strong>Outras obs: </strong>").append(this.getObservacao());
+		}
+		
+		return retorno.toString();
+	}
 
 	public String getPublicacoesPossui() {
 		return publicacoesPossui;
@@ -321,6 +371,22 @@ public class SurdoVO implements Serializable {
 
 	public void setAnoNascimento(Integer anoNascimento) {
 		this.anoNascimento = anoNascimento;
+	}
+
+	public Long getRegiaoId() {
+		return regiaoId;
+	}
+
+	public void setRegiaoId(Long regiaoId) {
+		this.regiaoId = regiaoId;
+	}
+
+	public String getNomeCidade() {
+		return nomeCidade;
+	}
+
+	public void setNomeCidade(String nomeCidade) {
+		this.nomeCidade = nomeCidade;
 	}
 
 }

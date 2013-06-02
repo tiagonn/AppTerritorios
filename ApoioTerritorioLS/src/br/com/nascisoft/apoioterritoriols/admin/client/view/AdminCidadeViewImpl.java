@@ -11,6 +11,7 @@ import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -46,6 +47,9 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	@UiField ListBox cidadeQuantidadeSurdosMapaListBox;
 	@UiField TextBox cidadeLatitudeTextBox;
 	@UiField TextBox cidadeLongitudeTextBox;
+	@UiField CheckBox cidadeUtilizarMesmaLatitudeCheckBox;
+	@UiField TextBox cidadeLatitudeTerritorioTextBox;
+	@UiField TextBox cidadeLongitudeTerritorioTextBox;
 	@UiField CheckBox cidadeUtilizarBairroBuscaEnderecoCheckBox;
 	@UiField Button cidadeAdicionarButton;
 	@UiField HTML cidadesWarningHTML;
@@ -131,11 +135,17 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 		cidade.setPais(this.cidadePaisTextBox.getText());
 		cidade.setLatitudeCentro(Double.valueOf(this.cidadeLatitudeTextBox.getText()));
 		cidade.setLongitudeCentro(Double.valueOf(this.cidadeLongitudeTextBox.getText()));
+		if (this.cidadeUtilizarMesmaLatitudeCheckBox.getValue()) {
+			cidade.setLatitudeCentroTerritorio(Double.valueOf(this.cidadeLatitudeTextBox.getText()));
+			cidade.setLongitudeCentroTerritorio(Double.valueOf(this.cidadeLongitudeTextBox.getText()));
+		} else {
+			cidade.setLatitudeCentroTerritorio(Double.valueOf(this.cidadeLatitudeTerritorioTextBox.getText()));
+			cidade.setLongitudeCentroTerritorio(Double.valueOf(this.cidadeLongitudeTerritorioTextBox.getText()));
+		}
 		cidade.setUtilizarBairroBuscaEndereco(this.cidadeUtilizarBairroBuscaEnderecoCheckBox.getValue());
 		cidade.setQuantidadeSurdosMapa(
 				Integer.valueOf(this.cidadeQuantidadeSurdosMapaListBox.getValue(
 						this.cidadeQuantidadeSurdosMapaListBox.getSelectedIndex())));
-		
 		
 		return cidade;
 	}
@@ -147,6 +157,11 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 		this.cidadesWarningHTML.setHTML("");
 		this.cidadeLatitudeTextBox.setText("");
 		this.cidadeLongitudeTextBox.setText("");
+		this.cidadeUtilizarMesmaLatitudeCheckBox.setValue(true);
+		this.cidadeLatitudeTerritorioTextBox.setText("");
+		this.cidadeLongitudeTerritorioTextBox.setText("");
+		this.cidadeLatitudeTerritorioTextBox.setEnabled(false);
+		this.cidadeLongitudeTerritorioTextBox.setEnabled(false);
 		this.cidadeUFTextBox.setText("");
 		this.cidadePaisTextBox.setText("");
 		this.cidadeQuantidadeSurdosMapaListBox.setSelectedIndex(0);
@@ -156,6 +171,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 		this.cidadeQuantidadeSurdosMapaListBox.addItem("-- Escolha uma opção --", "");
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.UM.getQtde()));
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.QUATRO.getQtde()));
+		this.cidadeQuantidadeSurdosMapaListBox.addItem("5 - Grande", String.valueOf(QuantidadeSurdosMapaEnum.CINCO.getQtde()));
 	}
 	
 	private void limparResultadoPesquisa() {	
@@ -235,6 +251,17 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 		this.cidadeUtilizarBairroBuscaEnderecoCheckBox.setValue(cidade.getUtilizarBairroBuscaEndereco());
 		this.cidadeQuantidadeSurdosMapaListBox.setSelectedIndex(
 				obterIndice(this.cidadeQuantidadeSurdosMapaListBox, cidade.getQuantidadeSurdosMapa().toString()));
+		if (cidade.getLatitudeCentro().equals(cidade.getLatitudeCentroTerritorio()) && cidade.getLongitudeCentro().equals(cidade.getLongitudeCentroTerritorio())) {
+			this.cidadeUtilizarMesmaLatitudeCheckBox.setValue(true);
+			this.cidadeLatitudeTerritorioTextBox.setEnabled(false);
+			this.cidadeLongitudeTerritorioTextBox.setEnabled(false);
+		} else {
+			this.cidadeUtilizarMesmaLatitudeCheckBox.setValue(false);
+			this.cidadeLatitudeTerritorioTextBox.setEnabled(true);
+			this.cidadeLongitudeTerritorioTextBox.setEnabled(true);
+			this.cidadeLatitudeTerritorioTextBox.setText(cidade.getLatitudeCentroTerritorio().toString());
+			this.cidadeLongitudeTerritorioTextBox.setText(cidade.getLongitudeCentroTerritorio().toString());
+		}
 
 	}
 	
@@ -260,21 +287,41 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 			validacoes.add("País precisa ser preenchido");
 		}		
 		if (cidadeLatitudeTextBox.getText().isEmpty()) {
-			validacoes.add("Latitude precisa ser preenchido");
+			validacoes.add("Latitude do centro da cidade precisa ser preenchido");
 		} else {
 			try {
 				Double.valueOf(this.cidadeLatitudeTextBox.getText());
 			} catch (NumberFormatException ex) {
-				validacoes.add("Latitude precisa ser numérico");
+				validacoes.add("Latitude do centro da cidade precisa ser numérico");
 			}
 		}
 		if (cidadeLongitudeTextBox.getText().isEmpty()) {
-			validacoes.add("Longitude precisa ser preenchido");
+			validacoes.add("Longitude do centro da cidade precisa ser preenchido");
 		} else {
 			try {
 				Double.valueOf(this.cidadeLongitudeTextBox.getText());
 			} catch (NumberFormatException ex) {
-				validacoes.add("Longitude precisa ser numérico");
+				validacoes.add("Longitude do centro da cidade precisa ser numérico");
+			}
+		}
+		if (!cidadeUtilizarMesmaLatitudeCheckBox.getValue()) {
+			if (cidadeLatitudeTerritorioTextBox.getText().isEmpty()) {
+				validacoes.add("Latitude do centro do território precisa ser preenchido");
+			} else {
+				try {
+					Double.valueOf(this.cidadeLatitudeTerritorioTextBox.getText());
+				} catch (NumberFormatException ex) {
+					validacoes.add("Latitude do centro do território precisa ser numérico");
+				}
+			}
+			if (cidadeLongitudeTerritorioTextBox.getText().isEmpty()) {
+				validacoes.add("Longitude do centro do território precisa ser preenchido");
+			} else {
+				try {
+					Double.valueOf(this.cidadeLongitudeTerritorioTextBox.getText());
+				} catch (NumberFormatException ex) {
+					validacoes.add("Longitude do centro do território precisa ser numérico");
+				}
 			}
 		}
 		if (this.cidadeQuantidadeSurdosMapaListBox.getSelectedIndex() == 0) {
@@ -283,5 +330,15 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 
 		
 		return validacoes;
+	}
+	
+	@UiHandler("cidadeUtilizarMesmaLatitudeCheckBox")
+	void onCidadeUtilizarMesmaLatitudeCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		this.cidadeLatitudeTerritorioTextBox.setEnabled(!event.getValue());
+		this.cidadeLongitudeTerritorioTextBox.setEnabled(!event.getValue());
+		if (event.getValue()) {
+			this.cidadeLatitudeTerritorioTextBox.setText("");
+			this.cidadeLongitudeTerritorioTextBox.setText("");
+		} 
 	}
 }

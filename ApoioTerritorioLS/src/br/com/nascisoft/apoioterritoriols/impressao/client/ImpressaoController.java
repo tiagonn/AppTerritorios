@@ -51,7 +51,7 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 				public void onSuccess() {
 					try {
 							// Impressao - pattern de URL: 
-							// imprimir!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
+							// imprimir!identificadorMapa=ABC&paisagem=ABC&imprimirCabecalho=ABC&imprimirMapa=ABC
 						if (currentToken.startsWith("imprimir")) {
 							if (view == null) {
 								view = new ImpressaoMapaViewImpl();

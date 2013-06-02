@@ -48,7 +48,7 @@ public class AdminDAO extends DAOBase {
 		ofy.put(usuario);
 	}
 	
-	public List<Usuario> buscarUsuarios() {
+	public List<Usuario> obterUsuarios() {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Usuario> usuarios = ofy.query(Usuario.class);
 		return usuarios.list();
@@ -64,7 +64,7 @@ public class AdminDAO extends DAOBase {
 		ofy.put(cidade);
 	}
 	
-	public List<Cidade> buscarCidades() {
+	public List<Cidade> obterCidades() {
 		Objectify ofy = ObjectifyService.begin();
 		return ofy.query(Cidade.class).list();
 	}
@@ -103,13 +103,17 @@ public class AdminDAO extends DAOBase {
 		ofy.put(bairro);
 	}
 	
-	public List<Bairro> buscarBairros(Long cidadeId) {
+	public List<Bairro> buscarBairros(Long cidadeId, String nome) {
 		Objectify ofy = ObjectifyService.begin();
 		
 		Query<Bairro> query = ofy.query(Bairro.class);
 		
 		if (cidadeId != null) {
 			query.filter("cidade", new Key<Cidade>(Cidade.class, cidadeId));
+		}
+		
+		if (nome != null) {
+			query.filter("nome", nome);
 		}
 		
 		return query.list();
@@ -128,6 +132,21 @@ public class AdminDAO extends DAOBase {
 	public Map<Key<Cidade>, Cidade> obterCidades(Collection<Key<Cidade>> chaves) {
 		Objectify ofy = ObjectifyService.begin();
 		return ofy.get(chaves);
+	}
+	
+	public Map<Key<Regiao>, Regiao> obterRegioes(Collection<Key<Regiao>> chaves) {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.get(chaves);
+	}
+	
+	public Regiao obterRegiao(Long regiaoId) {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.get(new Key<Regiao>(Regiao.class, regiaoId));
+	}
+	
+	public Cidade obterCidade(Long cidadeId) {
+		Objectify ofy = ObjectifyService.begin();
+		return ofy.get(new Key<Cidade>(Cidade.class, cidadeId));
 	}
 
 }

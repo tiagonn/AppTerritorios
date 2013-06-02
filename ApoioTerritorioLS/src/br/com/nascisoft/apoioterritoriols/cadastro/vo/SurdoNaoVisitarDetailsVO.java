@@ -3,6 +3,8 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 public class SurdoNaoVisitarDetailsVO implements Serializable {
@@ -11,16 +13,17 @@ public class SurdoNaoVisitarDetailsVO implements Serializable {
 		
 	}
 	
-	public SurdoNaoVisitarDetailsVO(Surdo surdo) {
+	public SurdoNaoVisitarDetailsVO(Surdo surdo, Regiao regiao, Cidade cidade) {
 		this.setId(surdo.getId());
 		this.setNome(surdo.getNome());
-		this.setRegiao(surdo.getRegiao());
+		this.setRegiao(regiao.getNomeRegiaoCompleta());
 		if (surdo.isMudouSe()) {
 			this.setMotivo("Mudou-se");
 		} else if (surdo.isVisitarSomentePorAnciaos()) {
 			this.setMotivo("Visitar somente por anciãos");
 		} 
 		this.setObservacao(surdo.getObservacao());
+		this.setNomeCidade(cidade.getNome());
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +32,7 @@ public class SurdoNaoVisitarDetailsVO implements Serializable {
 	private String regiao;
 	private String motivo;
 	private String observacao;
+	private String nomeCidade;
 	
 	public static final Comparator<SurdoNaoVisitarDetailsVO> COMPARATOR_NOME = new Comparator<SurdoNaoVisitarDetailsVO>() {
 		@Override
@@ -66,6 +70,14 @@ public class SurdoNaoVisitarDetailsVO implements Serializable {
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public String getNomeCidade() {
+		return nomeCidade;
+	}
+
+	public void setNomeCidade(String nomeCidade) {
+		this.nomeCidade = nomeCidade;
 	}
 	
 }

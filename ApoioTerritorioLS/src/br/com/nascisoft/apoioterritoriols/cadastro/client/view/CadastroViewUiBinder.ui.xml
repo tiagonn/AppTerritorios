@@ -13,11 +13,10 @@
 					<g:Grid styleName="surdo-tabela">
 						<g:row>
 							<g:customCell>
-								<g:Label text="Nome:" />
+								<g:Label text="Cidade:" />
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="pesquisaNomeTextBox"
-									visibleLength="25" />
+								<g:ListBox ui:field="pesquisaCidadeListBox" />
 							</g:customCell>
 							<g:customCell>
 								<g:Label text="Região:" />
@@ -25,38 +24,60 @@
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaRegiaoListBox" />
 							</g:customCell>
-						</g:row>
+						</g:row>					
 						<g:row>
+							<g:customCell>
+								<g:Label text="Nome:" />
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="pesquisaNomeTextBox"
+									visibleLength="25" />
+							</g:customCell>
 							<g:customCell>
 								<g:Label text="Mapa:" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaMapaListBox" />
 							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
-								<g:VerticalPanel styleName="check-alinhado-direita" horizontalAlignment="ALIGN_RIGHT">
-									<g:CheckBox ui:field="pesquisaEstaAssociadoMapaCheckBox" name="pesquisaEstaAssociadoMapaCheckBox"></g:CheckBox>
-								</g:VerticalPanel>
+								<g:HTML>&nbsp;</g:HTML>
 							</g:customCell>
 							<g:customCell>
-								<g:Label>Pesquisar apenas surdos sem mapa</g:Label>
-							</g:customCell>			
+								<g:CheckBox ui:field="pesquisaEstaAssociadoMapaCheckBox" name="pesquisaEstaAssociadoMapaCheckBox"
+											text="Apenas surdos sem mapa"></g:CheckBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
 							<g:customCell>
-								<g:Button ui:field="pesquisaPesquisarButton" text="Filtrar" />
+								<g:HTML>&nbsp;</g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>	<g:customCell>
+								<g:Button ui:field="pesquisaPesquisarButton" text="Pesquisar" />
 							</g:customCell>
 						</g:row>
 					</g:Grid>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="pesquisaResultadoLabel"/>
-					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="15" />
-					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="15"/>
+					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="10" />
+					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="10"/>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:InlineHyperlink text="Adicionar Surdo" targetHistoryToken="surdos!adicionar" ui:field="manterAdicionarSurdoInlineHyperlink"/>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:HTML ui:field="manterWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:VerticalPanel ui:field="manterSurdoPanel" visible="false" styleName="surdo-tabela">
-						<g:Grid>
+						<g:Grid styleName="surdo-tabela">
+							<g:row>
+								<g:customCell>
+									<g:Label text="Cidade:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterCidadeListBox"/>
+								</g:customCell>							
+							</g:row>
 							<g:row>
 								<g:customCell>
 									<g:Label text="Nome:"/>
@@ -177,7 +198,7 @@
 									<g:TextBox ui:field="manterOnibusTextBox" visibleLength="20"/>
 								</g:customCell>
 								<g:customCell>
-									<g:Label text="MSN:"/>
+									<g:Label text="Email/MSN:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:TextBox ui:field="manterMSNTextBox" visibleLength="20"/>
@@ -252,6 +273,9 @@
 					<g:Grid>
 						<g:row>
 							<g:customCell>
+								<g:Label text="Cidade: " />
+							</g:customCell>
+							<g:customCell>
 								<g:Label text="Região: " />
 							</g:customCell>
 							<g:customCell>
@@ -260,24 +284,25 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:ListBox ui:field="pesquisaMapaRegiaoListBox" />
+								<g:ListBox ui:field="pesquisaMapaCidadeListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaMapaRegiaoListBox" enabled="false" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaMapaMapaListBox" enabled="false" />
 							</g:customCell>
 						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:HTML>&nbsp;</g:HTML>
-							</g:customCell>
-						</g:row>
+					</g:Grid>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					<g:Grid>
 						<g:row>
 							<g:customCell>
 								<g:Button ui:field="pesquisaMapaAdicionarMapaButton" enabled="false" text="Adicionar Mapa na Região" visible="false"></g:Button>
 							</g:customCell>
 						</g:row>
 					</g:Grid>
-					<g:HTML wordWrap="true"><br /></g:HTML>
+					
 					<g:Label ui:field="manterMapaSurdoNomeMapaLabel" visible="false"/>
 					<g:Grid ui:field="manterMapaSurdoGrid" visible="false" cellSpacing="15">
 						<g:row>
@@ -331,6 +356,9 @@
 					<g:Grid>
 						<g:row>
 							<g:customCell>
+								<g:Label text="Cidade: " />
+							</g:customCell>
+							<g:customCell>
 								<g:Label text="Região: " />
 							</g:customCell>
 							<g:customCell>
@@ -339,7 +367,10 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" />
+								<g:ListBox ui:field="pesquisaImpressaoCidadeListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" enabled="false" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" />
@@ -354,6 +385,7 @@
 							<li>Também se deseja imprimir o plano de fundo amarelo do mapa é necessário configurar o seu browser para isto.</li>
 							<li>No Internet Explorer, vá em Arquivo (alt + f) -> Configurar página e marque a opção Imprimir Cores e Imagens de Plano de Fundo.</li>
 							<li>No Firefox vá em Imprimir -> Configurar Página e marque a opção Imprimir cores e imagens do plano de fundo.</li>
+							<li>Para impressão de formulários grandes (5 surdos por mapa), configurar página para não imprimir cabeçalho nem rodapé e configurar margens (superior, inferior, direita e esquerda) para o menor valor possível</li>
 						</ul>  
 					</g:HTML>
 					<g:PopupPanel 

@@ -33,6 +33,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoViewImpl;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarViewImpl;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -59,6 +60,7 @@ public class CadastroController implements CadastroPresenter,
 	private ImpressaoViewImpl impressaoView = null;
 	private NaoVisitarPresenter naoVisitarPresenter = null;
 	private NaoVisitarViewImpl naoVisitarView = null;
+	private LoginVO login;
 	
 	private String currentToken = null;
 	private SelectionHandler<Integer> selectionHandler = new SelectionHandler<Integer>() {
@@ -80,9 +82,10 @@ public class CadastroController implements CadastroPresenter,
 			.getLogger(CadastroController.class.getName());
 
 	public CadastroController(CadastroServiceAsync service,
-			HandlerManager eventBusParam) {
+			HandlerManager eventBusParam, LoginVO login) {
 		this.service = service;
 		this.eventBus = eventBusParam;
+		this.login = login;
 		bind();
 	}
 
@@ -102,8 +105,9 @@ public class CadastroController implements CadastroPresenter,
 					@Override
 					public void onPesquisarSurdo(PesquisarSurdoEvent event) {
 						History.newItem("surdos!pesquisar#" +
-								"nomeSurdo="+event.getNomeSurdo()+
-								"&nomeRegiao="+event.getNomeRegiao()+
+								"identificadorCidade="+event.getIdentificadorCidade()+
+								"&identificadorRegiao="+event.getNomeRegiao()+
+								"&nomeSurdo="+event.getNomeSurdo()+
 								"&identificadorMapa="+event.getIdentificadorMapa()+
 								"&estaAssociadoMapa="+event.getEstaAssociadoMapa());					
 					}
@@ -157,7 +161,7 @@ public class CadastroController implements CadastroPresenter,
 			public void onAbrirImpressaoMapa(AbrirImpressaoMapaEvent event) {
 				
 				// Impressao - pattern de URL: 
-				// imprimir!identificadorMapa=XXX&paisagem=XXX&imprimirCabecalho=XXX&imprimirMapa=XXX
+				// imprimir!identificadorMapa=ABC&paisagem=ABC&imprimirCabecalho=ABC&imprimirMapa=ABC
 				
 				StringBuilder page = new StringBuilder();
 				page.append(GWT.getHostPageBaseURL())
@@ -213,7 +217,7 @@ public class CadastroController implements CadastroPresenter,
 							}
 							if (cadastroSurdoPresenter == null) {
 								cadastroSurdoPresenter = new CadastroSurdoPresenter(
-										service, eventBus, cadastroSurdoView);
+										service, eventBus, cadastroSurdoView, login);
 								cadastroSurdoPresenter.setTabSelectionEventHandler(selectionHandler);
 							}	
 							
@@ -221,17 +225,16 @@ public class CadastroController implements CadastroPresenter,
 							
 							if ("surdos".equals(currentToken)) {
 								cadastroSurdoPresenter.initView();
-									// Disparando a pesquisa de surdos já na entrada da aba
-								eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", null));
 							} else if (currentToken.startsWith("surdos!pesquisar")) {
 								String queryString = currentToken.split("#")[1];
 								String[] parametros = queryString.split("&");
+								String identificadorCidade = null;
 								String nomeSurdo = null;
 								String nomeRegiao = null;
 								String identificadorMapa = null;
 								Boolean estaAssociadoMapa = null;
 								try {
-									nomeSurdo = parametros[0].split("=")[1];
+									identificadorCidade = parametros[0].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
 									// não faz nada, o nome continua null
 								}
@@ -241,12 +244,17 @@ public class CadastroController implements CadastroPresenter,
 									// não faz nada, o nome continua null
 								}
 								try {
-									identificadorMapa = parametros[2].split("=")[1];
+									nomeSurdo = parametros[2].split("=")[1];
+								} catch (ArrayIndexOutOfBoundsException e) {
+									// não faz nada, o nome continua null
+								}
+								try {
+									identificadorMapa = parametros[3].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
 									// não faz nada, o identificador continua null
 								}
 								try {
-									String estaAssociadoMapaString = parametros[3].split("=")[1];
+									String estaAssociadoMapaString = parametros[4].split("=")[1];
 									if (!StringUtils.isEmpty(estaAssociadoMapaString) && !"null".equals(estaAssociadoMapaString)) {
 										estaAssociadoMapa = Boolean.valueOf(estaAssociadoMapaString);
 									}
@@ -257,6 +265,7 @@ public class CadastroController implements CadastroPresenter,
 									estaAssociadoMapa = null;
 								}
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
+										identificadorCidade,
 										nomeSurdo,
 										nomeRegiao,
 										identificadorMapa,
@@ -268,8 +277,7 @@ public class CadastroController implements CadastroPresenter,
 								cadastroSurdoPresenter.onEditar(id);
 							}
 							
-							cadastroSurdoPresenter.go(container);
-							
+							cadastroSurdoPresenter.go(container);					
 							// Aba Mapa
 						} else if (currentToken.startsWith("mapas")) {
 							if (cadastroMapaView == null) {
@@ -277,14 +285,12 @@ public class CadastroController implements CadastroPresenter,
 							}
 							if (cadastroMapaPresenter == null) {
 								cadastroMapaPresenter = new CadastroMapaPresenter(
-										service, eventBus, cadastroMapaView);
+										service, eventBus, cadastroMapaView, login);
 								cadastroMapaPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							cadastroMapaPresenter.selectThisTab();
-							
-							if ("mapas".equals(currentToken)) {
-								cadastroMapaPresenter.initView();
-							} else if (currentToken.startsWith("mapas!abrir")) {
+							cadastroMapaPresenter.initView();
+							if (currentToken.startsWith("mapas!abrir")) {
 								cadastroMapaPresenter.onAbrirMapa(Long.valueOf(currentToken.split("#")[1].split("=")[1]));
 							}
 						
@@ -295,7 +301,7 @@ public class CadastroController implements CadastroPresenter,
 								impressaoView = new ImpressaoViewImpl();
 							}
 							if (impressaoPresenter == null) {
-								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView);
+								impressaoPresenter = new ImpressaoPresenter(service, eventBus, impressaoView, login);
 								impressaoPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							impressaoPresenter.selectThisTab();
@@ -303,13 +309,6 @@ public class CadastroController implements CadastroPresenter,
 							if ("impressao".equals(currentToken)) {
 								impressaoPresenter.initView();
 							} 
-//							else if (currentToken.startsWith("impressao!abrir")) {
-//								String queryString = currentToken.split("#")[1];
-//								String[] parametros = queryString.split("&");
-//								impressaoPresenter.onAbrirImpressao(
-//										Long.valueOf(parametros[0].split("=")[1]),
-//										Boolean.valueOf(parametros[1].split("=")[1]));
-//							}
 							
 							impressaoPresenter.go(container);
 						} else if (currentToken.startsWith("naoVisitar")) {
@@ -317,7 +316,7 @@ public class CadastroController implements CadastroPresenter,
 								naoVisitarView = new NaoVisitarViewImpl();
 							}
 							if (naoVisitarPresenter == null) {
-								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView);
+								naoVisitarPresenter = new NaoVisitarPresenter(service, eventBus, naoVisitarView, login);
 								naoVisitarPresenter.setTabSelectionEventHandler(selectionHandler);
 							}
 							naoVisitarPresenter.selectThisTab();

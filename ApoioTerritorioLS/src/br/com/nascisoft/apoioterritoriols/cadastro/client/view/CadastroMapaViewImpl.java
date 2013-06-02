@@ -9,8 +9,9 @@ import java.util.Set;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.InfoWindowVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
@@ -43,6 +44,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -59,6 +61,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	private Presenter presenter;
 	
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
+	@UiField ListBox pesquisaMapaCidadeListBox;
 	@UiField ListBox pesquisaMapaRegiaoListBox;
 	@UiField ListBox pesquisaMapaMapaListBox;
 	@UiField Label manterMapaSurdoNomeMapaLabel;
@@ -73,16 +76,13 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField Button pesquisaMapaAdicionarMapaButton;
 	
-	private Long identificadorMapaAtual;
+	private AbrirMapaVO abrirMapaVO;
 	
 	private Map<Long, InfoWindowVO> mapaInfoWindow;
 	
 	private static final int TIPO_SURDO_SEM_MAPA = 0;
 	private static final int TIPO_SURDO_MAPA_ATUAL = 1;
 	private static final int TIPO_SURDO_MAPA_OUTROS = 2;
-	
-	//TODO: Parametrizar
-	private static final boolean mapaIndividual = true;
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 
@@ -98,6 +98,19 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.selectThisTab();	
 		this.limparPesquisa();
 		this.limparManter();
+		if (this.presenter.getLoginInformation().isAdmin()) {
+			boolean existeAdmin = true;
+			try {
+				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
+			} catch (AssertionError ex) {
+				existeAdmin = false;
+			} catch (IndexOutOfBoundsException ex) {
+				existeAdmin = false;
+			}
+			if (!existeAdmin) {
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+			}
+		}
 	}
 	
 	@Override
@@ -119,51 +132,81 @@ public class CadastroMapaViewImpl extends Composite implements
 	
 	
 	private void limparPesquisa() {
+		this.pesquisaMapaCidadeListBox.setSelectedIndex(0);
 		this.pesquisaMapaRegiaoListBox.setSelectedIndex(0);
+		this.pesquisaMapaRegiaoListBox.clear();
+		this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma região --", "");
+		this.pesquisaMapaRegiaoListBox.setEnabled(false);
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
-		this.pesquisaMapaMapaListBox.setSelectedIndex(0);
 		this.pesquisaMapaMapaListBox.setEnabled(false);
 		this.pesquisaMapaAdicionarMapaButton.setEnabled(false);
 		this.pesquisaMapaAdicionarMapaButton.setVisible(false);
-		this.identificadorMapaAtual = null;
+		this.abrirMapaVO = null;
 	}
 	
 	private void limparManter() {
+		this.abrirMapaVO = null;
 		this.manterMapaSurdoGrid.setVisible(false);
 		this.manterMapaSurdoNomeMapaLabel.setText("");
-		this.identificadorMapaAtual = null;
 		this.manterMapaMapaLayoutPanel.clear();
 		this.manterMapaMapaLayoutPanel.setVisible(false);
 		this.manterMapaLegendaHorizontalPanel.setVisible(false);
 		this.mapaInfoWindow = new HashMap<Long, InfoWindowVO>();
 	}
+	
+
+	@Override
+	public void setCidadeList(List<Cidade> cidades) {
+		this.pesquisaMapaCidadeListBox.clear();
+		if (cidades.size() > 1) {
+			this.pesquisaMapaCidadeListBox.addItem("-- Escolha uma cidade --", "");
+			
+			this.pesquisaMapaRegiaoListBox.clear();
+			this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma região --", "");
+			
+			this.pesquisaMapaMapaListBox.clear();
+			this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");	
+		} else {
+			this.presenter.onPesquisaCidadeListBoxChange(cidades.get(0).getId());
+		}
+		for (Cidade cidade : cidades) {
+			this.pesquisaMapaCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
+		}	
+	}
 
 	@Override
 	public void setRegiaoList(List<Regiao> regioes) {
+		this.pesquisaMapaRegiaoListBox.setEnabled(true);
 		this.pesquisaMapaRegiaoListBox.clear();
 		this.pesquisaMapaRegiaoListBox.addItem("-- Escolha uma região --", "");
-
-		this.pesquisaMapaMapaListBox.clear();
-		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		
 		for (Regiao regiao : regioes) {
-			this.pesquisaMapaRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getNome());
+			this.pesquisaMapaRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getId().toString());
+		}
+		
+		if (abrirMapaVO != null) {
+			this.pesquisaMapaRegiaoListBox.setSelectedIndex(
+					obterIndice(this.pesquisaMapaRegiaoListBox, this.abrirMapaVO.getRegiao().getId().toString()));
+			this.pesquisaMapaAdicionarMapaButton.setVisible(true);
+			this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
+			this.presenter.onPesquisaRegiaoListBoxChange(this.abrirMapaVO.getRegiao().getId());
 		}
 	}
 
 	@Override
 	public void setMapaList(List<Mapa> mapas) {
+		this.pesquisaMapaMapaListBox.setEnabled(true);
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		for (Mapa mapa : mapas) {
 			this.pesquisaMapaMapaListBox.addItem(mapa.getNome(), mapa.getId().toString());
 		}
-		if (this.identificadorMapaAtual != null) {
+		if (this.abrirMapaVO != null) {
 			this.pesquisaMapaMapaListBox.setSelectedIndex(
 					this.obterIndice(
 							this.pesquisaMapaMapaListBox, 
-							this.identificadorMapaAtual.toString()));
+							this.abrirMapaVO.getMapa().getId().toString()));
 		}
 	}
 
@@ -179,14 +222,30 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
 	}
 
+	@UiHandler("pesquisaMapaCidadeListBox")
+	void onPesquisaMapaCidadeListBoxChange(ChangeEvent event) {
+		String value = this.pesquisaMapaCidadeListBox.getValue(this.pesquisaMapaCidadeListBox.getSelectedIndex());
+		if (!StringUtils.isEmpty(value)) {
+			this.presenter.onPesquisaCidadeListBoxChange(Long.valueOf(value));
+		} 
+		
+		this.pesquisaMapaMapaListBox.setEnabled(false);
+		this.pesquisaMapaMapaListBox.setSelectedIndex(0);
+		
+		this.pesquisaMapaRegiaoListBox.setEnabled(false);
+		this.pesquisaMapaRegiaoListBox.setSelectedIndex(0);
+		limparManter();
+	}
+	
 	@UiHandler("pesquisaMapaRegiaoListBox")
 	void onPesquisaMapaRegiaoListBoxChange(ChangeEvent event) {
 		if (presenter != null) {
 			if (!this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()).isEmpty()) {
-				this.pesquisaMapaMapaListBox.setEnabled(true);
 				this.pesquisaMapaAdicionarMapaButton.setVisible(true);
 				this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
-				this.presenter.onPesquisaRegiaoListBoxChange(pesquisaMapaRegiaoListBox.getValue(pesquisaMapaRegiaoListBox.getSelectedIndex()));
+				this.presenter.onPesquisaRegiaoListBoxChange(
+						Long.valueOf(
+								pesquisaMapaRegiaoListBox.getValue(pesquisaMapaRegiaoListBox.getSelectedIndex())));
 			} else {
 				this.pesquisaMapaMapaListBox.setEnabled(false);
 				this.pesquisaMapaMapaListBox.setSelectedIndex(0);
@@ -200,7 +259,8 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiHandler("pesquisaMapaAdicionarMapaButton")
 	void onPesquisaMapaAdicionarMapaButtonClick(ClickEvent event) {
 		this.presenter.adicionarMapa(
-				this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()));
+				Long.valueOf(
+						this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex())));
 	}
 	
 
@@ -230,9 +290,9 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (this.presenter != null) {
 			List<Long> lista = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
 			if (lista.size() > 0) {
-				int tamanhoMapa = mapaIndividual ? 1 : 4;
+				int tamanhoMapa = this.abrirMapaVO.getCidade().getQuantidadeSurdosMapa();
 				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > tamanhoMapa) {
-					Window.alert("Apenas tamanhoMapa surdo(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
+					Window.alert("Apenas " + tamanhoMapa + " surdo(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
 				} else {
 					this.presenter.adicionarSurdosMapa(lista, 
 							Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
@@ -271,19 +331,21 @@ public class CadastroMapaViewImpl extends Composite implements
 		}
 		return lista;
 	}
+	
+	private void setDadosFiltros(Cidade cidade) {
+		this.pesquisaMapaCidadeListBox.setSelectedIndex(
+				obterIndice(this.pesquisaMapaCidadeListBox, cidade.getId().toString()));
+		this.presenter.onPesquisaCidadeListBoxChange(cidade.getId());
+	}
 
 	@Override
 	public void onAbrirMapa(AbrirMapaVO vo) {
 		
-		this.pesquisaMapaRegiaoListBox.setSelectedIndex(obterIndice(this.pesquisaMapaRegiaoListBox, vo.getMapa().getRegiao()));
-		this.onPesquisaMapaRegiaoListBoxChange(null);
-		
-		this.pesquisaMapaMapaListBox.setSelectedIndex(obterIndice(this.pesquisaMapaMapaListBox, vo.getMapa().getId().toString()));
-		
-		this.identificadorMapaAtual = vo.getMapa().getId();
+		setDadosFiltros(vo.getCidade());
+		this.abrirMapaVO = vo;
 		
 		HasMapOptions opt = new MapOptions();
-		opt.setZoom(13);
+		opt.setZoom(vo.getRegiao().getZoom());
 		opt.setCenter(new LatLng(vo.getCentroRegiao().getLatitude(),vo.getCentroRegiao().getLongitude()));
 		opt.setMapTypeId(new MapTypeId().getRoadmap());
 		opt.setDraggable(true);
@@ -401,4 +463,5 @@ public class CadastroMapaViewImpl extends Composite implements
 			vo.getInfoWindow().close();
 		}
 	}
+
 }

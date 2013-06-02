@@ -117,7 +117,7 @@
 					<g:HTML wordWrap="true"> <br/></g:HTML>
 					<g:HTML ui:field="cidadesWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"> <br/></g:HTML>	
-					<g:Grid>
+					<g:Grid styleName="admin-cidade-table">
 						<g:row>
 							<g:customCell>
 								<g:InlineLabel text="Nome: " styleName="negrito"></g:InlineLabel>
@@ -148,20 +148,44 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:InlineLabel text="Latitude do centro: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Latitude do centro da cidade: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="cidadeLatitudeTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 							<g:customCell>
-								<g:InlineLabel text="Longitude do centro: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Longitude do centro da cidade: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:TextBox ui:field="cidadeLongitudeTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 						</g:row>
+					</g:Grid>
+					<g:Grid>	
 						<g:row>
-							<g:customCell><g:HTML>&nbsp;</g:HTML></g:customCell>
+							<g:customCell>
+								<g:CheckBox ui:field="cidadeUtilizarMesmaLatitudeCheckBox" checked="true" text="Utilizar mesma latitude/longitude do centro da cidade e do centro do territorio?"></g:CheckBox>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Grid styleName="admin-cidade-table">	
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Latitude do centro do território: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLatitudeTerritorioTextBox" visibleLength="25" enabled="false"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Longitude do centro do território: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="cidadeLongitudeTerritorioTextBox" visibleLength="25" enabled="false"></g:TextBox>
+							</g:customCell>
+						</g:row>
+					</g:Grid>
+					<g:Grid>	
+						<g:row>
 							<g:customCell>
 								<g:CheckBox ui:field="cidadeUtilizarBairroBuscaEnderecoCheckBox" checked="false" text="Utilizar bairro na busca por endereço"></g:CheckBox>
 							</g:customCell>
@@ -211,7 +235,7 @@
 								<g:InlineLabel text="Nível de zoom: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
-								<g:TextBox ui:field="regiaoZoomTextBox" visibleLength="5"></g:TextBox>
+								<g:ListBox ui:field="regiaoZoomListBox"/>
 							</g:customCell>
 						</g:row>
 						<g:row>
@@ -272,6 +296,10 @@
 					<c:SimplePager location="CENTER" ui:field="pesquisaBairroResultadoSimplePager" pageSize="15"/>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
+			<g:header>Cadastro</g:header>
+			<g:HTML wordWrap="true"> <br/></g:HTML>
 		</g:tab>
 	</g:TabLayoutPanel>
 </ui:UiBinder> 

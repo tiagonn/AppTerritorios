@@ -14,9 +14,11 @@ import br.com.nascisoft.apoioterritoriols.admin.client.AdminService;
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 
@@ -32,12 +34,20 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	private static final Logger logger = Logger.getLogger(AdminService.class.getName());
 	
 	private AdminDAO dao = null;
+	private CadastroDAO cadastroDao = null;
 	
 	private AdminDAO getDao() {
 		if (dao == null) {
 			dao = new AdminDAO();
 		}
 		return dao;
+	}
+	
+	private CadastroDAO getCadastroDao() {
+		if (cadastroDao == null) {
+			cadastroDao = new CadastroDAO();
+		}
+		return cadastroDao;
 	}
 
 	@Override
@@ -65,7 +75,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 
 	@Override
 	public List<Usuario> buscarUsuarios() {
-		return getDao().buscarUsuarios();
+		return getDao().obterUsuarios();
 	}
 
 	@Override
@@ -84,7 +94,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	@Override
 	public List<Cidade> buscarCidades() {
 		logger.info("Obtendo lista de cidades");
-		return getDao().buscarCidades();
+		return getDao().obterCidades();
 	}
 
 	@Override
@@ -93,7 +103,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		List<Regiao> regioes = getDao().buscarRegioes(id);
 		Boolean retorno = false;
 		if (regioes == null || regioes.size() == 0) {
-			List<Bairro> bairros = getDao().buscarBairros(id);
+			List<Bairro> bairros = getDao().buscarBairros(id, null);
 			List<Key<Bairro>> keyBairros = new ArrayList<Key<Bairro>>();
 			for (Bairro bairro : bairros) {
 				keyBairros.add(new Key<Bairro>(Bairro.class, bairro.getId()));
@@ -137,9 +147,16 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	@Override
 	public Boolean apagarRegiao(Long id) {
 		logger.info("Apagando regiao " + id);
-		getDao().apagarRegiao(id);
-		return true;
-		//TODO consistência para não apagar regioes que possuam surdos associados
+		List<Surdo> surdos = this.getCadastroDao().obterSurdos(null, null, id, null, null);
+		if (surdos == null || surdos.size() == 0) {
+			surdos = this.getCadastroDao().obterSurdosNaoVisitar();
+		}
+		
+		Boolean apagar = surdos == null || surdos.size() == 0;
+		if (apagar) {
+			getDao().apagarRegiao(id);
+		}
+		return apagar;
 	}
 
 	@Override
@@ -153,7 +170,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	@Override
 	public List<BairroVO> buscarBairros() {
 		logger.info("Obtendo lista de bairros");
-		List<Bairro> bairros = getDao().buscarBairros(null);
+		List<Bairro> bairros = getDao().buscarBairros(null, null);
 		List<BairroVO> retorno = new ArrayList<BairroVO>();
 		
 		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();

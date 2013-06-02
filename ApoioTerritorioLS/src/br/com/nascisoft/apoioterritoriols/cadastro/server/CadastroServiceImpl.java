@@ -1,30 +1,28 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-
+import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroService;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Bairros;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Centro;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regioes;
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.googlecode.objectify.Key;
 
@@ -35,12 +33,10 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 
 	private static final Logger logger = Logger
 			.getLogger(CadastroServiceImpl.class.getName());
-
-	private static List<String> bairros = null;
-	
-	private static Regioes regioes = null;
 	
 	private CadastroDAO dao = null;
+	
+	private AdminDAO adminDao = null;
 	
 	private CadastroDAO getDao() {
 		if (dao == null) {
@@ -48,90 +44,72 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		}
 		return dao;
 	}
-
+	
+	private AdminDAO getAdminDao() {
+		if (adminDao == null) {
+			adminDao = new AdminDAO();
+		}
+		return adminDao;
+	}
+	
 	@Override
-	public List<String> obterBairrosCampinas() {
-		if (CadastroServiceImpl.bairros == null) {
-			try {
-				JAXBContext context = JAXBContext.newInstance(Bairros.class);
-				Unmarshaller unmarshaller = context.createUnmarshaller();
-				CadastroServiceImpl.bairros = ((Bairros) unmarshaller
-						.unmarshal(new File(
-								"WEB-INF/classes/META-INF/BairrosCampinas.xml")))
-						.getBairro();
-			} catch (Exception ex) {
-				logger.log(Level.SEVERE, "Erro ao recuperar lista de bairros",
-						ex);
-				throw new RuntimeException("Erro ao recuperar lista de bairros.", ex);
-			}
-		}
-		return CadastroServiceImpl.bairros;
+	public List<Cidade> obterCidades() {
+		return getAdminDao().obterCidades();
 	}
 	
-	private void initRegioes() {
-		if (CadastroServiceImpl.regioes == null) {
-			try {
-				JAXBContext context = JAXBContext.newInstance(Regioes.class);
-				Unmarshaller unmarshaller = context.createUnmarshaller();
-				CadastroServiceImpl.regioes = ((Regioes) unmarshaller
-						.unmarshal(new File(
-								"WEB-INF/classes/META-INF/RegioesCampinas.xml")));
-				
-			} catch (Exception ex) {
-				logger.log(Level.SEVERE, "Erro ao recuperar lista de regiões",
-						ex);
-				throw new RuntimeException("Erro ao recuperar lista de regiões.", ex);
-			}
-		}
+	@Override
+	public List<Regiao> obterRegioes(Long cidadeId) {
+		return getAdminDao().buscarRegioes(cidadeId);
 	}
 	
-	private Regiao obterRegiao(String nomeRegiao) {
-		initRegioes();
-		Regiao retorno = null;
-		for (Regiao regiao : CadastroServiceImpl.regioes.getRegiao()) {
-			if (regiao.getNome().equals(nomeRegiao)) {
-				retorno = regiao;
-				break;
-			}
-		}
-		return retorno;
+	@Override
+	public List<Bairro> obterBairros(Long cidadeId) {
+		return getAdminDao().buscarBairros(cidadeId, null);
 	}
 
-	@Override
-	public List<Regiao> obterRegioesCampinas() {
-		initRegioes();
-		return regioes.getRegiao();
-	}
 	
 	@Override
-	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa) {
-		List<SurdoVO> surdos = this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, null);
+	public List<SurdoVO> obterSurdosCompletos(String nomeSurdo, Long regiaoId, Long identificadorMapa) {
+		List<SurdoVO> surdos = this.obterSurdosCompletos(null, nomeSurdo, regiaoId, identificadorMapa, null);
 		Collections.sort(surdos, SurdoVO.COMPARATOR_ENDERECO);
 		return surdos;
 	}
 
-	private List<SurdoVO> obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
-		List<Surdo> surdos = this.getDao().obterSurdos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa);
-		Map<Long, Key<Mapa>> chavesMapa = new HashMap<Long, Key<Mapa>>();
+	private List<SurdoVO> obterSurdosCompletos(Long identificadorCidade, String nomeSurdo, Long regiaoId, Long identificadorMapa, Boolean estaAssociadoMapa) {
+		List<Surdo> surdos = this.getDao().obterSurdos(identificadorCidade, nomeSurdo, regiaoId, identificadorMapa, estaAssociadoMapa);
+
+		Set<Key<Mapa>> chavesMapa = new HashSet<Key<Mapa>>();
+		Set<Key<Regiao>> chavesRegiao = new HashSet<Key<Regiao>>();
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+
 		for (Surdo surdo : surdos) {
 			if (surdo.getMapa() != null) {
-				chavesMapa.put(surdo.getId(), surdo.getMapa());
-			} 
+				chavesMapa.add(surdo.getMapa());
+			}
+				chavesRegiao.add(surdo.getRegiao());
+				chavesCidade.add(surdo.getCidade());
 		}
 		
-		Map<Key<Mapa>, Mapa> mapas = this.getDao().obterMapas(chavesMapa.values());
+		Map<Key<Mapa>, Mapa> mapas = this.getDao().obterMapas(chavesMapa);
+		Map<Key<Regiao>, Regiao> mapasRegiao = this.getAdminDao().obterRegioes(chavesRegiao);
+		Map<Key<Cidade>, Cidade> mapasCidade = this.getAdminDao().obterCidades(chavesCidade);
 		
 		List<SurdoVO> surdosVO = new ArrayList<SurdoVO>();
 		for (Surdo surdo : surdos) {
-			surdosVO.add(new SurdoVO(surdo, mapas.get(surdo.getMapa())));
+			surdosVO.add(new SurdoVO(
+					surdo, 
+					mapas.get(surdo.getMapa()), 
+					mapasRegiao.get(surdo.getRegiao()),
+					mapasCidade.get(surdo.getCidade())));
 		}
+		
 		return surdosVO;
 	}
 	
 	@Override
-	public List<SurdoDetailsVO> obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa) {
+	public List<SurdoDetailsVO> obterSurdos(Long identificadorCidade, String nomeSurdo, Long regiaoId, Long identificadorMapa, Boolean estaAssociadoMapa) {
 		List<SurdoDetailsVO> surdos = new ArrayList<SurdoDetailsVO>();
-		for (SurdoVO surdo : this.obterSurdosCompletos(nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa)) {
+		for (SurdoVO surdo : this.obterSurdosCompletos(identificadorCidade, nomeSurdo, regiaoId, identificadorMapa, estaAssociadoMapa)) {
 			surdos.add(new SurdoDetailsVO(surdo));
 		}
 		
@@ -139,8 +117,8 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	}
 
 	@Override
-	public List<Mapa> obterMapasRegiao(String nomeRegiao) {
-		return this.getDao().obterMapasRegiao(nomeRegiao);
+	public List<Mapa> obterMapasRegiao(Long regiaoId) {
+		return this.getDao().obterMapasRegiao(regiaoId);
 	}
 
 	@Override
@@ -149,12 +127,29 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		if (surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos()) {
 			surdo.setMapa(null);
 		}
+		surdo.setCidade(new Key<Cidade>(Cidade.class, surdo.getCidadeId()));
+		surdo.setRegiao(new Key<Regiao>(Regiao.class, surdo.getRegiaoId()));
 		Long id = this.getDao().adicionarOuAlterarSurdo(surdo);
 		logger.log(Level.INFO, "Surdo " + id + operacao + " com sucesso");
 		
-		if (surdo.getMapaAnterior() != null &&
-				dao.obterSurdos(null, null, surdo.getMapaAnterior(), null).size() == 0) {
-			dao.apagarMapa(surdo.getMapaAnterior());			
+		if (surdo.getMapaAnterior() != null) {
+			List<Surdo> surdos = dao.obterSurdos(null, null, null, surdo.getMapaAnterior(), null);
+			for (Surdo temp : surdos) {
+				if (temp.getId().equals(surdo.getId())) {
+					surdos.remove(temp);
+				}
+			}
+			if (surdos.size() == 0) {
+				dao.apagarMapa(surdo.getMapaAnterior());			
+			}
+		}
+		
+		if (!StringUtils.isEmpty(surdo.getBairro()) 
+				&& getAdminDao().buscarBairros(surdo.getCidadeId(), surdo.getBairro()).size() == 0) {
+			Bairro bairro = new Bairro();
+			bairro.setCidade(surdo.getCidade());
+			bairro.setNome(surdo.getBairro());
+			getAdminDao().adicionarOuAtualizarBairro(bairro);
 		}
 		
 		return id;
@@ -166,38 +161,56 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	}
 
 	@Override
-	public Long adicionarMapa(String nomeRegiao) {
-		Regiao regiao = obterRegiao(nomeRegiao);
-		return this.getDao().adicionarMapa(nomeRegiao, regiao.getLetra());
+	public Long adicionarMapa(Long regiaoId) {
+		Regiao regiao = this.getAdminDao().obterRegiao(regiaoId);
+		return this.getDao().adicionarMapa(regiaoId, regiao.getLetra());
 	}
 
 	@Override
 	public AbrirMapaVO obterInformacoesAbrirMapa(Long identificadorMapa) {
 		AbrirMapaVO vo = new AbrirMapaVO();
 		Mapa mapa = this.getDao().obterMapa(new Key<Mapa>(Mapa.class, identificadorMapa));
+		Regiao regiao = this.getAdminDao().obterRegiao(mapa.getRegiao().getId());
+		Cidade cidade = this.getAdminDao().obterCidade(regiao.getCidade().getId());
 		
 		vo.setMapa(mapa);
+		vo.setRegiao(regiao);
+		vo.setCidade(cidade);
 		
-		List<SurdoDetailsVO> surdosPara = this.obterSurdos(null, mapa.getRegiao(), identificadorMapa, null);
+		List<SurdoDetailsVO> surdosPara = this.obterSurdos(null, null, mapa.getRegiao().getId(), identificadorMapa, null);
 		
 		vo.setSurdosPara(surdosPara);
 		
 		List<SurdoDetailsVO> surdosDe = new ArrayList<SurdoDetailsVO>();
 		
-		for (Surdo surdo : this.getDao().obterSurdosSemMapa(mapa.getRegiao())) {
-			surdosDe.add(new SurdoDetailsVO(surdo, null));
+		for (Surdo surdo : this.getDao().obterSurdosSemMapa(mapa.getRegiao().getId())) {
+			surdosDe.add(new SurdoDetailsVO(surdo, null, regiao, cidade));
 		}
 		
 		vo.setSurdosDe(surdosDe);
 		
 		List<SurdoDetailsVO> surdosOutros = new ArrayList<SurdoDetailsVO>();
-		for (Surdo surdo: this.getDao().obterSurdosOutrosMapas(mapa.getRegiao(), identificadorMapa)) {
-			surdosOutros.add(new SurdoDetailsVO(surdo, this.getDao().obterMapa(surdo.getMapa())));
+		
+		List<Surdo> surdosOutrosMapas = this.getDao().obterSurdosOutrosMapas(mapa.getRegiao().getId(), identificadorMapa);
+		
+		Set<Key<Mapa>> chavesMapa = new HashSet<Key<Mapa>>();
+
+		for (Surdo surdo : surdosOutrosMapas) {
+			if (surdo.getMapa() != null) {
+				chavesMapa.add(surdo.getMapa());
+			} 
+		}
+		
+		Map<Key<Mapa>, Mapa> mapas = this.getDao().obterMapas(chavesMapa);
+		
+		for (Surdo surdo: surdosOutrosMapas) {
+			surdosOutros.add(new SurdoDetailsVO(surdo, mapas.get(surdo.getMapa()), regiao, cidade));
 		}
 		
 		vo.setSurdosOutros(surdosOutros);
-		
-		vo.setCentroRegiao(this.obterCentroRegiao(mapa.getRegiao()));
+
+		vo.getCentroRegiao().setLatitude(regiao.getLatitudeCentro());
+		vo.getCentroRegiao().setLongitude(regiao.getLongitudeCentro());
 		
 		return vo;
 	}
@@ -221,7 +234,7 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 
 	@Override
 	public void apagarMapa(Long identificadorMapa) {
-		List<Surdo> surdos = this.getDao().obterSurdos(null, null, identificadorMapa, null);
+		List<Surdo> surdos = this.getDao().obterSurdos(null, null, null, identificadorMapa, null);
 		List<Long> lista = this.obterListaIds(surdos);
 		this.removerSurdosMapa(lista);
 		this.getDao().apagarMapa(identificadorMapa);
@@ -234,26 +247,33 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		}
 		return retorno;
 	}
-	
-	private Centro obterCentroRegiao(String nomeRegiao) {
-		Centro centro = null;
-		initRegioes();
-		for (Regiao regiao : CadastroServiceImpl.regioes.getRegiao()) {
-			if (regiao.getNome().equals(nomeRegiao)) {
-				centro = regiao.getCentro();
-				break;
-			}
-		}
-		return centro;
-	}
 
 	@Override
 	public List<SurdoNaoVisitarDetailsVO> obterSurdosNaoVisitar() {
 		List<SurdoNaoVisitarDetailsVO> retorno = new ArrayList<SurdoNaoVisitarDetailsVO>();
-		for (Surdo surdo : getDao().obterSurdosNaoVisitar()) {
-			retorno.add(new SurdoNaoVisitarDetailsVO(surdo));
+		List<Surdo> surdos = getDao().obterSurdosNaoVisitar();
+		
+		Set<Key<Regiao>> chavesRegiao = new HashSet<Key<Regiao>>();
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+		
+		for (Surdo surdo : surdos) {
+			chavesRegiao.add(surdo.getRegiao());
+			chavesCidade.add(surdo.getCidade());
 		}
+		
+		Map<Key<Regiao>, Regiao> mapasRegiao = this.getAdminDao().obterRegioes(chavesRegiao);
+		Map<Key<Cidade>, Cidade> mapasCidade = this.getAdminDao().obterCidades(chavesCidade);
+		
+		for (Surdo surdo : surdos) {
+			retorno.add(
+					new SurdoNaoVisitarDetailsVO(
+							surdo, 
+							mapasRegiao.get(surdo.getRegiao()),
+							mapasCidade.get(surdo.getCidade())));
+		}
+		
 		Collections.sort(retorno, SurdoNaoVisitarDetailsVO.COMPARATOR_NOME);
+		
 		return retorno;
 	}
 
@@ -263,5 +283,10 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		surdo.setMudouSe(Boolean.FALSE);
 		surdo.setVisitarSomentePorAnciaos(Boolean.FALSE);
 		getDao().adicionarOuAlterarSurdo(surdo);
+	}
+
+	@Override
+	public Cidade obterCidade(Long identificadorCidade) {
+		return this.getAdminDao().obterCidade(identificadorCidade);
 	}
 }

@@ -18,7 +18,8 @@ public class Surdo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id private Long id;
-	@Indexed private String regiao;
+	@Indexed private Key<Regiao> regiao;
+	@Indexed private Key<Cidade> cidade;
 	@Indexed private String nome;
 	private String logradouro;
 	private String numero;
@@ -31,8 +32,6 @@ public class Surdo implements Serializable {
 	private String publicacoesPossui;
 	private String dvd;
 	private String instrutor;
-		//TODO: depois de mapear ano de nascimento, remover atributo idade
-	private String idade;
 	private Integer anoNascimento;
 	private String sexo;
 	private String horario;
@@ -47,6 +46,8 @@ public class Surdo implements Serializable {
 	@Indexed private boolean mudouSe = Boolean.FALSE;
 	@Indexed private boolean visitarSomentePorAnciaos = Boolean.FALSE;
 	@NotSaved private Long mapaAnterior;
+	@NotSaved private Long regiaoId;
+	@NotSaved private Long cidadeId;
 	
 	public Long getId() {
 		return id;
@@ -54,11 +55,11 @@ public class Surdo implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public void setRegiao(String regiao) {
-		this.regiao = regiao;
-	}
-	public String getRegiao() {
+	public Key<Regiao> getRegiao() {
 		return regiao;
+	}
+	public void setRegiao(Key<Regiao> regiao) {
+		this.regiao = regiao;
 	}
 	public String getNome() {
 		return nome;
@@ -132,36 +133,13 @@ public class Surdo implements Serializable {
 	public void setInstrutor(String instrutor) {
 		this.instrutor = instrutor;
 	}
-	public String getIdade() {
-		return idade;
-	}
-	public void setIdade(String idade) {
-		this.idade = idade;
-	}
 	public Integer getAnoNascimento() {
-		Integer retorno = null;
-		if (anoNascimento == null) {
-			String idade = this.getIdade();
-			try {
-				retorno = 2012 - Integer.valueOf(idade);
-			} catch (NumberFormatException ex) {
-				// não foi possível mapear a idade, não faça nada
-			}
-		} else {
-			retorno = anoNascimento;
-		}
-			
-		return retorno;
+		return anoNascimento;
 	}
 	public void setAnoNascimento(Integer anoNascimento) {
 		this.anoNascimento = anoNascimento;
 	}
 	public String getSexo() {
-		if ("Masculino".equals(sexo)) {
-			this.setSexo("Homem");
-		} else if ("Feminino".equals(sexo) ) {
-			this.setSexo("Mulher");
-		}
 		return sexo;
 	}
 	public void setSexo(String sexo) {
@@ -256,6 +234,24 @@ public class Surdo implements Serializable {
 			retorno.append(", ").append(this.getCep());
 		}
 		return retorno.toString();
+	}
+	public Long getRegiaoId() {
+		return regiaoId;
+	}
+	public void setRegiaoId(Long regiaoId) {
+		this.regiaoId = regiaoId;
+	}
+	public Key<Cidade> getCidade() {
+		return cidade;
+	}
+	public void setCidade(Key<Cidade> cidade) {
+		this.cidade = cidade;
+	}
+	public Long getCidadeId() {
+		return cidadeId;
+	}
+	public void setCidadeId(Long cidadeId) {
+		this.cidadeId = cidadeId;
 	}
 	
 }

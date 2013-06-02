@@ -1,10 +1,9 @@
 package br.com.nascisoft.apoioterritoriols.impressao.client.presenter;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoServiceAsync;
 import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView;
 import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView.IImpressaoPresenter;
@@ -38,10 +37,10 @@ public class ImpressaoMapaPresenter implements IImpressaoPresenter {
 
 	@Override
 	public void abrirImpressaoMapa(Long identificadorMapa) {
-		this.service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
+		this.service.obterSurdosCompletos(identificadorMapa, new AsyncCallback<AbrirMapaVO>() {
 			
 			@Override
-			public void onSuccess(List<SurdoVO> result) {
+			public void onSuccess(AbrirMapaVO result) {
 				view.abrirImpressaoMapa(result);
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			}

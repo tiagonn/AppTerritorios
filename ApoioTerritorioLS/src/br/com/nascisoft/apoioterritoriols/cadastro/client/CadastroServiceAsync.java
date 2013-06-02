@@ -6,32 +6,30 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.xml.Regiao;
+import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface CadastroServiceAsync {
-	
-	void obterBairrosCampinas(AsyncCallback<List<String>> callback);
 
-	void obterSurdos(String nomeSurdo, String nomeRegiao, Long identificadorMapa, Boolean estaAssociadoMapa, 
+	void obterSurdos(Long identificadorCidade, String nomeSurdo, Long regiaoId,
+			Long identificadorMapa, Boolean estaAssociadoMapa,
 			AsyncCallback<List<SurdoDetailsVO>> callback);
 
-	void obterSurdosCompletos(String nomeSurdo, String nomeRegiao, Long identificadorMapa,
-			AsyncCallback<List<SurdoVO>> callback);
+	void obterSurdosCompletos(String nomeSurdo, Long regiaoId,
+			Long identificadorMapa, AsyncCallback<List<SurdoVO>> callback);
 
-	void obterMapasRegiao(String nomeRegiao,
-			AsyncCallback<List<Mapa>> callback);
+	void obterMapasRegiao(Long regiaoId, AsyncCallback<List<Mapa>> callback);
 
 	void adicionarOuAlterarSurdo(Surdo surdo, AsyncCallback<Long> callback);
 
 	void obterSurdo(Long id, AsyncCallback<Surdo> callback);
 
-	void adicionarMapa(String nomeRegiao, AsyncCallback<Long> callback);
-
-	void obterRegioesCampinas(AsyncCallback<List<Regiao>> callback);
+	void adicionarMapa(Long regiaoId, AsyncCallback<Long> callback);
 
 	void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa,
 			AsyncCallback<Long> callback);
@@ -49,5 +47,13 @@ public interface CadastroServiceAsync {
 			AsyncCallback<List<SurdoNaoVisitarDetailsVO>> callback);
 
 	void retornarSurdoNaoVisitar(Long id, AsyncCallback<Void> callback);
+
+	void obterCidades(AsyncCallback<List<Cidade>> callback);
+
+	void obterBairros(Long cidadeId, AsyncCallback<List<Bairro>> callback);
+
+	void obterRegioes(Long cidadeId, AsyncCallback<List<Regiao>> callback);
+
+	void obterCidade(Long identificadorCidade, AsyncCallback<Cidade> callback);
 
 }

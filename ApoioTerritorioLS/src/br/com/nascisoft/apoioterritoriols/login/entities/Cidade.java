@@ -18,6 +18,8 @@ public class Cidade implements Serializable {
 	private String nome;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
+	private Double latitudeCentroTerritorio;
+	private Double longitudeCentroTerritorio;
 	private Integer quantidadeSurdosMapa;
 	private Boolean utilizarBairroBuscaEndereco;
 	private String UF;
@@ -46,6 +48,18 @@ public class Cidade implements Serializable {
 	}
 	public void setLongitudeCentro(Double longitudeCentro) {
 		this.longitudeCentro = longitudeCentro;
+	}
+	public Double getLatitudeCentroTerritorio() {
+		return latitudeCentroTerritorio;
+	}
+	public void setLatitudeCentroTerritorio(Double latitudeCentroTerritorio) {
+		this.latitudeCentroTerritorio = latitudeCentroTerritorio;
+	}
+	public Double getLongitudeCentroTerritorio() {
+		return longitudeCentroTerritorio;
+	}
+	public void setLongitudeCentroTerritorio(Double longitudeCentroTerritorio) {
+		this.longitudeCentroTerritorio = longitudeCentroTerritorio;
 	}
 	public Integer getQuantidadeSurdosMapa() {
 		return quantidadeSurdosMapa;

@@ -14,14 +14,15 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.RetornarVisitarS
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 public class NaoVisitarPresenter extends AbstractCadastroPresenter implements NaoVisitarView.Presenter {
 	
 	private final NaoVisitarView view;
 
 	public NaoVisitarPresenter(CadastroServiceAsync service,
-			HandlerManager eventBus, NaoVisitarView view) {
-		super(service, eventBus);
+			HandlerManager eventBus, NaoVisitarView view, LoginVO login) {
+		super(service, eventBus, login);
 		this.view = view;
 		this.view.setPresenter(this);
 	}
@@ -81,6 +82,11 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				Window.alert("Falha ao retornar surdo para serem visitados\n" + caught.getMessage());
 			}
 		});
+	}
+
+	@Override
+	void tratarCidadePopulada() {
+		//Não tem nenhum tratamento para este presenter
 	}
 
 }

@@ -1,8 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.impressao.client.view;
 
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
-
-import java.util.List;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -19,6 +17,6 @@ public interface ImpressaoMapaView {
 	
 	Widget asWidget();
 	public void setConfiguracoesImpressao(Boolean paisagem, Boolean imprimirCabecalho, Boolean imprimirMapa);
-	public void abrirImpressaoMapa(List<SurdoVO> surdos);
+	public void abrirImpressaoMapa(AbrirMapaVO surdos);
 
 }

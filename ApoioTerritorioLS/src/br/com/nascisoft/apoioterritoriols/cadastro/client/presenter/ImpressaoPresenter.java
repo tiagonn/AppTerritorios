@@ -70,9 +70,4 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 		
 	}
 
-	@Override
-	void tratarCidadePopulada() {
-		// não é necessário tratamento
-	}
-
 }

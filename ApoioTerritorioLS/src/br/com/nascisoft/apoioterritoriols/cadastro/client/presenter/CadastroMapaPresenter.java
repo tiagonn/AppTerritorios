@@ -154,9 +154,4 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 		});
 	}
 
-	@Override
-	void tratarCidadePopulada() {
-		// não precisa de tratamento
-	}
-
 }

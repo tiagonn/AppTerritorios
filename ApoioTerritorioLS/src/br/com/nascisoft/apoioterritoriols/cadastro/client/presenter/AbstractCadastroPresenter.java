@@ -31,8 +31,6 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 	
 	abstract CadastroView getView();
 	
-	abstract void tratarCidadePopulada();
-	
 	protected static final Logger logger = Logger.getLogger(AbstractCadastroPresenter.class.getName());
 	
 	@Override
@@ -48,7 +46,6 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 				@Override
 				public void onSuccess(List<Cidade> result) {
 					cidades = result;
-					tratarCidadePopulada();
 					getView().setCidadeList(result);
 					getView().hideWaitingPanel();
 				}
@@ -61,7 +58,6 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 				}
 			});
 		} else {
-			tratarCidadePopulada();
 			getView().setCidadeList(cidades);
 		}
 	}

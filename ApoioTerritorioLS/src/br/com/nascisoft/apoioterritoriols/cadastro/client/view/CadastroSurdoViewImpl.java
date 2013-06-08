@@ -155,6 +155,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.limparResultadoPesquisa();
 		this.limparManter();
 		this.pesquisaMapaListBox.setEnabled(false);
+		this.dadosFiltro = new HashMap<String, String>();
 	}
 	
 	@Override
@@ -244,7 +245,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		
 		if (dadosFiltro != null && !StringUtils.isEmpty(dadosFiltro.get("Mapa"))) {
 			this.pesquisaMapaListBox.setSelectedIndex(obterIndice(this.pesquisaMapaListBox, dadosFiltro.get("Mapa")));
-			this.onPesquisaRegiaoListBoxChange(null);
+			//TODO: FIX - CAUSANDO LOOP INFINITO
+//			this.onPesquisaRegiaoListBoxChange(null);
 		}
 	}
 

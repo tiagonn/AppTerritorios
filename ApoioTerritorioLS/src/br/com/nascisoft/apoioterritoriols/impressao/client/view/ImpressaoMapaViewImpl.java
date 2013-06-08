@@ -342,8 +342,6 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 					.append("</table>");		
 			}
 			
-			//TODO: Terminar o layout da tabela e gerar o icone para o nro 5
-			
 			this.impressaoSurdoFlexTable.setHTML(i+1, 0, html.toString());
 			this.impressaoSurdoFlexTable.setBorderWidth(quantidadeMapa == 1 ? 0 : 1);
 			this.impressaoSurdoFlexTable.setCellSpacing(0);

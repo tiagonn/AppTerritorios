@@ -178,4 +178,27 @@ public class CadastroDAO extends DAOBase {
 		
 		return retorno;
 	}
+	
+	public List<Surdo> obterSurdosNaoVisitar(Long regiaoId) {
+		List<Surdo> retorno = new ArrayList<Surdo>();
+		Objectify ofy = ObjectifyService.begin();
+		
+		Query<Surdo> mudouSe = ofy.query(Surdo.class);		
+		mudouSe.filter("mudouSe", Boolean.TRUE);
+		if (regiaoId != null) {
+			mudouSe.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+		}
+		retorno.addAll(mudouSe.list());
+		
+		Query<Surdo> visitarSomentePorAnciaos = ofy.query(Surdo.class);
+		visitarSomentePorAnciaos.filter("visitarSomentePorAnciaos", Boolean.TRUE);
+		if (regiaoId != null) {
+			visitarSomentePorAnciaos.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+		}
+		retorno.addAll(visitarSomentePorAnciaos.list());
+		
+		
+		
+		return retorno;
+	}
 }

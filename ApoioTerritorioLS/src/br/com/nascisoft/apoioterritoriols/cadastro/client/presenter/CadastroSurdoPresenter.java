@@ -51,14 +51,8 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	@Override
 	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
 		super.onPesquisaCidadeListBoxChange(cidadeId);
-		populaBairros(cidadeId);
 	}
 	
-	@Override
-	void tratarCidadePopulada() {
-		this.onManterCidadeListBoxChange(this.cidades.get(0).getId());
-		this.populaBairros(this.cidades.get(0).getId());
-	}
 	
 	@Override
 	public void onManterCidadeListBoxChange(final Long cidadeId) {
@@ -295,7 +289,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	}
 	
 	private HasLatLng roundLatLng(HasLatLng latlng) {
-		return new LatLng(Math.floor(latlng.getLatitude()*10000)/10000, Math.floor(latlng.getLongitude()*10000)/10000);
+		return new LatLng(Math.floor(latlng.getLatitude()*1000)/1000, Math.floor(latlng.getLongitude()*1000)/1000);
 	}
 
 	@Override

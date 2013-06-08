@@ -268,7 +268,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 							if (naoEncontrouEndereco) {
 								retorno = roundLatLng(new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio()));
 							}
-							view.setPosition(retorno, !naoEncontrouEndereco, true);
+							view.setPosition(result.getGeometry().getLocation(), !naoEncontrouEndereco, true);
 						} else {
 							view.setPosition(centro, false, true);
 						}				

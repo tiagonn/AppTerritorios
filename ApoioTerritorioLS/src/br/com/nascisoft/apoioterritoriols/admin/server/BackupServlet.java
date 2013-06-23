@@ -138,7 +138,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 
 	        try {
 				Message msg = new MimeMessage(session);
-				msg.setFrom(new InternetAddress("tiagonn@gmail.com", "Tiago Nascimento"));
+				msg.setFrom(new InternetAddress("apoioterritoriols.email@gmail.com", "Apoio Territorio LS"));
 				msg.addRecipient(Message.RecipientType.TO,
 				                 new InternetAddress(destinatarios));
 				msg.setSubject("Backup de mapas e surdos do ApoioTerritorioLS");

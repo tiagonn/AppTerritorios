@@ -266,9 +266,11 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 								// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
 							boolean naoEncontrouEndereco = retorno.equals(centro);
 							if (naoEncontrouEndereco) {
-								retorno = roundLatLng(new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio()));
+								retorno = new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio());
+							} else {
+								retorno = result.getGeometry().getLocation();
 							}
-							view.setPosition(result.getGeometry().getLocation(), !naoEncontrouEndereco, true);
+							view.setPosition(retorno, !naoEncontrouEndereco, true);
 						} else {
 							view.setPosition(centro, false, true);
 						}				

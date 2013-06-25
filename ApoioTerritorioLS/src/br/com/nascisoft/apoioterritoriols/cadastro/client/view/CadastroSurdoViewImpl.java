@@ -105,6 +105,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField CheckBox pesquisaEstaAssociadoMapaCheckBox;
 	@UiField CheckBox manterMudouSe;
 	@UiField CheckBox manterVisitarSomentePorAnciaos;
+	@UiField CheckBox manterMapaSateliteCheckBox;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -621,6 +622,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMSNTextBox.setText("");
 		this.manterMudouSe.setValue(Boolean.FALSE);
 		this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
+		this.manterMapaSateliteCheckBox.setValue(false);
 	}
 	
 	private Surdo populaSurdo() {

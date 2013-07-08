@@ -288,6 +288,38 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
+			<g:header>Relatórios</g:header>
+			<g:ScrollPanel>
+				<g:VerticalPanel>
+					<g:HTML wordWrap="true"><br /></g:HTML>
+					<g:Grid>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Tipo de relatório: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="adminRelatorioTipoRelatorioListBox"></g:ListBox>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+							</g:customCell>
+						</g:row>
+					</g:Grid>	
+					<g:VerticalPanel ui:field="adminRelatorioVerticalPanel"></g:VerticalPanel>
+					<g:PopupPanel 
+						ui:field="adminRelatorioDetalhesPopupPanel" 
+						visible="false" 
+						autoHideEnabled="true" 
+						animationEnabled="true" 
+						glassEnabled="true">
+							<g:HTML ui:field="adminRelatorioDetalhesHTML" wordWrap="true"></g:HTML>
+					</g:PopupPanel>
+				</g:VerticalPanel>
+			</g:ScrollPanel>
+		</g:tab>
+		<g:tab>
 			<g:header>Cadastro</g:header>
 			<g:HTML wordWrap="true"> <br/></g:HTML>
 		</g:tab>

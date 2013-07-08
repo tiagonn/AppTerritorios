@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
@@ -38,5 +39,7 @@ public interface AdminService extends RemoteService {
 	List<BairroVO> buscarBairros();
 	
 	void apagarBairro(Long id);
+	
+	RelatorioVO obterDadosRelatorio();
 
 }

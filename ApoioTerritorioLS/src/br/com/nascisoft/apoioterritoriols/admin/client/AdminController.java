@@ -11,6 +11,8 @@ import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirCidadeEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirCidadeEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRegiaoEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRegiaoEventHandler;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRelatorioEvent;
+import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirRelatorioEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEvent;
 import br.com.nascisoft.apoioterritoriols.admin.client.event.AbrirUsuarioEventHandler;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminBackupPresenter;
@@ -18,11 +20,13 @@ import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminBairroPres
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminCidadePresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminRegiaoPresenter;
+import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminRelatorioPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.presenter.AdminUsuarioPresenter;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBackupViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBairroViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminCidadeViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRegiaoViewImpl;
+import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRelatorioViewImpl;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminUsuarioViewImpl;
 
 import com.google.gwt.core.client.GWT;
@@ -57,6 +61,8 @@ public class AdminController implements AdminPresenter,
 			} else if (event.getSelectedItem() == 4) {
 				eventBus.fireEvent(new AbrirBairroEvent());
 			} else if (event.getSelectedItem() == 5) {
+				eventBus.fireEvent(new AbrirRelatorioEvent());
+			} else if (event.getSelectedItem() == 6) {
 				Window.open("/Cadastro.html", "_self", "");
 			}
 		}
@@ -71,6 +77,8 @@ public class AdminController implements AdminPresenter,
 	private AdminRegiaoViewImpl adminRegiaoViewImpl;
 	private AdminBairroPresenter adminBairroPresenter;
 	private AdminBairroViewImpl adminBairroViewImpl;
+	private AdminRelatorioPresenter adminRelatorioPresenter;
+	private AdminRelatorioViewImpl adminRelatorioViewImpl;
 
 	private static final Logger logger = Logger
 			.getLogger(AdminController.class.getName());
@@ -121,13 +129,22 @@ public class AdminController implements AdminPresenter,
 						History.newItem("regiao");
 					}
 				});
-	
+		
 		eventBus.addHandler(AbrirBairroEvent.TYPE, 
 				new AbrirBairroEventHandler() {
 					
 					@Override
 					public void onAbrirBairro(AbrirBairroEvent event) {
 						History.newItem("bairro");
+					}
+				});
+	
+		eventBus.addHandler(AbrirRelatorioEvent.TYPE, 
+				new AbrirRelatorioEventHandler() {
+					
+					@Override
+					public void onAbrirRelatorio(AbrirRelatorioEvent event) {
+						History.newItem("relatorio");
 					}
 				});
 		}
@@ -215,7 +232,7 @@ public class AdminController implements AdminPresenter,
 								adminRegiaoPresenter.initView();
 							}
 							adminRegiaoPresenter.go(container);
-
+							
 							// aba REGIÕES
 						} else if (currentToken.startsWith("bairro")) {
 							if (adminBairroViewImpl == null) {
@@ -231,6 +248,22 @@ public class AdminController implements AdminPresenter,
 								adminBairroPresenter.initView();
 							}
 							adminBairroPresenter.go(container);
+
+							// aba RELATÓRIOS
+						} else if (currentToken.startsWith("relatorio")) {
+							if (adminRelatorioViewImpl == null) {
+								adminRelatorioViewImpl = new AdminRelatorioViewImpl();
+							}
+							if (adminRelatorioPresenter == null) {
+								adminRelatorioPresenter = new AdminRelatorioPresenter(service, eventBus, adminRelatorioViewImpl);
+								adminRelatorioPresenter.setTabSelectionEventHandler(selectionHandler);
+							}
+							adminRelatorioPresenter.selectThisTab();
+							
+							if ("relatorio".equals(currentToken)) {
+								adminRelatorioPresenter.initView();
+							}
+							adminRelatorioPresenter.go(container);
 						}
 					} catch (Exception ex) {
 						logger.log(Level.SEVERE, "Falha ao responder a requisição.\n", ex);

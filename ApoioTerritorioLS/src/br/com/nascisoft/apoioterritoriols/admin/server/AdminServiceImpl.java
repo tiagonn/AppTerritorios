@@ -14,6 +14,7 @@ import br.com.nascisoft.apoioterritoriols.admin.client.AdminService;
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -189,6 +190,29 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public void apagarBairro(Long id) {
 		logger.info("Apagando bairro " + id);
 		getDao().apagarBairro(id);
+	}
+
+	@Override
+	public RelatorioVO obterDadosRelatorio() {
+		List<Surdo> surdos = this.getDao().obterSurdosAtivos();
+		
+		Set<Key<Regiao>> chavesRegiao = new HashSet<Key<Regiao>>();
+		Set<Key<Cidade>> chavesCidade = new HashSet<Key<Cidade>>();
+		
+		RelatorioVO retorno = new RelatorioVO();
+		
+		for (Surdo surdo : surdos) {
+			retorno.adiciona(surdo);
+			chavesRegiao.add(surdo.getRegiao());
+			chavesCidade.add(surdo.getCidade());
+		}
+		
+		Map<Key<Regiao>, Regiao> mapasRegiao = this.getDao().obterRegioes(chavesRegiao);
+		Map<Key<Cidade>, Cidade> mapasCidade = this.getDao().obterCidades(chavesCidade);
+		
+		retorno.acertaReferencias(mapasCidade, mapasRegiao);
+
+		return retorno;
 	}
 
 }

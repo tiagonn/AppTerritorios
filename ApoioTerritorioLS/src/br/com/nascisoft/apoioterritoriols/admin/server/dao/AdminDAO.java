@@ -27,6 +27,13 @@ public class AdminDAO extends DAOBase {
 		return mapas.list();
 	}
 	
+	public List<Surdo> obterSurdosAtivos() {
+		Objectify ofy = ObjectifyService.begin();
+		Query<Surdo> surdos = ofy.query(Surdo.class);
+		surdos.filter("estaAssociadoMapa", true);
+		return surdos.list();
+	}
+	
 	public List<Surdo> obterSurdos() {
 		Objectify ofy = ObjectifyService.begin();
 		Query<Surdo> surdos = ofy.query(Surdo.class);

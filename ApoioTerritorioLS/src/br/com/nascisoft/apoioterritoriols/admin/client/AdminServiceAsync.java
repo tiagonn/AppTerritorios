@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
+import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
@@ -40,5 +41,7 @@ public interface AdminServiceAsync {
 	void buscarBairros(AsyncCallback<List<BairroVO>> callback);
 
 	void apagarBairro(Long id, AsyncCallback<Void> callback);
+
+	void obterDadosRelatorio(AsyncCallback<RelatorioVO> callback);
 	
 }

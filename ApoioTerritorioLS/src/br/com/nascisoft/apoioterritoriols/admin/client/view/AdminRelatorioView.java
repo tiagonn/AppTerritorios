@@ -9,6 +9,7 @@ public interface AdminRelatorioView extends AdminView {
 	
 	public interface Presenter extends AdminView.Presenter {
 		void buscarDadosRelatorio();
+		void dispararExport(String destinatario);
 	}
 	
 	void setPresenter(Presenter presenter);

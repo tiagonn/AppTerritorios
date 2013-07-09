@@ -215,4 +215,13 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		return retorno;
 	}
 
+	@Override
+	public void dispararExport(String destinatario) {
+		logger.log(Level.INFO, "Disparando queue de export");
+		Queue queue = QueueFactory.getDefaultQueue();
+        UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		queue.add(withUrl("/tasks/export").param("destinatario", destinatario).param("remetente", user.getEmail()));	
+	}
+
 }

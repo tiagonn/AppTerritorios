@@ -79,6 +79,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>ExportServlet</servlet-name>
+		<servlet-class>br.com.nascisoft.apoioterritoriols.admin.server.ExportServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ExportServlet</servlet-name>
+		<url-pattern>/tasks/export</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>RestauracaoServlet</servlet-name>
 		<servlet-class>br.com.nascisoft.apoioterritoriols.admin.server.RestauracaoServlet</servlet-class>
 	</servlet>

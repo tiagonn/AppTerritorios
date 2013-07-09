@@ -43,5 +43,7 @@ public interface AdminServiceAsync {
 	void apagarBairro(Long id, AsyncCallback<Void> callback);
 
 	void obterDadosRelatorio(AsyncCallback<RelatorioVO> callback);
+
+	void dispararExport(String destinatario, AsyncCallback<Void> callback);
 	
 }

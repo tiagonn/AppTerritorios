@@ -41,5 +41,7 @@ public interface AdminService extends RemoteService {
 	void apagarBairro(Long id);
 	
 	RelatorioVO obterDadosRelatorio();
+	
+	void dispararExport(String destinatario);
 
 }

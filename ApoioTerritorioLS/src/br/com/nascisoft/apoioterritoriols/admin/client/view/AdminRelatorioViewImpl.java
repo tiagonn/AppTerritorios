@@ -6,20 +6,25 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
+import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.visualization.client.AbstractDataTable;
@@ -49,6 +54,9 @@ public class AdminRelatorioViewImpl extends Composite implements
 	@UiField ListBox adminRelatorioTipoRelatorioListBox;
 	@UiField PopupPanel adminRelatorioDetalhesPopupPanel;
 	@UiField HTML adminRelatorioDetalhesHTML;
+	@UiField InlineLabel adminRelatorioTotalEnderecoLabel;
+	@UiField TextBox adminRelatorioEmailTextBox;
+	@UiField Button adminRelatorioExportButton;
 	private RelatorioVO relatorio;
 
 	@UiTemplate("AdminViewUiBinder.ui.xml")
@@ -104,9 +112,18 @@ public class AdminRelatorioViewImpl extends Composite implements
 	@Override
 	public void setDados(final RelatorioVO relatorio) {
 		this.relatorio = relatorio;
+		this.adminRelatorioTotalEnderecoLabel.setText(determinaTotalEnderecos()+ " endereços encontrados");
 
 		disparaGrafico(this.adminRelatorioTipoRelatorioListBox.getValue(this.adminRelatorioTipoRelatorioListBox.getSelectedIndex()), 
 				this.relatorio);
+	}
+	
+	private int determinaTotalEnderecos() {
+		int total = 0;
+			for (String regiao : relatorio.keySet()) {
+				total += relatorio.get(regiao).getConsolidado();
+			}
+		return total;
 	}
 	
 	private void disparaGrafico(final String tipo, final RelatorioVO relatorio) {
@@ -143,7 +160,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		titulo.setFontSize(16);
 		titulo.setColor("#454545");
 		options.setTitleTextStyle(titulo);
-		options.setTitle("Distribuição de surdos por região");
+		options.setTitle("Distribuição de endereços/surdos por região");
 		
 		ChartArea chartArea = ChartArea.create();
 		chartArea.setTop(50);
@@ -171,7 +188,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		titulo.setFontSize(16);
 		titulo.setColor("#454545");
 		options.setTitleTextStyle(titulo);
-		options.setTitle("Distribuição de surdos por região");
+		options.setTitle("Distribuição de endereços/surdos por região");
 
 		ChartArea chartArea = ChartArea.create();
 		chartArea.setTop(50);
@@ -215,7 +232,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 	private AbstractDataTable createTable(RelatorioVO relatorio) {
 		DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, "Região");
-		data.addColumn(ColumnType.NUMBER, "Surdos na região");
+		data.addColumn(ColumnType.NUMBER, "Endereços/Surdos na região");
 
 		Set<String> chaves = relatorio.keySet();
 		List<String> chavesOrdenadas = new ArrayList<String>();
@@ -238,6 +255,15 @@ public class AdminRelatorioViewImpl extends Composite implements
 		this.adminRelatorioVerticalPanel.clear();
 		disparaGrafico(this.adminRelatorioTipoRelatorioListBox.getValue(this.adminRelatorioTipoRelatorioListBox.getSelectedIndex()),
 				this.relatorio);
+	}
+	
+	@UiHandler("adminRelatorioExportButton")
+	void onAdminRelatorioExportButtonClick(ClickEvent event) {
+		if (!StringUtils.isEmpty(this.adminRelatorioEmailTextBox.getText())) {
+			this.presenter.dispararExport(this.adminRelatorioEmailTextBox.getText()); 
+		} else {
+			Window.alert("O campo e-mail deve ser preenchido com um e-mail.");
+		}
 	}
 
 }

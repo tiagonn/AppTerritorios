@@ -54,6 +54,28 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 		
 	}
 
+	@Override
+	public void dispararExport(String destinatario) {
+		getView().showWaitingPanel();
+		this.service.dispararExport(destinatario, new AsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				getView().hideWaitingPanel();
+				Window.alert("Export disparado com sucesso");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao disparar export.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao disparar export. \n" + caught.getMessage());
+			}
+			
+		});
+		
+	}
+
 	
 
 }

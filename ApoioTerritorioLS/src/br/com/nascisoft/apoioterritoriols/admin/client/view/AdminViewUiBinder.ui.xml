@@ -306,6 +306,35 @@
 								<g:HTML wordWrap="true"><br /></g:HTML>
 							</g:customCell>
 						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Total de endereços: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel ui:field="adminRelatorioTotalEnderecoLabel"></g:InlineLabel>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Email para export: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:TextBox ui:field="adminRelatorioEmailTextBox"></g:TextBox>
+							</g:customCell>
+							<g:customCell>
+								<g:Button ui:field="adminRelatorioExportButton" text="Exportar em CSV"></g:Button>
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:HTML wordWrap="true"><br /></g:HTML>
+							</g:customCell>
+						</g:row>
 					</g:Grid>	
 					<g:VerticalPanel ui:field="adminRelatorioVerticalPanel"></g:VerticalPanel>
 					<g:PopupPanel 

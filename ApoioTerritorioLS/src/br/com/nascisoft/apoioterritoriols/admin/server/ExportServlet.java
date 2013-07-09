@@ -91,13 +91,9 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 			ByteArrayOutputStream zipOut = new ByteArrayOutputStream();
 			ZipOutputStream zip = new ZipOutputStream(zipOut);
 			
-			ZipEntry entryRegiao = new ZipEntry("exportPorRegiao.csv");
+			ZipEntry entryRegiao = new ZipEntry("exportApoioTerritorioLS.csv");
 			zip.putNextEntry(entryRegiao);
 			zip.write(outRegiao.toByteArray());
-			zip.closeEntry();
-			
-			ZipEntry entryBairro = new ZipEntry("exportPorBairro.csv");
-			zip.putNextEntry(entryBairro);
 			zip.write(outBairro.toByteArray());
 			
 			zip.close();

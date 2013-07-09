@@ -54,38 +54,52 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 			chavesOrdenadas.addAll(chaves);
 			Collections.sort(chavesOrdenadas);
 			
-			StringBuffer csv = new StringBuffer("Cidade|Região|Bairro|Quantidade\n");
+			StringBuffer csvRegiao = new StringBuffer("Cidade;Região;Quantidade\n");
+			StringBuffer csvBairro = new StringBuffer("Cidade;Região;Bairro;Quantidade\n");
 			String bairroNaoInformado = "Não informado";
 
 			for (String regiao : chavesOrdenadas) {
-				csv.append(relatorio.get(regiao).getCidade()).append("|").append(regiao).append("||\n");
+				csvRegiao
+					.append(relatorio.get(regiao).getCidade()).append(";")
+					.append(regiao).append(";")
+					.append(relatorio.get(regiao).getConsolidado()).append("\n");
 				Set<String> chavesBairros = relatorio.get(regiao).getMapaBairros().keySet();
 				List<String> chavesBairrosOrdenados = new ArrayList<String>();
 				chavesBairrosOrdenados.addAll(chavesBairros);
 				Collections.sort(chavesBairrosOrdenados);
 				for (String bairro : chavesBairrosOrdenados) {
 					if(!bairroNaoInformado.equals(bairro)) {
-						csv.append(relatorio.get(regiao).getCidade()).append("|")
-							.append(regiao).append("|")
-							.append(bairro).append("|")
+						csvBairro.append(relatorio.get(regiao).getCidade()).append(";")
+							.append(regiao).append(";")
+							.append(bairro).append(";")
 							.append(relatorio.get(regiao).getMapaBairros().get(bairro)).append("\n");
 					}
 				}
 				if (relatorio.get(regiao).getMapaBairros().get(bairroNaoInformado) != null) {
-					csv.append(relatorio.get(regiao).getCidade()).append("|")
-						.append(regiao).append("|")
-						.append(bairroNaoInformado).append("|")
+					csvBairro.append(relatorio.get(regiao).getCidade()).append(";")
+						.append(regiao).append(";")
+						.append(bairroNaoInformado).append(";")
 						.append(relatorio.get(regiao).getMapaBairros().get(bairroNaoInformado)).append("\n");
 				}
 			}
 
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			out.write(csv.toString().getBytes());
+			ByteArrayOutputStream outRegiao = new ByteArrayOutputStream();
+			outRegiao.write(csvRegiao.toString().getBytes("ISO-8859-1"));
+			ByteArrayOutputStream outBairro = new ByteArrayOutputStream();
+			outRegiao.write(csvBairro.toString().getBytes("ISO-8859-1"));
+			
 			ByteArrayOutputStream zipOut = new ByteArrayOutputStream();
 			ZipOutputStream zip = new ZipOutputStream(zipOut);
-			ZipEntry entry = new ZipEntry("export.csv");
-			zip.putNextEntry(entry);
-			zip.write(out.toByteArray());
+			
+			ZipEntry entryRegiao = new ZipEntry("exportPorRegiao.csv");
+			zip.putNextEntry(entryRegiao);
+			zip.write(outRegiao.toByteArray());
+			zip.closeEntry();
+			
+			ZipEntry entryBairro = new ZipEntry("exportPorBairro.csv");
+			zip.putNextEntry(entryBairro);
+			zip.write(outBairro.toByteArray());
+			
 			zip.close();
 			
 			DataSource ds = new ByteArrayDataSource(zipOut.toByteArray(), "aplication/zip");
@@ -98,18 +112,18 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 				msg.setFrom(new InternetAddress(remetente));
 				msg.addRecipient(Message.RecipientType.TO,
 				                 new InternetAddress(destinatarios));
-				msg.setSubject("Export de relatório de endereços/surdos do ApoioTerritorioLS");
-				msg.setText("Segue em anexo o export. Note que por limitação de segurança do google o anexo é um arquivo .zipe. " +
+				msg.setSubject("Export de relatorio de enderecos/surdos do ApoioTerritorioLS");
+				msg.setText("Segue em anexo o export. \n\nNote que por limitação de segurança do google o anexo é um arquivo .zipe. " +
 						"Por favor renomeie o arquivo para .zip e depois abra normalmente.");
 				Multipart mp = new MimeMultipart();						
 				 
 				MimeBodyPart htmlPart = new MimeBodyPart();
-			    htmlPart.setContent("Segue em anexo o export. Note que por limitação de segurança do google o anexo é um arquivo .zipe. " +
+			    htmlPart.setContent("Segue em anexo o export. <br/><br/>Note que por limitação de segurança do google o anexo é um arquivo .zipe. " +
 						"Por favor renomeie o arquivo para .zip e depois abra normalmente.", "text/html");
 			    mp.addBodyPart(htmlPart);
 			    
 				MimeBodyPart attachment = new MimeBodyPart();
-				attachment.setFileName("backup.zipe");
+				attachment.setFileName("exportApoioTerritorioLS.zipe");
 				attachment.setDataHandler(new DataHandler(ds));
 				mp.addBodyPart(attachment);
 				
@@ -117,7 +131,7 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 				
 				Transport.send(msg);
 	        } catch (Exception e) {
-				logger.log(Level.SEVERE, "Erro ao enviar e-mail de backup", e);
+				logger.log(Level.SEVERE, "Erro ao enviar e-mail de export", e);
 				throw new ServletException(e);
 			}
 		}

@@ -161,6 +161,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 								.append("<td width=27px ").append(classe1).append(">Nome:</td>")
 								.append("<td width=386px ").append(classe).append(">")
 									.append(StringUtils.toCamelCase(surdo.getNome()))
+									.append(" (").append(surdo.getMapa().substring(5)).append(")")
 								.append("</td>")
 								.append("<td width=27px ").append(classe1).append(">Tel:</td>")
 								.append("<td width=100px ").append(classe).append(">")

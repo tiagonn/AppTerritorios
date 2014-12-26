@@ -1,19 +1,16 @@
 package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipInputStream;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
@@ -43,12 +40,12 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		.getLogger(BackupServlet.class.getName());
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 			
-		byte[] arquivoBackup = (byte[]) CacheManager.getInstance().getCache("ARQUIVO_UPLOAD").get("BACKUP");
-				
 		try {
+			
+			byte[] arquivoBackup = (byte[]) CacheManager.getInstance().getCache("ARQUIVO_UPLOAD").get("BACKUP");
+			
 			ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(arquivoBackup));
 			zip.getNextEntry();
 			JAXBContext context = JAXBContext.newInstance(BackupType.class);
@@ -104,9 +101,8 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 								mapaRegioes.get(surdo.getIdentificadorRegiao()),
 								mapaMapas.get(surdo.getIdentificadorMapa())));
 			}
-		} catch (JAXBException e) {
-			logger.log(Level.SEVERE, "Erro ao processar arquivo xml", e);
-			throw new RuntimeException("Erro ao processar arquivo xml", e);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Erro ao processar arquivo xml. Exception logada mas não relançada.", e);
 		}
 	}
 	

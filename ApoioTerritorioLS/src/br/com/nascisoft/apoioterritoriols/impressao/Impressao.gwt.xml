@@ -9,6 +9,5 @@
 	<inherits name="com.google.gwt.activity.Activity" />
 	<source path="client"/>
 	<entry-point class="br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoEntryPoint"/>
-	<set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />	
-	<script src="http://maps.google.com/maps/api/js?sensor=true"></script>	
+	<set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />		
 </module>

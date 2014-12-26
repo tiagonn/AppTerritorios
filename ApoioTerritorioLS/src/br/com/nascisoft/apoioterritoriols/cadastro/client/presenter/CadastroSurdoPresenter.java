@@ -10,6 +10,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -22,12 +23,6 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.maps.client.base.HasLatLng;
 import com.google.gwt.maps.client.base.LatLng;
-import com.google.gwt.maps.client.geocoder.Geocoder;
-import com.google.gwt.maps.client.geocoder.GeocoderCallback;
-import com.google.gwt.maps.client.geocoder.GeocoderRequest;
-import com.google.gwt.maps.client.geocoder.HasGeocoder;
-import com.google.gwt.maps.client.geocoder.HasGeocoderRequest;
-import com.google.gwt.maps.client.geocoder.HasGeocoderResult;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -249,34 +244,64 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				
 				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador).append(cidade.getPais());
 				
-				HasGeocoderRequest request = new GeocoderRequest();
-				request.setRegion("BR");
-				request.setLanguage("pt-BR");
-				request.setAddress(sb.toString());
-				
-				HasGeocoder geo = new Geocoder();
-				geo.geocode(request, new GeocoderCallback() {			
+				service.buscarEndereco(sb.toString(), new AsyncCallback<GeocoderResultVO>() {
 					@Override
-					public void callback(List<HasGeocoderResult> responses, String status) {
+					public void onFailure(Throwable caught) {
+						logger.log(Level.SEVERE, "Falha ao buscar endereço.\n", caught);
+						getView().hideWaitingPanel();
+						Window.alert("Falha ao buscar endereço. \n" + caught.getMessage());
+					}
+					
+					public void onSuccess(GeocoderResultVO result) {
 						HasLatLng centro = roundLatLng(new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro()));
-						if (status.equals("OK")) {
-							HasGeocoderResult result = responses.get(0);
-							HasLatLng retorno = roundLatLng(result.getGeometry().getLocation());
-								// em caso de não encontrar o endereço, a api do google maps está retornando o centro da cidade, por conta da 
-								// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
+						if ("OK".equals(result.getStatus())) {
+							HasLatLng retorno = roundLatLng(new LatLng(result.getLat(), result.getLng()));
 							boolean naoEncontrouEndereco = retorno.equals(centro);
 							if (naoEncontrouEndereco) {
 								retorno = new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio());
 							} else {
-								retorno = result.getGeometry().getLocation();
+								retorno = new LatLng(result.getLat(), result.getLng());
 							}
 							view.setPosition(retorno, !naoEncontrouEndereco, true);
 						} else {
 							view.setPosition(centro, false, true);
 						}				
 						getView().hideWaitingPanel();
-					}
+						
+					};
 				});
+				
+				
+						
+
+//				HasGeocoderRequest request = new GeocoderRequest();
+//				request.setRegion("BR");
+//				request.setLanguage("pt-BR");
+//				request.setAddress(sb.toString());
+
+//				HasGeocoder geo = new Geocoder();
+//				geo.geocode(request, new GeocoderCallback() {			
+//					@Override
+//					public void callback(List<HasGeocoderResult> responses, String status) {
+//						HasLatLng centro = roundLatLng(new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro()));
+//						if (status.equals("OK")) {
+//							HasGeocoderResult result = responses.get(0);
+//							HasLatLng retorno = roundLatLng(result.getGeometry().getLocation());
+//								// em caso de não encontrar o endereço, a api do google maps está retornando o centro da cidade, por conta da 
+//								// Query String que foi usada. Neste caso vou tratar como se ele não tivesse encontrado o endereço.
+//							boolean naoEncontrouEndereco = retorno.equals(centro);
+//							if (naoEncontrouEndereco) {
+//								retorno = new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio());
+//							} else {
+//								retorno = result.getGeometry().getLocation();
+//							}
+//							view.setPosition(retorno, !naoEncontrouEndereco, true);
+//						} else {
+//							view.setPosition(centro, false, true);
+//						}				
+//						getView().hideWaitingPanel();
+//					}
+//				});
 				
 			}
 			

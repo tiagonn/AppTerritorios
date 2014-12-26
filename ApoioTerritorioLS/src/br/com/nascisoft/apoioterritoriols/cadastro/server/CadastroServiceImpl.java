@@ -13,6 +13,7 @@ import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroService;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
@@ -24,6 +25,10 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
 import com.googlecode.objectify.Key;
 
 public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implements
@@ -288,5 +293,23 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	@Override
 	public Cidade obterCidade(Long identificadorCidade) {
 		return this.getAdminDao().obterCidade(identificadorCidade);
+	}
+
+	@Override
+	public GeocoderResultVO buscarEndereco(String endereco) {
+		final Geocoder geocoder = new Geocoder();
+		GeocoderRequest geocoderRequest = 
+				new GeocoderRequestBuilder().setAddress(endereco).setLanguage("pt-BR").setRegion("BR").getGeocoderRequest();
+		
+		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+		
+		GeocoderResultVO vo = new GeocoderResultVO();
+		vo.setStatus(geocoderResponse.getStatus().toString());
+		if (!geocoderResponse.getResults().isEmpty()) {
+			vo.setLat(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
+			vo.setLng(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue());
+		}
+		
+		return vo;
 	}
 }

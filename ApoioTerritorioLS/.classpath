@@ -11,8 +11,8 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geocoder-java-0.15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-gae-1.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-1.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt2.7-mapsV3.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (2)"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-visualization.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt2.6-mapsV3.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

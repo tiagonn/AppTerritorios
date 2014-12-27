@@ -255,6 +255,8 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 			this.cidadeUtilizarMesmaLatitudeCheckBox.setValue(true);
 			this.cidadeLatitudeTerritorioTextBox.setEnabled(false);
 			this.cidadeLongitudeTerritorioTextBox.setEnabled(false);
+			this.cidadeLatitudeTerritorioTextBox.setValue("");
+			this.cidadeLongitudeTerritorioTextBox.setValue("");
 		} else {
 			this.cidadeUtilizarMesmaLatitudeCheckBox.setValue(false);
 			this.cidadeLatitudeTerritorioTextBox.setEnabled(true);

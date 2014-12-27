@@ -105,5 +105,6 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiHandler("restauracaoSubmeterButton")
 	void onrestauracaoSubmeterButtonClick(ClickEvent event) {
 		this.restauracaoFormPanel.submit();
+		Window.alert("Restauração submetida com sucesso");
 	}
 }

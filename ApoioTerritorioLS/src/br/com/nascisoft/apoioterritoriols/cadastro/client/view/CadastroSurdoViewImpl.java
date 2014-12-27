@@ -649,7 +649,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMudouSe.setValue(Boolean.FALSE);
 		this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 		this.manterMapaSateliteCheckBox.setValue(false);
-		this.manterQtdePessoasTextBox.setText("");
+		this.manterQtdePessoasTextBox.setText("1");
 	}
 	
 	private Surdo populaSurdo() {
@@ -729,7 +729,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMudouSe.setValue(surdo.isMudouSe());
 		this.manterVisitarSomentePorAnciaos.setValue(surdo.isVisitarSomentePorAnciaos());
 		this.manterCidadeListBox.setSelectedIndex(obterIndice(this.manterCidadeListBox, this.manterCidade));
-		this.manterQtdePessoasTextBox.setValue(surdo.getQtdePessoasEndereco()!=null?surdo.getQtdePessoasEndereco().toString():"");
+		this.manterQtdePessoasTextBox.setValue(surdo.getQtdePessoasEndereco()!=null?surdo.getQtdePessoasEndereco().toString():"1");
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {

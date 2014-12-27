@@ -18,8 +18,9 @@ public class SubRelatorioVO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Map<String, Integer> mapaBairros = new HashMap<String, Integer>();
-	private int consolidado = 0;
+	private Map<String, String> mapaBairros = new HashMap<String, String>();
+	private int consolidadoEnderecos = 0;
+	private int consolidadoPessoas = 0;
 	private String cidade;
 	private Key<Regiao> keyRegiao;
 	private Key<Cidade> keyCidade;
@@ -36,34 +37,40 @@ public class SubRelatorioVO implements Serializable {
 	public void setKeyCidade(Key<Cidade> keyCidade) {
 		this.keyCidade = keyCidade;
 	}
-	public Map<String, Integer> getMapaBairros() {
+	public Map<String, String> getMapaBairros() {
 		return mapaBairros;
 	}
-	public void setBairrosNoMapa(String bairro, Integer quantidade) {
+	public void setBairrosNoMapa(String bairro, String quantidade) {
 		if (mapaBairros == null) {
-			mapaBairros = new HashMap<String, Integer>();
+			mapaBairros = new HashMap<String, String>();
 		}
 		mapaBairros.put(bairro, quantidade);
 	}
 
-	public int getConsolidado() {
-		return consolidado;
+	public int getConsolidadoEnderecos() {
+		return consolidadoEnderecos;
 	}
 	
-	public void setConsolidado(int consolidado) {
-		this.consolidado = consolidado;
+	public void setConsolidadoEnderecos(int consolidado) {
+		this.consolidadoEnderecos = consolidado;
 	}
 	
-	public void adiciona(String bairro) {
+	public void adiciona(String bairro, Byte qtdePessoas) {
 		
-		this.consolidado++;
+		this.consolidadoEnderecos++;
+		this.setConsolidadoPessoas(this.getConsolidadoPessoas()+qtdePessoas);
 
-		Integer quantidadeNoBairro = this.mapaBairros.get(bairro);
+		String quantidadeNoBairro = this.mapaBairros.get(bairro);
 		if (quantidadeNoBairro == null) {
-			quantidadeNoBairro = 0;
+			quantidadeNoBairro = "0/0";
 		}
-		quantidadeNoBairro++;
-		this.mapaBairros.put(bairro, quantidadeNoBairro);
+		String[] quantidades = quantidadeNoBairro.split("/");
+		int quantidadePessoas = Integer.valueOf(quantidades[0]);
+		int quantidadeEnderecos = Integer.valueOf(quantidades[1]);
+		quantidadePessoas += qtdePessoas;
+		quantidadeEnderecos++;
+		
+		this.mapaBairros.put(bairro, quantidadePessoas+"/"+quantidadeEnderecos);
 
 	}
 	
@@ -82,7 +89,9 @@ public class SubRelatorioVO implements Serializable {
 		ret
 			.append("Cidade: <strong>").append(this.cidade).append("</strong><br/>")
 			.append("Região: <strong>").append(nomeRegiao).append("</strong><br/>")
-			.append("Quantidade de surdos: ").append(this.getConsolidado()).append("<br/><br/>").append("Divisão por bairros: <ul>");
+			.append("Quantidade de Pessoas: ").append(this.getConsolidadoPessoas()).append("<br/>")
+			.append("Quantidade de Enderecos: ").append(this.getConsolidadoEnderecos()).append("<br/><br/>")
+			.append("Divisão por bairros (pessoas/enderecos): <ul>");
 		
 		Set<String> chaves = mapaBairros.keySet();
 		List<String> chavesOrdenadas = new ArrayList<String>();
@@ -102,6 +111,12 @@ public class SubRelatorioVO implements Serializable {
 		ret.append("</ul>");
 		
 		return ret.toString();
+	}
+	public int getConsolidadoPessoas() {
+		return consolidadoPessoas;
+	}
+	public void setConsolidadoPessoas(int consolidadoPessoas) {
+		this.consolidadoPessoas = consolidadoPessoas;
 	}
 
 }

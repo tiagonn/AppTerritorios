@@ -54,32 +54,37 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 			chavesOrdenadas.addAll(chaves);
 			Collections.sort(chavesOrdenadas);
 			
-			StringBuffer csvRegiao = new StringBuffer("Cidade;Região;Quantidade\n");
-			StringBuffer csvBairro = new StringBuffer("Cidade;Região;Bairro;Quantidade\n");
+			StringBuffer csvRegiao = new StringBuffer("Cidade;Região;QuantidadePessoas;QuantidadeEnderecos\n");
+			StringBuffer csvBairro = new StringBuffer("Cidade;Região;Bairro;QuantidadePessoas;QuantidadeEnderecos\n");
 			String bairroNaoInformado = "Não informado";
 
 			for (String regiao : chavesOrdenadas) {
 				csvRegiao
 					.append(relatorio.get(regiao).getCidade()).append(";")
 					.append(regiao).append(";")
-					.append(relatorio.get(regiao).getConsolidado()).append("\n");
+					.append(relatorio.get(regiao).getConsolidadoPessoas()).append(";")
+					.append(relatorio.get(regiao).getConsolidadoEnderecos()).append("\n");
 				Set<String> chavesBairros = relatorio.get(regiao).getMapaBairros().keySet();
 				List<String> chavesBairrosOrdenados = new ArrayList<String>();
 				chavesBairrosOrdenados.addAll(chavesBairros);
 				Collections.sort(chavesBairrosOrdenados);
 				for (String bairro : chavesBairrosOrdenados) {
 					if(!bairroNaoInformado.equals(bairro)) {
+						String[] quantidades = relatorio.get(regiao).getMapaBairros().get(bairro).split("/");
 						csvBairro.append(relatorio.get(regiao).getCidade()).append(";")
 							.append(regiao).append(";")
 							.append(bairro).append(";")
-							.append(relatorio.get(regiao).getMapaBairros().get(bairro)).append("\n");
+							.append(quantidades[0]).append(";")
+							.append(quantidades[1]).append("\n");
 					}
 				}
 				if (relatorio.get(regiao).getMapaBairros().get(bairroNaoInformado) != null) {
+					String[] quantidades = relatorio.get(regiao).getMapaBairros().get(bairroNaoInformado).split("/");
 					csvBairro.append(relatorio.get(regiao).getCidade()).append(";")
 						.append(regiao).append(";")
 						.append(bairroNaoInformado).append(";")
-						.append(relatorio.get(regiao).getMapaBairros().get(bairroNaoInformado)).append("\n");
+						.append(quantidades[0]).append(";")
+						.append(quantidades[1]).append("\n");
 				}
 			}
 

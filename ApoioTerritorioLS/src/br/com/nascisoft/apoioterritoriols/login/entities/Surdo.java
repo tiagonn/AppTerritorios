@@ -255,6 +255,9 @@ public class Surdo implements Serializable {
 		this.cidadeId = cidadeId;
 	}
 	public Byte getQtdePessoasEndereco() {
+		if (this.qtdePessoasEndereco==null||this.qtdePessoasEndereco.equals(0)) {
+			this.setQtdePessoasEndereco(null);
+		}
 		return qtdePessoasEndereco;
 	}
 	public void setQtdePessoasEndereco(Byte qtdePessoasEndereco) {
@@ -270,7 +273,9 @@ public class Surdo implements Serializable {
 			case "Casal":
 				this.qtdePessoasEndereco = 2;
 				break;
-	
+			default:
+				this.qtdePessoasEndereco = 1;
+				break;	
 			}
 		}
 	}

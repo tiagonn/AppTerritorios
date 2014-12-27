@@ -112,20 +112,22 @@ public class AdminRelatorioViewImpl extends Composite implements
 	@Override
 	public void setDados(final RelatorioVO relatorio) {
 		this.relatorio = relatorio;
-		this.adminRelatorioTotalEnderecoLabel.setText(determinaTotalEnderecos()+ " endereços encontrados");
+		this.adminRelatorioTotalEnderecoLabel.setText(determinaTotal()+ " pessoas/endereços encontrados");
 
 		disparaGrafico(this.adminRelatorioTipoRelatorioListBox.getValue(this.adminRelatorioTipoRelatorioListBox.getSelectedIndex()), 
 				this.relatorio);
 	}
 	
-	private int determinaTotalEnderecos() {
-		int total = 0;
+	private String determinaTotal() {
+		int totalEnderecos = 0;
+		int totalPessoas = 0;
 			for (String regiao : relatorio.keySet()) {
-				total += relatorio.get(regiao).getConsolidado();
+				totalPessoas += relatorio.get(regiao).getConsolidadoPessoas();
+				totalEnderecos += relatorio.get(regiao).getConsolidadoEnderecos();
 			}
-		return total;
+		return totalPessoas+"/"+totalEnderecos;
 	}
-	
+		
 	private void disparaGrafico(final String tipo, final RelatorioVO relatorio) {
 		Runnable onLoadCallback = new Runnable() {
 			public void run() {
@@ -160,7 +162,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		titulo.setFontSize(16);
 		titulo.setColor("#454545");
 		options.setTitleTextStyle(titulo);
-		options.setTitle("Distribuição de endereços/surdos por região");
+		options.setTitle("Distribuição de pessoas/endereços por região");
 		
 		ChartArea chartArea = ChartArea.create();
 		chartArea.setTop(50);
@@ -188,7 +190,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		titulo.setFontSize(16);
 		titulo.setColor("#454545");
 		options.setTitleTextStyle(titulo);
-		options.setTitle("Distribuição de endereços/surdos por região");
+		options.setTitle("Distribuição de pessoas/endereços por região");
 
 		ChartArea chartArea = ChartArea.create();
 		chartArea.setTop(50);
@@ -232,7 +234,8 @@ public class AdminRelatorioViewImpl extends Composite implements
 	private AbstractDataTable createTable(RelatorioVO relatorio) {
 		DataTable data = DataTable.create();
 		data.addColumn(ColumnType.STRING, "Região");
-		data.addColumn(ColumnType.NUMBER, "Endereços/Surdos na região");
+		data.addColumn(ColumnType.NUMBER, "Pessoas na região");
+		data.addColumn(ColumnType.NUMBER, "Endereços na região");
 
 		Set<String> chaves = relatorio.keySet();
 		List<String> chavesOrdenadas = new ArrayList<String>();
@@ -244,7 +247,8 @@ public class AdminRelatorioViewImpl extends Composite implements
 		for (int i = 0; i < chavesOrdenadas.size(); i++) {
 			String regiao = chavesOrdenadas.get(i);
 			data.setValue(i, 0, regiao);
-			data.setValue(i, 1, relatorio.get(regiao).getConsolidado());
+			data.setValue(i, 1, relatorio.get(regiao).getConsolidadoPessoas());
+			data.setValue(i, 2, relatorio.get(regiao).getConsolidadoEnderecos());
 		}
 
 		return data;

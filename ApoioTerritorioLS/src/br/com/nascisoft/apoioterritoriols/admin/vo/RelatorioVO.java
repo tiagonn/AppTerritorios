@@ -27,7 +27,7 @@ public class RelatorioVO extends HashMap<String, SubRelatorioVO> {
 			bairro = "Não informado";
 		}
 
-		sub.adiciona(bairro);
+		sub.adiciona(bairro, surdo.getQtdePessoasEndereco());
 	}
 	
 	public void acertaReferencias(Map<Key<Cidade>, Cidade> mapaCidades, Map<Key<Regiao>, Regiao> mapaRegiao) {

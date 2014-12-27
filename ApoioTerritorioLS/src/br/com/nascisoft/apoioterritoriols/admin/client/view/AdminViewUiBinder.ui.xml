@@ -309,7 +309,7 @@
 						</g:row>
 						<g:row>
 							<g:customCell>
-								<g:InlineLabel text="Total de endereços: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Total de registros: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:InlineLabel ui:field="adminRelatorioTotalEnderecoLabel"></g:InlineLabel>

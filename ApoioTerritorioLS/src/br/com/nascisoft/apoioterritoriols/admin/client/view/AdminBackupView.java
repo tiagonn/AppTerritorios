@@ -6,7 +6,9 @@ public interface AdminBackupView extends AdminView {
 	
 	public interface Presenter extends AdminView.Presenter {
 		void dispararBackup(String destinatarios);
+		void obterUploadAction();
 	}
 	
 	void setPresenter(Presenter presenter);
+	void setAction(String action);
 }

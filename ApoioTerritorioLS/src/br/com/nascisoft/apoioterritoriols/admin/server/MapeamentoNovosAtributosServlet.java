@@ -63,6 +63,7 @@ public class MapeamentoNovosAtributosServlet extends
 					.isVisitarSomentePorAnciaos());
 			surdoMapeado.setPossuiMSN(surdo.isPossuiMSN());
 			surdoMapeado.setEstaAssociadoMapa(surdo.getEstaAssociadoMapa());
+			surdoMapeado.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
 
 			dao.adicionarSurdo(surdoMapeado);
 		}

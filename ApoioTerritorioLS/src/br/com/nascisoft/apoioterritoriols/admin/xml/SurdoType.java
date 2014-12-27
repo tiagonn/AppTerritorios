@@ -52,6 +52,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="mudouSe" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="visitarSomentePorAnciaos" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="qtdePessoasEndereco" type="{http://www.w3.org/2001/XMLSchema}byte"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -89,7 +90,8 @@ import javax.xml.bind.annotation.XmlType;
     "latitude",
     "longitude",
     "mudouSe",
-    "visitarSomentePorAnciaos"
+    "visitarSomentePorAnciaos",
+    "qtdePessoasEndereco"
 })
 public class SurdoType {
 
@@ -124,6 +126,7 @@ public class SurdoType {
     protected double longitude;
     protected boolean mudouSe;
     protected boolean visitarSomentePorAnciaos;
+    protected Byte qtdePessoasEndereco;
 
     /**
      * Gets the value of the id property.
@@ -724,5 +727,13 @@ public class SurdoType {
     public void setVisitarSomentePorAnciaos(boolean value) {
         this.visitarSomentePorAnciaos = value;
     }
+
+	public Byte getQtdePessoasEndereco() {
+		return qtdePessoasEndereco;
+	}
+
+	public void setQtdePessoasEndereco(Byte qtdePessoasEndereco) {
+		this.qtdePessoasEndereco = qtdePessoasEndereco;
+	}
 
 }

@@ -40,6 +40,7 @@ public class SurdoVO implements Serializable {
 	private Double longitude;
 	private Long regiaoId;
 	private String nomeCidade;
+	private Byte qtdePessoasEndereco;
 	
 	public static final Comparator<SurdoVO> COMPARATOR_ENDERECO = new Comparator<SurdoVO>() {
 		@Override
@@ -79,6 +80,7 @@ public class SurdoVO implements Serializable {
 		this.setOnibus(surdo.getOnibus());
 		this.setMsn(surdo.getMsn());
 		this.setNomeCidade(cidade.getNome());
+//		this.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
 	}
 	
 	public String getLogradouro() {
@@ -387,6 +389,14 @@ public class SurdoVO implements Serializable {
 
 	public void setNomeCidade(String nomeCidade) {
 		this.nomeCidade = nomeCidade;
+	}
+
+	public Byte getQtdePessoasEndereco() {
+		return qtdePessoasEndereco;
+	}
+
+	public void setQtdePessoasEndereco(Byte qtdePessoasEndereco) {
+		this.qtdePessoasEndereco = qtdePessoasEndereco;
 	}
 
 }

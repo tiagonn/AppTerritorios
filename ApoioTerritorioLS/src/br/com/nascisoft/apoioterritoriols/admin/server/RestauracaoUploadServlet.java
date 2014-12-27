@@ -1,26 +1,23 @@
 package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
-import gwtupload.server.exceptions.UploadActionException;
-import gwtupload.server.gae.AppEngineUploadAction;
 
-import java.util.Collections;
+import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.jsr107cache.Cache;
-import net.sf.jsr107cache.CacheException;
-import net.sf.jsr107cache.CacheManager;
-
-import org.apache.commons.fileupload.FileItem;
-
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 
-public class RestauracaoUploadServlet extends AppEngineUploadAction {
+public class RestauracaoUploadServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -29,25 +26,27 @@ public class RestauracaoUploadServlet extends AppEngineUploadAction {
 	
 	private static final Logger logger = Logger.getLogger(RestauracaoUploadServlet.class.getName());
 	
-	@Override
-	public String executeAction(HttpServletRequest request,
-			List<FileItem> sessionFiles) throws UploadActionException {
+	protected void doPost(HttpServletRequest req, javax.servlet.http.HttpServletResponse resp) throws ServletException, IOException {
 		
-		FileItem file = sessionFiles.get(0);
-		try {
-			Cache cache = CacheManager.getInstance().getCacheFactory().createCache(Collections.EMPTY_MAP);
-			CacheManager.getInstance().registerCache("ARQUIVO_UPLOAD", cache);
-			cache.put("BACKUP", file.get());
-		} catch (CacheException e) {
-			logger.log(Level.SEVERE, "Erro ao adicionar cache", e);
-			throw new RuntimeException("Erro ao adicionar cache", e);
-		} 
-		Queue queue = QueueFactory.getDefaultQueue();
-		queue.add(withUrl("/tasks/restauracao"));
-		
-//		removeSessionFileItems(request);
-		
-		return super.executeAction(request, sessionFiles);
+		 BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+		 
+		 Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
+		  List<BlobKey> blobKeys = blobs.get("restauracaoFileUpload");
+		 
+		 if (blobKeys == null || blobKeys.size()==0) {
+			 logger.severe("Chave blob não encontrada");
+		 } else {
+			 
+			 logger.info("Chave do blob obtida: " + blobKeys.get(0).toString());
+			 Queue queue = QueueFactory.getDefaultQueue();
+			 queue.add(
+					withUrl("/tasks/restauracao").
+						param("key", blobKeys.get(0).getKeyString()).
+						param("end", String.valueOf(blobstoreService.getBlobInfos(req).get("restauracaoFileUpload").get(0).getSize())));
+			
+		 }
+
+		super.doPost(req, resp);
 	}
 
 }

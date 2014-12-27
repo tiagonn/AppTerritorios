@@ -76,7 +76,13 @@
 								</g:customCell>
 								<g:customCell>
 									<g:ListBox ui:field="manterCidadeListBox"/>
-								</g:customCell>							
+								</g:customCell>					
+								<g:customCell>
+									<g:Label text="Regiao:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:ListBox ui:field="manterRegiaoListBox"/>
+								</g:customCell>
 							</g:row>
 							<g:row>
 								<g:customCell>
@@ -108,72 +114,72 @@
 							</g:row>
 							<g:row>
 								<g:customCell>
-									<g:Label text="Regiao:"/>
-								</g:customCell>
-								<g:customCell>
-									<g:ListBox ui:field="manterRegiaoListBox"/>
-								</g:customCell>
-								<g:customCell>
 									<g:Label text="Bairro:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:SuggestBox ui:field="manterBairroSuggestBox"></g:SuggestBox>
 								</g:customCell>
-							</g:row>
-							<g:row>
 								<g:customCell>
 									<g:Label text="CEP:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:TextBox ui:field="manterCEPTextBox" visibleLength="20"/>
 								</g:customCell>
+							</g:row>
+							<g:row>
 								<g:customCell>
 									<g:Label text="Telefone:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20"/>
 								</g:customCell>
-							</g:row>
-							<g:row>
 								<g:customCell>
 									<g:Label text="Libras:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:ListBox ui:field="manterLibrasListBox"/>
 								</g:customCell>
+							</g:row>
+							<g:row>
 								<g:customCell>
 									<g:Label text="DVD:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:ListBox ui:field="manterDVDListBox"/>
 								</g:customCell>
-							</g:row>
-							<g:row>
 								<g:customCell>
 									<g:Label text="Publicações:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:TextBox ui:field="manterPublicacoesTextBox" visibleLength="20"/>
 								</g:customCell>
+							</g:row>
+							<g:row>
 								<g:customCell>
 									<g:Label text="Instrutor:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:TextBox ui:field="manterInstrutorTextBox" visibleLength="20"/>
 								</g:customCell>
-							</g:row>
-							<g:row>
 								<g:customCell>
 									<g:Label text="Ano nasc.:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:IntegerBox ui:field="manterAnoNascimentoIntegerBox" visibleLength="20"/>
 								</g:customCell>
+							</g:row>
+							<g:row>
 								<g:customCell>
 									<g:Label text="Tipo:"/>
 								</g:customCell>
 								<g:customCell>
 									<g:ListBox ui:field="manterSexoListBox"/>
+								</g:customCell>
+								<g:customCell>
+									<g:Label text="Qtde pessoas:"/>
+								</g:customCell>
+								<g:customCell>
+									<g:TextBox ui:field="manterQtdePessoasTextBox" visibleLength="4"/>
 								</g:customCell>
 							</g:row>
 							<g:row>

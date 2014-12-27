@@ -48,6 +48,7 @@ public class Surdo implements Serializable {
 	@NotSaved private Long mapaAnterior;
 	@NotSaved private Long regiaoId;
 	@NotSaved private Long cidadeId;
+	private Byte qtdePessoasEndereco;
 	
 	public Long getId() {
 		return id;
@@ -252,6 +253,26 @@ public class Surdo implements Serializable {
 	}
 	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
+	}
+	public Byte getQtdePessoasEndereco() {
+		return qtdePessoasEndereco;
+	}
+	public void setQtdePessoasEndereco(Byte qtdePessoasEndereco) {
+		this.qtdePessoasEndereco = qtdePessoasEndereco;		
+		if (this.qtdePessoasEndereco == null) {
+			switch (this.sexo) {
+			case "Homem":
+				this.qtdePessoasEndereco = 1;
+				break;
+			case "Mulher":
+				this.qtdePessoasEndereco = 1;
+				break;
+			case "Casal":
+				this.qtdePessoasEndereco = 2;
+				break;
+	
+			}
+		}
 	}
 	
 }

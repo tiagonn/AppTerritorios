@@ -51,5 +51,23 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 			}
 		});
 	}
+	
+	public void obterUploadAction() {
+		this.getView().showWaitingPanel();
+		this.service.obterUploadAction(new AsyncCallback<String>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao recuperar a action de upload.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao recuperar a action de upload. \n" + caught.getMessage());
+			}
+			
+			@Override
+			public void onSuccess(String result) {
+				getView().setAction(result);	
+				getView().hideWaitingPanel();
+			}
+		});
+	}
 
 }

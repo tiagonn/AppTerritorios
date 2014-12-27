@@ -260,6 +260,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		xml.setTelefone(surdo.getTelefone());
 		xml.setMudouSe(surdo.isMudouSe());
 		xml.setVisitarSomentePorAnciaos(surdo.isVisitarSomentePorAnciaos());
+		xml.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
 		
 		return xml;		
 	}

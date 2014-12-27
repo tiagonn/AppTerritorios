@@ -6,13 +6,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/objectify-3.0.jar" sourcepath="C:/Java/objectify-3.0"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-io-2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/geocoder-java-0.15.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-gae-1.0.1.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-1.0.1.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (2)"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt2.7-mapsV3.jar"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-visualization.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt2.6-mapsV3.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

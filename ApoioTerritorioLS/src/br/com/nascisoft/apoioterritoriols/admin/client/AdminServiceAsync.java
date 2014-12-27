@@ -45,5 +45,7 @@ public interface AdminServiceAsync {
 	void obterDadosRelatorio(AsyncCallback<RelatorioVO> callback);
 
 	void dispararExport(String destinatario, AsyncCallback<Void> callback);
+
+	void obterUploadAction(AsyncCallback<String> callback);
 	
 }

@@ -106,6 +106,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField CheckBox manterMudouSe;
 	@UiField CheckBox manterVisitarSomentePorAnciaos;
 	@UiField CheckBox manterMapaSateliteCheckBox;
+	@UiField TextBox manterQtdePessoasTextBox;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -321,6 +322,21 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				&& !this.manterRegiao.equals(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
 			Window.alert("Ao alterar a região do surdo ele perderá a associação que tem com o mapa atual.");
+		}
+	}
+	
+	@UiHandler("manterSexoListBox")
+	void onManterSexoListBoxChange(ChangeEvent event) {
+		switch (manterSexoListBox.getValue(manterSexoListBox.getSelectedIndex())) {
+		case "Homem":
+			this.manterQtdePessoasTextBox.setValue("1");
+			break;
+		case "Mulher":
+			this.manterQtdePessoasTextBox.setValue("1");
+			break;
+		case "Casal":
+			this.manterQtdePessoasTextBox.setValue("2");
+			break;
 		}
 	}
 
@@ -562,6 +578,16 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		if (manterRegiaoListBox.getSelectedIndex() == 0) {
 			validacoes.add("Região precisa ser preenchida");
 		}
+		if (manterQtdePessoasTextBox.getValue() == null ||
+				manterQtdePessoasTextBox.getValue().length() == 0) {
+			validacoes.add("Quantidade de pessoas no endereço precisa ser preenchida");
+		} else {
+			try {
+				Byte.valueOf(this.manterQtdePessoasTextBox.getValue());
+			} catch (NumberFormatException ex) {
+				validacoes.add("Quantidade de pessoas no endereço precisa ser um valor numérico");
+			}
+		}
 		
 		return validacoes;
 	} 
@@ -623,6 +649,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMudouSe.setValue(Boolean.FALSE);
 		this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 		this.manterMapaSateliteCheckBox.setValue(false);
+		this.manterQtdePessoasTextBox.setText("");
 	}
 	
 	private Surdo populaSurdo() {
@@ -661,6 +688,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			surdo.setMapaAnterior(this.manterMapa.getId());
 		}
 		surdo.setCidadeId(Long.valueOf(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex())));
+		surdo.setQtdePessoasEndereco(
+				this.manterQtdePessoasTextBox.getValue() != null && this.manterQtdePessoasTextBox.getValue().length()>0 
+				? Byte.valueOf(this.manterQtdePessoasTextBox.getValue())
+						:null);
 		return surdo;
 	}
 	
@@ -698,6 +729,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterMudouSe.setValue(surdo.isMudouSe());
 		this.manterVisitarSomentePorAnciaos.setValue(surdo.isVisitarSomentePorAnciaos());
 		this.manterCidadeListBox.setSelectedIndex(obterIndice(this.manterCidadeListBox, this.manterCidade));
+		this.manterQtdePessoasTextBox.setValue(surdo.getQtdePessoasEndereco()!=null?surdo.getQtdePessoasEndereco().toString():"");
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {

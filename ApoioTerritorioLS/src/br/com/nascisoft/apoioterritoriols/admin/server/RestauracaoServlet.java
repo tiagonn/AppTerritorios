@@ -14,7 +14,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
-import net.sf.jsr107cache.CacheManager;
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.admin.xml.BackupType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.BairroType;
@@ -30,6 +29,9 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.googlecode.objectify.Key;
 
 public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
@@ -43,9 +45,10 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 			
 		try {
-			
-			byte[] arquivoBackup = (byte[]) CacheManager.getInstance().getCache("ARQUIVO_UPLOAD").get("BACKUP");
-			
+			BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+			BlobKey blobKey = new BlobKey(req.getParameter("key"));
+			String end = req.getParameter("end");
+			byte[] arquivoBackup = blobstoreService.fetchData(blobKey, 0, Long.valueOf(end));
 			ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(arquivoBackup));
 			zip.getNextEntry();
 			JAXBContext context = JAXBContext.newInstance(BackupType.class);
@@ -195,6 +198,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setTelefone(surdo.getTelefone());
 		retorno.setMudouSe(surdo.isMudouSe());
 		retorno.setVisitarSomentePorAnciaos(surdo.isVisitarSomentePorAnciaos());
+		retorno.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
 		
 		return retorno;
 	}

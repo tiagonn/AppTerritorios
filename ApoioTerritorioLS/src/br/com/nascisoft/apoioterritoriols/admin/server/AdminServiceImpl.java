@@ -2,6 +2,8 @@ package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,11 +25,14 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLSService;
 
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.utils.SystemProperty;
 import com.googlecode.objectify.Key;
 
 public class AdminServiceImpl extends AbstractApoioTerritorioLSService implements
@@ -223,5 +228,21 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		User user = userService.getCurrentUser();
 		queue.add(withUrl("/tasks/export").param("destinatario", destinatario).param("remetente", user.getEmail()));	
 	}
+
+	@Override
+	public String obterUploadAction() {
+		BlobstoreService blobStoreService = BlobstoreServiceFactory.getBlobstoreService();
+		String url = blobStoreService.createUploadUrl("/restauracao/upload");
+		// change the computer name to standard localhost ip address, if in dev mode
+		if(SystemProperty.environment.value() == SystemProperty.Environment.Value.Development) {
+		    try {
+				url = url.replace(InetAddress.getLocalHost().getHostName(), "127.0.0.1");
+			} catch (UnknownHostException e) {
+				logger.log(Level.SEVERE, e.getMessage(), e);
+			}
+		}
+		return url;
+	}
+	
 
 }

@@ -1,8 +1,5 @@
 package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
-import gwtupload.client.IUploadStatus.Status;
-import gwtupload.client.IUploader;
-import gwtupload.client.SingleUploader;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
@@ -15,7 +12,9 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.SubmitButton;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -29,7 +28,9 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField TabLayoutPanel adminTabLayoutPanel;
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField TextBox destinatario;
-	@UiField SingleUploader arquivoUpload;
+	@UiField FormPanel restauracaoFormPanel;
+	@UiField SubmitButton restauracaoSubmeterButton;
+
 	@UiField Button botaoBackup;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
@@ -57,16 +58,10 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	public void initView() {
 		this.selectThisTab();
 		this.limparFormularios();
-		this.arquivoUpload.addOnFinishUploadHandler(new IUploader.OnFinishUploaderHandler() {			
-			@Override
-			public void onFinish(IUploader uploader) {
-				if (uploader.getStatus().equals(Status.SUCCESS)) {
-					Window.alert("Arquivo enviado com sucesso");
-				} else {
-					Window.alert("Falha ao enviar arquivo");
-				}				
-			}
-		});
+		this.presenter.obterUploadAction();
+		this.restauracaoFormPanel.setMethod(FormPanel.METHOD_POST);
+		this.restauracaoFormPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+		
 	}
 
 	@Override
@@ -100,5 +95,15 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	
 	@UiHandler("usuarioAdicionarButton")
 	void onUsuarioAdicionarButtonClick(ClickEvent event) {
+	}
+
+	@Override
+	public void setAction(String action) {
+		this.restauracaoFormPanel.setAction(action);		
+	}
+	
+	@UiHandler("restauracaoSubmeterButton")
+	void onrestauracaoSubmeterButtonClick(ClickEvent event) {
+		this.restauracaoFormPanel.submit();
 	}
 }

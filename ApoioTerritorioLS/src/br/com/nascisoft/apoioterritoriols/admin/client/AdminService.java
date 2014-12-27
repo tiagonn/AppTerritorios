@@ -43,5 +43,7 @@ public interface AdminService extends RemoteService {
 	RelatorioVO obterDadosRelatorio();
 	
 	void dispararExport(String destinatario);
+	
+	String obterUploadAction();
 
 }

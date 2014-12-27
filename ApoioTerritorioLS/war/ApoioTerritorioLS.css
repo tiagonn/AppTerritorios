@@ -64,6 +64,13 @@ a, a:visited, a:hover {
 	padding: 5px;
 }
 
+.impressao-td {
+	border-bottom: black;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    text-align: center;
+}
+
 .label-instrucoes {
 	width:100%;
 	font-size: small;

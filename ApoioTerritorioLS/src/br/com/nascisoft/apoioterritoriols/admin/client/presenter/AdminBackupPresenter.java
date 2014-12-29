@@ -33,21 +33,21 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 	}
 
 	@Override
-	public void dispararBackup(String destinatario) {
+	public void dispararBackup(String destinatario, final String tipo) {
 		this.getView().showWaitingPanel();
-		this.service.dispararBackup(destinatario, new AsyncCallback<Void>() {
+		this.service.dispararBackup(destinatario, tipo, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				Window.alert("Backup disparado com sucesso");
+				Window.alert("enderecos".equals(tipo)?"Export disparado com sucesso":"Backup disparado com sucesso");
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao disparar o backup.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao disparar o backup/export.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter disparar o backup. \n" + caught.getMessage());
+				Window.alert("Falha ao obter disparar o backup/export. \n" + caught.getMessage());
 			}
 		});
 	}

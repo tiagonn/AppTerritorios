@@ -22,7 +22,10 @@
 								<g:TextBox ui:field="destinatario" visibleLength="25"></g:TextBox>
 							</g:customCell>
 							<g:customCell>
-								<g:Button ui:field="botaoBackup" text="Backup"></g:Button>
+								<g:Button ui:field="botaoBackup" text="Backup completo"></g:Button>
+							</g:customCell>
+							<g:customCell>
+								<g:Button ui:field="botaoExport" text="Export de endereços"></g:Button>
 							</g:customCell>
 						</g:row>
 						<g:row>

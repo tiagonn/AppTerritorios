@@ -32,6 +32,7 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	@UiField SubmitButton restauracaoSubmeterButton;
 
 	@UiField Button botaoBackup;
+	@UiField Button botaoExport;
 	
 	@UiTemplate("AdminViewUiBinder.ui.xml")
 	interface AdminViewUiBinderUiBinder extends
@@ -83,11 +84,20 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 	private void limparFormularios() {
 		this.destinatario.setText("");
 	}
-
+	
 	@UiHandler("botaoBackup")
 	void onBotaoBackupClick(ClickEvent event) {
 		if (!StringUtils.isEmpty(destinatario.getText())) {
-			this.presenter.dispararBackup(destinatario.getText()); 
+			this.presenter.dispararBackup(destinatario.getText(), "completo"); 
+		} else {
+			Window.alert("O campo destinatário deve ser preenchido com um e-mail.");
+		}
+	}
+
+	@UiHandler("botaoExport")
+	void onBotaoExportClick(ClickEvent event) {
+		if (!StringUtils.isEmpty(destinatario.getText())) {
+			this.presenter.dispararBackup(destinatario.getText(), "enderecos"); 
 		} else {
 			Window.alert("O campo destinatário deve ser preenchido com um e-mail.");
 		}

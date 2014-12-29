@@ -80,7 +80,7 @@ public class SurdoVO implements Serializable {
 		this.setOnibus(surdo.getOnibus());
 		this.setMsn(surdo.getMsn());
 		this.setNomeCidade(cidade.getNome());
-//		this.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
+		this.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
 	}
 	
 	public String getLogradouro() {

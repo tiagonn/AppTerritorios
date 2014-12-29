@@ -13,7 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface AdminServiceAsync {
 
-	void dispararBackup(String destinatarios, AsyncCallback<Void> callback);
+	void dispararBackup(String destinatarios, String tipo, AsyncCallback<Void> callback);
 
 	void adicionarOuAtualizarUsuario(String email, Boolean admin,
 			AsyncCallback<Void> callback);

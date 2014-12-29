@@ -60,12 +60,15 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	}
 
 	@Override
-	public void dispararBackup(String destinatarios) {
+	public void dispararBackup(String destinatarios, String tipo) {
 		logger.log(Level.INFO, "Disparando queue de backup");
 		Queue queue = QueueFactory.getDefaultQueue();
         UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
-		queue.add(withUrl("/tasks/backup").param("destinatarios", destinatarios).param("remetente", user.getEmail()));	
+		queue.add(withUrl("/tasks/backup")
+				.param("destinatarios", destinatarios)
+				.param("remetente", user.getEmail())
+				.param("tipo", tipo));	
 	}
 
 	@Override

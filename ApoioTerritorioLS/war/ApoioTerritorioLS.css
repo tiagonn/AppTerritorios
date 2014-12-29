@@ -71,6 +71,33 @@ a, a:visited, a:hover {
     text-align: center;
 }
 
+.impressao-td-borda-inferior-pequena{
+	border-bottom: black;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    text-align: center;
+    font-family: Tahoma;
+	font-size: xx-small;
+}
+
+.impressao-td-borda-inferior{
+	border-bottom: black;
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    text-align: center;
+    font-family: Tahoma;
+	font-size: x-small;
+}
+
+
+.impressao-tr-pequeno {
+	line-height: 14px;
+}
+
+.impressao-tr-grande {
+	line-height: 15px;
+}
+
 .label-instrucoes {
 	width:100%;
 	font-size: small;

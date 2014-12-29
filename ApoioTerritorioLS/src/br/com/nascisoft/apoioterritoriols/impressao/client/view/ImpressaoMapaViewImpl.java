@@ -90,11 +90,15 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		
 		String classe = null;
 		String classe1 = null;
+		String classeTitulo = null;
 		int zoom = 0;
 		String altura = null;
 		String largura = null;
-		String cellspacing = null;
-		String resumo = null;
+		String larguraRelativa1 = null;
+		String larguraRelativa2 = null;
+		String cellspacing1 = null;
+		String cellspacing2 = null;
+		boolean mapaGrande = false;
 		
 		switch (quantidadeMapa) {
 		case 1:
@@ -108,26 +112,35 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		case 4:
 			classe = " class=\"impressao-celula-pequena\"";
 			classe1 = " class=\"impressao-celula-titulo-pequena\"";
+			classeTitulo = " class=\"impressao-td-borda-inferior-pequena\"";
 			zoom = 15;
+			larguraRelativa1 = "\"70%\"";
+			larguraRelativa2 = "\"30%\"";
 			altura = ALTURA_MAPA;
 			largura = LARGURA_MAPA;
-			cellspacing="1px";
-			resumo = "________________________";
+			cellspacing1="\"1px\"";
+			cellspacing2="\"0px\"";
 			break;
 			
 		case 5:
 			classe = " class=\"impressao-celula\"";
 			classe1 = " class=\"impressao-celula-titulo\"";
+			classeTitulo = " class=\"impressao-td-borda-inferior\"";
 			zoom = 15;
+			larguraRelativa1 = "\"60%\"";
+			larguraRelativa2 = "\"40%\"";
 			altura = ALTURA_MAPA_GRANDE;
 			largura = LARGURA_MAPA_GRANDE;
-			cellspacing="5px";
-			resumo = "_________________________________";
+			cellspacing1="\"5px\"";
+			cellspacing2="\"1px\"";
+			mapaGrande = true;
 			break;
 			
 		default:
 			break;
 		}
+		
+		quantidadeMapa = surdos.size();
 	
 		HasMapOptions opt = new MapOptions();
 		opt.setZoom(zoom);
@@ -143,7 +156,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		this.impressaoMapaVerticalPanel.setWidth(largura);
 		
 		Date date = new Date();
-		DateTimeFormat dtf = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm");
+		DateTimeFormat dtf = DateTimeFormat.getFormat("dd/MM/yyyy");
 		
 		for (int i = 0; i < surdos.size(); i++) {
 			
@@ -275,17 +288,77 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 							.append("<td class=\"impressao-td\"></td>")
 							.append("<td class=\"impressao-td\"></td>")
 							.append("<td class=\"impressao-td\"></td>")
-							.append("</tr>")
-						.append("</table>")
+							.append("</tr>");
+				if (mapaGrande) {
+					html.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>")
+						.append("<tr>")
+						.append("<td class=\"impressao-td\">/</td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>");						
+				}
+				
+				html.append("</table>")
 					.append("</td></tr>")
 					.append("</table>");				
 				
 			} else {
 				
-				html.append("<table width=100% cellspacing=3px cellpadding=0 border=0>")
-					.append("<tr>")
-						.append("<td width=70%>")
-							.append("<table width=100% cellspacing=").append(cellspacing).append(" cellpadding=0 border=0>")
+				
+				if (i == 0) {
+					html.append("<table width=100% cellspacing=0px cellpadding=0 border=0>")
+						.append("<tr><td ").append(classeTitulo).append(">")
+						.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
+						.append("</td></tr>");
+				}
+
+				html.append("<table width=100% cellspacing=3px cellpadding=0 border=0>");
+				html.append("<tr>")
+						.append("<td width=").append(larguraRelativa1).append(">")
+							.append("<table width=100% cellspacing=").append(cellspacing1).append(" cellpadding=0 border=0>")
 								.append("<tr>")
 									.append("<td").append(classe).append("><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
 								.append("</tr>")
@@ -297,37 +370,33 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 								.append("</tr>")
 							.append("</table>")
 						.append("</td>")
-						.append("<td width=30%>")
-							.append("<table width=100% cellspacing=0 cellpadding=0 border=0>")
-								.append("<tr>")
+						.append("<td width=").append(larguraRelativa2).append(">")
+							.append("<table width=100% cellspacing=").append(cellspacing2).append(" cellpadding=0 border=0>")
+								.append("<tr class=\"impressao-tr-pequeno\">")
 									.append("<td").append(classe1).append(">Data</td>")
 									.append("<td").append(classe1).append(">Detalhes da conversa</td>")
 								.append("</tr>")
-								.append("<tr>")
-									.append("<td ").append(classe).append(">__/__</td>")
-									.append("<td ").append(classe).append(">").append(resumo).append("</td>")
+								.append("<tr class=\"impressao-tr-pequeno\">")
+									.append("<td class=\"impressao-td\">/</td>")
+									.append("<td class=\"impressao-td\"></td>")
 								.append("</tr>")
-								.append("<tr>")
-									.append("<td").append(classe).append(">__/__</td>")
-									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("<tr class=\"impressao-tr-pequeno\">")
+									.append("<td class=\"impressao-td\">/</td>")
+									.append("<td class=\"impressao-td\"></td>")
 								.append("</tr>")
-								.append("<tr>")
-									.append("<td").append(classe).append(">__/__</td>")
-									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("<tr class=\"impressao-tr-pequeno\">")
+									.append("<td class=\"impressao-td\">/</td>")
+									.append("<td class=\"impressao-td\"></td>")
 								.append("</tr>")
-								.append("<tr>")
-									.append("<td").append(classe).append(">__/__</td>")
-									.append("<td").append(classe).append(">").append(resumo).append("</td>")
-								.append("</tr>")
-								.append("<tr>")
-									.append("<td").append(classe).append(">__/__</td>")
-									.append("<td").append(classe).append(">").append(resumo).append("</td>")
+								.append("<tr class=\"impressao-tr-pequeno\">")
+									.append("<td class=\"impressao-td\">/</td>")
+									.append("<td class=\"impressao-td\"></td>")
 								.append("</tr>");
 				if (quantidadeMapa == 5) {
-							html.append("<tr>")
-									.append("<td").append(classe).append(">__/__</td>")
-									.append("<td").append(classe).append(">").append(resumo).append("</td>")
-								.append("</tr>");
+					html.append("<tr class=\"impressao-tr-pequeno\">")
+							.append("<td class=\"impressao-td\">/</td>")
+							.append("<td class=\"impressao-td\"></td>")
+						.append("</tr>");
 				}
 						html.append("</table>")
 						.append("</td>")

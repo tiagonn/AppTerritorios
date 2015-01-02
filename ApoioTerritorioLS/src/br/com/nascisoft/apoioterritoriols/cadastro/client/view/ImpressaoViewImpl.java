@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -9,11 +10,14 @@ import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
@@ -33,8 +37,7 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField ListBox pesquisaImpressaoRegiaoListBox;
 	@UiField ListBox pesquisaImpressaoMapaListBox;
 	@UiField PopupPanel waitingPopUpPanel;
-	
-	private Long identificadorMapaAtual = null;
+	@UiField Button pesquisaImpressapImprimirButton;
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 
@@ -91,6 +94,8 @@ public class ImpressaoViewImpl extends Composite implements
 		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaImpressaoMapaListBox.setSelectedIndex(0);
 		this.pesquisaImpressaoMapaListBox.setEnabled(false);
+		this.pesquisaImpressaoMapaListBox.setVisibleItemCount(4);
+		this.pesquisaImpressapImprimirButton.setEnabled(false);
 	}
 
 
@@ -105,6 +110,8 @@ public class ImpressaoViewImpl extends Composite implements
 			
 			this.pesquisaImpressaoMapaListBox.clear();
 			this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");	
+			this.pesquisaImpressaoMapaListBox.setVisibleItemCount(4);
+
 		} else {
 			this.presenter.onPesquisaCidadeListBoxChange(cidades.get(0).getId());
 		}
@@ -121,6 +128,7 @@ public class ImpressaoViewImpl extends Composite implements
 
 		this.pesquisaImpressaoMapaListBox.clear();
 		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
+		this.pesquisaImpressaoMapaListBox.setVisibleItemCount(4);
 		
 		for (Regiao regiao : regioes) {
 			this.pesquisaImpressaoRegiaoListBox.addItem(regiao.getLetra() + " - " + regiao.getNome(), regiao.getId().toString());
@@ -131,10 +139,11 @@ public class ImpressaoViewImpl extends Composite implements
 	public void setMapaList(List<Mapa> mapas) {
 		this.pesquisaImpressaoMapaListBox.setEnabled(true);
 		this.pesquisaImpressaoMapaListBox.clear();
-		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
+		this.pesquisaImpressaoMapaListBox.setWidth("155px");
 		for (Mapa mapa : mapas) {
 			this.pesquisaImpressaoMapaListBox.addItem(mapa.getNome(), mapa.getId().toString());
 		}
+		this.pesquisaImpressaoMapaListBox.setVisibleItemCount(mapas.size()>15?15:mapas.size());
 	}
 
 	@Override
@@ -161,29 +170,53 @@ public class ImpressaoViewImpl extends Composite implements
 		
 		this.pesquisaImpressaoMapaListBox.setEnabled(false);
 		this.pesquisaImpressaoMapaListBox.setSelectedIndex(0);
+		this.pesquisaImpressaoMapaListBox.clear();
+		this.pesquisaImpressaoMapaListBox.setVisibleItemCount(4);
+		this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
+		
+		this.pesquisaImpressapImprimirButton.setEnabled(false);
 	}
 
 	@UiHandler("pesquisaImpressaoRegiaoListBox")
 	void onPesquisaImpressaoRegiaoListBox(ChangeEvent event) {
 		if (!this.pesquisaImpressaoRegiaoListBox.getValue(this.pesquisaImpressaoRegiaoListBox.getSelectedIndex()).isEmpty()) {
 			this.pesquisaImpressaoMapaListBox.setEnabled(true);
+			this.pesquisaImpressapImprimirButton.setEnabled(false);
 			this.presenter.onPesquisaRegiaoListBoxChange(
 					Long.valueOf(pesquisaImpressaoRegiaoListBox.getValue(pesquisaImpressaoRegiaoListBox.getSelectedIndex())));
 		} else {
 			this.pesquisaImpressaoMapaListBox.setEnabled(false);
 			this.pesquisaImpressaoMapaListBox.setSelectedIndex(0);
+			this.pesquisaImpressaoMapaListBox.clear();
+			this.pesquisaImpressaoMapaListBox.setVisibleItemCount(4);
+			this.pesquisaImpressaoMapaListBox.addItem("-- Escolha um mapa --", "");
+			this.pesquisaImpressapImprimirButton.setEnabled(false);
 		}
 	}
 	
 	@UiHandler("pesquisaImpressaoMapaListBox")
 	void onPesquisaImpressaoMapaListBox(ChangeEvent event) {
-		if (presenter != null) {
-			String mapa = this.pesquisaImpressaoMapaListBox.getValue(this.pesquisaImpressaoMapaListBox.getSelectedIndex());
-			if (!StringUtils.isEmpty(mapa)) {
-				this.identificadorMapaAtual = Long.valueOf(mapa);
-				this.presenter.abrirImpressao(identificadorMapaAtual, true);
+		this.pesquisaImpressapImprimirButton.setEnabled(true);
+	}
+	
+	@UiHandler("pesquisaImpressapImprimirButton")
+	void onPesquisaImpressapImprimirButtonClick(ClickEvent event) {
+		List<Long> mapaIDs = mapearMapasSelecionados(this.pesquisaImpressaoMapaListBox);
+		if (mapaIDs.size() > 0) {
+			this.presenter.abrirImpressao(mapaIDs, true);
+		} else {
+			Window.alert("Por favor, selecione ao menos um mapa.");
+		}
+	}
+	
+	private List<Long> mapearMapasSelecionados(ListBox box) {
+		List<Long> lista = new ArrayList<Long>();
+		for (int i = 0; i < box.getItemCount(); i++) {
+			if (box.isItemSelected(i)) {
+				lista.add(Long.valueOf(box.getValue(i)));
 			}
 		}
+		return lista;
 	}
 
 }

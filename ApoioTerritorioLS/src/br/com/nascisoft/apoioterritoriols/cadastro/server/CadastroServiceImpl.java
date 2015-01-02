@@ -312,4 +312,14 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		
 		return vo;
 	}
+
+	@Override
+	public Boolean existePessoasNosMapas(List<Long> mapasIDs) {
+		for (Long mapaID : mapasIDs) {
+			if (getDao().obterSurdos(null, null, null, mapaID, true).size() == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.impressao.client.presenter;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,22 +37,18 @@ public class ImpressaoMapaPresenter implements IImpressaoPresenter {
 	}
 
 	@Override
-	public void abrirImpressaoMapa(Long identificadorMapa) {
-		this.service.obterSurdosCompletos(identificadorMapa, new AsyncCallback<AbrirMapaVO>() {
-			
-			@Override
-			public void onSuccess(AbrirMapaVO result) {
+	public void abrirImpressaoMapa(List<Long> mapasIDs) {
+		this.service.obterDadosImpressao(mapasIDs, new AsyncCallback<List<AbrirMapaVO>>() {
+			public void onSuccess(List<AbrirMapaVO> result) {
 				view.abrirImpressaoMapa(result);
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
-			}
+			};
 			
-			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
 				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
-			}
+			};
 		});
-		
 	}
 
 }

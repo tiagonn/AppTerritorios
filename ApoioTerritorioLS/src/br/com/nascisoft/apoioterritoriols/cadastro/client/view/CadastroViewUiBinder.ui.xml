@@ -373,15 +373,20 @@
 							</g:customCell>
 						</g:row>
 						<g:row>
-							<g:customCell>
+							<g:customCell styleName="customCell-alinhado-top">
 								<g:ListBox ui:field="pesquisaImpressaoCidadeListBox" />
 							</g:customCell>
-							<g:customCell>
+							<g:customCell styleName="customCell-alinhado-top">
 								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" enabled="false" />
 							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" />
+							<g:customCell styleName="customCell-alinhado-top">
+							    <g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" multipleSelect="true" />
 							</g:customCell>
+						</g:row>
+						<g:row>
+						    <g:customCell>
+						        <g:Button ui:field="pesquisaImpressapImprimirButton" enabled="false" text="Visualizar Impressão"/>
+						    </g:customCell>
 						</g:row>
 					</g:Grid>
 					<g:HTML styleName="label-instrucoes">

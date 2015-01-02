@@ -71,6 +71,11 @@ a, a:visited, a:hover {
     text-align: center;
 }
 
+.customCell-alinhado-top {
+	vertical-align: top;
+	padding-right: 10px;
+}
+
 .impressao-td-borda-inferior-pequena{
 	border-bottom: black;
     border-bottom-width: thin;

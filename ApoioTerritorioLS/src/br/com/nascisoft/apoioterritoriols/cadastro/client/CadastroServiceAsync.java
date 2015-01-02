@@ -59,4 +59,7 @@ public interface CadastroServiceAsync {
 
 	void buscarEndereco(String endereco, AsyncCallback<GeocoderResultVO> callback);
 
+	void existePessoasNosMapas(List<Long> mapasIDs,
+			AsyncCallback<Boolean> callback);
+
 }

@@ -48,7 +48,15 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 	}
 	
 	@Override
-	public AbrirMapaVO obterSurdosCompletos(Long identificadorMapa) {
+	public List<AbrirMapaVO> obterDadosImpressao(List<Long> mapasIDs) {
+		List<AbrirMapaVO> retorno = new ArrayList<AbrirMapaVO>();
+		for (Long mapaID : mapasIDs) {
+			retorno.add(this.obterSurdosCompletos(mapaID));
+		}
+		return retorno;
+	};
+	
+	private AbrirMapaVO obterSurdosCompletos(Long identificadorMapa) {
 		logger.log(Level.INFO, "Obtendo surdos para impressao");
 		
 		List<Surdo> surdos = this.getDao().obterSurdos(null, null, null, identificadorMapa, null);

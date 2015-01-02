@@ -55,4 +55,6 @@ public interface CadastroService extends RemoteService {
 	
 	GeocoderResultVO buscarEndereco(String endereco);
 	
+	Boolean existePessoasNosMapas(List<Long> mapasIDs);
+	
 }

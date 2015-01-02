@@ -7,7 +7,6 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirImpressaoMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoView;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -44,17 +43,16 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 	}
 
 	@Override
-	public void abrirImpressao(final Long identificadorMapa, final Boolean paisagem) {
+	public void abrirImpressao(final List<Long> mapasIDs, final Boolean paisagem) {
 		getView().showWaitingPanel();
-		this.service.obterSurdosCompletos(null, null, identificadorMapa, new AsyncCallback<List<SurdoVO>>() {
-			
+		this.service.existePessoasNosMapas(mapasIDs, new AsyncCallback<Boolean>() {
 			@Override
-			public void onSuccess(List<SurdoVO> result) {
+			public void onSuccess(Boolean result) {
 				getView().hideWaitingPanel();
-				if (result == null || result.size() == 0) {
-					Window.alert("Não existe surdo associado a este mapa");
-				} else {
-					eventBus.fireEvent(new AbrirImpressaoMapaEvent(identificadorMapa, paisagem));
+				if (result) {
+					eventBus.fireEvent(new AbrirImpressaoMapaEvent(mapasIDs, paisagem));
+				} else {					
+					Window.alert("Não existe surdo associado a algum mapa selecionado. Por favor reveja a seleção e tente novamente.");
 				}
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			}
@@ -66,8 +64,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
 			}
 		});
-		
-		
+				
 	}
 
 }

@@ -1,5 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.impressao.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +53,7 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 				public void onSuccess() {
 					try {
 							// Impressao - pattern de URL: 
-							// imprimir!identificadorMapa=ABC&paisagem=ABC&imprimirCabecalho=ABC&imprimirMapa=ABC
+							// imprimir!identificadorMapa=ABC;DEF;GHI&paisagem=ABC&imprimirCabecalho=ABC&imprimirMapa=ABC
 						if (currentToken.startsWith("imprimir")) {
 							if (view == null) {
 								view = new ImpressaoMapaViewImpl();
@@ -62,13 +64,18 @@ public class ImpressaoController implements ValueChangeHandler<String> {
 							String queryString = currentToken.split("!")[1];
 							String[] parametros = queryString.split("&");
 							
-							Long identificadorMapa = Long.valueOf(parametros[0].split("=")[1]);
+							String[] listaMapasIDs = parametros[0].split("=")[1].split(";");
+							List<Long> mapasIDs = new ArrayList<Long>();
+							for (int i = 0; i<listaMapasIDs.length; i++) {
+								mapasIDs.add(Long.valueOf(listaMapasIDs[i]));
+							}
+							
 							Boolean paisagem = Boolean.valueOf(parametros[1].split("=")[1]);
 							Boolean imprimirCabecalho = Boolean.valueOf(parametros[2].split("=")[1]);
 							Boolean imprimirMapa = Boolean.valueOf(parametros[3].split("=")[1]);
 							
 							presenter.setConfiguracoesImpressao(paisagem, imprimirCabecalho, imprimirMapa);
-							presenter.abrirImpressaoMapa(identificadorMapa);
+							presenter.abrirImpressaoMapa(mapasIDs);
 							
 							presenter.go(container);
 							

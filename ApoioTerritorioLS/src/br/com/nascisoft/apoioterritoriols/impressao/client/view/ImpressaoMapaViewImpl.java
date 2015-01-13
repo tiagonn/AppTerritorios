@@ -10,6 +10,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Float;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -98,7 +99,11 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		impressaoRootPanel.setStyleName("impressao-root");
 		impressaoSimplePanel.add(impressaoRootPanel);
 		impressaoSimplePanel.getElement().getStyle().setPosition(Position.RELATIVE);
+		impressaoSimplePanel.getElement().getStyle().setFloat(Float.NONE);
 		impressaoSimplePanel.getElement().getParentElement().getStyle().setPosition(Position.RELATIVE);
+		impressaoSimplePanel.getElement().getParentElement().getStyle().setFloat(Float.NONE);
+		impressaoSimplePanel.getElement().getParentElement().getParentElement().getStyle().setPosition(Position.RELATIVE);
+		impressaoSimplePanel.getElement().getParentElement().getParentElement().getStyle().setFloat(Float.NONE);
 		
 		for (AbrirMapaVO vo : mapas) {
 			

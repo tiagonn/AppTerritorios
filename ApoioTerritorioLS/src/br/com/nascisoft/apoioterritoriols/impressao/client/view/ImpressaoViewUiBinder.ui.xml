@@ -2,8 +2,6 @@
 <ui:UiBinder
 	xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
-	<g:SimplePanel ui:field="impressaoSimplePanel" styleName="impressao-panel">
-		<g:VerticalPanel ui:field="impressaoVerticalPanel" styleName="impressao-panel-vertical">			
-		</g:VerticalPanel>
+	<g:SimplePanel ui:field="impressaoSimplePanel" stylePrimaryName="impressao-panel">
 	</g:SimplePanel>
 </ui:UiBinder>

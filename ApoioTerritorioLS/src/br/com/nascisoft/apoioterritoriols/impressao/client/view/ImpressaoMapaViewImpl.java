@@ -10,6 +10,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
@@ -31,6 +32,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -48,7 +50,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			UiBinder<Widget, ImpressaoMapaViewImpl> {
 	}
 	
-	@UiField VerticalPanel impressaoVerticalPanel;
+	@UiField SimplePanel impressaoSimplePanel;
 	
 	@SuppressWarnings("unused")
 	private Boolean paisagem;
@@ -92,7 +94,23 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		labelsImpressaoLocalidadeLabel = new HashMap<Long, Label>();
 		labelsImpressaoTerritorioLabel = new HashMap<Long, Label>();
 		
+		FlowPanel impressaoRootPanel = new FlowPanel();
+		impressaoRootPanel.setStyleName("impressao-root");
+		impressaoSimplePanel.add(impressaoRootPanel);
+		impressaoSimplePanel.getElement().getStyle().setPosition(Position.RELATIVE);
+		impressaoSimplePanel.getElement().getParentElement().getStyle().setPosition(Position.RELATIVE);
+		
 		for (AbrirMapaVO vo : mapas) {
+			
+			VerticalPanel impressaoVerticalPanel = new VerticalPanel();
+			impressaoVerticalPanel.setStyleName("impressao-panel-vertical");
+			
+			impressaoRootPanel.add(impressaoVerticalPanel);
+			
+			SimplePanel pageBreaker = new SimplePanel();
+			pageBreaker.setStyleName("footer-break");
+			
+			impressaoRootPanel.add(pageBreaker);
 			
 			final Long idPrimeiraPessoa = vo.getSurdosImprimir().get(0).getId();
 			
@@ -104,6 +122,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			impressaoMapaVerticalPanel.add(titulo);
 			
 			HorizontalPanel subtituloHorizontalPanel = new HorizontalPanel();
+			subtituloHorizontalPanel.setStyleName("impressao-cabecalho-subtitulo");
 			impressaoMapaVerticalPanel.add(subtituloHorizontalPanel);
 			
 			Label localidade = new Label("Localidade: ");
@@ -173,9 +192,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				}
 			});
 			impressaoVerticalPanel.add(imprimirMapaSateliteCheckBox);
-			
-			impressaoVerticalPanel.add(new HTML("<footer style=\"page-break-after: always;\"><hr/><br/><br/></footer>"));
-		
+						
 			List<SurdoVO> surdos = vo.getSurdosImprimir();
 			
 			paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).removeAllRows();
@@ -508,8 +525,6 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			paineisImpressaoMapaSimplePanel.get(idPrimeiraPessoa).setSize(largura, altura);
 			paineisImpressaoMapaSimplePanel.get(idPrimeiraPessoa).add(mapa);
 		}
-		impressaoVerticalPanel.asWidget();
-		impressaoVerticalPanel.setVisible(true);
 	}
 	
 	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa, boolean mapaIndividual) {

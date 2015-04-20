@@ -1427,3 +1427,14 @@ td.datePickerMonth {
   background: white url(images/splitPanelThumb.png) center center no-repeat;
   cursor: row-resize;
 }
+
+.imageCell {
+	width: 40px;
+}
+
+.imageButton {
+	cursor: pointer; cursor: hand;
+	padding: 2px;
+	border: solid thin;
+	border-color: #303030;
+}

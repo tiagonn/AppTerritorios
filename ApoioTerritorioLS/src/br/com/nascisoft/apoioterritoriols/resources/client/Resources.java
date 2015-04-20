@@ -40,9 +40,15 @@ public interface Resources extends ClientBundle {
 	
 	@Source("/images/relatorios.png")
 	ImageResource relatorios();
-
+	
 	@Source("/images/buscar.png")
 	ImageResource buscar();
+	
+	@Source("/images/delete.png")
+	ImageResource apagar();
+
+	@Source("/images/edit.png")
+	ImageResource editar();
 	
 	
 }

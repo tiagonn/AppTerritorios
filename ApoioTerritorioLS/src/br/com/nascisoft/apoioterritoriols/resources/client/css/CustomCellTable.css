@@ -47,6 +47,7 @@
 .cellTableCell {
   padding: 2px 15px;
   overflow: hidden;
+  font-size: small;
 }
 
 .cellTableFirstColumnFooter {

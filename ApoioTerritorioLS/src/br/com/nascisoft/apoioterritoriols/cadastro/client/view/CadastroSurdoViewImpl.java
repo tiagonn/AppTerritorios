@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.nascisoft.apoioterritoriols.cadastro.client.common.ImageButtonCell;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
@@ -14,8 +15,7 @@ import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
 import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
-import com.google.gwt.cell.client.ActionCell;
-import com.google.gwt.cell.client.ActionCell.Delegate;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -136,7 +136,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.bairroOracle = new MultiWordSuggestOracle();
 		this.manterBairroSuggestBox = new SuggestBox(this.bairroOracle);
 		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
-		this.pesquisaResultadoCellTable = new CellTable<SurdoDetailsVO>(30, CellTableCustomResources.INSTANCE);
+		this.pesquisaResultadoCellTable = new CellTable<SurdoDetailsVO>(15, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.iniciarSNListBox(this.manterLibrasListBox);
 		this.iniciarSNListBox(this.manterDVDListBox);
@@ -398,44 +398,53 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			TextColumn<SurdoDetailsVO> mapaColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
-					return object.getMapa();
+					return object.getMapa().substring(5);
+				}
+			};
+			TextColumn<SurdoDetailsVO> enderecoColumn = new TextColumn<SurdoDetailsVO>() {
+				@Override
+				public String getValue(SurdoDetailsVO object) {
+					return object.getEndereco();
 				}
 			};
 			
-			Delegate<Long> delegate = new Delegate<Long>() {
+			Column<SurdoDetailsVO, String> editColumn = new Column<SurdoDetailsVO, String>(
+					new ImageButtonCell()) {
 				@Override
-				public void execute(Long object) {
-					presenter.onEditarButtonClick(object);
+				public String getValue(SurdoDetailsVO object) {
+					return Resources.INSTANCE.editar().getSafeUri().asString();
 				}
 			};
-			ActionCell<Long> actionCell = new ActionCell<Long>("Editar", delegate);
-			Column<SurdoDetailsVO, Long> editColumn = new Column<SurdoDetailsVO, Long>(actionCell) {
+			editColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
 				@Override
-				public Long getValue(SurdoDetailsVO object) {
-					return object.getId();
+				public void update(int index, SurdoDetailsVO object, String value) {
+					presenter.onEditarButtonClick(object.getId());
 				}
-			};
+			});
+			editColumn.setCellStyleNames("imageCell");
 			
-			Delegate<Long> deletarDelegate = new Delegate<Long>() {
+			Column<SurdoDetailsVO, String> deletarColumn = new Column<SurdoDetailsVO, String>(
+					new ImageButtonCell()) {
 				@Override
-				public void execute(Long object) {
+				public String getValue(SurdoDetailsVO object) {
+					return Resources.INSTANCE.apagar().getSafeUri().asString();
+				}
+			};
+			deletarColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
+				@Override
+				public void update(int index, SurdoDetailsVO object, String value) {
 					if (Window.confirm("Deseja realmente apagar este surdo?")) {
-						presenter.onApagar(object);
+						presenter.onApagar(object.getId());
 					}
-				}				
-			};
-			ActionCell<Long> deletarCell = new ActionCell<Long>("Apagar", deletarDelegate);
-			Column<SurdoDetailsVO, Long> deletarColumn = new Column<SurdoDetailsVO, Long>(deletarCell) {
-				@Override
-				public Long getValue(SurdoDetailsVO object) {
-					return object.getId();
 				}
-			};
+			});
+			deletarColumn.setCellStyleNames("imageCell");
 
-			this.pesquisaResultadoCellTable.addColumn(nomeColumn, "Nome");
 			this.pesquisaResultadoCellTable.addColumn(cidadeColumn, "Cidade");
+			this.pesquisaResultadoCellTable.addColumn(nomeColumn, "Nome");
 			this.pesquisaResultadoCellTable.addColumn(regiaoColumn, "Região");
 			this.pesquisaResultadoCellTable.addColumn(mapaColumn, "Mapa");
+			this.pesquisaResultadoCellTable.addColumn(enderecoColumn, "Endereço");
 			this.pesquisaResultadoCellTable.addColumn(editColumn, "");
 			this.pesquisaResultadoCellTable.addColumn(deletarColumn, "");
 			

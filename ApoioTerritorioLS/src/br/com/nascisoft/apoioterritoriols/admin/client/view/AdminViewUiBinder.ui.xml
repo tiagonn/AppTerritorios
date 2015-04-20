@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:with field='res' type='br.com.nascisoft.apoioterritoriols.resources.client.Resources'/>
-	<g:TabLayoutPanel barUnit='EM' barHeight='3.5'
+	<g:TabLayoutPanel barUnit='EM' barHeight='3.4'
 		animationDuration="1" ui:field="adminTabLayoutPanel">
 		<g:tab>
 			<g:header><img src="{res.backup.getSafeUri}" title="Backup/Restauração" alt="Backup/Restauração"/></g:header>

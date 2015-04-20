@@ -4,7 +4,7 @@
 	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 	<ui:with field='res' type='br.com.nascisoft.apoioterritoriols.resources.client.Resources'/>
-	<g:TabLayoutPanel barUnit='EM' barHeight='3.5'
+	<g:TabLayoutPanel barUnit='EM' barHeight='3.4'
 		animationDuration="1" ui:field="cadastroSurdoTabLayoutPanel">
 		<g:tab>
 			<g:header><img src="{res.pessoa.getSafeUri}" title="Pessoas" alt="Pessoas"/></g:header>

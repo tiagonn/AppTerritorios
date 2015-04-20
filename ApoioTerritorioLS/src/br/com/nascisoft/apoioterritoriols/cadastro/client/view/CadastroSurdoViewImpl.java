@@ -11,6 +11,8 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -50,6 +52,7 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -68,8 +71,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField ListBox pesquisaCidadeListBox;
 	@UiField ListBox pesquisaRegiaoListBox;
 	@UiField ListBox pesquisaMapaListBox;
-	@UiField Button pesquisaPesquisarButton;
-	@UiField CellTable<SurdoDetailsVO> pesquisaResultadoCellTable;
+	@UiField PushButton pesquisaPesquisarButton;
+	@UiField(provided=true) CellTable<SurdoDetailsVO> pesquisaResultadoCellTable;
 	@UiField Label pesquisaResultadoLabel;
 	@UiField HTML manterWarningHTML;
 	@UiField VerticalPanel manterSurdoPanel;
@@ -132,6 +135,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	public CadastroSurdoViewImpl() {
 		this.bairroOracle = new MultiWordSuggestOracle();
 		this.manterBairroSuggestBox = new SuggestBox(this.bairroOracle);
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.pesquisaResultadoCellTable = new CellTable<SurdoDetailsVO>(30, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.iniciarSNListBox(this.manterLibrasListBox);
 		this.iniciarSNListBox(this.manterDVDListBox);
@@ -139,6 +144,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.resultadoPesquisa = new ListDataProvider<SurdoDetailsVO>();
 		this.resultadoPesquisa.addDataDisplay(this.pesquisaResultadoCellTable);
 		this.pesquisaResultadoSimplePager.setDisplay(this.pesquisaResultadoCellTable);
+		
 	}
 	
 	public void initView() {
@@ -603,7 +609,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				existeAdmin = false;
 			}
 			if (!existeAdmin) {
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
+				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
+					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
 			}
 		}
 

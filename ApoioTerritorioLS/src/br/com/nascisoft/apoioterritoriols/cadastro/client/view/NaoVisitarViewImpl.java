@@ -7,6 +7,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -78,7 +79,10 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 				existeAdmin = false;
 			}
 			if (!existeAdmin) {
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
+				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
+					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
 			}
 		}
 	}

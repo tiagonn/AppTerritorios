@@ -14,7 +14,7 @@
 
 body, table td, select {
   font-family: Arial Unicode MS, Arial, sans-serif;
-  font-size: small;
+  font-size: medium;
 }
 pre {
   font-family: "courier new", courier;
@@ -25,7 +25,7 @@ body {
   margin: 0px;
   border: 0px;
   padding: 0px;
-  background: #fff;
+  background: #6495ED;
   direction: ltr;
 }
 a, a:visited, a:hover {
@@ -233,7 +233,15 @@ a, a:visited, a:hover {
 }
 
 .surdo-tabela {
-  width: 770px;
+  width: 100%;
+}
+
+.cabecalho {
+	width:100%;
+}
+
+.cabecalho-pesquisa {
+	width: 95%;
 }
 
 .check-alinhado-direita {
@@ -1370,11 +1378,33 @@ td.datePickerMonth {
 }
 
 .gwt-TabLayoutPanel {
-	width: 800px;
+	width: 90%;
 	margin-left: auto;
     margin-right: auto;
+    background: #F5F5F5;
 }
+
 .gwt-TabLayoutPanel .gwt-TabLayoutPanelTabs {
+	background: #6495ED;
+	height: 55px;
+}
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
+  margin-left: 6px;
+  padding: 3px 6px 3px 6px;
+  cursor: pointer;
+  cursor: hand;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  background: #e3e3e3;
+  min-height: 100%;
+}
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
+  cursor: default;
+  background: #bcbcbc;
+}
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTabInner {
+	height: 100%;	
 }
 .gwt-TabLayoutPanelContentContainer {
   border-color: #bcbcbc;
@@ -1388,21 +1418,6 @@ td.datePickerMonth {
   overflow: hidden;
   padding: 6px;
 }
-.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab {
-  margin-left: 6px;
-  padding: 3px 6px 3px 6px;
-  cursor: pointer;
-  cursor: hand;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-  background: #e3e3e3;
-}
-.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab-selected {
-  cursor: default;
-  background: #bcbcbc;
-}
-
 .gwt-SplitLayoutPanel-HDragger {
   background: white url(images/splitPanelThumb.png) center center no-repeat;
   cursor: col-resize;

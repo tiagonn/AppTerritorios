@@ -13,6 +13,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -108,7 +109,10 @@ public class CadastroMapaViewImpl extends Composite implements
 				existeAdmin = false;
 			}
 			if (!existeAdmin) {
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML("<a href=/Admin.html>Admin</a>"));
+				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
+				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
+					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
+				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
 			}
 		}
 	}

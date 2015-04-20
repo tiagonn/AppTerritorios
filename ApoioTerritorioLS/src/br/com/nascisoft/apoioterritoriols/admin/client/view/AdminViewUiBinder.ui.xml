@@ -2,10 +2,11 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
-	<g:TabLayoutPanel barUnit='EM' barHeight='3'
+	<ui:with field='res' type='br.com.nascisoft.apoioterritoriols.resources.client.Resources'/>
+	<g:TabLayoutPanel barUnit='EM' barHeight='3.5'
 		animationDuration="1" ui:field="adminTabLayoutPanel">
 		<g:tab>
-			<g:header>Backup</g:header>
+			<g:header><img src="{res.backup.getSafeUri}" title="Backup/Restauração" alt="Backup/Restauração"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>					
 					<g:Grid>
@@ -70,7 +71,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Usuarios</g:header>
+			<g:header><img src="{res.user.getSafeUri}" title="Usuários" alt="Usuários"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:InlineLabel text="Manter Usuários" styleName="negrito"></g:InlineLabel>
@@ -104,7 +105,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Cidades</g:header>
+			<g:header><img src="{res.cidade.getSafeUri}" title="Cidades" alt="Cidades"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:InlineLabel text="Manter Cidades" styleName="negrito"></g:InlineLabel>
@@ -196,7 +197,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Regiões</g:header>
+			<g:header><img src="{res.regiao.getSafeUri}" title="Regiões" alt="Regiões"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:InlineLabel text="Manter Regiões" styleName="negrito"></g:InlineLabel>
@@ -258,7 +259,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Bairros</g:header>
+			<g:header><img src="{res.bairro.getSafeUri}" title="Bairros" alt="Bairros"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:InlineLabel text="Manter Bairros" styleName="negrito"></g:InlineLabel>
@@ -292,7 +293,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Relatórios</g:header>
+			<g:header><img src="{res.relatorios.getSafeUri}" title="Relatórios" alt="Relatórios"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:HTML wordWrap="true"><br /></g:HTML>
@@ -353,7 +354,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Cadastro</g:header>
+			<g:header><img src="{res.pessoa.getSafeUri}" title="Pessoas" alt="Pessoas"/></g:header>
 			<g:HTML wordWrap="true"> <br/></g:HTML>
 		</g:tab>
 	</g:TabLayoutPanel>

@@ -3,38 +3,41 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
 	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
 	xmlns:c="urn:import:com.google.gwt.user.cellview.client">
-	<g:TabLayoutPanel barUnit='EM' barHeight='3'
+	<ui:with field='res' type='br.com.nascisoft.apoioterritoriols.resources.client.Resources'/>
+	<g:TabLayoutPanel barUnit='EM' barHeight='3.5'
 		animationDuration="1" ui:field="cadastroSurdoTabLayoutPanel">
 		<g:tab>
-			<g:header>Surdos</g:header>
+			<g:header><img src="{res.pessoa.getSafeUri}" title="Pessoas" alt="Pessoas"/></g:header>
 			<g:ScrollPanel>
-				<g:VerticalPanel>
-					<g:Label text="Pesquisar"/>
-					<g:Grid styleName="surdo-tabela">
-						<g:row>
-							<g:customCell>
-								<g:Label text="Cidade:" />
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaCidadeListBox" />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Região:" />
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaRegiaoListBox" />
-							</g:customCell>
-						</g:row>					
+				<g:VerticalPanel styleName="cabecalho">
+					<g:Label text="Pesquisar" styleName="negrito"/>
+					<g:HTML><br/></g:HTML>
+					<g:HorizontalPanel verticalAlignment="middle" styleName="cabecalho-pesquisa">
+					<g:Grid width="95%">
 						<g:row>
 							<g:customCell>
 								<g:Label text="Nome:" />
 							</g:customCell>
 							<g:customCell>
+								<g:Label text="Cidade:" />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Região:" />
+							</g:customCell>
+							<g:customCell>
+								<g:Label text="Mapa:" />
+							</g:customCell>
+						</g:row>
+						<g:row>
+							<g:customCell>
 								<g:TextBox ui:field="pesquisaNomeTextBox"
 									visibleLength="25" />
 							</g:customCell>
 							<g:customCell>
-								<g:Label text="Mapa:" />
+								<g:ListBox ui:field="pesquisaCidadeListBox" />
+							</g:customCell>
+							<g:customCell>
+								<g:ListBox ui:field="pesquisaRegiaoListBox" />
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="pesquisaMapaListBox" />
@@ -45,23 +48,26 @@
 								<g:HTML>&nbsp;</g:HTML>
 							</g:customCell>
 							<g:customCell>
+								<g:HTML>&nbsp;</g:HTML>
+							</g:customCell>
+							<g:customCell>
+								<g:HTML>&nbsp;</g:HTML>
+							</g:customCell>
+							<g:customCell>
 								<g:CheckBox ui:field="pesquisaEstaAssociadoMapaCheckBox" name="pesquisaEstaAssociadoMapaCheckBox"
 											text="Apenas surdos sem mapa"></g:CheckBox>
 							</g:customCell>
 						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:HTML>&nbsp;</g:HTML>
-							</g:customCell>
-						</g:row>
-						<g:row>	<g:customCell>
-								<g:Button ui:field="pesquisaPesquisarButton" text="Pesquisar" />
-							</g:customCell>
-						</g:row>
-					</g:Grid>
+					</g:Grid>					
+					<g:PushButton width="40px" ui:field='pesquisaPesquisarButton' enabled='true'>
+						<g:upFace image="{res.buscar}"></g:upFace>
+						<g:downFace image='{res.buscar}' />
+						<g:downHoveringFace image='{res.buscar}' />
+					</g:PushButton>
+					</g:HorizontalPanel>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="pesquisaResultadoLabel"/>
-					<c:CellTable ui:field="pesquisaResultadoCellTable" pageSize="10" />
+					<c:CellTable ui:field="pesquisaResultadoCellTable" />
 					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="10"/>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:InlineHyperlink text="Adicionar Surdo" targetHistoryToken="surdos!adicionar" ui:field="manterAdicionarSurdoInlineHyperlink"/>
@@ -273,7 +279,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Mapas</g:header>
+			<g:header><img src="{res.mapa.getSafeUri}" title="Mapas" alt="Mapas"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:Label text="Pesquisar"/>
@@ -356,7 +362,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Impressão</g:header>
+			<g:header><img src="{res.printer.getSafeUri}" title="Impressão" alt="Impressão"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:Label text="Pesquisar"/>
@@ -413,7 +419,7 @@
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>
-			<g:header>Não Visitar</g:header>
+			<g:header><img src="{res.naoVisitar.getSafeUri}" title="Não visitar" alt="Não visitar"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
 					<g:Label text="Surdos que estão marcados para não serem visitados."/>

@@ -5,6 +5,8 @@
 	<inherits name="com.googlecode.objectify.Objectify" />
 	<inherits name='com.google.gwt.maps.Maps' />
 	<inherits name='br.com.nascisoft.apoioterritoriols.login.Login' />
+	<inherits name="br.com.nascisoft.apoioterritoriols.resources.Resources" />
+	<inherits name="com.google.gwt.resources.Resources" />
 	<source path="client" />
 	<source path="vo" />
 	<source path="xml" />

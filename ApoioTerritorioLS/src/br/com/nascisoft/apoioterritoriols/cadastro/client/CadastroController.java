@@ -74,6 +74,8 @@ public class CadastroController implements CadastroPresenter,
 				eventBus.fireEvent(new AbrirImpressaoEvent());
 			} else if (event.getSelectedItem() == 3) {
 				eventBus.fireEvent(new AbrirNaoVisitarEvent());
+			} else if (event.getSelectedItem() == 4) {
+				Window.open("/Admin.html", "_self", "");
 			}
 		}
 	};;

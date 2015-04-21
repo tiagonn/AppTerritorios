@@ -42,18 +42,19 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.InlineHyperlink;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -92,7 +93,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField TextBox manterMelhorDiaTextBox;
 	@UiField TextBox manterOnibusTextBox;
 	@UiField TextBox manterMSNTextBox;
-	@UiField InlineHyperlink manterAdicionarSurdoInlineHyperlink;
 	@UiField Button manterSalvarButton;
 	@UiField SimplePager pesquisaResultadoSimplePager;
 	@UiField PopupPanel manterMapaPopupPanel;
@@ -106,6 +106,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField CheckBox manterMapaSateliteCheckBox;
 	@UiField TextBox manterQtdePessoasTextBox;
 	@UiField TextBox pesquisaFiltrarTextBox;
+	@UiField PushButton adicionarPessoaButton;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -182,15 +183,22 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterCidadeListBox.clear();
 		for (Cidade cidade : cidades) {
 			this.manterCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
-		}	
+		}
+		this.presenter.onManterCidadeListBoxChange(
+				Long.valueOf(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex())));
 	}	
 	
 	@Override
 	public void setManterRegiaoList(List<Regiao> regioes) {
+		GWT.log("entrando em setRegiaoList, regiões encontradas: " + regioes.size());
 		this.manterRegiaoListBox.clear();
 		this.manterRegiaoListBox.addItem("-- Escolha uma região --", "");
 		for (Regiao regiao : regioes) {
-			this.manterRegiaoListBox.addItem(regiao.getNomeRegiaoCompleta(), regiao.getId().toString());
+			String nome = regiao.getNomeRegiaoCompleta();
+			if (nome != null && nome.length() > 38) {
+				nome = nome.substring(0, 39);
+			}
+			this.manterRegiaoListBox.addItem(nome, regiao.getId().toString());
 		}
 		if (this.manterRegiao != null) {
 			this.manterRegiaoListBox.setSelectedIndex(obterIndice(this.manterRegiaoListBox, this.manterRegiao));
@@ -210,7 +218,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		if (!StringUtils.isEmpty(this.manterCidade) 
 				&& !this.manterCidade.equals(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			Window.alert("Ao alterar a cidade do surdo ele perderá a associação que tem com o mapa atual.");
+			Window.alert("Ao alterar a cidade do cadastro ele perderá a associação que tem com o mapa atual.");
 		}
 		this.manterCidade = this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex());
 		this.presenter.onManterCidadeListBoxChange(Long.valueOf(manterCidade));
@@ -221,7 +229,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		if (!StringUtils.isEmpty(this.manterRegiao) 
 				&& !this.manterRegiao.equals(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			Window.alert("Ao alterar a região do surdo ele perderá a associação que tem com o mapa atual.");
+			Window.alert("Ao alterar a região do cadastro ele perderá a associação que tem com o mapa atual.");
 		}
 	}
 	
@@ -372,6 +380,21 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				}
 			};
 			
+			Column<SurdoDetailsVO, String> visualizarColumn = new Column<SurdoDetailsVO, String>(
+					new ImageButtonCell()) {
+				@Override
+				public String getValue(SurdoDetailsVO object) {
+					return Resources.INSTANCE.visualizar().getSafeUri().asString();
+				}
+			};
+			visualizarColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
+				@Override
+				public void update(int index, SurdoDetailsVO object, String value) {
+					presenter.onVisualizar(object.getId());
+				}
+			});
+			visualizarColumn.setCellStyleNames("imageCell");
+			
 			Column<SurdoDetailsVO, String> editColumn = new Column<SurdoDetailsVO, String>(
 					new ImageButtonCell()) {
 				@Override
@@ -397,7 +420,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			deletarColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
 				@Override
 				public void update(int index, SurdoDetailsVO object, String value) {
-					if (Window.confirm("Deseja realmente apagar este surdo?")) {
+					if (Window.confirm("Deseja realmente apagar este cadastro?")) {
 						presenter.onApagar(object.getId());
 					}
 				}
@@ -413,7 +436,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			this.pesquisaResultadoCellTable.addColumn(nomeColumn, "Nome");
 			this.pesquisaResultadoCellTable.addColumn(regiaoColumn, "Região");
 			this.pesquisaResultadoCellTable.addColumn(mapaColumn, "Mapa");
-			this.pesquisaResultadoCellTable.addColumn(enderecoColumn, "Endereço");
+			if (Window.getClientWidth() > 1000) {
+				this.pesquisaResultadoCellTable.addColumn(enderecoColumn, "Endereço");
+			}
+			this.pesquisaResultadoCellTable.addColumn(visualizarColumn, "");
 			this.pesquisaResultadoCellTable.addColumn(editColumn, "");
 			this.pesquisaResultadoCellTable.addColumn(deletarColumn, "");
 			
@@ -510,10 +536,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiHandler(value={"manterMudouSe", "manterVisitarSomentePorAnciaos"})
 	void onNaoVisitarChangeValue(ValueChangeEvent<Boolean> event) {
 		if (event.getValue()) {
-			Window.alert("Ao selecionar mudou-se ou visitar somente por anciãos, este surdo será removido " +
+			Window.alert("Ao selecionar mudou-se ou visitar somente por anciãos, este cadastro será removido " +
 					"da listagem e do mapa que ele está associado, se é que ele está associado a algum mapa, " + 
 					"até que ele seja desmarcado como não visitar na aba própria para este fim.\n\n" +
-					"Por favor, detalhe porque você está marcando este surdo para não ser visitado no campo observação.");
+					"Por favor, detalhe porque você está marcando este cadastro para não ser visitado no campo observação.");
 			if ("manterMudouSe".equals(((CheckBox)event.getSource()).getName())) {
 				this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 			} else {
@@ -579,23 +605,9 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	} 
 	
 	private void limparResultadoPesquisa() {	
-		if (this.presenter.getLoginInformation().isAdmin()) {
-			boolean existeAdmin = true;
-			try {
-				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
-			} catch (AssertionError ex) {
-				existeAdmin = false;
-			} catch (IndexOutOfBoundsException ex) {
-				existeAdmin = false;
-			}
-			if (!existeAdmin) {
-				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
-				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
-					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
-			}
-		}
-
+		
+		this.cadastroSurdoTabLayoutPanel.getTabWidget(4).getParent().setVisible(this.presenter.getLoginInformation().isAdmin());
+		
 		// ao remover a coluna 0, o objeto passa a coluna 1 para a 0,
 		// portanto sempre  é necessário remover a coluna 0.
 		int j = this.pesquisaResultadoCellTable.getColumnCount();
@@ -750,10 +762,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.manterSurdoPanel.setVisible(true);
 		this.limparResultadoPesquisa();
 		this.limparManter();
-		if (this.manterCidadeListBox != null && this.manterCidadeListBox.getItemCount() > 0) {
-			this.presenter.onManterCidadeListBoxChange(
-					Long.valueOf(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex())));
-		} 
+		this.presenter.populaCidades();
 	}
 	
 	@UiHandler("manterMapaSateliteCheckBox")
@@ -792,6 +801,17 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public void onVisualizar(Surdo surdo) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@UiHandler("adicionarPessoaButton")
+	void onAdicionarPessoaButtonClick(ClickEvent e) {
+		History.newItem("surdos!adicionar");
 	}
 	
 }

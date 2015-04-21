@@ -21,6 +21,8 @@ public interface CadastroSurdoView extends CadastroView {
 		void buscarEndereco(Long identificadorCidade, String logradouro, String numero, String bairro, String cep);
 		void onAdicionar();
 		void onManterCidadeListBoxChange(Long cidadeId);
+		void onVisualizar(Long id);
+		void populaCidades();
 	}
 	void setCidadeList(List<Cidade> lista);
 	void setPresenter(Presenter presenter);
@@ -31,5 +33,6 @@ public interface CadastroSurdoView extends CadastroView {
 	void setPosition(HasLatLng position, Boolean sucesso, Boolean mostraMapa);
 	void onEditar(Surdo surdo);
 	void onApagarSurdo(Long id);
+	void onVisualizar(Surdo surdo);
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
-import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -20,7 +19,6 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -67,22 +65,7 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	@Override
 	public void initView() {
 		this.selectThisTab();
-		if (this.presenter.getLoginInformation().isAdmin()) {
-			boolean existeAdmin = true;
-			try {
-				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
-			} catch (AssertionError ex) {
-				existeAdmin = false;
-			} catch (IndexOutOfBoundsException ex) {
-				existeAdmin = false;
-			}
-			if (!existeAdmin) {
-				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
-				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
-					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
-			}
-		}
+		this.cadastroSurdoTabLayoutPanel.getTabWidget(4).getParent().setVisible(this.presenter.getLoginInformation().isAdmin());
 	}
 
 	@Override

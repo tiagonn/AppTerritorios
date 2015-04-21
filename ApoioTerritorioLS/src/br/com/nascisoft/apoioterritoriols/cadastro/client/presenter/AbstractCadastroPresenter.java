@@ -49,7 +49,7 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 		getView().selectThisTab();
 	}
 	
-	protected void populaCidades() {
+	public void populaCidades() {
 		if (cidades == null) {
 			getView().showWaitingPanel();
 			service.obterCidades(new AsyncCallback<List<Cidade>>() {

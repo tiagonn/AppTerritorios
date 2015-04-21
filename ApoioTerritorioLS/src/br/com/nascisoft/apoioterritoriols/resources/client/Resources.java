@@ -46,9 +46,15 @@ public interface Resources extends ClientBundle {
 	
 	@Source("/images/delete.png")
 	ImageResource apagar();
-
+	
 	@Source("/images/edit.png")
 	ImageResource editar();
+	
+	@Source("/images/visualizar.png")
+	ImageResource visualizar();
+
+	@Source("/images/adicionarPessoa.png")
+	ImageResource adicionarPessoa();
 	
 	
 }

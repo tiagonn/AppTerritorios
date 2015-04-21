@@ -241,7 +241,7 @@ a, a:visited, a:hover {
 }
 
 .cabecalho-pesquisa {
-	width: 95%;
+	width: 100%;
 }
 
 .check-alinhado-direita {
@@ -1437,4 +1437,56 @@ td.datePickerMonth {
 	padding: 2px;
 	border: solid thin;
 	border-color: #303030;
+}
+
+.pessoas-manter {
+	width: 100%;
+}
+
+.pessoas-manter-bloco {
+	float: left;
+	width: 445px;
+	display: inline-block;
+	height: 35px;
+}
+
+.pessoas-manter-bloco-observacao {
+	float: left;
+	width: 810px;
+	display: inline-block;
+}
+.pessoas-manter-bloco-checkboxes {
+	width: 445px;
+	display: inline-block;
+	height: 60px;
+	padding-left: 120px;
+	padding-top: 8px;
+}
+
+.pessoas-manter-checkbox {
+	display: block;
+	height: 28px;
+	font-size: small;
+}
+
+.pessoas-manter-label {
+	float: left;
+	display: inline-block;
+	width: 120px;
+}
+
+.pessoas-manter-form-element {
+	height: 23px;
+	font-size: small;
+}
+
+.pessoas-manter-form-selectBox {
+	height: 28px;
+	font-size: small;
+}
+
+.pessoas-manter-form-textArea {
+	font-size: small;
+	width: 680px;
+	height: 120px;
 }

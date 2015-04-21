@@ -7,7 +7,6 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
-import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -20,7 +19,6 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
@@ -53,22 +51,7 @@ public class ImpressaoViewImpl extends Composite implements
 	public void initView() {
 		this.selectThisTab();	
 		this.limparPesquisa();
-		if (this.presenter.getLoginInformation().isAdmin()) {
-			boolean existeAdmin = true;
-			try {
-				this.cadastroSurdoTabLayoutPanel.getTabWidget(4);
-			} catch (AssertionError ex) {
-				existeAdmin = false;
-			} catch (IndexOutOfBoundsException ex) {
-				existeAdmin = false;
-			}
-			if (!existeAdmin) {
-				StringBuilder sb = new StringBuilder("<a href=\"/Admin.html\"><img src=\"");
-				sb.append(Resources.INSTANCE.configuracao().getSafeUri().asString())
-					.append("\" title=\"Configurações\" alt=\"Configurações\"/></a>");
-				this.cadastroSurdoTabLayoutPanel.add(new HTML(""), new HTML(sb.toString()));
-			}
-		}
+		this.cadastroSurdoTabLayoutPanel.getTabWidget(4).getParent().setVisible(this.presenter.getLoginInformation().isAdmin());
 	}
 	
 	@Override

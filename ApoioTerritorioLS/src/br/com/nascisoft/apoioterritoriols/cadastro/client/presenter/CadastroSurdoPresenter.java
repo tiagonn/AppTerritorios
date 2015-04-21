@@ -43,11 +43,6 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 		super.initView();
 	}
 	
-	@Override
-	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
-		super.onPesquisaCidadeListBoxChange(cidadeId);
-	}
-	
 	
 	@Override
 	public void onManterCidadeListBoxChange(final Long cidadeId) {
@@ -131,7 +126,6 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				filtros.put("Regiao", regiaoId);
 				filtros.put("Mapa", identificadorMapa);
 				filtros.put("EstaAssociadoMapa", String.valueOf(estaAssociadoMapa));
-				view.setDadosFiltro(filtros);
 				getView().hideWaitingPanel();
 			}
 		});			
@@ -153,13 +147,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onSuccess(Long result) {
 				getView().hideWaitingPanel();
 				Window.alert("Surdo id " + result + " salvo com sucesso.");
-				Map<String, String> filtros = getView().getDadosFiltro();
-				String estaAssociadoMapa = filtros.get("EstaAssociadoMapa");
-				Boolean estaAssociadoMapaBoolean = null;
-				if (!StringUtils.isEmpty(estaAssociadoMapa) && !"null".equals(estaAssociadoMapa)) {
-					estaAssociadoMapaBoolean = Boolean.valueOf(estaAssociadoMapa);
-				}
-				eventBus.fireEvent(new PesquisarSurdoEvent(filtros.get("Cidade"), filtros.get("Nome"), filtros.get("Regiao"), filtros.get("Mapa"), estaAssociadoMapaBoolean));
+				eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null));
 			}
 		});
 	}

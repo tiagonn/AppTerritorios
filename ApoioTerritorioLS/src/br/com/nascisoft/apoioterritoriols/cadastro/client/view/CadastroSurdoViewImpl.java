@@ -1,8 +1,8 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.common.ImageButtonCell;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
@@ -20,6 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.maps.client.HasMapOptions;
@@ -38,6 +39,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
@@ -52,7 +54,6 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -67,11 +68,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	private static CadastroSurdoViewUiBinderUiBinder uiBinder = GWT
 			.create(CadastroSurdoViewUiBinderUiBinder.class);
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
-	@UiField TextBox pesquisaNomeTextBox;
-	@UiField ListBox pesquisaCidadeListBox;
-	@UiField ListBox pesquisaRegiaoListBox;
-	@UiField ListBox pesquisaMapaListBox;
-	@UiField PushButton pesquisaPesquisarButton;
 	@UiField(provided=true) CellTable<SurdoDetailsVO> pesquisaResultadoCellTable;
 	@UiField Label pesquisaResultadoLabel;
 	@UiField HTML manterWarningHTML;
@@ -105,11 +101,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField Button manterMapaConfirmarEnderecoButton;
 	@UiField Button manterMapaVoltarEnderecoButton;
 	@UiField PopupPanel waitingPopUpPanel;
-	@UiField CheckBox pesquisaEstaAssociadoMapaCheckBox;
 	@UiField CheckBox manterMudouSe;
 	@UiField CheckBox manterVisitarSomentePorAnciaos;
 	@UiField CheckBox manterMapaSateliteCheckBox;
 	@UiField TextBox manterQtdePessoasTextBox;
+	@UiField TextBox pesquisaFiltrarTextBox;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -121,7 +117,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	String manterRegiao;
 	String manterCidade;
 	boolean buscaEndereco = true;
-	private Map<String, String> dadosFiltro;
 
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder extends
@@ -131,6 +126,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	private Presenter presenter;
 	
 	private ListDataProvider<SurdoDetailsVO> resultadoPesquisa;
+	private List<SurdoDetailsVO> listaResultadoPesquisa;
 
 	public CadastroSurdoViewImpl() {
 		this.bairroOracle = new MultiWordSuggestOracle();
@@ -149,21 +145,12 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	
 	public void initView() {
 		this.selectThisTab();
-		this.pesquisaNomeTextBox.setText("");
-		this.pesquisaCidadeListBox.setSelectedIndex(0);
-		if (this.pesquisaCidadeListBox.getItemCount() > 0 && StringUtils.isEmpty(this.pesquisaCidadeListBox.getValue(0))) {
-			this.pesquisaRegiaoListBox.setEnabled(false);
-		}
-		this.pesquisaRegiaoListBox.setSelectedIndex(0);
-		this.pesquisaMapaListBox.setSelectedIndex(0);
-		this.pesquisaEstaAssociadoMapaCheckBox.setValue(Boolean.FALSE);
+		this.pesquisaFiltrarTextBox.setText("");
 		this.manterSurdoPanel.setVisible(false);
 		this.manterWarningHTML.setHTML("");
 		this.manterMapaPopupPanel.hide();
 		this.limparResultadoPesquisa();
 		this.limparManter();
-		this.pesquisaMapaListBox.setEnabled(false);
-		this.dadosFiltro = new HashMap<String, String>();
 	}
 	
 	@Override
@@ -192,44 +179,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 	@Override
 	public void setCidadeList(List<Cidade> cidades) {
-		this.pesquisaCidadeListBox.clear();
 		this.manterCidadeListBox.clear();
-		if (cidades.size() > 1) {
-			this.pesquisaCidadeListBox.addItem("-- Escolha uma cidade --", "");
-			
-			this.pesquisaRegiaoListBox.clear();
-			this.pesquisaRegiaoListBox.addItem("-- Escolha uma região --", "");
-			this.pesquisaRegiaoListBox.setEnabled(false);
-			
-			this.pesquisaMapaListBox.clear();
-			this.pesquisaMapaListBox.addItem("-- Escolha um mapa --", "");
-			this.pesquisaMapaListBox.setEnabled(false);			
-		} else {
-			this.presenter.onPesquisaCidadeListBoxChange(cidades.get(0).getId());
-		}
 		for (Cidade cidade : cidades) {
-			this.pesquisaCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 			this.manterCidadeListBox.addItem(cidade.getNome(), cidade.getId().toString());
 		}	
 	}	
-	
-	@Override
-	public void setRegiaoList(List<Regiao> regioes) {
-		this.pesquisaRegiaoListBox.clear();
-		this.pesquisaRegiaoListBox.addItem("-- Escolha uma região --", "");
-		
-		this.pesquisaMapaListBox.clear();
-		this.pesquisaMapaListBox.addItem("-- Escolha um mapa --", "");
-		this.pesquisaMapaListBox.setEnabled(false);
-		for (Regiao regiao : regioes) {
-			this.pesquisaRegiaoListBox.addItem(regiao.getNomeRegiaoCompleta(), regiao.getId().toString());
-		}	
-		
-		if (dadosFiltro != null && !StringUtils.isEmpty(dadosFiltro.get("Regiao"))) {
-			this.pesquisaRegiaoListBox.setSelectedIndex(obterIndice(this.pesquisaRegiaoListBox, dadosFiltro.get("Regiao")));
-			this.onPesquisaRegiaoListBoxChange(null);
-		}
-	}
 	
 	@Override
 	public void setManterRegiaoList(List<Regiao> regioes) {
@@ -242,72 +196,12 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			this.manterRegiaoListBox.setSelectedIndex(obterIndice(this.manterRegiaoListBox, this.manterRegiao));
 		}
  	}
-	
-	@Override
-	public void setMapaList(List<Mapa> mapas) {
-		this.pesquisaMapaListBox.clear();
-		this.pesquisaMapaListBox.addItem("-- Escolha um mapa --", "");
-		for (Mapa mapa : mapas) {
-			this.pesquisaMapaListBox.addItem(mapa.getNome(), mapa.getId().toString());
-		}
-		
-		if (dadosFiltro != null && !StringUtils.isEmpty(dadosFiltro.get("Mapa"))) {
-			this.pesquisaMapaListBox.setSelectedIndex(obterIndice(this.pesquisaMapaListBox, dadosFiltro.get("Mapa")));
-			//TODO: FIX - CAUSANDO LOOP INFINITO
-//			this.onPesquisaRegiaoListBoxChange(null);
-		}
-	}
 
 	@Override
 	public void setBairroList(List<String> bairros) {
 		this.bairroOracle.clear();
 		for (String bairro : bairros) {
 			this.bairroOracle.add(bairro);
-		}
-	}
-
-	
-	@UiHandler("pesquisaPesquisarButton")
-	void onPesquisaPesquisarButtonClick(ClickEvent event) {
-		if (this.presenter != null) {			
-			this.presenter.onPesquisaPesquisarButtonClick(
-					this.pesquisaCidadeListBox.getValue(this.pesquisaCidadeListBox.getSelectedIndex()),
-					this.pesquisaNomeTextBox.getText(), 
-					this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()),
-					this.pesquisaMapaListBox.getValue(
-							this.pesquisaMapaListBox.getSelectedIndex()), 
-					!this.pesquisaEstaAssociadoMapaCheckBox.getValue());
-		}
-		this.manterSurdoPanel.setVisible(false);
-	}
-	
-	@UiHandler("pesquisaCidadeListBox")
-	void onPesquisaCidadeListBoxChange(ChangeEvent event) {
-		String value = this.pesquisaCidadeListBox.getValue(this.pesquisaCidadeListBox.getSelectedIndex());
-		if (!StringUtils.isEmpty(value)) {
-			this.pesquisaRegiaoListBox.setEnabled(true);
-			this.presenter.onPesquisaCidadeListBoxChange(
-					Long.valueOf(value));
-		} else {
-			this.pesquisaMapaListBox.setEnabled(false);
-			this.pesquisaMapaListBox.setSelectedIndex(0);
-			
-			this.pesquisaRegiaoListBox.setEnabled(false);
-			this.pesquisaRegiaoListBox.setSelectedIndex(0);
-		}
-	}
-	
-	@UiHandler("pesquisaRegiaoListBox")
-	void onPesquisaRegiaoListBoxChange(ChangeEvent event) {
-		if (!this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()).isEmpty()
-				&& !this.pesquisaEstaAssociadoMapaCheckBox.getValue()) {
-			this.pesquisaMapaListBox.setEnabled(true);
-			this.presenter.onPesquisaRegiaoListBoxChange(
-					Long.valueOf(
-							pesquisaRegiaoListBox.getValue(pesquisaRegiaoListBox.getSelectedIndex())));
-		} else {
-			this.pesquisaMapaListBox.setEnabled(false);
-			this.pesquisaMapaListBox.setSelectedIndex(0);
 		}
 	}
 	
@@ -345,26 +239,13 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			break;
 		}
 	}
-
-	
-	@UiHandler("pesquisaEstaAssociadoMapaCheckBox")
-	void onPesquisaEstaAssociadoMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
-		if (this.pesquisaEstaAssociadoMapaCheckBox.getValue()) {
-			this.pesquisaMapaListBox.setEnabled(false);
-			this.pesquisaMapaListBox.setSelectedIndex(0);
-		} else if (!this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()).isEmpty()) {
-			this.pesquisaMapaListBox.setEnabled(true);
-			this.presenter.onPesquisaRegiaoListBoxChange(
-					Long.valueOf(
-							pesquisaRegiaoListBox.getValue(pesquisaRegiaoListBox.getSelectedIndex())));
-		}
-	}
 		
 	@Override
 	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
 		this.limparResultadoPesquisa();
 		this.pesquisaResultadoCellTable.setRowCount(resultadoPesquisa.size());
 		this.resultadoPesquisa.setList(resultadoPesquisa);
+		this.listaResultadoPesquisa = resultadoPesquisa;
 		this.mostrarResultadoPesquisa();
 	}
 	
@@ -383,24 +264,107 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					return StringUtils.toCamelCase(object.getNome());
 				}
 			};
+			ListHandler<SurdoDetailsVO> nomeSortHandler = new ListHandler<SurdoDetailsVO>(this.resultadoPesquisa.getList());
+			nomeSortHandler.setComparator(nomeColumn, new Comparator<SurdoDetailsVO>() {
+				@Override
+				public int compare(SurdoDetailsVO o1, SurdoDetailsVO o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+
+					// Compare the name columns.
+					if (o1 != null) {
+						return (o2 != null) ? o1.getNome()
+								.compareTo(o2.getNome()) : 1;
+					}
+					return -1;
+				}
+			});
+			nomeColumn.setSortable(true);
+			
 			TextColumn<SurdoDetailsVO> cidadeColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return object.getNomeCidade();
 				}
 			};
+			ListHandler<SurdoDetailsVO> cidadeSortHandler = new ListHandler<SurdoDetailsVO>(this.resultadoPesquisa.getList());
+			nomeSortHandler.setComparator(cidadeColumn, new Comparator<SurdoDetailsVO>() {
+				@Override
+				public int compare(SurdoDetailsVO o1, SurdoDetailsVO o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+
+					// Compare the name columns.
+					if (o1 != null) {
+						return (o2 != null) ? o1.getNomeCidade()
+								.compareTo(o2.getNomeCidade()) : 1;
+					}
+					return -1;
+				}
+			});
+			cidadeColumn.setSortable(true);
+			
 			TextColumn<SurdoDetailsVO> regiaoColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return object.getRegiao();
 				}				
 			};
+			ListHandler<SurdoDetailsVO> regiaoSortHandler = new ListHandler<SurdoDetailsVO>(this.resultadoPesquisa.getList());
+			nomeSortHandler.setComparator(regiaoColumn, new Comparator<SurdoDetailsVO>() {
+				@Override
+				public int compare(SurdoDetailsVO o1, SurdoDetailsVO o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+
+					// Compare the name columns.
+					if (o1 != null) {
+						return (o2 != null) ? o1.getRegiao()
+								.compareTo(o2.getRegiao()) : 1;
+					}
+					return -1;
+				}
+			});
+			regiaoColumn.setSortable(true);
+			
 			TextColumn<SurdoDetailsVO> mapaColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return object.getMapa().substring(5);
 				}
-			};
+			};			
+			ListHandler<SurdoDetailsVO> mapaSortHandler = new ListHandler<SurdoDetailsVO>(this.resultadoPesquisa.getList());
+			nomeSortHandler.setComparator(mapaColumn, new Comparator<SurdoDetailsVO>() {
+				@Override
+				public int compare(SurdoDetailsVO o1, SurdoDetailsVO o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+
+					// Compare the name columns.
+					if (o1 != null) {
+						if (o2 != null) {
+							String mapa1 = o1.getMapa().substring(5);
+							String mapa2 = o2.getMapa().substring(5);
+							if (mapa1.length() == 2) {
+								mapa1 = mapa1.substring(0,1) + "0" + mapa1.substring(1);
+							}
+							if (mapa2.length() == 2) {
+								mapa2 = mapa2.substring(0,1) + "0" + mapa2.substring(1);
+							}
+							return mapa1.compareTo(mapa2);
+						} else {
+							return 1;
+						}
+					}
+					return -1;
+				}
+			});
+			mapaColumn.setSortable(true);
+			
 			TextColumn<SurdoDetailsVO> enderecoColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
@@ -439,6 +403,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 				}
 			});
 			deletarColumn.setCellStyleNames("imageCell");
+			
+			this.pesquisaResultadoCellTable.addColumnSortHandler(nomeSortHandler);
+			this.pesquisaResultadoCellTable.addColumnSortHandler(cidadeSortHandler);
+			this.pesquisaResultadoCellTable.addColumnSortHandler(regiaoSortHandler);
+			this.pesquisaResultadoCellTable.addColumnSortHandler(mapaSortHandler);
 
 			this.pesquisaResultadoCellTable.addColumn(cidadeColumn, "Cidade");
 			this.pesquisaResultadoCellTable.addColumn(nomeColumn, "Nome");
@@ -447,6 +416,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			this.pesquisaResultadoCellTable.addColumn(enderecoColumn, "Endereço");
 			this.pesquisaResultadoCellTable.addColumn(editColumn, "");
 			this.pesquisaResultadoCellTable.addColumn(deletarColumn, "");
+			
+			this.pesquisaResultadoCellTable.getColumnSortList().push(nomeColumn);
 			
 			this.pesquisaResultadoSimplePager.setVisible(true);
 		}
@@ -506,7 +477,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			manterMapaLayoutPanel.clear();
 			manterMapaLayoutPanel.setSize("635px", "480px");
 			manterMapaLayoutPanel.add(mapa);		
-			manterMapaPopupPanel.setPopupPosition(this.pesquisaNomeTextBox.getAbsoluteLeft()+50,20);
+			manterMapaPopupPanel.setPopupPosition(this.pesquisaFiltrarTextBox.getAbsoluteLeft()+50,20);
 			manterMapaPopupPanel.setVisible(true);
 			manterMapaPopupPanel.show();
 		}
@@ -784,48 +755,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					Long.valueOf(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex())));
 		} 
 	}
-
-	@Override
-	public Map<String, String> getDadosFiltro() {
-		if (dadosFiltro == null) {
-			dadosFiltro = new HashMap<String, String>();
-		}
-		dadosFiltro.put("Cidade", this.pesquisaCidadeListBox.getValue(this.pesquisaCidadeListBox.getSelectedIndex()));
-		dadosFiltro.put("Nome", this.pesquisaNomeTextBox.getText());
-		dadosFiltro.put("Regiao", this.pesquisaRegiaoListBox.getValue(this.pesquisaRegiaoListBox.getSelectedIndex()));
-		dadosFiltro.put("Mapa", this.pesquisaMapaListBox.getValue(this.pesquisaMapaListBox.getSelectedIndex()));
-		dadosFiltro.put("EstaAssociadoMapa", String.valueOf(!this.pesquisaEstaAssociadoMapaCheckBox.getValue()));
-		
-		return dadosFiltro;
-	}
-
-	@Override
-	public void setDadosFiltro(Map<String, String> filtros) {
-		dadosFiltro = filtros;
-		String cidade = filtros.get("Cidade");
-		if (!StringUtils.isEmpty(cidade)) {
-			this.pesquisaCidadeListBox.setSelectedIndex(obterIndice(this.pesquisaCidadeListBox, cidade));
-			this.onPesquisaCidadeListBoxChange(null);
-		}
-		
-		this.pesquisaNomeTextBox.setText(filtros.get("Nome"));
-
-		String regiao = filtros.get("Regiao");
-		if (!StringUtils.isEmpty(regiao)) {
-			this.pesquisaRegiaoListBox.setSelectedIndex(obterIndice(this.pesquisaRegiaoListBox, regiao));
-		}
-		
-		String mapa = filtros.get("Mapa");
-		if (!StringUtils.isEmpty(mapa)) {
-			this.pesquisaMapaListBox.setSelectedIndex(obterIndice(this.pesquisaMapaListBox, mapa));
-		}
-		
-		String estaAssociadoMapa = filtros.get("EstaAssociadoMapa");
-		if (!StringUtils.isEmpty(estaAssociadoMapa) && !"null".equals(estaAssociadoMapa)) {
-			this.pesquisaEstaAssociadoMapaCheckBox.setValue(!Boolean.valueOf(estaAssociadoMapa));
-		}
-		
-	}
 	
 	@UiHandler("manterMapaSateliteCheckBox")
 	void onImprimirMapaSateliteCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
@@ -834,6 +763,35 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		} else {
 			((MapWidget)this.manterMapaLayoutPanel.getWidget(0)).getMap().setMapTypeId(new MapTypeId().getRoadmap());
 		}
+	}
+	
+	@UiHandler("pesquisaFiltrarTextBox")
+	void onPesquisaFiltrarTextBoxKeyUpEvent(KeyUpEvent event) {
+		this.limparResultadoPesquisa();
+		if (this.pesquisaFiltrarTextBox.getValue().length()>0) {
+			List<SurdoDetailsVO> resultado = filtrarResultadoPesquisa(this.pesquisaFiltrarTextBox.getValue());
+			this.resultadoPesquisa.setList(resultado);
+			this.pesquisaResultadoCellTable.setRowCount(resultado.size());
+		} else {
+			this.resultadoPesquisa.setList(this.listaResultadoPesquisa);
+			this.pesquisaResultadoCellTable.setRowCount(this.listaResultadoPesquisa.size());
+		}
+		this.mostrarResultadoPesquisa();
+	}
+	
+	private List<SurdoDetailsVO> filtrarResultadoPesquisa(String query) {
+		List<SurdoDetailsVO> result = new ArrayList<SurdoDetailsVO>();
+		for (SurdoDetailsVO vo : this.listaResultadoPesquisa) {
+			if ( (vo.getNome().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getNomeCidade().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getRegiao().toUpperCase().indexOf(query.toUpperCase()) != -1) 
+					|| (vo.getMapa().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getEndereco().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					) {
+				result.add(vo);
+			}
+		}
+		return result;
 	}
 	
 }

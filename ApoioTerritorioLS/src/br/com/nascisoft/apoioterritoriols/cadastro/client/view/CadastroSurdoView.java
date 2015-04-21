@@ -1,9 +1,9 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.List;
-import java.util.Map;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 
@@ -22,7 +22,7 @@ public interface CadastroSurdoView extends CadastroView {
 		void onAdicionar();
 		void onManterCidadeListBoxChange(Long cidadeId);
 	}
-
+	void setCidadeList(List<Cidade> lista);
 	void setPresenter(Presenter presenter);
 	void setManterRegiaoList(List<Regiao> regioes);
 	void setBairroList(List<String> bairros);
@@ -31,7 +31,5 @@ public interface CadastroSurdoView extends CadastroView {
 	void setPosition(HasLatLng position, Boolean sucesso, Boolean mostraMapa);
 	void onEditar(Surdo surdo);
 	void onApagarSurdo(Long id);
-	Map<String, String> getDadosFiltro();
-	void setDadosFiltro(Map<String, String> filtros);
 
 }

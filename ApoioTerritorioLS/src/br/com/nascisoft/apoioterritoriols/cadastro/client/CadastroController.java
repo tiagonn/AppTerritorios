@@ -230,6 +230,7 @@ public class CadastroController implements CadastroPresenter,
 							
 							if ("surdos".equals(currentToken)) {
 								cadastroSurdoPresenter.initView();
+								cadastroSurdoPresenter.onPesquisaPesquisarEvent(null, null, null, null, null);
 							} else if (currentToken.startsWith("surdos!pesquisar")) {
 								String queryString = currentToken.split("#")[1];
 								String[] parametros = queryString.split("&");

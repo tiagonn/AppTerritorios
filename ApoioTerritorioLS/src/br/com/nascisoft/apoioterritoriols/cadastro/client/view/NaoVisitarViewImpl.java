@@ -4,8 +4,6 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
@@ -91,28 +89,14 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(3, false);
 	}
-	
+
 	@Override
 	public void setCidadeList(List<Cidade> cidades) {
 		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
 		// apesar deste método estar implementado aqui ele não será chamado.
 		throw new RuntimeException("Método setCidadeList não é suportado pela view NaoVisitarViewImpl");
 	}
-
-	@Override
-	public void setMapaList(List<Mapa> mapas) {
-		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
-		// apesar deste método estar implementado aqui ele não será chamado.
-		throw new RuntimeException("Método setMapaList não é suportado pela view NaoVisitarViewImpl");
-	}
-
-	@Override
-	public void setRegiaoList(List<Regiao> regioes) {
-		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
-		// apesar deste método estar implementado aqui ele não será chamado.
-		throw new RuntimeException("Método setRegiaoList não é suportado pela view NaoVisitarViewImpl");
-	}
-
+	
 	@Override
 	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
 		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);

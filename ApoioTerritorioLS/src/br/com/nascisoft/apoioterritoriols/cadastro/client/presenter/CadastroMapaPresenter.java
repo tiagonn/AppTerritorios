@@ -6,8 +6,9 @@ import java.util.logging.Level;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirMapaEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaView;
-import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -26,6 +27,44 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 		this.view = view;
 		this.view.setPresenter(this);
 	}
+	
+	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
+		getView().showWaitingPanel();
+		service.obterRegioes(cidadeId, new AsyncCallback<List<Regiao>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
+			}
+
+			@Override
+			public void onSuccess(List<Regiao> result) {
+				getView().setRegiaoList(result);
+				getView().hideWaitingPanel();
+			}
+		});
+	}
+	
+	public void onPesquisaRegiaoListBoxChange(Long regiaoId) {
+		getView().showWaitingPanel();
+		service.obterMapasRegiao(regiaoId, new AsyncCallback<List<Mapa>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
+				getView().hideWaitingPanel();
+				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
+			}
+
+			@Override
+			public void onSuccess(List<Mapa> result) {
+				getView().setMapaList(result);
+				getView().hideWaitingPanel();
+			}
+		});		
+	}
 
 	@Override
 	public void initView() {
@@ -34,7 +73,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	}
 	
 	@Override
-	CadastroView getView() {
+	CadastroMapaView getView() {
 		return this.view;
 	}
 

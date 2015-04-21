@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
-import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
-import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -37,8 +35,21 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 	public LoginVO getLoginInformation() {
 		return login;
 	}
+
+	public void go(HasWidgets container) {
+		container.clear();
+		container.add(getView().asWidget());
+	}
 	
-	public void populaCidades() {
+	public void initView() {
+		getView().initView();
+	}
+	
+	public void selectThisTab() {
+		getView().selectThisTab();
+	}
+	
+	protected void populaCidades() {
 		if (cidades == null) {
 			getView().showWaitingPanel();
 			service.obterCidades(new AsyncCallback<List<Cidade>>() {
@@ -60,57 +71,6 @@ public abstract class AbstractCadastroPresenter implements CadastroPresenter, Ca
 		} else {
 			getView().setCidadeList(cidades);
 		}
-	}
-	
-	public void onPesquisaCidadeListBoxChange(Long cidadeId) {
-		getView().showWaitingPanel();
-		service.obterRegioes(cidadeId, new AsyncCallback<List<Regiao>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
-				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
-			}
-
-			@Override
-			public void onSuccess(List<Regiao> result) {
-				getView().setRegiaoList(result);
-				getView().hideWaitingPanel();
-			}
-		});
-	}
-	
-	public void onPesquisaRegiaoListBoxChange(Long regiaoId) {
-		getView().showWaitingPanel();
-		service.obterMapasRegiao(regiaoId, new AsyncCallback<List<Mapa>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
-				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
-			}
-
-			@Override
-			public void onSuccess(List<Mapa> result) {
-				getView().setMapaList(result);
-				getView().hideWaitingPanel();
-			}
-		});		
-	}
-
-	public void go(HasWidgets container) {
-		container.clear();
-		container.add(getView().asWidget());
-	}
-	
-	public void initView() {
-		getView().initView();
-	}
-	
-	public void selectThisTab() {
-		getView().selectThisTab();
 	}
 
 }

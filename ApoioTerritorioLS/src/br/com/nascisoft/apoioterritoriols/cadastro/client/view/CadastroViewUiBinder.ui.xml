@@ -10,6 +10,7 @@
 			<g:header><img src="{res.pessoa.getSafeUri}" title="Pessoas" alt="Pessoas"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel styleName="cabecalho">
+				<!-- trecho do código foi removido para simplificar a busca de surdos
 					<g:Label text="Pesquisar" styleName="negrito"/>
 					<g:HTML><br/></g:HTML>
 					<g:HorizontalPanel verticalAlignment="middle" styleName="cabecalho-pesquisa">
@@ -65,6 +66,9 @@
 						<g:downHoveringFace image='{res.buscar}' />
 					</g:PushButton>
 					</g:HorizontalPanel>
+					-->
+					<g:Label text="Filtrar" styleName="negrito"/>
+					<g:TextBox ui:field="pesquisaFiltrarTextBox"></g:TextBox>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="pesquisaResultadoLabel"/>
 					<c:CellTable ui:field="pesquisaResultadoCellTable" />

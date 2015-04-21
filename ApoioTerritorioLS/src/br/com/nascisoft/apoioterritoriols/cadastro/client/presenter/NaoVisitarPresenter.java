@@ -3,11 +3,6 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.presenter;
 import java.util.List;
 import java.util.logging.Level;
 
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.AbrirNaoVisitarEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.RetornarVisitarSurdoEvent;
@@ -15,6 +10,11 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
+
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class NaoVisitarPresenter extends AbstractCadastroPresenter implements NaoVisitarView.Presenter {
 	

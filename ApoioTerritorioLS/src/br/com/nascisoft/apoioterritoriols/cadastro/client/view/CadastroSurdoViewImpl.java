@@ -498,12 +498,19 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			opt.setNavigationControl(true);
 			opt.setScrollwheel(true);
 			MapWidget mapa = new MapWidget(opt);
-			mapa.setSize("635px", "480px");
+			int width = Window.getClientWidth()-50;
+			int left = (Window.getClientWidth() - width)/2;
+			int height = Window.getClientHeight()-100;
+			String widthString = width+"px";
+			String heightString = height+"px";
+			
+
+			mapa.setSize(widthString, heightString);
 			this.marker.setMap(mapa.getMap());
 			manterMapaLayoutPanel.clear();
-			manterMapaLayoutPanel.setSize("635px", "480px");
+			manterMapaLayoutPanel.setSize(widthString, heightString);
 			manterMapaLayoutPanel.add(mapa);		
-			manterMapaPopupPanel.setPopupPosition(this.pesquisaFiltrarTextBox.getAbsoluteLeft()+50,20);
+			manterMapaPopupPanel.setPopupPosition(left, 0);
 			manterMapaPopupPanel.setVisible(true);
 			manterMapaPopupPanel.show();
 		}

@@ -1451,16 +1451,17 @@ td.datePickerMonth {
 }
 
 .pessoas-manter-bloco-observacao {
+	clear: both;
 	float: left;
-	width: 810px;
-	display: inline-block;
+	width: 650px;
 }
 .pessoas-manter-bloco-checkboxes {
-	width: 445px;
-	display: inline-block;
+	clear: both;
+	width: 710px;
 	height: 60px;
 	padding-left: 120px;
 	padding-top: 8px;
+	display: inline-block;
 }
 
 .pessoas-manter-checkbox {
@@ -1487,6 +1488,6 @@ td.datePickerMonth {
 
 .pessoas-manter-form-textArea {
 	font-size: small;
-	width: 680px;
+	width: 520px;
 	height: 120px;
 }

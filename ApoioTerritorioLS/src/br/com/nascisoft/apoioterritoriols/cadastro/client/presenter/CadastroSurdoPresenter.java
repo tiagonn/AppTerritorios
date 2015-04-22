@@ -10,6 +10,7 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEv
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
@@ -174,7 +175,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	@Override
 	public void onVisualizar(Long id) {
 		getView().showWaitingPanel();
-		service.obterSurdo(id, new AsyncCallback<Surdo>() {
+		service.obterSurdoCompleto(id, new AsyncCallback<SurdoVO>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter surdo.\n", caught);
@@ -183,7 +184,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			}
 
 			@Override
-			public void onSuccess(Surdo result) {
+			public void onSuccess(SurdoVO result) {
 				view.onVisualizar(result);			
 				getView().hideWaitingPanel();
 			}

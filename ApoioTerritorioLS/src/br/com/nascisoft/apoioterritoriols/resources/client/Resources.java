@@ -52,9 +52,15 @@ public interface Resources extends ClientBundle {
 	
 	@Source("/images/visualizar.png")
 	ImageResource visualizar();
-
+	
 	@Source("/images/adicionarPessoa.png")
 	ImageResource adicionarPessoa();
+	
+	@Source("/images/salvar.png")
+	ImageResource salvar();
+
+	@Source("/images/voltar.png")
+	ImageResource voltar();
 	
 	
 }

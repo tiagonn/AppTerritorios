@@ -3,6 +3,7 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
@@ -33,6 +34,6 @@ public interface CadastroSurdoView extends CadastroView {
 	void setPosition(HasLatLng position, Boolean sucesso, Boolean mostraMapa);
 	void onEditar(Surdo surdo);
 	void onApagarSurdo(Long id);
-	void onVisualizar(Surdo surdo);
+	void onVisualizar(SurdoVO surdo);
 
 }

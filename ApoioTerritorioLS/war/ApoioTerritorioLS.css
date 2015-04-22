@@ -1491,3 +1491,18 @@ td.datePickerMonth {
 	width: 520px;
 	height: 120px;
 }
+
+.pessoas-manter-voltar {
+	width: 50%;
+	display: inline-block;
+	float: left;
+}
+
+.pessoas-manter-salvar {
+	width: 50%;
+	display: inline-block;
+}
+
+.pessoas-manter-salvar-button {
+	float: right;
+}

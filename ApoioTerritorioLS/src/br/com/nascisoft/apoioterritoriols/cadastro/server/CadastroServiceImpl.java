@@ -164,6 +164,20 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	public Surdo obterSurdo(Long id) {
 		return this.getDao().obterSurdo(id);
 	}
+	
+	@Override
+	public SurdoVO obterSurdoCompleto(Long id) {
+		Surdo surdo = this.getDao().obterSurdo(id);
+		
+		SurdoVO surdoVO = new SurdoVO(
+			surdo, 
+			this.getDao().obterMapa(surdo.getMapa()),
+			this.getAdminDao().obterRegiao(surdo.getRegiao().getId()),
+			this.getAdminDao().obterCidade(surdo.getCidade().getId()));
+
+		return surdoVO;
+		
+	}
 
 	@Override
 	public Long adicionarMapa(Long regiaoId) {

@@ -62,4 +62,6 @@ public interface CadastroServiceAsync {
 	void existePessoasNosMapas(List<Long> mapasIDs,
 			AsyncCallback<Boolean> callback);
 
+	void obterSurdoCompleto(Long id, AsyncCallback<SurdoVO> callback);
+
 }

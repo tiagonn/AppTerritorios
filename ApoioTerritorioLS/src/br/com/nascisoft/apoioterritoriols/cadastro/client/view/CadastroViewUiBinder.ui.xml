@@ -22,12 +22,18 @@
 								<g:downHoveringFace image='{res.adicionarPessoa}' />
 							</g:PushButton>
 						</g:VerticalPanel>
-					</g:HorizontalPanel>
-					
+					</g:HorizontalPanel>					
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="pesquisaResultadoLabel"/>
 					<c:CellTable ui:field="pesquisaResultadoCellTable" />
 					<c:SimplePager location="CENTER" ui:field="pesquisaResultadoSimplePager" pageSize="10"/>
+					<g:PopupPanel 
+						ui:field="visualizarPopUpPanel" 
+						visible="false" 
+						autoHideEnabled="true" 
+						animationEnabled="true" 
+						glassEnabled="true"><g:HTML>&nbsp;</g:HTML>
+					</g:PopupPanel>
 					<g:HTML wordWrap="true"><br/></g:HTML>
 					<g:HTML ui:field="manterWarningHTML" wordWrap="true" styleName="surdo-warning"></g:HTML>
 					<g:HTML wordWrap="true"><br/></g:HTML>
@@ -130,30 +136,45 @@
 									styleName="pessoas-manter-checkbox"></g:CheckBox>
 							</g:FlowPanel>
 							<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
-							<g:Button ui:field="manterSalvarButton" text="Salvar"/>
+							<g:FlowPanel width="100%">
+								<g:FlowPanel styleName="pessoas-manter-voltar">
+									<g:PushButton width="30px" ui:field='manterVoltarButton' enabled='true'>
+										<g:upFace image="{res.voltar}"></g:upFace>
+										<g:downFace image='{res.voltar}' />
+										<g:downHoveringFace image='{res.voltar}' />
+									</g:PushButton>
+								</g:FlowPanel>
+								<g:FlowPanel styleName="pessoas-manter-salvar">
+									<g:PushButton width="30px" ui:field='manterSalvarButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
+										<g:upFace image="{res.salvar}"></g:upFace>
+										<g:downFace image='{res.salvar}' />
+										<g:downHoveringFace image='{res.salvar}' />
+									</g:PushButton>
+								</g:FlowPanel>
+							</g:FlowPanel>
 						</g:FlowPanel>
-					</g:VerticalPanel>
-					<g:PopupPanel 
-						ui:field="manterMapaPopupPanel" 
-						visible="false" 
-						autoHideEnabled="false" 
-						animationEnabled="true" 
-						glassEnabled="true">
-						<g:VerticalPanel>
-							<g:HTML ui:field="manterWarningEnderecoHTML" wordWrap="true" styleName="surdo-warning-centro" visible="false">
-								O endereco não foi encontrado. Você precisará selecioná-lo manualmente ou voltar e alterar o cadastro.<br/><br/>
-							</g:HTML>
-							<g:LayoutPanel ui:field="manterMapaLayoutPanel"></g:LayoutPanel>
-							<g:HTML><br/></g:HTML>
-							<g:HorizontalPanel styleName="endereco-tabela">
-								<g:Button ui:field="manterMapaConfirmarEnderecoButton" text="Confirmar Endereço"></g:Button>
-								<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
-								<g:HorizontalPanel styleName="endereco-tabela-direita">
-									<g:Button ui:field="manterMapaVoltarEnderecoButton" text="Voltar"></g:Button>
+						<g:PopupPanel 
+							ui:field="manterMapaPopupPanel" 
+							visible="false" 
+							autoHideEnabled="false" 
+							animationEnabled="true" 
+							glassEnabled="true">
+							<g:VerticalPanel>
+								<g:HTML ui:field="manterWarningEnderecoHTML" wordWrap="true" styleName="surdo-warning-centro" visible="false">
+									O endereco não foi encontrado. Você precisará selecioná-lo manualmente ou voltar e alterar o cadastro.<br/><br/>
+								</g:HTML>
+								<g:LayoutPanel ui:field="manterMapaLayoutPanel"></g:LayoutPanel>
+								<g:HTML><br/></g:HTML>
+								<g:HorizontalPanel styleName="endereco-tabela">
+									<g:Button ui:field="manterMapaConfirmarEnderecoButton" text="Confirmar Endereço"></g:Button>
+									<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
+									<g:HorizontalPanel styleName="endereco-tabela-direita">
+										<g:Button ui:field="manterMapaVoltarEnderecoButton" text="Voltar"></g:Button>
+									</g:HorizontalPanel>
 								</g:HorizontalPanel>
-							</g:HorizontalPanel>
-						</g:VerticalPanel>
-					</g:PopupPanel>
+							</g:VerticalPanel>
+						</g:PopupPanel>
+					</g:VerticalPanel>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>

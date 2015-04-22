@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.common.ImageButtonCell;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
+import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
@@ -93,7 +94,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField TextBox manterMelhorDiaTextBox;
 	@UiField TextBox manterOnibusTextBox;
 	@UiField TextBox manterMSNTextBox;
-	@UiField Button manterSalvarButton;
+	@UiField PushButton manterSalvarButton;
 	@UiField SimplePager pesquisaResultadoSimplePager;
 	@UiField PopupPanel manterMapaPopupPanel;
 	@UiField LayoutPanel manterMapaLayoutPanel;
@@ -107,6 +108,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField TextBox manterQtdePessoasTextBox;
 	@UiField TextBox pesquisaFiltrarTextBox;
 	@UiField PushButton adicionarPessoaButton;
+	@UiField PushButton manterVoltarButton;
+	@UiField PopupPanel visualizarPopUpPanel;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -811,14 +814,70 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 	
 	@Override
-	public void onVisualizar(Surdo surdo) {
-		// TODO Auto-generated method stub
+	public void onVisualizar(SurdoVO surdo) {
+		int clientWidth = Window.getClientWidth();
+		int clientHeight = Window.getClientHeight();
+		int width = 600;
+		int top = 100;
+		int left = (clientWidth-width)/2;
+		if (clientWidth < width) {
+			width = 400;
+			left = 0;
+		}
+		if (clientHeight < 400) {
+			top = 0;
+		}
+		String sWidth = width+"px";
+
+		visualizarPopUpPanel.setWidth(sWidth);
+		visualizarPopUpPanel.setPopupPosition(left, top);
+		
+		String classe = " class=\"impressao-celula\"";
+		String classe1 = " class=\"impressao-celula-titulo\"";
+		StringBuilder html = new StringBuilder();
+			html.append("<table width=100% cellspacing=2 border=0>")
+			.append("<tr>")
+				.append("<td width=27px ").append(classe1).append(">Nome:</td>")
+				.append("<td width=386px ").append(classe).append(">")
+					.append(StringUtils.toCamelCase(surdo.getNome()))
+					.append(" (").append(surdo.getMapa().substring(5)).append(")")
+				.append("</td>")
+				.append("<td width=27px ").append(classe1).append(">Tel:</td>")
+				.append("<td width=100px ").append(classe).append(">")
+					.append(surdo.getTelefone())
+				.append("</td>")
+			.append("</tr>")
+			.append("<tr>")
+				.append("<td ").append(classe1).append(">End:</td>")
+				.append("<td ").append(classe).append(">").append(surdo.getEndereco()).append("</td>")
+				.append("<td ").append(classe1).append(">Instr:</td>")
+				.append("<td ").append(classe).append(">")
+				.append(surdo.getInstrutor())
+				.append("</td>")
+			.append("</tr>")
+			.append("<tr>")
+				.append("<td colspan=4 ").append(classe)
+					.append("><strong>Observações: </strong>")
+					.append(surdo.getObservacaoConsolidada())
+				.append("</td>")
+			.append("</tr>")
+			.append("</table>");
+			
+			visualizarPopUpPanel.clear();
+			visualizarPopUpPanel.add(new HTML(html.toString()));
+			visualizarPopUpPanel.setVisible(true);
+			visualizarPopUpPanel.show();
 		
 	}
 	
 	@UiHandler("adicionarPessoaButton")
 	void onAdicionarPessoaButtonClick(ClickEvent e) {
 		History.newItem("surdos!adicionar");
+	}
+	
+	@UiHandler("manterVoltarButton")
+	void onManterVoltarButtonClick(ClickEvent e) {
+		History.back();
 	}
 	
 }

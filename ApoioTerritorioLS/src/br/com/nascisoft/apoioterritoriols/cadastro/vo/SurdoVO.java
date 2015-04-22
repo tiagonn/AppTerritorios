@@ -398,5 +398,25 @@ public class SurdoVO implements Serializable {
 	public void setQtdePessoasEndereco(Byte qtdePessoasEndereco) {
 		this.qtdePessoasEndereco = qtdePessoasEndereco;
 	}
+	
+	public String getSafeHTMLDetails(String styleName) {
+		StringBuilder html = new StringBuilder();
+		if (!StringUtils.isEmpty(styleName)) {
+			html.append("<ul class=\"").append(styleName).append("\">");
+		} else {
+			html.append("<ul>");
+		}
+		
+		html.append("<li><strong>Nome: </strong>").append(StringUtils.toCamelCase(this.getNome())).append("</li>")
+			.append("<li><strong>Mapa: </strong>").append(this.getMapa().substring(5)).append("</li>")
+			.append("<li><strong>Telefone: </strong>").append(this.getTelefone()).append("</li>")
+			.append("<li><strong>Endereço: </strong>").append(this.getEndereco()).append("</li>")
+			.append("<li><strong>Instrutor: </strong>").append(this.getInstrutor()).append("</li>")
+			.append("<li><strong>Observações: </strong>").append(this.getObservacaoConsolidada()).append("</li>")
+			.append("</ul>");
+		
+		return html.toString();
+
+	}
 
 }

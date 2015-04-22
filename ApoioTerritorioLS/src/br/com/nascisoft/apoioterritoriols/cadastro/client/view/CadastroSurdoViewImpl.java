@@ -817,11 +817,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	public void onVisualizar(SurdoVO surdo) {
 		int clientWidth = Window.getClientWidth();
 		int clientHeight = Window.getClientHeight();
-		int width = 600;
+		int width = 400;
 		int top = 100;
 		int left = (clientWidth-width)/2;
 		if (clientWidth < width) {
-			width = 400;
+			width = 200;
 			left = 0;
 		}
 		if (clientHeight < 400) {
@@ -831,42 +831,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 
 		visualizarPopUpPanel.setWidth(sWidth);
 		visualizarPopUpPanel.setPopupPosition(left, top);
-		
-		String classe = " class=\"impressao-celula\"";
-		String classe1 = " class=\"impressao-celula-titulo\"";
-		StringBuilder html = new StringBuilder();
-			html.append("<table width=100% cellspacing=2 border=0>")
-			.append("<tr>")
-				.append("<td width=27px ").append(classe1).append(">Nome:</td>")
-				.append("<td width=386px ").append(classe).append(">")
-					.append(StringUtils.toCamelCase(surdo.getNome()))
-					.append(" (").append(surdo.getMapa().substring(5)).append(")")
-				.append("</td>")
-				.append("<td width=27px ").append(classe1).append(">Tel:</td>")
-				.append("<td width=100px ").append(classe).append(">")
-					.append(surdo.getTelefone())
-				.append("</td>")
-			.append("</tr>")
-			.append("<tr>")
-				.append("<td ").append(classe1).append(">End:</td>")
-				.append("<td ").append(classe).append(">").append(surdo.getEndereco()).append("</td>")
-				.append("<td ").append(classe1).append(">Instr:</td>")
-				.append("<td ").append(classe).append(">")
-				.append(surdo.getInstrutor())
-				.append("</td>")
-			.append("</tr>")
-			.append("<tr>")
-				.append("<td colspan=4 ").append(classe)
-					.append("><strong>Observações: </strong>")
-					.append(surdo.getObservacaoConsolidada())
-				.append("</td>")
-			.append("</tr>")
-			.append("</table>");
-			
-			visualizarPopUpPanel.clear();
-			visualizarPopUpPanel.add(new HTML(html.toString()));
-			visualizarPopUpPanel.setVisible(true);
-			visualizarPopUpPanel.show();
+		visualizarPopUpPanel.clear();
+		visualizarPopUpPanel.add(new HTML(surdo.getSafeHTMLDetails("pessoas-visualizar-lista")));
+		visualizarPopUpPanel.setVisible(true);
+		visualizarPopUpPanel.show();
 		
 	}
 	

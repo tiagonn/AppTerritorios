@@ -1428,10 +1428,6 @@ td.datePickerMonth {
   cursor: row-resize;
 }
 
-.imageCell {
-	width: 40px;
-}
-
 .imageButton {
 	cursor: pointer; cursor: hand;
 	padding: 2px;
@@ -1510,4 +1506,23 @@ td.datePickerMonth {
 .pessoas-visualizar-lista {
 	font-size: small;
 	padding-right: 20px;
+}
+
+.pessoas-manter-confirmar-voltar {
+	width: 33%;
+	display: inline-block;
+	float: left;
+}
+
+.pessoas-manter-confirmar-satelite {
+	width: 33%;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pessoas-manter-confirmar-salvar {
+	width: 34%;
+	display: inline-block;
 }

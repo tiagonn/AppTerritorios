@@ -16,7 +16,7 @@
 							<g:TextBox ui:field="pesquisaFiltrarTextBox"></g:TextBox>
 						</g:VerticalPanel>
 						<g:VerticalPanel horizontalAlignment="right" width="100%">
-							<g:PushButton width="30px" ui:field='adicionarPessoaButton' enabled='true'>
+							<g:PushButton width="35px" ui:field='adicionarPessoaButton' enabled='true'>
 								<g:upFace image="{res.adicionarPessoa}"></g:upFace>
 								<g:downFace image='{res.adicionarPessoa}' />
 								<g:downHoveringFace image='{res.adicionarPessoa}' />
@@ -138,14 +138,14 @@
 							<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
 							<g:FlowPanel width="100%">
 								<g:FlowPanel styleName="pessoas-manter-voltar">
-									<g:PushButton width="30px" ui:field='manterVoltarButton' enabled='true'>
+									<g:PushButton width="35px" ui:field='manterVoltarButton' enabled='true'>
 										<g:upFace image="{res.voltar}"></g:upFace>
 										<g:downFace image='{res.voltar}' />
 										<g:downHoveringFace image='{res.voltar}' />
 									</g:PushButton>
 								</g:FlowPanel>
 								<g:FlowPanel styleName="pessoas-manter-salvar">
-									<g:PushButton width="30px" ui:field='manterSalvarButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
+									<g:PushButton width="35px" ui:field='manterSalvarButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
 										<g:upFace image="{res.salvar}"></g:upFace>
 										<g:downFace image='{res.salvar}' />
 										<g:downHoveringFace image='{res.salvar}' />
@@ -165,13 +165,25 @@
 								</g:HTML>
 								<g:LayoutPanel ui:field="manterMapaLayoutPanel"></g:LayoutPanel>
 								<g:HTML><br/></g:HTML>
-								<g:HorizontalPanel styleName="endereco-tabela">
-									<g:Button ui:field="manterMapaConfirmarEnderecoButton" text="Confirmar Endereço"></g:Button>
-									<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
-									<g:HorizontalPanel styleName="endereco-tabela-direita">
-										<g:Button ui:field="manterMapaVoltarEnderecoButton" text="Voltar"></g:Button>
-									</g:HorizontalPanel>
-								</g:HorizontalPanel>
+								<g:FlowPanel width="100%">
+									<g:FlowPanel styleName="pessoas-manter-confirmar-voltar">
+										<g:PushButton width="35px" ui:field='manterMapaVoltarEnderecoButton' enabled='true'>
+											<g:upFace image="{res.voltar}"></g:upFace>
+											<g:downFace image='{res.voltar}' />
+											<g:downHoveringFace image='{res.voltar}' />
+										</g:PushButton>										
+									</g:FlowPanel>
+									<g:FlowPanel styleName="pessoas-manter-confirmar-satelite">
+										<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
+									</g:FlowPanel>
+									<g:FlowPanel styleName="pessoas-manter-confirmar-salvar">
+										<g:PushButton width="35px" ui:field='manterMapaConfirmarEnderecoButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
+											<g:upFace image="{res.salvar}"></g:upFace>
+											<g:downFace image='{res.salvar}' />
+											<g:downHoveringFace image='{res.salvar}' />
+										</g:PushButton>
+									</g:FlowPanel>
+								</g:FlowPanel>
 							</g:VerticalPanel>
 						</g:PopupPanel>
 					</g:VerticalPanel>

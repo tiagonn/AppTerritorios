@@ -45,7 +45,6 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -99,8 +98,8 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PopupPanel manterMapaPopupPanel;
 	@UiField LayoutPanel manterMapaLayoutPanel;
 	@UiField HTML manterWarningEnderecoHTML;
-	@UiField Button manterMapaConfirmarEnderecoButton;
-	@UiField Button manterMapaVoltarEnderecoButton;
+	@UiField PushButton manterMapaConfirmarEnderecoButton;
+	@UiField PushButton manterMapaVoltarEnderecoButton;
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField CheckBox manterMudouSe;
 	@UiField CheckBox manterVisitarSomentePorAnciaos;
@@ -396,7 +395,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					presenter.onVisualizar(object.getId());
 				}
 			});
-			visualizarColumn.setCellStyleNames("imageCell");
 			
 			Column<SurdoDetailsVO, String> editColumn = new Column<SurdoDetailsVO, String>(
 					new ImageButtonCell()) {
@@ -411,7 +409,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					presenter.onEditarButtonClick(object.getId());
 				}
 			});
-			editColumn.setCellStyleNames("imageCell");
 			
 			Column<SurdoDetailsVO, String> deletarColumn = new Column<SurdoDetailsVO, String>(
 					new ImageButtonCell()) {
@@ -428,7 +425,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 					}
 				}
 			});
-			deletarColumn.setCellStyleNames("imageCell");
 			
 			this.pesquisaResultadoCellTable.addColumnSortHandler(nomeSortHandler);
 			this.pesquisaResultadoCellTable.addColumnSortHandler(cidadeSortHandler);

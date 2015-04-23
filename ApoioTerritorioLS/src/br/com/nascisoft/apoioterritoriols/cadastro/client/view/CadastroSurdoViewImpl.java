@@ -135,7 +135,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.bairroOracle = new MultiWordSuggestOracle();
 		this.manterBairroSuggestBox = new SuggestBox(this.bairroOracle);
 		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
-		this.pesquisaResultadoCellTable = new CellTable<SurdoDetailsVO>(15, CellTableCustomResources.INSTANCE);
+		this.pesquisaResultadoCellTable = new CellTable<SurdoDetailsVO>(10, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.iniciarSNListBox(this.manterLibrasListBox);
 		this.iniciarSNListBox(this.manterDVDListBox);

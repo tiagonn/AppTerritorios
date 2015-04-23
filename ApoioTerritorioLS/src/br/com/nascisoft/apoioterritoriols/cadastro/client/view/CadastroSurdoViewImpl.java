@@ -383,7 +383,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			};
 			
 			Column<SurdoDetailsVO, String> visualizarColumn = new Column<SurdoDetailsVO, String>(
-					new ImageButtonCell()) {
+					new ImageButtonCell("Visualizar", "Visualizar")) {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return Resources.INSTANCE.visualizar().getSafeUri().asString();
@@ -397,7 +397,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			});
 			
 			Column<SurdoDetailsVO, String> editColumn = new Column<SurdoDetailsVO, String>(
-					new ImageButtonCell()) {
+					new ImageButtonCell("Editar", "Editar")) {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return Resources.INSTANCE.editar().getSafeUri().asString();
@@ -411,7 +411,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			});
 			
 			Column<SurdoDetailsVO, String> deletarColumn = new Column<SurdoDetailsVO, String>(
-					new ImageButtonCell()) {
+					new ImageButtonCell("Apagar", "Apagar")) {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
 					return Resources.INSTANCE.apagar().getSafeUri().asString();

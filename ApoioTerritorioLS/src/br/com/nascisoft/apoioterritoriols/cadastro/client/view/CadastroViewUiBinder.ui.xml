@@ -18,8 +18,7 @@
 						<g:VerticalPanel horizontalAlignment="right" width="100%">
 							<g:PushButton width="35px" ui:field='adicionarPessoaButton' enabled='true'>
 								<g:upFace image="{res.adicionarPessoa}"></g:upFace>
-								<g:downFace image='{res.adicionarPessoa}' />
-								<g:downHoveringFace image='{res.adicionarPessoa}' />
+								<g:downFace image="{res.adicionarPessoa}" />
 							</g:PushButton>
 						</g:VerticalPanel>
 					</g:HorizontalPanel>					
@@ -139,16 +138,14 @@
 							<g:FlowPanel width="100%">
 								<g:FlowPanel styleName="pessoas-manter-voltar">
 									<g:PushButton width="35px" ui:field='manterVoltarButton' enabled='true'>
-										<g:upFace image="{res.voltar}"></g:upFace>
-										<g:downFace image='{res.voltar}' />
-										<g:downHoveringFace image='{res.voltar}' />
+										<g:upFace image="{res.voltar}" />
+										<g:downFace image="{res.voltar}" />
 									</g:PushButton>
 								</g:FlowPanel>
 								<g:FlowPanel styleName="pessoas-manter-salvar">
 									<g:PushButton width="35px" ui:field='manterSalvarButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
-										<g:upFace image="{res.salvar}"></g:upFace>
-										<g:downFace image='{res.salvar}' />
-										<g:downHoveringFace image='{res.salvar}' />
+										<g:upFace image="{res.salvar}" />
+										<g:downFace image="{res.salvar}" />
 									</g:PushButton>
 								</g:FlowPanel>
 							</g:FlowPanel>
@@ -168,9 +165,8 @@
 								<g:FlowPanel width="100%">
 									<g:FlowPanel styleName="pessoas-manter-confirmar-voltar">
 										<g:PushButton width="35px" ui:field='manterMapaVoltarEnderecoButton' enabled='true'>
-											<g:upFace image="{res.voltar}"></g:upFace>
-											<g:downFace image='{res.voltar}' />
-											<g:downHoveringFace image='{res.voltar}' />
+											<g:upFace image="{res.voltar}" />
+											<g:downFace image="{res.voltar}" />
 										</g:PushButton>										
 									</g:FlowPanel>
 									<g:FlowPanel styleName="pessoas-manter-confirmar-satelite">
@@ -178,9 +174,8 @@
 									</g:FlowPanel>
 									<g:FlowPanel styleName="pessoas-manter-confirmar-salvar">
 										<g:PushButton width="35px" ui:field='manterMapaConfirmarEnderecoButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
-											<g:upFace image="{res.salvar}"></g:upFace>
-											<g:downFace image='{res.salvar}' />
-											<g:downHoveringFace image='{res.salvar}' />
+											<g:upFace image="{res.salvar}" />
+											<g:downFace image="{res.salvar}" />
 										</g:PushButton>
 									</g:FlowPanel>
 								</g:FlowPanel>

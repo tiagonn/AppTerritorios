@@ -16,7 +16,7 @@
 							<g:TextBox ui:field="pesquisaFiltrarTextBox"></g:TextBox>
 						</g:VerticalPanel>
 						<g:VerticalPanel horizontalAlignment="right" width="100%">
-							<g:PushButton width="35px" ui:field='adicionarPessoaButton' enabled='true'>
+							<g:PushButton width="35px" ui:field='adicionarPessoaButton' enabled='true' title="Adicionar Pessoa">
 								<g:upFace image="{res.adicionarPessoa}"></g:upFace>
 								<g:downFace image="{res.adicionarPessoa}" />
 							</g:PushButton>
@@ -137,15 +137,20 @@
 							<g:HTML wordWrap="true" styleName="surdo-warning">&nbsp;</g:HTML>
 							<g:FlowPanel width="100%">
 								<g:FlowPanel styleName="pessoas-manter-voltar">
-									<g:PushButton width="35px" ui:field='manterVoltarButton' enabled='true'>
+									<g:PushButton width="35px" ui:field='manterVoltarButton' enabled='true' title="Voltar">
 										<g:upFace image="{res.voltar}" />
 										<g:downFace image="{res.voltar}" />
 									</g:PushButton>
 								</g:FlowPanel>
 								<g:FlowPanel styleName="pessoas-manter-salvar">
-									<g:PushButton width="35px" ui:field='manterSalvarButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
-										<g:upFace image="{res.salvar}" />
-										<g:downFace image="{res.salvar}" />
+									<g:PushButton 
+										width="35px" 
+										ui:field='manterSalvarButton' 
+										enabled='true' 
+										styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button"
+										title="Salvar">
+											<g:upFace image="{res.salvar}" />
+											<g:downFace image="{res.salvar}" />
 									</g:PushButton>
 								</g:FlowPanel>
 							</g:FlowPanel>
@@ -164,7 +169,7 @@
 								<g:HTML><br/></g:HTML>
 								<g:FlowPanel width="100%">
 									<g:FlowPanel styleName="pessoas-manter-confirmar-voltar">
-										<g:PushButton width="35px" ui:field='manterMapaVoltarEnderecoButton' enabled='true'>
+										<g:PushButton width="35px" ui:field='manterMapaVoltarEnderecoButton' enabled='true' title="Voltar">
 											<g:upFace image="{res.voltar}" />
 											<g:downFace image="{res.voltar}" />
 										</g:PushButton>										
@@ -173,9 +178,14 @@
 										<g:CheckBox ui:field="manterMapaSateliteCheckBox" checked="false" text="Satelite"></g:CheckBox>
 									</g:FlowPanel>
 									<g:FlowPanel styleName="pessoas-manter-confirmar-salvar">
-										<g:PushButton width="35px" ui:field='manterMapaConfirmarEnderecoButton' enabled='true' styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button">
-											<g:upFace image="{res.salvar}" />
-											<g:downFace image="{res.salvar}" />
+										<g:PushButton 
+											width="35px" 
+											ui:field='manterMapaConfirmarEnderecoButton' 
+											enabled='true' 
+											styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button" 
+											title="Confirmar Endereço">
+												<g:upFace image="{res.salvar}" />
+												<g:downFace image="{res.salvar}" />
 										</g:PushButton>
 									</g:FlowPanel>
 								</g:FlowPanel>
@@ -188,84 +198,88 @@
 		<g:tab>
 			<g:header><img src="{res.mapa.getSafeUri}" title="Mapas" alt="Mapas"/></g:header>
 			<g:ScrollPanel>
-				<g:VerticalPanel>
-					<g:Label text="Pesquisar"/>
-					<g:Grid>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Cidade: " />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Região: " />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Mapa: " />
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaMapaCidadeListBox" />
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaMapaRegiaoListBox" enabled="false" />
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox ui:field="pesquisaMapaMapaListBox" enabled="false" />
-							</g:customCell>
-						</g:row>
-					</g:Grid>
+				<g:FlowPanel>
+					<g:FlowPanel styleName="mapas-tabela">
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Cidade: " />
+							<g:ListBox ui:field="pesquisaMapaCidadeListBox" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Região: " />
+							<g:ListBox ui:field="pesquisaMapaRegiaoListBox" enabled="false" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Mapa: " />
+							<g:ListBox ui:field="pesquisaMapaMapaListBox" enabled="false" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula-botao" title="Apagar Mapa">
+							<g:PushButton 
+								width="35px" 
+								ui:field='manterMapaApagarMapaButton' 
+								visible="false" 
+								styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button"
+								title="Apagar Mapa">
+									<g:upFace image="{res.apagar}" />
+									<g:downFace image="{res.apagar}" />
+							</g:PushButton>
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula-botao">
+							<g:PushButton 
+								width="35px" 
+								ui:field='pesquisaMapaAdicionarMapaButton' 
+								visible="false" 
+								styleName="gwt-PushButton gwt-PushButton-up pessoas-manter-salvar-button"
+								title="Adicionar Mapa">
+									<g:upFace image="{res.adicionarMapa}" />
+									<g:downFace image="{res.adicionarMapa}" />
+							</g:PushButton>
+						</g:FlowPanel>
+					</g:FlowPanel>
 					<g:HTML wordWrap="true"><br /></g:HTML>
-					<g:Grid>
-						<g:row>
-							<g:customCell>
-								<g:Button ui:field="pesquisaMapaAdicionarMapaButton" enabled="false" text="Adicionar Mapa na Região" visible="false"></g:Button>
-							</g:customCell>
-						</g:row>
-					</g:Grid>
 					
-					<g:Label ui:field="manterMapaSurdoNomeMapaLabel" visible="false"/>
-					<g:Grid ui:field="manterMapaSurdoGrid" visible="false" cellSpacing="15">
-						<g:row>
-							<g:customCell>
-								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Surdos da região sem mapa</g:HTML>
-							</g:customCell>
-							<g:customCell>
-								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Associação/Desassociação</g:HTML>
-							</g:customCell>
-							<g:customCell>
-								<g:HTML wordWrap="true" styleName="surdo-tabela-header">Surdos no mapa atualmente</g:HTML>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:ListBox visibleItemCount="5" ui:field="manterMapaSurdoDeListBox" multipleSelect="true"/>
-							</g:customCell>
-							<g:customCell>
-								<g:VerticalPanel styleName="surdo-celula-central">
-									<g:Button ui:field="manterMapaSurdoAdicionarButton" text="&gt;&gt;"/>
-									<g:Button ui:field="manterMapaSurdoRemoverButton" text="&lt;&lt;"/>
-								</g:VerticalPanel>
-							</g:customCell>
-							<g:customCell>
-								<g:ListBox visibleItemCount="5" ui:field="manterMapaSurdoParaListBox" multipleSelect="true"/>
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell>
-								<g:Button ui:field="manterMapaApagarMapaButton" text="Apagar Mapa"/>
-							</g:customCell>
-						</g:row>
-					</g:Grid>
-					<g:HorizontalPanel ui:field="manterMapaLegendaHorizontalPanel" visible="false" width="740px">
-						<g:HTML>
-							<strong>Legenda:</strong> 
-							<img src="images/icone_vermelho.png" alt="Surdos sem mapa"/> Surdos sem mapa
-							<img src="images/icone_azul.png" alt="Surdos no mapa atual"/> Surdos no mapa atual
-							<img src="images/icone_verde.png" alt="Surdos em outros mapas"/> Surdos em outros mapas
-						</g:HTML>
-					</g:HorizontalPanel>
-					<g:LayoutPanel ui:field="manterMapaMapaLayoutPanel" visible="false" width="750px"></g:LayoutPanel>
-				</g:VerticalPanel>
+					<g:FlowPanel ui:field="manterMapaSelecaoPessoasContainerFlowPanel" styleName="mapas-manter-selecao-container" visible="false">
+						<g:FlowPanel ui:field="manterMapaSelecaoPessoasContainerDeFlowPanel" styleName="mapas-manter-selecao-caixa">
+							<g:FlowPanel styleName="mapas-manter-selecao-caixa-header">
+								<g:Label text="Pessoas na região fora de mapas"/>
+							</g:FlowPanel>
+							<g:FlowPanel ui:field="manterMapaSelecaoPessoasDeFlowPanel" styleName="mapas-manter-selecao-caixa-body">
+							</g:FlowPanel>
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-manter-selecao-botoes">
+							<g:FlowPanel styleName="mapas-manter-selecao-botao">
+								<g:PushButton 
+									ui:field="manterMapaSurdoAdicionarButton" 
+									title="Associar pessoa à mapa"
+									styleName="gwt-PushButton gwt-PushButton-up mapas-manter-selecao-button"/>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-selecao-botao">
+								<g:PushButton 
+									ui:field="manterMapaSurdoRemoverButton" 
+									title="Remover pessoa de mapa"
+									styleName="gwt-PushButton gwt-PushButton-up mapas-manter-selecao-button"/>
+							</g:FlowPanel>
+						</g:FlowPanel>
+						<g:FlowPanel ui:field="manterMapaSelecaoPessoasContainerParaFlowPanel" styleName="mapas-manter-selecao-caixa">
+							<g:FlowPanel styleName="mapas-manter-selecao-caixa-header">
+								<g:Label text="Pessoas no mapa selecionado"/>
+							</g:FlowPanel>
+							<g:FlowPanel ui:field="manterMapaSelecaoPessoasParaFlowPanel" styleName="mapas-manter-selecao-caixa-body">
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:FlowPanel>
+					
+					<g:FlowPanel ui:field="manterMapaMapaContainerFlowPanel" styleName="mapas-manter-mapa-container" visible="false">
+						<g:HorizontalPanel>
+							<g:HTML>
+								<strong>Legenda:</strong> 
+								<img src="images/icone_vermelho.png" alt="Surdos sem mapa"/> Surdos sem mapa
+								<img src="images/icone_azul.png" alt="Surdos no mapa atual"/> Surdos no mapa atual
+								<img src="images/icone_verde.png" alt="Surdos em outros mapas"/> Surdos em outros mapas
+							</g:HTML>
+						</g:HorizontalPanel>
+						<g:LayoutPanel ui:field="manterMapaMapaLayoutPanel"></g:LayoutPanel>
+					</g:FlowPanel>
+				</g:FlowPanel>
 			</g:ScrollPanel>
 		</g:tab>
 		<g:tab>

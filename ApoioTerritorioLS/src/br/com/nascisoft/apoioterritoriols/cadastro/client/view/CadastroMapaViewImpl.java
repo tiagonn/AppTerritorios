@@ -1,7 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,12 +13,14 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
@@ -41,14 +43,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -63,21 +65,22 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiField ListBox pesquisaMapaCidadeListBox;
 	@UiField ListBox pesquisaMapaRegiaoListBox;
 	@UiField ListBox pesquisaMapaMapaListBox;
-	@UiField Label manterMapaSurdoNomeMapaLabel;
-	@UiField Grid manterMapaSurdoGrid;
-	@UiField ListBox manterMapaSurdoDeListBox;
-	@UiField ListBox manterMapaSurdoParaListBox;
-	@UiField Button manterMapaSurdoAdicionarButton;
-	@UiField Button manterMapaSurdoRemoverButton;
-	@UiField Button manterMapaApagarMapaButton;
+	@UiField PushButton manterMapaSurdoAdicionarButton;
+	@UiField PushButton manterMapaSurdoRemoverButton;
+	@UiField PushButton manterMapaApagarMapaButton;
 	@UiField LayoutPanel manterMapaMapaLayoutPanel;
-	@UiField HorizontalPanel manterMapaLegendaHorizontalPanel;
 	@UiField PopupPanel waitingPopUpPanel;
-	@UiField Button pesquisaMapaAdicionarMapaButton;
+	@UiField PushButton pesquisaMapaAdicionarMapaButton;
+	@UiField FlowPanel manterMapaSelecaoPessoasContainerFlowPanel;
+	@UiField FlowPanel manterMapaSelecaoPessoasDeFlowPanel;
+	@UiField FlowPanel manterMapaSelecaoPessoasParaFlowPanel;
+	@UiField FlowPanel manterMapaMapaContainerFlowPanel;
 	
 	private AbrirMapaVO abrirMapaVO;
 	
 	private Map<Long, InfoWindowVO> mapaInfoWindow;
+	private Set<Long> setPessoasDe = new HashSet<Long>();
+	private Set<Long> setPessoasPara = new HashSet<Long>();
 	
 	private static final int TIPO_SURDO_SEM_MAPA = 0;
 	private static final int TIPO_SURDO_MAPA_ATUAL = 1;
@@ -127,19 +130,20 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.pesquisaMapaMapaListBox.clear();
 		this.pesquisaMapaMapaListBox.addItem("-- Escolha um mapa --", "");
 		this.pesquisaMapaMapaListBox.setEnabled(false);
-		this.pesquisaMapaAdicionarMapaButton.setEnabled(false);
 		this.pesquisaMapaAdicionarMapaButton.setVisible(false);
+		this.manterMapaApagarMapaButton.setVisible(false);
 		this.abrirMapaVO = null;
 	}
 	
 	private void limparManter() {
 		this.abrirMapaVO = null;
-		this.manterMapaSurdoGrid.setVisible(false);
-		this.manterMapaSurdoNomeMapaLabel.setText("");
-		this.manterMapaMapaLayoutPanel.clear();
-		this.manterMapaMapaLayoutPanel.setVisible(false);
-		this.manterMapaLegendaHorizontalPanel.setVisible(false);
 		this.mapaInfoWindow = new HashMap<Long, InfoWindowVO>();
+		this.manterMapaApagarMapaButton.setVisible(false);
+		this.manterMapaSelecaoPessoasContainerFlowPanel.setVisible(false);
+		this.manterMapaMapaContainerFlowPanel.setVisible(false);
+		setPessoasDe.clear();
+		setPessoasPara.clear();
+
 	}
 	
 
@@ -176,7 +180,6 @@ public class CadastroMapaViewImpl extends Composite implements
 			this.pesquisaMapaRegiaoListBox.setSelectedIndex(
 					obterIndice(this.pesquisaMapaRegiaoListBox, this.abrirMapaVO.getRegiao().getId().toString()));
 			this.pesquisaMapaAdicionarMapaButton.setVisible(true);
-			this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
 			this.presenter.onPesquisaRegiaoListBoxChange(this.abrirMapaVO.getRegiao().getId());
 		}
 	}
@@ -229,14 +232,12 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (presenter != null) {
 			if (!this.pesquisaMapaRegiaoListBox.getValue(this.pesquisaMapaRegiaoListBox.getSelectedIndex()).isEmpty()) {
 				this.pesquisaMapaAdicionarMapaButton.setVisible(true);
-				this.pesquisaMapaAdicionarMapaButton.setEnabled(true);
 				this.presenter.onPesquisaRegiaoListBoxChange(
 						Long.valueOf(
 								pesquisaMapaRegiaoListBox.getValue(pesquisaMapaRegiaoListBox.getSelectedIndex())));
 			} else {
 				this.pesquisaMapaMapaListBox.setEnabled(false);
 				this.pesquisaMapaMapaListBox.setSelectedIndex(0);
-				this.pesquisaMapaAdicionarMapaButton.setEnabled(false);
 				this.pesquisaMapaAdicionarMapaButton.setVisible(false);
 			}
 		}
@@ -274,28 +275,22 @@ public class CadastroMapaViewImpl extends Composite implements
 
 	@UiHandler("manterMapaSurdoAdicionarButton")
 	void onManterMapaSurdoAdicionarButtonClick(ClickEvent event) {
-		if (this.presenter != null) {
-			List<Long> lista = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
-			if (lista.size() > 0) {
-				int tamanhoMapa = this.abrirMapaVO.getCidade().getQuantidadeSurdosMapa();
-				if (lista.size() + this.manterMapaSurdoParaListBox.getItemCount() > tamanhoMapa) {
-					Window.alert("Apenas " + tamanhoMapa + " surdo(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
-				} else {
-					this.presenter.adicionarSurdosMapa(lista, 
-							Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
-									this.pesquisaMapaMapaListBox.getSelectedIndex())));
-				}
+		if (setPessoasDe.size() > 0) {
+			int tamanhoMapa = this.abrirMapaVO.getCidade().getQuantidadeSurdosMapa();
+			if (setPessoasDe.size() + this.manterMapaSelecaoPessoasParaFlowPanel.getWidgetCount() > tamanhoMapa) {
+				Window.alert("Apenas " + tamanhoMapa + " pessoas(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
+			} else {
+				this.presenter.adicionarSurdosMapa(setPessoasDe, 
+						Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
+								this.pesquisaMapaMapaListBox.getSelectedIndex())));
 			}
 		}
 	}
 
 	@UiHandler("manterMapaSurdoRemoverButton")
 	void onManterMapaSurdoRemoverButtonClick(ClickEvent event) {
-		if (this.presenter != null) {
-			List<Long> lista = mapearSurdosSelecionados(this.manterMapaSurdoParaListBox);
-			if (lista.size() > 0) {
-				this.presenter.removerSurdosMapa(lista);
-			}
+		if (this.setPessoasPara.size() > 0) {
+			this.presenter.removerSurdosMapa(this.setPessoasPara);
 		}
 	}
 
@@ -307,16 +302,6 @@ public class CadastroMapaViewImpl extends Composite implements
 						this.pesquisaMapaMapaListBox.getSelectedIndex())));
 			}
 		}
-	}
-	
-	private List<Long> mapearSurdosSelecionados(ListBox box) {
-		List<Long> lista = new ArrayList<Long>();
-		for (int i = 0; i < box.getItemCount(); i++) {
-			if (box.isItemSelected(i)) {
-				lista.add(Long.valueOf(box.getValue(i)));
-			}
-		}
-		return lista;
 	}
 	
 	private void setDadosFiltros(Cidade cidade) {
@@ -339,30 +324,72 @@ public class CadastroMapaViewImpl extends Composite implements
 		opt.setNavigationControl(true);
 		opt.setScrollwheel(true);
 		MapWidget mapa = new MapWidget(opt);
-		mapa.setSize("750px", "400px");
-
-		this.manterMapaSurdoParaListBox.clear();
-		for (SurdoDetailsVO surdo : vo.getSurdosPara()) {
-			this.manterMapaSurdoParaListBox.addItem(StringUtils.toCamelCase(surdo.getNome()), surdo.getId().toString());
-			adicionarMarcadorSurdo(surdo, mapa, TIPO_SURDO_MAPA_ATUAL);
-		}	
-		this.manterMapaSurdoDeListBox.clear();
+		
+		this.manterMapaSelecaoPessoasDeFlowPanel.clear();
 		for (SurdoDetailsVO surdo : vo.getSurdosDe()) {
-			this.manterMapaSurdoDeListBox.addItem(StringUtils.toCamelCase(surdo.getNome()), surdo.getId().toString());
+			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getNome()));
+			cb.setStyleName("mapas-manter-selecao-checkbox");
+			final Long idSurdo = surdo.getId();
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {				
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					if (event.getValue()) {
+						setPessoasDe.add(idSurdo);
+						abrirMarcadorMapa(idSurdo);
+					} else {
+						setPessoasDe.remove(idSurdo);
+						fecharMarcadorMapa(idSurdo);
+					}					
+				}
+			});
 			adicionarMarcadorSurdo(surdo, mapa, TIPO_SURDO_SEM_MAPA);
+			this.manterMapaSelecaoPessoasDeFlowPanel.add(cb);
 		}
+		
+		this.manterMapaSelecaoPessoasParaFlowPanel.clear();
+		for (SurdoDetailsVO surdo : vo.getSurdosPara()) {
+			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getNome()));
+			cb.setStyleName("mapas-manter-selecao-checkbox");
+			final Long idSurdo = surdo.getId();
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {				
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					if (event.getValue()) {
+						setPessoasPara.add(idSurdo);
+						abrirMarcadorMapa(idSurdo);
+					} else {
+						setPessoasPara.remove(idSurdo);
+						fecharMarcadorMapa(idSurdo);
+					}					
+				}
+			});
+			adicionarMarcadorSurdo(surdo, mapa, TIPO_SURDO_MAPA_ATUAL);
+			this.manterMapaSelecaoPessoasParaFlowPanel.add(cb);
+		}
+		
 		for (SurdoDetailsVO surdo : vo.getSurdosOutros()) {
 			adicionarMarcadorSurdo(surdo, mapa, TIPO_SURDO_MAPA_OUTROS);
 		}
-		this.manterMapaSurdoGrid.setVisible(true);
-		this.manterMapaSurdoNomeMapaLabel.setText(vo.getMapa().getNome());
-		this.manterMapaSurdoNomeMapaLabel.setVisible(true);
 		
-		this.manterMapaMapaLayoutPanel.setSize("750px", "400px");
-		this.manterMapaMapaLayoutPanel.setVisible(true);
-		this.manterMapaMapaLayoutPanel.add(mapa);
+		this.manterMapaSurdoAdicionarButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraBaixo()));
+		this.manterMapaSurdoAdicionarButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraBaixo()));
+
+		this.manterMapaSurdoRemoverButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraCima()));
+		this.manterMapaSurdoRemoverButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraCima()));
 		
-		this.manterMapaLegendaHorizontalPanel.setVisible(true);
+		this.manterMapaApagarMapaButton.setVisible(true);
+		this.manterMapaSelecaoPessoasContainerFlowPanel.setVisible(true);
+		this.manterMapaMapaContainerFlowPanel.setVisible(true);
+		
+		int larguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth() - 20;
+		int alturaMapa = Window.getClientHeight() - this.manterMapaMapaContainerFlowPanel.getAbsoluteTop() - 60;
+		String sLarguraMapa = larguraMapa + "px";
+		String sAlturaMapa = alturaMapa + "px";
+		
+		this.manterMapaMapaLayoutPanel.clear();
+		this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
+		mapa.setSize(sLarguraMapa, sAlturaMapa);
+		this.manterMapaMapaLayoutPanel.add(mapa);		
 	}
 	
 	private void adicionarMarcadorSurdo(SurdoDetailsVO surdo, final MapWidget mapa, int tipoSurdo) {
@@ -414,41 +441,15 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.onPesquisaMapaRegiaoListBoxChange(null);
 	}
 	
-	@UiHandler("manterMapaSurdoDeListBox")
-	void onManterMapaSurdoDeListMouseUp(MouseUpEvent event) {
-		abrirInfoWindowSurdosSelecionados();
-	}
-	
-	@UiHandler("manterMapaSurdoParaListBox")
-	void onManterMapaSurdoParaListMouseUp(MouseUpEvent event) {
-		abrirInfoWindowSurdosSelecionados();
-	}	
-	
-	private void abrirInfoWindowSurdosSelecionados() {
-		fecharTodosMarcadores();
-		
-		List<Long> surdosSelecionados = mapearSurdosSelecionados(this.manterMapaSurdoDeListBox);
-		
-		for (Long id : surdosSelecionados) {
-			InfoWindowVO vo = this.mapaInfoWindow.get(id);
-			vo.getInfoWindow().open(vo.getMap(), vo.getMarker());
-		}		
-		
-		surdosSelecionados = mapearSurdosSelecionados(this.manterMapaSurdoParaListBox);
-		
-		for (Long id : surdosSelecionados) {
-			InfoWindowVO vo = this.mapaInfoWindow.get(id);
-			vo.getInfoWindow().open(vo.getMap(), vo.getMarker());
-		}
+	private void abrirMarcadorMapa(Long id) {
+		InfoWindowVO vo = this.mapaInfoWindow.get(id);
+		vo.getInfoWindow().open(vo.getMap(), vo.getMarker());
 		
 	}
 	
-	private void fecharTodosMarcadores() {
-		Set<Long> identificadores = this.mapaInfoWindow.keySet();
-		for (Long id : identificadores) {
-			InfoWindowVO vo = this.mapaInfoWindow.get(id);
-			vo.getInfoWindow().close();
-		}
+	private void fecharMarcadorMapa(Long id) {
+		InfoWindowVO vo = this.mapaInfoWindow.get(id);
+		vo.getInfoWindow().close();
 	}
 
 }

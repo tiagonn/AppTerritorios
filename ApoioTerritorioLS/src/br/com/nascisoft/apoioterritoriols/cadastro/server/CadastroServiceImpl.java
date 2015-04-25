@@ -235,13 +235,13 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	}
 
 	@Override
-	public Long adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa) {
+	public Long adicionarSurdosMapa(Set<Long> surdos, Long identificadorMapa) {
 		this.getDao().adicionarSurdoMapa(surdos, identificadorMapa);
 		return identificadorMapa;
 	}
 	
 	@Override
-	public Long removerSurdosMapa(List<Long> surdos) {
+	public Long removerSurdosMapa(Set<Long> surdos) {
 		return this.getDao().removerSurdoMapa(surdos);
 	}
 
@@ -254,13 +254,12 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	@Override
 	public void apagarMapa(Long identificadorMapa) {
 		List<Surdo> surdos = this.getDao().obterSurdos(null, null, null, identificadorMapa, null);
-		List<Long> lista = this.obterListaIds(surdos);
-		this.removerSurdosMapa(lista);
+		this.removerSurdosMapa(this.obterListaIds(surdos));
 		this.getDao().apagarMapa(identificadorMapa);
 	}
 	
-	private List<Long> obterListaIds(List<Surdo> lista) {
-		List<Long> retorno = new ArrayList<Long>();
+	private Set<Long> obterListaIds(List<Surdo> lista) {
+		Set<Long> retorno = new HashSet<Long>();
 		for (Surdo surdo : lista) {
 			retorno.add(surdo.getId());
 		}

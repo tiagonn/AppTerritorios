@@ -1,6 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client;
 
 import java.util.List;
+import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
@@ -41,9 +42,9 @@ public interface CadastroService extends RemoteService {
 	
 	Long adicionarMapa(Long regiaoId);
 	
-	Long adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa);
+	Long adicionarSurdosMapa(Set<Long> surdos, Long identificadorMapa);
 
-	Long removerSurdosMapa(List<Long> surdos);
+	Long removerSurdosMapa(Set<Long> surdos);
 	
 	Long apagarSurdo(Long id);
 	

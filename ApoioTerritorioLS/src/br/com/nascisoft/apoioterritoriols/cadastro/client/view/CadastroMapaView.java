@@ -1,6 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.List;
+import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
@@ -13,8 +14,8 @@ public interface CadastroMapaView extends CadastroView {
 		void adicionarMapa(Long identificadorRegiao);
 		void abrirMapa(Long identificadorMapa);
 		void onAbrirMapa(Long identificadorMapa);
-		void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa);
-		void removerSurdosMapa(List<Long> surdos);
+		void adicionarSurdosMapa(Set<Long> surdos, Long identificadorMapa);
+		void removerSurdosMapa(Set<Long> surdos);
 		void apagarMapa(Long identificadorMapa);
 		void onPesquisaCidadeListBoxChange(Long cidadeId);
 		void onPesquisaRegiaoListBoxChange(Long regiaoId);

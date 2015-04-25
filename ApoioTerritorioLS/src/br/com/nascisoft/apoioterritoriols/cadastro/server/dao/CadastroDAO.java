@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
@@ -130,7 +131,7 @@ public class CadastroDAO extends DAOBase {
 		return query.list();
 	}
 	
-	public void adicionarSurdoMapa(List<Long> surdos, Long identificadorMapa) {
+	public void adicionarSurdoMapa(Set<Long> surdos, Long identificadorMapa) {
 		Objectify ofy = ObjectifyService.begin();
 		for (Long id : surdos) {
 			Surdo surdo = ofy.get(Surdo.class, id);
@@ -140,7 +141,7 @@ public class CadastroDAO extends DAOBase {
 		}
 	}
 	
-	public Long removerSurdoMapa(List<Long> surdos) {
+	public Long removerSurdoMapa(Set<Long> surdos) {
 		Long retorno = null;
 		Objectify ofy = ObjectifyService.begin();
 		for (Long id : surdos) {

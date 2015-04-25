@@ -58,9 +58,24 @@ public interface Resources extends ClientBundle {
 	
 	@Source("/images/salvar.png")
 	ImageResource salvar();
-
+	
 	@Source("/images/voltar.png")
 	ImageResource voltar();
+
+	@Source("/images/adicionarMapa.png")
+	ImageResource adicionarMapa();
+
+	@Source("/images/para_baixo.png")
+	ImageResource paraBaixo();
+	
+	@Source("/images/para_cima.png")
+	ImageResource paraCima();
+	
+	@Source("/images/para_direita.png")
+	ImageResource paraDireita();
+	
+	@Source("/images/para_esquerda.png")
+	ImageResource paraEsquerda();
 	
 	
 }

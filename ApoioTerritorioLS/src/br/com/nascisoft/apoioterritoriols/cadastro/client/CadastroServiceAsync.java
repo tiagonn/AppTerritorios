@@ -1,6 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client;
 
 import java.util.List;
+import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
@@ -32,10 +33,10 @@ public interface CadastroServiceAsync {
 
 	void adicionarMapa(Long regiaoId, AsyncCallback<Long> callback);
 
-	void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa,
+	void adicionarSurdosMapa(Set<Long> surdos, Long identificadorMapa,
 			AsyncCallback<Long> callback);
 	
-	void removerSurdosMapa(List<Long> surdos, AsyncCallback<Long> callback);
+	void removerSurdosMapa(Set<Long> surdos, AsyncCallback<Long> callback);
 
 	void obterInformacoesAbrirMapa(Long identificadorMapa,
 			AsyncCallback<AbrirMapaVO> callback);

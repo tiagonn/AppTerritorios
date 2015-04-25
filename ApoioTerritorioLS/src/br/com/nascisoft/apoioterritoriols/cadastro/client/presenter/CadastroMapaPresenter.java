@@ -1,6 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.presenter;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
@@ -131,7 +132,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	}
 
 	@Override
-	public void adicionarSurdosMapa(List<Long> surdos, Long identificadorMapa) {
+	public void adicionarSurdosMapa(Set<Long> surdos, Long identificadorMapa) {
 		getView().showWaitingPanel();
 		service.adicionarSurdosMapa(surdos, identificadorMapa, new AsyncCallback<Long>() {
 			
@@ -152,7 +153,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 	}
 	
 	@Override
-	public void removerSurdosMapa(List<Long> surdos) {
+	public void removerSurdosMapa(Set<Long> surdos) {
 		getView().showWaitingPanel();
 		service.removerSurdosMapa(surdos, new AsyncCallback<Long>() {
 

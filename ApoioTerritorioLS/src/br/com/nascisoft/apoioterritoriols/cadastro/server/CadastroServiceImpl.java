@@ -169,9 +169,14 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	public SurdoVO obterSurdoCompleto(Long id) {
 		Surdo surdo = this.getDao().obterSurdo(id);
 		
+		Mapa mapa = null;
+		if (surdo.getMapa() != null) {
+			mapa = this.getDao().obterMapa(surdo.getMapa());
+		}
+		
 		SurdoVO surdoVO = new SurdoVO(
 			surdo, 
-			this.getDao().obterMapa(surdo.getMapa()),
+			mapa,
 			this.getAdminDao().obterRegiao(surdo.getRegiao().getId()),
 			this.getAdminDao().obterCidade(surdo.getCidade().getId()));
 

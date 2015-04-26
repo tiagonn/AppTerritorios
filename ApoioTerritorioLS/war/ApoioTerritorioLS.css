@@ -1589,6 +1589,7 @@ td.datePickerMonth {
 }
 .mapas-manter-selecao-checkbox {
 	display: block;
+	padding-bottom: 10px;
 }
 .mapas-manter-mapa-container {
 	float: left;

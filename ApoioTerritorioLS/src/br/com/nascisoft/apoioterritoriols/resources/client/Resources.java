@@ -77,5 +77,14 @@ public interface Resources extends ClientBundle {
 	@Source("/images/para_esquerda.png")
 	ImageResource paraEsquerda();
 	
+	@Source("/images/icone_azul.png")
+	ImageResource iconeAzul();
+	
+	@Source("/images/icone_verde.png")
+	ImageResource iconeVerde();
+	
+	@Source("/images/icone_vermelho.png")
+	ImageResource iconeVermelho();
+	
 	
 }

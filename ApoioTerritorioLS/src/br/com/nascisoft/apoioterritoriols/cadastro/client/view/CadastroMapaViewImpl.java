@@ -16,6 +16,7 @@ import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -75,6 +76,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiField FlowPanel manterMapaSelecaoPessoasDeFlowPanel;
 	@UiField FlowPanel manterMapaSelecaoPessoasParaFlowPanel;
 	@UiField FlowPanel manterMapaMapaContainerFlowPanel;
+	@UiField FlowPanel manterMapaSelecaoPessoasContainerDeFlowPanel;
 	
 	private AbrirMapaVO abrirMapaVO;
 	
@@ -390,6 +392,15 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
 		mapa.setSize(sLarguraMapa, sAlturaMapa);
 		this.manterMapaMapaLayoutPanel.add(mapa);		
+		
+		int alturaPainelDe = Window.getClientHeight() 
+				- this.manterMapaSelecaoPessoasContainerFlowPanel.getAbsoluteTop()
+				- this.manterMapaSelecaoPessoasContainerFlowPanel.getOffsetHeight() + 20;
+		
+		alturaPainelDe += this.manterMapaSelecaoPessoasDeFlowPanel.getOffsetHeight();
+		
+		this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setProperty("maxHeight", alturaPainelDe, Unit.PX);
+		this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().setHeight(alturaPainelDe - 50, Unit.PX);
 	}
 	
 	private void adicionarMarcadorSurdo(SurdoDetailsVO surdo, final MapWidget mapa, int tipoSurdo) {
@@ -398,11 +409,11 @@ public class CadastroMapaViewImpl extends Composite implements
 		markerOpt.setVisible(true);
 		HasMarkerImage icon = null;
 		if (TIPO_SURDO_MAPA_ATUAL == tipoSurdo) {
-			icon = new MarkerImage.Builder("images/icone_azul.png").build();
+			icon = new MarkerImage.Builder(Resources.INSTANCE.iconeAzul().getSafeUri().asString()).build();
 		} else if (TIPO_SURDO_SEM_MAPA == tipoSurdo){
-			icon = new MarkerImage.Builder("images/icone_vermelho.png").build();
+			icon = new MarkerImage.Builder(Resources.INSTANCE.iconeVermelho().getSafeUri().asString()).build();
 		} else if (TIPO_SURDO_MAPA_OUTROS == tipoSurdo) {
-			icon = new MarkerImage.Builder("images/icone_verde.png").build();
+			icon = new MarkerImage.Builder(Resources.INSTANCE.iconeVerde().getSafeUri().asString()).build();
 		}
 		if (icon != null) {
 			markerOpt.setIcon(icon);

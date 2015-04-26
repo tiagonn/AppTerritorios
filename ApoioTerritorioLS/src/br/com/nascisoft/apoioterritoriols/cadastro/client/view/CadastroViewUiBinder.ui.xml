@@ -269,14 +269,26 @@
 					</g:FlowPanel>
 					
 					<g:FlowPanel ui:field="manterMapaMapaContainerFlowPanel" styleName="mapas-manter-mapa-container" visible="false">
-						<g:HorizontalPanel>
-							<g:HTML>
-								<strong>Legenda:</strong> 
-								<img src="images/icone_vermelho.png" alt="Surdos sem mapa"/> Surdos sem mapa
-								<img src="images/icone_azul.png" alt="Surdos no mapa atual"/> Surdos no mapa atual
-								<img src="images/icone_verde.png" alt="Surdos em outros mapas"/> Surdos em outros mapas
-							</g:HTML>
-						</g:HorizontalPanel>
+						<g:FlowPanel styleName="mapas-manter-mapa-legenda" title="Legenda">
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Image url="{res.iconeVermelho.getSafeUri.asString}"></g:Image>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Label>Pessoas não associadas a nenhum mapa</g:Label>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Image url="{res.iconeAzul.getSafeUri.asString}"></g:Image>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Label>Pessoas associadas ao mapa atual</g:Label>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Image url="{res.iconeVerde.getSafeUri.asString}"></g:Image>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="mapas-manter-mapa-legenda-celula">
+								<g:Label>Pessoas associadas a outros mapas</g:Label>
+							</g:FlowPanel>
+						</g:FlowPanel>
 						<g:LayoutPanel ui:field="manterMapaMapaLayoutPanel"></g:LayoutPanel>
 					</g:FlowPanel>
 				</g:FlowPanel>

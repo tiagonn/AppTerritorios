@@ -1457,7 +1457,6 @@ td.datePickerMonth {
 	height: 60px;
 	padding-left: 120px;
 	padding-top: 8px;
-	display: inline-block;
 }
 
 .pessoas-manter-checkbox {
@@ -1609,3 +1608,14 @@ td.datePickerMonth {
 .mapas-manter-selecao-button {
 	width: 35px;	
 	margin: auto;
+}
+
+.mapas-manter-mapa-legenda {
+	width: 100%;
+	display: table;
+}
+
+.mapas-manter-mapa-legenda-celula {
+	display: table-cell;
+	vertical-align: middle;
+}

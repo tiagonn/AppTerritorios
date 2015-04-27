@@ -298,36 +298,30 @@
 			<g:header><img src="{res.printer.getSafeUri}" title="Impressão" alt="Impressão"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel>
-					<g:Label text="Pesquisar"/>
-					<g:Grid>
-						<g:row>
-							<g:customCell>
-								<g:Label text="Cidade: " />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Região: " />
-							</g:customCell>
-							<g:customCell>
-								<g:Label text="Mapa: " />
-							</g:customCell>
-						</g:row>
-						<g:row>
-							<g:customCell styleName="customCell-alinhado-top">
-								<g:ListBox ui:field="pesquisaImpressaoCidadeListBox" />
-							</g:customCell>
-							<g:customCell styleName="customCell-alinhado-top">
-								<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" enabled="false" />
-							</g:customCell>
-							<g:customCell styleName="customCell-alinhado-top">
-							    <g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" multipleSelect="true" />
-							</g:customCell>
-						</g:row>
-						<g:row>
-						    <g:customCell>
-						        <g:Button ui:field="pesquisaImpressapImprimirButton" enabled="false" text="Visualizar Impressão"/>
-						    </g:customCell>
-						</g:row>
-					</g:Grid>
+					<g:FlowPanel styleName="mapas-tabela">
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Cidade: " />
+							<g:ListBox ui:field="pesquisaImpressaoCidadeListBox" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Região: " />
+							<g:ListBox ui:field="pesquisaImpressaoRegiaoListBox" enabled="false" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula">
+							<g:Label text="Mapa: " />
+							<g:ListBox ui:field="pesquisaImpressaoMapaListBox" enabled="false" multipleSelect="true" />
+						</g:FlowPanel>
+						<g:FlowPanel styleName="mapas-tabela-celula-botao" title="Visualizar Impressão">
+							<g:PushButton 
+								ui:field="pesquisaImpressapImprimirButton" 
+								enabled="false"
+								title="Visualizar Impressão"
+								styleName="gwt-PushButton gwt-PushButton-up mapas-manter-selecao-button">
+									<g:upFace image="{res.visualizar}" />
+									<g:downFace image="{res.visualizar}" />
+							</g:PushButton>
+						</g:FlowPanel>
+					</g:FlowPanel>
 					<g:HTML styleName="label-instrucoes">
 						<br/><br/>
 						Instruções para a impressão: <ul>
@@ -357,7 +351,7 @@
 				<g:VerticalPanel>
 					<g:Label text="Surdos que estão marcados para não serem visitados."/>
 					<g:HTML wordWrap="true"><br /><br /></g:HTML>
-					<c:CellTable ui:field="naoVisitarResultadoCellTable" pageSize="10" styleName="surdo-tabela"/>
+					<c:CellTable ui:field="naoVisitarResultadoCellTable" pageSize="10"/>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<c:SimplePager location="CENTER" ui:field="naoVisitarSimplePager" pageSize="10"/>
 				</g:VerticalPanel>

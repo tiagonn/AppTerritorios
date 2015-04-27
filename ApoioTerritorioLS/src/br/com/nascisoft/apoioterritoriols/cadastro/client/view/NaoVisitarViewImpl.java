@@ -2,12 +2,14 @@ package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
 import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.cadastro.client.common.ImageButtonCell;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
-import com.google.gwt.cell.client.ActionCell;
-import com.google.gwt.cell.client.ActionCell.Delegate;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -34,7 +36,7 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	
 	@UiField PopupPanel waitingPopUpPanel;
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
-	@UiField CellTable<SurdoNaoVisitarDetailsVO> naoVisitarResultadoCellTable;
+	@UiField (provided=true) CellTable<SurdoNaoVisitarDetailsVO> naoVisitarResultadoCellTable;
 	@UiField SimplePager naoVisitarSimplePager;	
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
@@ -43,8 +45,9 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	}
 	
 	public NaoVisitarViewImpl() {
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.naoVisitarResultadoCellTable = new CellTable<SurdoNaoVisitarDetailsVO>(15, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
-
 		this.resultadoPesquisa = new ListDataProvider<SurdoNaoVisitarDetailsVO>();
 		this.resultadoPesquisa.addDataDisplay(this.naoVisitarResultadoCellTable);
 		this.naoVisitarSimplePager.setDisplay(this.naoVisitarResultadoCellTable);
@@ -120,43 +123,34 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 				return object.getMotivo();
 			}
 		};
-		
-		Delegate<Long> retornarDelegate = new Delegate<Long>() {
-			@Override
-			public void execute(Long object) {
-				if (Window.confirm("Deseja realmente retornar este surdo à lista de surdos a serem visitados?")) {
-					presenter.onRetornarButtonClick(object);
-				}
-			}
-		};
-		ActionCell<Long> retornarCell = new ActionCell<Long>("Retornar", retornarDelegate);
-		Column<SurdoNaoVisitarDetailsVO, Long> retornarColumn = new Column<SurdoNaoVisitarDetailsVO, Long>(retornarCell) {
-			@Override
-			public Long getValue(SurdoNaoVisitarDetailsVO object) {
-				return object.getId();
-			}
-		};
-		
-		Delegate<String> mostrarObservacaoDelegate = new Delegate<String>() {
-			@Override
-			public void execute(String object) {
-				Window.alert(object);
-			}				
-		};
-		ActionCell<String> mostrarObservacaoCell = new ActionCell<String>("Mostrar observação", mostrarObservacaoDelegate);
-		Column<SurdoNaoVisitarDetailsVO, String> mostrarObservacaoColumn = 
-				new Column<SurdoNaoVisitarDetailsVO, String>(mostrarObservacaoCell) {
+		TextColumn<SurdoNaoVisitarDetailsVO> observacaoColumn = new TextColumn<SurdoNaoVisitarDetailsVO>() {
 			@Override
 			public String getValue(SurdoNaoVisitarDetailsVO object) {
 				return object.getObservacao();
 			}
 		};
 		
+		Column<SurdoNaoVisitarDetailsVO, String> retornarColumn = new Column<SurdoNaoVisitarDetailsVO, String>(
+				new ImageButtonCell("Retornar pessoa ao cadastro", "Retornar pessoa ao cadastro")) {
+			@Override
+			public String getValue(SurdoNaoVisitarDetailsVO object) {
+				return Resources.INSTANCE.voltar().getSafeUri().asString();
+			}
+		};
+		retornarColumn.setFieldUpdater(new FieldUpdater<SurdoNaoVisitarDetailsVO, String>() {
+			@Override
+			public void update(int index, SurdoNaoVisitarDetailsVO object, String value) {
+				if (Window.confirm("Deseja realmente retornar esta pessoa à lista de cadastros ativos?")) {
+					presenter.onRetornarButtonClick(object.getId());
+				}
+			}
+		});
+		
 		this.naoVisitarResultadoCellTable.addColumn(nomeColumn, "Nome");
 		this.naoVisitarResultadoCellTable.addColumn(cidadeColumn, "Cidade");
 		this.naoVisitarResultadoCellTable.addColumn(regiaoColumn, "Região");
 		this.naoVisitarResultadoCellTable.addColumn(motivoColumn, "Motivo");
-		this.naoVisitarResultadoCellTable.addColumn(mostrarObservacaoColumn);
+		this.naoVisitarResultadoCellTable.addColumn(observacaoColumn, "Observação");
 		this.naoVisitarResultadoCellTable.addColumn(retornarColumn);
 		
 	}

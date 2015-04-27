@@ -17,10 +17,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -36,7 +36,7 @@ public class ImpressaoViewImpl extends Composite implements
 	@UiField ListBox pesquisaImpressaoRegiaoListBox;
 	@UiField ListBox pesquisaImpressaoMapaListBox;
 	@UiField PopupPanel waitingPopUpPanel;
-	@UiField Button pesquisaImpressapImprimirButton;
+	@UiField PushButton pesquisaImpressapImprimirButton;
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder 

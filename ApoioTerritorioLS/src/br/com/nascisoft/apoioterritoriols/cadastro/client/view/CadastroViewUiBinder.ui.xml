@@ -245,14 +245,14 @@
 							<g:FlowPanel ui:field="manterMapaSelecaoPessoasDeFlowPanel" styleName="mapas-manter-selecao-caixa-body">
 							</g:FlowPanel>
 						</g:FlowPanel>
-						<g:FlowPanel styleName="mapas-manter-selecao-botoes">
-							<g:FlowPanel styleName="mapas-manter-selecao-botao">
+						<g:FlowPanel ui:field="manterMapaSelecaoBotoesFlowPanel" styleName="mapas-manter-selecao-botoes">
+							<g:FlowPanel ui:field="manterMapaSelecaoBotao1FlowPanel" styleName="mapas-manter-selecao-botao">
 								<g:PushButton 
 									ui:field="manterMapaSurdoAdicionarButton" 
 									title="Associar pessoa à mapa"
 									styleName="gwt-PushButton gwt-PushButton-up mapas-manter-selecao-button"/>
 							</g:FlowPanel>
-							<g:FlowPanel styleName="mapas-manter-selecao-botao">
+							<g:FlowPanel ui:field="manterMapaSelecaoBotao2FlowPanel" styleName="mapas-manter-selecao-botao">
 								<g:PushButton 
 									ui:field="manterMapaSurdoRemoverButton" 
 									title="Remover pessoa de mapa"

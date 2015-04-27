@@ -389,72 +389,86 @@ public class CadastroMapaViewImpl extends Composite implements
 		this.manterMapaSelecaoPessoasContainerFlowPanel.setVisible(true);
 		this.manterMapaMapaContainerFlowPanel.setVisible(true);
 		
-		int larguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth() - 20;
-		int alturaMapa = Window.getClientHeight() - this.manterMapaMapaContainerFlowPanel.getAbsoluteTop() - 60;
-		String sLarguraMapa = larguraMapa + "px";
-		String sAlturaMapa = alturaMapa + "px";
-		
-		this.manterMapaMapaLayoutPanel.clear();
-		this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
-		mapa.setSize(sLarguraMapa, sAlturaMapa);
-		this.manterMapaMapaLayoutPanel.add(mapa);		
-		
-		int alturaPainelDe = Window.getClientHeight() 
-				- this.manterMapaSelecaoPessoasContainerFlowPanel.getAbsoluteTop()
-				- this.manterMapaSelecaoPessoasContainerFlowPanel.getOffsetHeight() + 20;
-		
-		alturaPainelDe += this.manterMapaSelecaoPessoasDeFlowPanel.getOffsetHeight();
-		
-		if (alturaPainelDe > 256) {
-			this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setProperty("maxHeight", alturaPainelDe, Unit.PX);
-			this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().setHeight(alturaPainelDe - 50, Unit.PX);
-		}
-		
-		
-		if (Window.getClientHeight() > Window.getClientWidth()) {
-		
-			// alteração para height maior do que width
-			this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setWidth(100, Unit.PCT);
-			this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setPaddingBottom(20, Unit.PX);
-			this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setDisplay(Display.TABLE);
-			
-			this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
-			this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().clearHeight();
-			
-			this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().clearHeight();
-	
-			this.manterMapaSelecaoPessoasContainerParaFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
-			
-			this.manterMapaSelecaoBotoesFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
-			this.manterMapaSelecaoBotoesFlowPanel.getElement().getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
-			
-			this.manterMapaSelecaoBotao1FlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			this.manterMapaSelecaoBotao1FlowPanel.getElement().getStyle().setPaddingBottom(20, Unit.PX);
-			
-			this.manterMapaSelecaoBotao2FlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
-			
-			this.manterMapaSurdoAdicionarButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraDireita()));
-			this.manterMapaSurdoAdicionarButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraDireita()));
-			
-			this.manterMapaSurdoRemoverButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraEsquerda()));
-			this.manterMapaSurdoRemoverButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraEsquerda()));
-			
-			this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+			// para telas pequenas
+		if ((Window.getClientHeight() < 400) || (Window.getClientWidth() < 400)) {
 			this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setWidth(100, Unit.PCT);
+			String sAlturaMapa = "400px";			
+			String sLarguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth()+"px";
+			this.manterMapaMapaLayoutPanel.clear();
+			this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
+			mapa.setSize(sLarguraMapa, sAlturaMapa);
+			this.manterMapaMapaLayoutPanel.add(mapa);
 			
-			alturaMapa = Window.getClientHeight() - this.manterMapaMapaContainerFlowPanel.getAbsoluteTop() - 20;
-			larguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth();
-			sLarguraMapa = larguraMapa + "px";
-			sAlturaMapa = alturaMapa + "px";
-	
-			this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setHeight(alturaMapa, Unit.PX);
+			// para telas grandes
+		} else {
+			int larguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth() - 20;
+			int alturaMapa = Window.getClientHeight() - this.manterMapaMapaContainerFlowPanel.getAbsoluteTop() - 60;
+		
+			String sLarguraMapa = larguraMapa + "px";
+			String sAlturaMapa = alturaMapa + "px";
 			
 			this.manterMapaMapaLayoutPanel.clear();
 			this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
 			mapa.setSize(sLarguraMapa, sAlturaMapa);
 			this.manterMapaMapaLayoutPanel.add(mapa);		
-		}
+			
+			int alturaPainelDe = Window.getClientHeight() 
+					- this.manterMapaSelecaoPessoasContainerFlowPanel.getAbsoluteTop()
+					- this.manterMapaSelecaoPessoasContainerFlowPanel.getOffsetHeight() + 20;
+			
+			alturaPainelDe += this.manterMapaSelecaoPessoasDeFlowPanel.getOffsetHeight();
+			
+			if (alturaPainelDe > 256) {
+				this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setProperty("maxHeight", alturaPainelDe, Unit.PX);
+				this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().setHeight(alturaPainelDe - 50, Unit.PX);
+			}
+			
+			
+			if (Window.getClientHeight() > Window.getClientWidth()) {
+			
+				// alteração para height maior do que width
+				this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setWidth(100, Unit.PCT);
+				this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+				this.manterMapaSelecaoPessoasContainerFlowPanel.getElement().getStyle().setDisplay(Display.TABLE);
+				
+				this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
+				this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().clearHeight();
+				
+				this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().clearHeight();
+		
+				this.manterMapaSelecaoPessoasContainerParaFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
+				
+				this.manterMapaSelecaoBotoesFlowPanel.getElement().getStyle().setDisplay(Display.TABLE_CELL);
+				this.manterMapaSelecaoBotoesFlowPanel.getElement().getStyle().setVerticalAlign(VerticalAlign.MIDDLE);
+				
+				this.manterMapaSelecaoBotao1FlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				this.manterMapaSelecaoBotao1FlowPanel.getElement().getStyle().setPaddingBottom(20, Unit.PX);
+				
+				this.manterMapaSelecaoBotao2FlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				
+				this.manterMapaSurdoAdicionarButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraDireita()));
+				this.manterMapaSurdoAdicionarButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraDireita()));
+				
+				this.manterMapaSurdoRemoverButton.getDownFace().setImage(new Image(Resources.INSTANCE.paraEsquerda()));
+				this.manterMapaSurdoRemoverButton.getUpFace().setImage(new Image(Resources.INSTANCE.paraEsquerda()));
+				
+				this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setDisplay(Display.BLOCK);
+				this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setWidth(100, Unit.PCT);
+				
+				alturaMapa = Window.getClientHeight() - this.manterMapaMapaContainerFlowPanel.getAbsoluteTop() - 20;
+				larguraMapa = this.manterMapaMapaContainerFlowPanel.getOffsetWidth();
+				sLarguraMapa = larguraMapa + "px";
+				sAlturaMapa = alturaMapa + "px";
+		
+				this.manterMapaMapaContainerFlowPanel.getElement().getStyle().setHeight(alturaMapa, Unit.PX);
+				
+				this.manterMapaMapaLayoutPanel.clear();
+				this.manterMapaMapaLayoutPanel.setSize(sLarguraMapa, sAlturaMapa);
+				mapa.setSize(sLarguraMapa, sAlturaMapa);
+				this.manterMapaMapaLayoutPanel.add(mapa);		
+			}
 
+		}
 	}
 	
 	private void adicionarMarcadorSurdo(SurdoDetailsVO surdo, final MapWidget mapa, int tipoSurdo) {

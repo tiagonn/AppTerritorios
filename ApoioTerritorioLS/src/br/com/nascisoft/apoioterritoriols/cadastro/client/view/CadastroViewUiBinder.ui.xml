@@ -10,18 +10,21 @@
 			<g:header><img src="{res.pessoa.getSafeUri}" title="Pessoas" alt="Pessoas"/></g:header>
 			<g:ScrollPanel>
 				<g:VerticalPanel styleName="cabecalho">
-					<g:HorizontalPanel verticalAlignment="middle" styleName="cabecalho-pesquisa">
-						<g:VerticalPanel>
+					<g:FlowPanel styleName="pessoas-cabecalho-container">
+						<g:FlowPanel styleName="pessoas-cabecalho-campo">
 							<g:Label text="Filtrar" styleName="negrito"/>
 							<g:TextBox ui:field="pesquisaFiltrarTextBox"></g:TextBox>
-						</g:VerticalPanel>
-						<g:VerticalPanel horizontalAlignment="right" width="100%">
+						</g:FlowPanel>
+						<g:FlowPanel styleName="pessoas-cabecalho-campo">
+							<g:CheckBox ui:field="pesquisarSemMapaCheckBox" text="Filtrar pessoas não associadas a nenhum mapa"></g:CheckBox>
+						</g:FlowPanel>
+						<g:FlowPanel styleName="pessoas-cabecalho-campo-direita">
 							<g:PushButton width="35px" ui:field='adicionarPessoaButton' enabled='true' title="Adicionar Pessoa">
 								<g:upFace image="{res.adicionarPessoa}"></g:upFace>
 								<g:downFace image="{res.adicionarPessoa}" />
 							</g:PushButton>
-						</g:VerticalPanel>
-					</g:HorizontalPanel>					
+						</g:FlowPanel>
+					</g:FlowPanel>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<g:Label ui:field="pesquisaResultadoLabel"/>
 					<c:CellTable ui:field="pesquisaResultadoCellTable" />

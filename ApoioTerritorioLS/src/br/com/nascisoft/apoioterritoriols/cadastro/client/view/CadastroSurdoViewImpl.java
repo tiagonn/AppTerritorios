@@ -109,6 +109,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PushButton adicionarPessoaButton;
 	@UiField PushButton manterVoltarButton;
 	@UiField PopupPanel visualizarPopUpPanel;
+	@UiField CheckBox pesquisarSemMapaCheckBox;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -842,6 +843,30 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiHandler("manterVoltarButton")
 	void onManterVoltarButtonClick(ClickEvent e) {
 		History.back();
+	}
+	
+	@UiHandler("pesquisarSemMapaCheckBox")
+	void onPesquisarSemMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		this.limparResultadoPesquisa();
+		if (event.getValue()) {
+			List<SurdoDetailsVO> resultado = filtrarResultadoPesquisaSemMapa();
+			this.resultadoPesquisa.setList(resultado);
+			this.pesquisaResultadoCellTable.setRowCount(resultado.size());
+		} else {
+			this.resultadoPesquisa.setList(this.listaResultadoPesquisa);
+			this.pesquisaResultadoCellTable.setRowCount(this.listaResultadoPesquisa.size());
+		}
+		this.mostrarResultadoPesquisa();
+	}
+	
+	private List<SurdoDetailsVO> filtrarResultadoPesquisaSemMapa() {
+		List<SurdoDetailsVO> result = new ArrayList<SurdoDetailsVO>();
+		for (SurdoDetailsVO vo : this.listaResultadoPesquisa) {
+			if (StringUtils.isEmpty(vo.getMapa())) {
+				result.add(vo);
+			}
+		}
+		return result;		
 	}
 	
 }

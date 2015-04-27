@@ -5,10 +5,12 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.admin.enumeration.QuantidadeSurdosMapaEnum;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -53,7 +55,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	@UiField CheckBox cidadeUtilizarBairroBuscaEnderecoCheckBox;
 	@UiField Button cidadeAdicionarButton;
 	@UiField HTML cidadesWarningHTML;
-	@UiField CellTable<Cidade> pesquisaCidadeResultadoCellTable;
+	@UiField (provided=true) CellTable<Cidade> pesquisaCidadeResultadoCellTable;
 	@UiField Label pesquisaCidadeResultadoLabel;
 	@UiField SimplePager pesquisaCidadeResultadoSimplePager;
 	private ListDataProvider<Cidade> resultadoPesquisaCidade;
@@ -65,6 +67,8 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	}
 
 	public AdminCidadeViewImpl() {
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.pesquisaCidadeResultadoCellTable = new CellTable<Cidade>(10, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resultadoPesquisaCidade = new ListDataProvider<Cidade>();
 		this.resultadoPesquisaCidade.addDataDisplay(this.pesquisaCidadeResultadoCellTable);
@@ -192,9 +196,8 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 			this.pesquisaCidadeResultadoSimplePager.setVisible(false);
 		} else {
 			this.pesquisaCidadeResultadoLabel.setText("Foram encontrado(s) " + this.pesquisaCidadeResultadoCellTable.getRowCount() + " resultado(s).");
-			this.pesquisaCidadeResultadoCellTable.setStyleName("surdo-tabela");
 			this.pesquisaCidadeResultadoCellTable.setVisible(true);
-			
+			this.pesquisaCidadeResultadoCellTable.getElement().getStyle().setWidth(100, Unit.PCT);
 			TextColumn<Cidade> nome = new TextColumn<Cidade>() {
 				@Override
 				public String getValue(Cidade object) {

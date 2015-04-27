@@ -341,7 +341,7 @@
 							</g:customCell>
 						</g:row>
 					</g:Grid>	
-					<g:VerticalPanel ui:field="adminRelatorioVerticalPanel"></g:VerticalPanel>
+					<g:VerticalPanel ui:field="adminRelatorioVerticalPanel" width="100%"></g:VerticalPanel>
 					<g:PopupPanel 
 						ui:field="adminRelatorioDetalhesPopupPanel" 
 						visible="false" 

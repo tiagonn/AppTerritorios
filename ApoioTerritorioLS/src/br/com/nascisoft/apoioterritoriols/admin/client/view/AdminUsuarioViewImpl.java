@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -42,7 +43,7 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 	@UiField CheckBox usuarioAdministradorCheckBox;
 	@UiField Button usuarioAdicionarButton;
 	@UiField HTML usuariosWarningHTML;
-	@UiField CellTable<Usuario> pesquisaUsuarioResultadoCellTable;
+	@UiField (provided=true) CellTable<Usuario> pesquisaUsuarioResultadoCellTable;
 	@UiField Label pesquisaUsuarioResultadoLabel;
 	@UiField SimplePager pesquisaUsuarioResultadoSimplePager;
 	private ListDataProvider<Usuario> resultadoPesquisaUsuario;
@@ -53,6 +54,8 @@ public class AdminUsuarioViewImpl extends Composite implements AdminUsuarioView 
 	}
 
 	public AdminUsuarioViewImpl() {
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.pesquisaUsuarioResultadoCellTable = new CellTable<Usuario>(10, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resultadoPesquisaUsuario = new ListDataProvider<Usuario>();
 		this.resultadoPesquisaUsuario.addDataDisplay(this.pesquisaUsuarioResultadoCellTable);

@@ -165,14 +165,15 @@ public class AdminRelatorioViewImpl extends Composite implements
 		options.setTitle("Distribuição de pessoas/endereços por região");
 		
 		ChartArea chartArea = ChartArea.create();
+
 		chartArea.setTop(50);
-		chartArea.setLeft(200);
-		chartArea.setWidth(500);
+		chartArea.setWidth(Window.getClientWidth()-600);
+		chartArea.setHeight(Window.getClientHeight()-this.adminRelatorioVerticalPanel.getAbsoluteTop()-30);
 		options.setChartArea(chartArea);
 		
 		options.setFontSize(9);
-		options.setWidth(750);
-		options.setHeight(700);
+		options.setWidth(Window.getClientWidth()-250);
+		options.setHeight(Window.getClientHeight()-this.adminRelatorioVerticalPanel.getAbsoluteTop()-30);
 		
 		AxisOptions axisOptions = AxisOptions.create();
 		axisOptions.setTextPosition("in");

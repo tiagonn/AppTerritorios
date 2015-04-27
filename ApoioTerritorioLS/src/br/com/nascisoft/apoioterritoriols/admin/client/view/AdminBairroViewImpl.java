@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.admin.vo.BairroVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -43,7 +44,7 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 	@UiField TextBox bairroNomeTextBox;
 	@UiField Button bairroAdicionarButton;
 	@UiField HTML bairrosWarningHTML;
-	@UiField CellTable<BairroVO> pesquisaBairroResultadoCellTable;
+	@UiField (provided=true) CellTable<BairroVO> pesquisaBairroResultadoCellTable;
 	@UiField Label pesquisaBairroResultadoLabel;
 	@UiField SimplePager pesquisaBairroResultadoSimplePager;
 	private ListDataProvider<BairroVO> resultadoPesquisaBairro;
@@ -55,6 +56,8 @@ public class AdminBairroViewImpl extends Composite implements AdminBairroView {
 	}
 
 	public AdminBairroViewImpl() {
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.pesquisaBairroResultadoCellTable = new CellTable<BairroVO>(10, CellTableCustomResources.INSTANCE);		
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resultadoPesquisaBairro = new ListDataProvider<BairroVO>();
 		this.resultadoPesquisaBairro.addDataDisplay(this.pesquisaBairroResultadoCellTable);

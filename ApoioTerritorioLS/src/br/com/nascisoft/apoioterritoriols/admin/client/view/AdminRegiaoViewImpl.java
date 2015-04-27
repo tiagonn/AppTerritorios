@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
@@ -47,7 +48,7 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	@UiField TextBox regiaoLongitudeTextBox;
 	@UiField Button regiaoAdicionarButton;
 	@UiField HTML regioesWarningHTML;
-	@UiField CellTable<RegiaoVO> pesquisaRegiaoResultadoCellTable;
+	@UiField (provided=true) CellTable<RegiaoVO> pesquisaRegiaoResultadoCellTable;
 	@UiField Label pesquisaRegiaoResultadoLabel;
 	@UiField SimplePager pesquisaRegiaoResultadoSimplePager;
 	private ListDataProvider<RegiaoVO> resultadoPesquisaRegiao;
@@ -59,6 +60,8 @@ public class AdminRegiaoViewImpl extends Composite implements AdminRegiaoView {
 	}
 
 	public AdminRegiaoViewImpl() {
+		CellTableCustomResources.INSTANCE.cellTableStyle().ensureInjected();
+		this.pesquisaRegiaoResultadoCellTable = new CellTable<RegiaoVO>(10, CellTableCustomResources.INSTANCE);
 		initWidget(uiBinder.createAndBindUi(this));
 		this.resultadoPesquisaRegiao = new ListDataProvider<RegiaoVO>();
 		this.resultadoPesquisaRegiao.addDataDisplay(this.pesquisaRegiaoResultadoCellTable);

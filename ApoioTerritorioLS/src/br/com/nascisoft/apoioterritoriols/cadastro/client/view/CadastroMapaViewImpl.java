@@ -405,8 +405,10 @@ public class CadastroMapaViewImpl extends Composite implements
 		
 		alturaPainelDe += this.manterMapaSelecaoPessoasDeFlowPanel.getOffsetHeight();
 		
-		this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setProperty("maxHeight", alturaPainelDe, Unit.PX);
-		this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().setHeight(alturaPainelDe - 50, Unit.PX);
+		if (alturaPainelDe > 256) {
+			this.manterMapaSelecaoPessoasContainerDeFlowPanel.getElement().getStyle().setProperty("maxHeight", alturaPainelDe, Unit.PX);
+			this.manterMapaSelecaoPessoasDeFlowPanel.getElement().getStyle().setHeight(alturaPainelDe - 50, Unit.PX);
+		}
 		
 		
 		if (Window.getClientHeight() > Window.getClientWidth()) {

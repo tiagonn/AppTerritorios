@@ -67,7 +67,7 @@ public class AdminBackupViewImpl extends Composite implements AdminBackupView {
 
 	@Override
 	public void selectThisTab() {
-		this.adminTabLayoutPanel.selectTab(0, false);
+		this.adminTabLayoutPanel.selectTab(5, false);
 		
 	}
 

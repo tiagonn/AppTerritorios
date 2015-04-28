@@ -96,7 +96,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 
 	@Override
 	public void selectThisTab() {
-		this.adminTabLayoutPanel.selectTab(5, false);
+		this.adminTabLayoutPanel.selectTab(0, false);
 	}
 
 	@Override
@@ -133,12 +133,12 @@ public class AdminRelatorioViewImpl extends Composite implements
 			public void run() {
 				AbstractDataTable data = createTable(relatorio);
 				if ("BAR".equals(tipo)) {
-					Options opt = createBarOptions();					
+					Options opt = createGraphOptions(tipo);					
 					BarChart bar = new BarChart(data, opt);
 					bar.addSelectHandler(createSelectHandler(bar));
 					adminRelatorioVerticalPanel.add(bar);
 				} else if ("PIE".equals(tipo)) {
-					Options opt = createPieOptions();
+					Options opt = createGraphOptions(tipo);
 					PieChart pie = new PieChart(data, opt);
 					pie.addSelectHandler(createSelectHandler(pie));
 					adminRelatorioVerticalPanel.add(pie);
@@ -155,7 +155,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		}
 	}
 
-	private Options createBarOptions() {
+	private Options createGraphOptions(String graphType) {
 		Options options = Options.create();
 		
 		TextStyle titulo = TextStyle.create();
@@ -166,7 +166,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 		
 		ChartArea chartArea = ChartArea.create();
 
-		chartArea.setTop(50);
+		chartArea.setTop(30);
 		chartArea.setWidth(Window.getClientWidth()-600);
 		chartArea.setHeight(Window.getClientHeight()-this.adminRelatorioVerticalPanel.getAbsoluteTop()-30);
 		options.setChartArea(chartArea);
@@ -179,32 +179,16 @@ public class AdminRelatorioViewImpl extends Composite implements
 		axisOptions.setTextPosition("in");
 		options.setHAxisOptions(axisOptions);
 		
-		options.setLegend(LegendPosition.NONE);
-		
-		return options;
-	}
-	
-	private Options createPieOptions() {
-		Options options = Options.create();
+		if ("BAR".equals(graphType)) {
+			options.setLegend(LegendPosition.NONE);
+		} else {
+			options.setLegend(LegendPosition.RIGHT);
+			options.set("is3D", "true");
+			TextStyle legenda = TextStyle.create();
+			legenda.setFontSize(12);			
+			options.setLegendTextStyle(legenda);
 
-		TextStyle titulo = TextStyle.create();
-		titulo.setFontSize(16);
-		titulo.setColor("#454545");
-		options.setTitleTextStyle(titulo);
-		options.setTitle("Distribuição de pessoas/endereços por região");
-
-		ChartArea chartArea = ChartArea.create();
-		chartArea.setTop(50);
-		chartArea.setWidth("60%");
-		chartArea.setLeft(20);
-		options.setChartArea(chartArea);
-
-		options.setFontSize(11);
-		options.setWidth(1300);
-		options.setHeight(700);
-		
-		options.set("is3D", "true");
-		options.set("pieSliceText", "value");
+		}
 		
 		return options;
 	}

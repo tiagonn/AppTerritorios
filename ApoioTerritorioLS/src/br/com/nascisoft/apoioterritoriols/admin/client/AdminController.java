@@ -51,7 +51,7 @@ public class AdminController implements AdminPresenter,
 		@Override
 		public void onSelection(SelectionEvent<Integer> event) {
 			if (event.getSelectedItem() == 0) {
-				eventBus.fireEvent(new AbrirBackupEvent());
+				eventBus.fireEvent(new AbrirRelatorioEvent());
 			} else if (event.getSelectedItem() == 1) {
 				eventBus.fireEvent(new AbrirUsuarioEvent());
 			} else if (event.getSelectedItem() == 2) {
@@ -61,7 +61,7 @@ public class AdminController implements AdminPresenter,
 			} else if (event.getSelectedItem() == 4) {
 				eventBus.fireEvent(new AbrirBairroEvent());
 			} else if (event.getSelectedItem() == 5) {
-				eventBus.fireEvent(new AbrirRelatorioEvent());
+				eventBus.fireEvent(new AbrirBackupEvent());
 			} else if (event.getSelectedItem() == 6) {
 				Window.open("/Cadastro.html", "_self", "");
 			}
@@ -153,7 +153,7 @@ public class AdminController implements AdminPresenter,
 	public void go(HasWidgets container) {
 		this.container = container;
 		if ("".equals(History.getToken())) {
-			History.newItem("backup");
+			History.newItem("relatorio");
 		} else {
 			History.fireCurrentHistoryState();
 		}

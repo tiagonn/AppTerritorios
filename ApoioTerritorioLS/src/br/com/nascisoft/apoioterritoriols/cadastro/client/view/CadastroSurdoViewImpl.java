@@ -532,7 +532,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		manterMapaPopupPanel.hide();
 	}
 	
-	@UiHandler(value={"manterLogradouroTextBox", "manterNumeroTextBox", "manterCEPTextBox"})
+	@UiHandler(value={"manterLogradouroTextBox", "manterNumeroTextBox", "manterCEPTextBox", "manterCidadeListBox"})
 	void onEnderecoChange(ChangeEvent event) {
 		this.buscaEndereco = true;
 	}

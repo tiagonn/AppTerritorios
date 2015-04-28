@@ -104,5 +104,13 @@
         <property name="visitarSomentePorAnciaos" direction="asc"/>
         <property name="nome" direction="asc"/>
     </datastore-index>
+    
+    <datastore-index kind="Surdo" ancestor="false" source="manual">
+        <property name="estaAssociadoMapa" direction="asc"/>
+        <property name="mapa" direction="asc"/>
+        <property name="mudouSe" direction="asc"/>
+        <property name="visitarSomentePorAnciaos" direction="asc"/>
+        <property name="nome" direction="asc"/>
+    </datastore-index>
 
 </datastore-indexes>

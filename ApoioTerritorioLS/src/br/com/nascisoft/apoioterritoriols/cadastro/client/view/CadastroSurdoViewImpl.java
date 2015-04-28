@@ -476,9 +476,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		
 		int zoom = 17;
 		this.manterWarningEnderecoHTML.setVisible(false);
+		int heightMinus = 100;
 		if (!sucesso) {
 			this.manterWarningEnderecoHTML.setVisible(true);
 			zoom = 12;
+			heightMinus = 130;
 		} 
 		this.manterLatitude = position.getLatitude();
 		this.manterLongitude = position.getLongitude();
@@ -500,7 +502,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			MapWidget mapa = new MapWidget(opt);
 			int width = Window.getClientWidth()-50;
 			int left = (Window.getClientWidth() - width)/2;
-			int height = Window.getClientHeight()-100;
+			int height = Window.getClientHeight()-heightMinus;
 			String widthString = width+"px";
 			String heightString = height+"px";
 			

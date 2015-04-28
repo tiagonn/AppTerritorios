@@ -114,9 +114,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de surdos.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao obter lista de pessoas.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de surdos. \n" + caught.getMessage());		
+				Window.alert("Falha ao obter lista de pessoas. \n" + caught.getMessage());		
 			}
 
 			@Override
@@ -134,15 +134,15 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar surdo.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao adicionar ou alterar surdo. \n" + caught.getMessage());
+				Window.alert("Falha ao adicionar ou alterar pessoa. \n" + caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
 				getView().hideWaitingPanel();
-				Window.alert("Surdo id " + result + " salvo com sucesso.");
+				Window.alert("Pessoa id " + result + " salva com sucesso.");
 				eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null));
 			}
 		});
@@ -159,9 +159,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 		service.obterSurdo(id, new AsyncCallback<Surdo>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter surdo.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao obter pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter surdo. \n" + caught.getMessage());
+				Window.alert("Falha ao obter pessoa. \n" + caught.getMessage());
 			}
 			
 			@Override
@@ -178,9 +178,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 		service.obterSurdoCompleto(id, new AsyncCallback<SurdoVO>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter surdo.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao obter pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter surdo. \n" + caught.getMessage());
+				Window.alert("Falha ao obter pessoa. \n" + caught.getMessage());
 			}
 
 			@Override
@@ -208,9 +208,9 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao apagar surdo.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao apagar pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao apagar surdo. \n" + caught.getMessage());
+				Window.alert("Falha ao apagar pessoa. \n" + caught.getMessage());
 			}
 
 			@Override

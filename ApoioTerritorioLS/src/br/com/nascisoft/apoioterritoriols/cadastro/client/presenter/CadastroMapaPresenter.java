@@ -138,14 +138,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao adicionar surdos no mapa.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao adicionar pessoas no mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao adicionar surdos no mapa. \n" + caught.getMessage());
+				Window.alert("Falha ao adicionar pessoas no mapa. \n" + caught.getMessage());
 			}
 			
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Surdo(s) adicionados com sucesso ao mapa");
+				Window.alert("Pessoa(s) adicionadas com sucesso ao mapa");
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}
@@ -159,14 +159,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao remover surdos no mapa.\n", caught);
+				logger.log(Level.SEVERE, "Falha ao remover pessoas no mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao adicionar remover no mapa. \n" + caught.getMessage());
+				Window.alert("Falha ao remover pessoas no mapa. \n" + caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Surdo(s) removidos com sucesso ao mapa");
+				Window.alert("Pessoas(s) removidas com sucesso ao mapa");
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}

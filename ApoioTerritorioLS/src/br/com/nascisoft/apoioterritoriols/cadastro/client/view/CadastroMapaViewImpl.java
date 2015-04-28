@@ -305,7 +305,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiHandler("manterMapaApagarMapaButton")
 	void onManterMapaApagarMapaButtonClick(ClickEvent event) {
 		if (this.presenter != null) {
-			if (Window.confirm("Deseja realmente apagar este mapa? Todos os surdos associados a esse ficarão sem mapa associados.")) {
+			if (Window.confirm("Deseja realmente apagar este mapa? Todos as pessoas associadas a esse ficarão sem mapa associados.")) {
 				this.presenter.apagarMapa(Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
 						this.pesquisaMapaMapaListBox.getSelectedIndex())));
 			}

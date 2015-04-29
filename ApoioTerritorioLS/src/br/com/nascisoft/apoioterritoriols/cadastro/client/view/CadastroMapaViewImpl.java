@@ -497,7 +497,7 @@ public class CadastroMapaViewImpl extends Composite implements
 			info.append("<span><strong>Mapa:</strong> ").append(surdo.getMapa()).append("</span><br/>");
 		}		
 		info.append("<span><a href=\"Cadastro.html#surdos!editar#identificadorSurdo=")
-			.append(surdo.getId()).append("\">Editar surdo</a></span>");
+			.append(surdo.getId()).append("\">Editar pessoa</a></span>");
 		infoOpt.setContent(info.toString());
 		infoOpt.setMaxWidth(300);
 		final HasInfoWindow infoWindow = new InfoWindow(infoOpt);

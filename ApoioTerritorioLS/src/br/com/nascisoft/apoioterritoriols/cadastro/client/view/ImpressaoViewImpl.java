@@ -206,4 +206,10 @@ public class ImpressaoViewImpl extends Composite implements
 		return lista;
 	}
 
+	@Override
+	public void mostrarWarning(String msgSafeHtml, int timeout) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

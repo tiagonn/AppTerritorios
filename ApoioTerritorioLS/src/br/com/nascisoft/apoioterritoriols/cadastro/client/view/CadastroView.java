@@ -24,4 +24,5 @@ public interface CadastroView {
 	void setCidadeList(List<Cidade> cidades);
 	void setTabSelectionEventHandler(SelectionHandler<Integer> handler);
 	Widget asWidget();
+	void mostrarWarning(String msgSafeHtml, int timeout);
 }

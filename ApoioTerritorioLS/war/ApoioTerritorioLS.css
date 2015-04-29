@@ -1636,3 +1636,11 @@ td.datePickerMonth {
 	vertical-align: middle;
 	float: right;	
 }
+
+.warning-popup-panel {
+	width: 400px;
+	background-color: rgba(187, 40, 113, 0.68);
+	color: #FFFAFA;
+	position: absolute;
+	padding: 10px;
+}

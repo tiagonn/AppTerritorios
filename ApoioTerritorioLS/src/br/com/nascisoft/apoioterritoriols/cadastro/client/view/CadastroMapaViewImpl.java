@@ -531,4 +531,10 @@ public class CadastroMapaViewImpl extends Composite implements
 		vo.getInfoWindow().close();
 	}
 
+	@Override
+	public void mostrarWarning(String msgSafeHtml, int timeout) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

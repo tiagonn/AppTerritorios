@@ -164,4 +164,10 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 		}
 	}
 
+	@Override
+	public void mostrarWarning(String msgSafeHtml, int timeout) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

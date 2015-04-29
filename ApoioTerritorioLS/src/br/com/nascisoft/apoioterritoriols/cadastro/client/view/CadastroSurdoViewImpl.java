@@ -13,6 +13,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.login.util.Validacoes;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
@@ -44,6 +45,7 @@ import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
@@ -110,6 +112,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PushButton manterVoltarButton;
 	@UiField PopupPanel visualizarPopUpPanel;
 	@UiField CheckBox pesquisarSemMapaCheckBox;
+	@UiField PopupPanel warningPopUpPanel;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -121,7 +124,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	String manterRegiao;
 	String manterCidade;
 	boolean buscaEndereco = true;
-
+	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder extends
 			UiBinder<Widget, CadastroSurdoViewImpl> {
@@ -143,8 +146,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		this.iniciarSexoListBox(this.manterSexoListBox); 
 		this.resultadoPesquisa = new ListDataProvider<SurdoDetailsVO>();
 		this.resultadoPesquisa.addDataDisplay(this.pesquisaResultadoCellTable);
-		this.pesquisaResultadoSimplePager.setDisplay(this.pesquisaResultadoCellTable);
-		
+		this.pesquisaResultadoSimplePager.setDisplay(this.pesquisaResultadoCellTable);		
 	}
 	
 	public void initView() {
@@ -221,7 +223,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		if (!StringUtils.isEmpty(this.manterCidade) 
 				&& !this.manterCidade.equals(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			Window.alert("Ao alterar a cidade do cadastro ele perderá a associação que tem com o mapa atual.");
+			this.mostrarWarning("Ao alterar a cidade do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 		}
 		this.manterCidade = this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex());
 		this.presenter.onManterCidadeListBoxChange(Long.valueOf(manterCidade));
@@ -232,7 +234,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		if (!StringUtils.isEmpty(this.manterRegiao) 
 				&& !this.manterRegiao.equals(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			Window.alert("Ao alterar a região do cadastro ele perderá a associação que tem com o mapa atual.");
+			this.mostrarWarning("Ao alterar a região do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 		}
 	}
 	
@@ -421,6 +423,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			deletarColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
 				@Override
 				public void update(int index, SurdoDetailsVO object, String value) {
+					
 					if (Window.confirm("Deseja realmente apagar este cadastro?")) {
 						presenter.onApagar(object.getId());
 					}
@@ -545,10 +548,11 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiHandler(value={"manterMudouSe", "manterVisitarSomentePorAnciaos"})
 	void onNaoVisitarChangeValue(ValueChangeEvent<Boolean> event) {
 		if (event.getValue()) {
-			Window.alert("Ao selecionar mudou-se ou visitar somente por anciãos, este cadastro será removido " +
+			mostrarWarning("Ao selecionar mudou-se ou visitar somente por anciãos, este cadastro será removido " +
 					"da listagem e do mapa que ele está associado, se é que ele está associado a algum mapa, " + 
 					"até que ele seja desmarcado como não visitar na aba própria para este fim.\n\n" +
-					"Por favor, detalhe porque você está marcando este cadastro para não ser visitado no campo observação.");
+					"Por favor, detalhe porque você está marcando este cadastro para não ser visitado no campo observação.", 
+					ApoioTerritorioLSConstants.WARNING_LONG_TIMEOUT);
 			if ("manterMudouSe".equals(((CheckBox)event.getSource()).getName())) {
 				this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 			} else {
@@ -869,6 +873,24 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		}
 		return result;		
+	}
+	
+	@Override
+	public void mostrarWarning(String msgSafeHtml, int timeout) {
+		this.warningPopUpPanel.setPopupPosition(Window.getClientWidth()-440, 20);
+		this.warningPopUpPanel.clear();
+		this.warningPopUpPanel.add(new HTML(msgSafeHtml));
+		this.warningPopUpPanel.setVisible(true);
+		this.warningPopUpPanel.show();
+		Timer timer = new Timer() {
+			
+			@Override
+			public void run() {
+				warningPopUpPanel.hide();
+				warningPopUpPanel.setVisible(false);
+			}
+		};
+		timer.schedule(timeout);
 	}
 	
 }

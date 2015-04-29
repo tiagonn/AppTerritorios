@@ -357,6 +357,7 @@
 					<c:CellTable ui:field="naoVisitarResultadoCellTable" pageSize="10"/>
 					<g:HTML wordWrap="true"><br /></g:HTML>
 					<c:SimplePager location="CENTER" ui:field="naoVisitarSimplePager" pageSize="10"/>
+					<g:PopupPanel ui:field="warningPopUpPanel" styleName="warning-popup-panel" visible="false" animationEnabled="true" glassEnabled="false"></g:PopupPanel>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>

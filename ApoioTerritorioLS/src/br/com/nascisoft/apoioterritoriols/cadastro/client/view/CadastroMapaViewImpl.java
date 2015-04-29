@@ -23,7 +23,6 @@ import com.google.gwt.dom.client.Style.VerticalAlign;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.maps.client.HasMapOptions;
@@ -53,9 +52,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
@@ -65,7 +62,6 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 		GWT.create(CadastroSurdoViewUiBinderUiBinder.class);
 	private CadastroMapaView.Presenter presenter;
 	
-	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField ListBox pesquisaMapaCidadeListBox;
 	@UiField ListBox pesquisaMapaRegiaoListBox;
 	@UiField ListBox pesquisaMapaMapaListBox;
@@ -73,7 +69,6 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 	@UiField PushButton manterMapaSurdoRemoverButton;
 	@UiField PushButton manterMapaApagarMapaButton;
 	@UiField LayoutPanel manterMapaMapaLayoutPanel;
-	@UiField PopupPanel waitingPopUpPanel;
 	@UiField PushButton pesquisaMapaAdicionarMapaButton;
 	@UiField FlowPanel manterMapaSelecaoPessoasContainerFlowPanel;
 	@UiField FlowPanel manterMapaSelecaoPessoasDeFlowPanel;
@@ -116,19 +111,6 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(1, false);
 	}
-	
-	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();
-	}
-	
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
-	}
-	
 	
 	private void limparPesquisa() {
 		this.pesquisaMapaCidadeListBox.setSelectedIndex(0);
@@ -213,11 +195,6 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 	public void setPresenter(CadastroMapaView.Presenter presenter) {
 		this.presenter = presenter;
 		
-	}
-
-	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
 	}
 
 	@UiHandler("pesquisaMapaCidadeListBox")

@@ -24,7 +24,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
@@ -57,7 +56,6 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -69,7 +67,6 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 
 	private static CadastroSurdoViewUiBinderUiBinder uiBinder = GWT
 			.create(CadastroSurdoViewUiBinderUiBinder.class);
-	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField(provided=true) CellTable<SurdoDetailsVO> pesquisaResultadoCellTable;
 	@UiField Label pesquisaResultadoLabel;
 	@UiField HTML manterWarningHTML;
@@ -101,7 +98,6 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField HTML manterWarningEnderecoHTML;
 	@UiField PushButton manterMapaConfirmarEnderecoButton;
 	@UiField PushButton manterMapaVoltarEnderecoButton;
-	@UiField PopupPanel waitingPopUpPanel;
 	@UiField CheckBox manterMudouSe;
 	@UiField CheckBox manterVisitarSomentePorAnciaos;
 	@UiField CheckBox manterMapaSateliteCheckBox;
@@ -156,19 +152,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.limparResultadoPesquisa();
 		this.limparManter();
 	}
-	
-	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();
-	}
-	
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
-	}
-	
+
 	@Override
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(0, false);
@@ -570,16 +554,18 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	}
 	
 	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
-	}
-
-	@Override
 	public void onApagarSurdo(Long id) {
 		for (int i = 0; i < this.resultadoPesquisa.getList().size();i++) {
 			SurdoDetailsVO vo = this.resultadoPesquisa.getList().get(i);
 			if (vo.getId().equals(id)) {
 				this.resultadoPesquisa.getList().remove(i);
+				break;
+			}
+		}
+		for (int i = 0; i < this.listaResultadoPesquisa.size(); i++) {
+			SurdoDetailsVO surdo = this.listaResultadoPesquisa.get(i);
+			if (surdo.getId().equals(id)) {
+				this.listaResultadoPesquisa.remove(i);
 				break;
 			}
 		}

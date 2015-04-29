@@ -1,7 +1,12 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client.view;
 
+import java.util.List;
+
+import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
@@ -11,6 +16,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
 
 public abstract class AbstractCadastroViewImpl extends Composite implements CadastroView {
 	
@@ -19,7 +25,25 @@ public abstract class AbstractCadastroViewImpl extends Composite implements Cada
 	@UiField Label confirmationMessageLabel;
 	@UiField PushButton confirmationBackPushButton;
 	@UiField PushButton confirmationConfirmPushButton;
+	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
+	@UiField PopupPanel waitingPopUpPanel;
 
+	@Override
+	public void showWaitingPanel() {
+		waitingPopUpPanel.setVisible(true);
+		waitingPopUpPanel.show();
+	}
+	
+	@Override
+	public void hideWaitingPanel() {
+		waitingPopUpPanel.hide();
+		waitingPopUpPanel.setVisible(false);
+	}
+	
+	@Override
+	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
+		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
+	}
 
 	@Override
 	public void mostrarWarning(String msgSafeHtml, int timeout) {
@@ -55,6 +79,13 @@ public abstract class AbstractCadastroViewImpl extends Composite implements Cada
 	void onConfirmationBackPushButtonClick(ClickEvent event) {
 		this.confirmationPopUpPanel.hide();
 		this.confirmationPopUpPanel.setVisible(false);
+	}
+	
+	@Override
+	public void setCidadeList(List<Cidade> cidades) {
+		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
+		// apesar deste método estar implementado aqui ele não será chamado.
+		throw new RuntimeException("Método setCidadeList não é suportado pela view Abstrata - e não foi implementada pela view especifica");
 	}
 	
 }

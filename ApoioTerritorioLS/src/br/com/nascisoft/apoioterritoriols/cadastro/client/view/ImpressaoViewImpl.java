@@ -12,15 +12,12 @@ import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSCons
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
@@ -30,11 +27,9 @@ public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
 		GWT.create(CadastroSurdoViewUiBinderUiBinder.class);
 	private ImpressaoView.Presenter presenter;
 	
-	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField ListBox pesquisaImpressaoCidadeListBox;
 	@UiField ListBox pesquisaImpressaoRegiaoListBox;
 	@UiField ListBox pesquisaImpressaoMapaListBox;
-	@UiField PopupPanel waitingPopUpPanel;
 	@UiField PushButton pesquisaImpressapImprimirButton;
 	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
@@ -56,18 +51,6 @@ public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
 	@Override
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(2, false);
-	}
-	
-	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();
-	}
-	
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
 	}
 	
 	private void limparPesquisa() {
@@ -137,12 +120,6 @@ public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
 		this.presenter = presenter;
 		
 	}
-
-	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
-	}
-	
 
 	@UiHandler("pesquisaImpressaoCidadeListBox")
 	void onPesquisaImpressaoCidadeListBoxChange(ChangeEvent event) {

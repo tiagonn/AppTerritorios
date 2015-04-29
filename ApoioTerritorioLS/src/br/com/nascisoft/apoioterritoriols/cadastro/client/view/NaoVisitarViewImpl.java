@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.client.common.ImageButtonCell;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
-import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResources;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
@@ -13,7 +12,6 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -21,8 +19,6 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 
@@ -34,8 +30,6 @@ public class NaoVisitarViewImpl extends AbstractCadastroViewImpl implements NaoV
 	private NaoVisitarView.Presenter presenter;
 	private ListDataProvider<SurdoNaoVisitarDetailsVO> resultadoPesquisa;
 	
-	@UiField PopupPanel waitingPopUpPanel;
-	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField (provided=true) CellTable<SurdoNaoVisitarDetailsVO> naoVisitarResultadoCellTable;
 	@UiField SimplePager naoVisitarSimplePager;	
 	
@@ -54,18 +48,6 @@ public class NaoVisitarViewImpl extends AbstractCadastroViewImpl implements NaoV
 	}
 
 	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();
-	}
-
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
-	}
-
-	@Override
 	public void initView() {
 		this.selectThisTab();
 		this.cadastroSurdoTabLayoutPanel.getTabWidget(4).getParent().setVisible(this.presenter.getLoginInformation().isAdmin());
@@ -75,19 +57,7 @@ public class NaoVisitarViewImpl extends AbstractCadastroViewImpl implements NaoV
 	public void selectThisTab() {
 		this.cadastroSurdoTabLayoutPanel.selectTab(3, false);
 	}
-
-	@Override
-	public void setCidadeList(List<Cidade> cidades) {
-		// não faz nada, não é necessário para esta View, embora seja para todas as outras e
-		// apesar deste método estar implementado aqui ele não será chamado.
-		throw new RuntimeException("Método setCidadeList não é suportado pela view NaoVisitarViewImpl");
-	}
 	
-	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.cadastroSurdoTabLayoutPanel.addSelectionHandler(handler);
-	}
-
 	@Override
 	public void setPresenter(NaoVisitarView.Presenter presenter) {
 		this.presenter = presenter;

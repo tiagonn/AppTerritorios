@@ -53,7 +53,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				logger.log(Level.SEVERE, "Falha ao obter informações de surdos que estão marcados para não serem visitados.\n", caught);
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
-						"Falha ao obter informações de surdos que estão marcados para não serem visitados\n" + caught.getMessage(),
+						"Falha ao obter informações de pessoas que estão marcadas para não serem visitados\n" + caught.getMessage(),
 						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
@@ -74,7 +74,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			public void onSuccess(Void result) {
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
-						"Surdo retornado para a lista de visitas com sucesso",
+						"Pessoa retornada para a lista de visitas com sucesso",
 						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				eventBus.fireEvent(new AbrirNaoVisitarEvent());
 			}
@@ -84,7 +84,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				logger.log(Level.SEVERE, "Falha ao retornar surdo para serem visitados.\n", caught);
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
-						"Falha ao retornar surdo para serem visitados\n" + caught.getMessage(),
+						"Falha ao retornar pessoa para ser visitada\n" + caught.getMessage(),
 						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});

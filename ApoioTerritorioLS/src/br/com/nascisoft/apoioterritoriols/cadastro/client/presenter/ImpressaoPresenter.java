@@ -94,7 +94,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 					eventBus.fireEvent(new AbrirImpressaoMapaEvent(mapasIDs, paisagem));
 				} else {					
 					getView().mostrarWarning(
-							"Não existe surdo associado a algum mapa selecionado. Por favor reveja a seleção e tente novamente.",
+							"Não existe pessoa associada a algum mapa selecionado. Por favor reveja a seleção e tente novamente.",
 							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				}
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");

@@ -7,6 +7,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -16,20 +17,18 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ImpressaoViewImpl extends Composite implements
+public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
 		ImpressaoView {
 	
 	private static CadastroSurdoViewUiBinderUiBinder uiBinder = 
 		GWT.create(CadastroSurdoViewUiBinderUiBinder.class);
-	private Presenter presenter;
+	private ImpressaoView.Presenter presenter;
 	
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField ListBox pesquisaImpressaoCidadeListBox;
@@ -134,7 +133,7 @@ public class ImpressaoViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setPresenter(Presenter presenter) {
+	public void setPresenter(ImpressaoView.Presenter presenter) {
 		this.presenter = presenter;
 		
 	}
@@ -192,7 +191,7 @@ public class ImpressaoViewImpl extends Composite implements
 		if (mapaIDs.size() > 0) {
 			this.presenter.abrirImpressao(mapaIDs, true);
 		} else {
-			Window.alert("Por favor, selecione ao menos um mapa.");
+			this.mostrarWarning("Por favor, selecione ao menos um mapa.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 		}
 	}
 	
@@ -204,12 +203,6 @@ public class ImpressaoViewImpl extends Composite implements
 			}
 		}
 		return lista;
-	}
-
-	@Override
-	public void mostrarWarning(String msgSafeHtml, int timeout) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

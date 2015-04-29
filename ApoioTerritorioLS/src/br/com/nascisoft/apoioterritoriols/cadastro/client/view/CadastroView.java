@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
 
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,4 +26,5 @@ public interface CadastroView {
 	void setTabSelectionEventHandler(SelectionHandler<Integer> handler);
 	Widget asWidget();
 	void mostrarWarning(String msgSafeHtml, int timeout);
+	void mostrarConfirmacao(String msgSafeHtml, ClickHandler acao);
 }

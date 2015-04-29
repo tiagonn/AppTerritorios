@@ -11,6 +11,8 @@ import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -19,19 +21,17 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 
-public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
+public class NaoVisitarViewImpl extends AbstractCadastroViewImpl implements NaoVisitarView {
 	
 	private static CadastroViewUiBinderUiBinder uiBinder = 
 			GWT.create(CadastroViewUiBinderUiBinder.class);
 	
-	private Presenter presenter;
+	private NaoVisitarView.Presenter presenter;
 	private ListDataProvider<SurdoNaoVisitarDetailsVO> resultadoPesquisa;
 	
 	@UiField PopupPanel waitingPopUpPanel;
@@ -89,7 +89,7 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 	}
 
 	@Override
-	public void setPresenter(Presenter presenter) {
+	public void setPresenter(NaoVisitarView.Presenter presenter) {
 		this.presenter = presenter;
 	}
 	
@@ -139,10 +139,15 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 		};
 		retornarColumn.setFieldUpdater(new FieldUpdater<SurdoNaoVisitarDetailsVO, String>() {
 			@Override
-			public void update(int index, SurdoNaoVisitarDetailsVO object, String value) {
-				if (Window.confirm("Deseja realmente retornar esta pessoa à lista de cadastros ativos?")) {
-					presenter.onRetornarButtonClick(object.getId());
-				}
+			public void update(int index, final SurdoNaoVisitarDetailsVO object, String value) {
+				mostrarConfirmacao("Deseja realmente retornar esta pessoa à lista de cadastros ativos?",
+					new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							presenter.onRetornarButtonClick(object.getId());
+						}
+					}
+				);					
 			}
 		});
 		
@@ -162,12 +167,6 @@ public class NaoVisitarViewImpl extends Composite implements NaoVisitarView {
 		for (int i = 0; i < j; i++) {
 			this.naoVisitarResultadoCellTable.removeColumn(0);
 		}
-	}
-
-	@Override
-	public void mostrarWarning(String msgSafeHtml, int timeout) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

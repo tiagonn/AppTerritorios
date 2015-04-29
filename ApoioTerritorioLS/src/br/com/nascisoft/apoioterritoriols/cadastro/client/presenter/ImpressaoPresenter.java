@@ -9,10 +9,10 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.ImpressaoView;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class ImpressaoPresenter extends AbstractCadastroPresenter
@@ -35,7 +35,8 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
+				getView().mostrarWarning("Falha ao obter lista de regiões. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);					
 			}
 
 			@Override
@@ -54,7 +55,8 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao obter lista de mapas. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 
 			@Override
@@ -91,7 +93,9 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				if (result) {
 					eventBus.fireEvent(new AbrirImpressaoMapaEvent(mapasIDs, paisagem));
 				} else {					
-					Window.alert("Não existe surdo associado a algum mapa selecionado. Por favor reveja a seleção e tente novamente.");
+					getView().mostrarWarning(
+							"Não existe surdo associado a algum mapa selecionado. Por favor reveja a seleção e tente novamente.",
+							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				}
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			}
@@ -100,7 +104,8 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());				
+				getView().mostrarWarning("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);				
 			}
 		});
 				

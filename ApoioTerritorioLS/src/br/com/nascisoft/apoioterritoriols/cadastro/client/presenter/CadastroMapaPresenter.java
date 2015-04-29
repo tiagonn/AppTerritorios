@@ -11,10 +11,10 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class CadastroMapaPresenter extends AbstractCadastroPresenter
@@ -37,7 +37,9 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de regiões. \n" + caught.getMessage());					
+				getView().mostrarWarning(
+						"Falha ao obter lista de regiões. \n" + caught.getMessage(), 
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);					
 			}
 
 			@Override
@@ -56,7 +58,9 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter lista de mapas. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao obter lista de mapas. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 
 			@Override
@@ -92,12 +96,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao adicionar mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao adicionar mapa. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao adicionar mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Mapa criado com sucesso.");
+				getView().mostrarWarning("Mapa criado com sucesso.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				abrirMapa(result);
 				getView().hideWaitingPanel();
 			}
@@ -115,7 +121,9 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa. \n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao obter informações para abrir o mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 
 			@Override
@@ -140,12 +148,16 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao adicionar pessoas no mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao adicionar pessoas no mapa. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao adicionar pessoas no mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Pessoa(s) adicionadas com sucesso ao mapa");
+				getView().mostrarWarning(
+						"Pessoa(s) adicionadas com sucesso ao mapa",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}
@@ -161,12 +173,16 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao remover pessoas no mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao remover pessoas no mapa. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao remover pessoas no mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 
 			@Override
 			public void onSuccess(Long result) {
-				Window.alert("Pessoas(s) removidas com sucesso ao mapa");
+				getView().mostrarWarning(
+						"Pessoas(s) removidas com sucesso ao mapa",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}
@@ -182,12 +198,16 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao apagar o mapa.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao apagar o mapa. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao apagar o mapa. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 
 			@Override
 			public void onSuccess(Void result) {
-				Window.alert("Mapa apagado com sucesso");
+				getView().mostrarWarning(
+						"Mapa apagado com sucesso",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				view.onApagarMapa();
 				getView().hideWaitingPanel();
 			}

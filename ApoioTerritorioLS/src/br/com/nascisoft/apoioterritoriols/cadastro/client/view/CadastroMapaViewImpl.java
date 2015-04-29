@@ -13,6 +13,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
@@ -21,6 +22,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.VerticalAlign;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -47,7 +49,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LayoutPanel;
@@ -57,12 +58,12 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CadastroMapaViewImpl extends Composite implements
+public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 		CadastroMapaView {
 	
 	private static CadastroSurdoViewUiBinderUiBinder uiBinder = 
 		GWT.create(CadastroSurdoViewUiBinderUiBinder.class);
-	private Presenter presenter;
+	private CadastroMapaView.Presenter presenter;
 	
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField ListBox pesquisaMapaCidadeListBox;
@@ -209,8 +210,7 @@ public class CadastroMapaViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setPresenter(
-			br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroMapaView.Presenter presenter) {
+	public void setPresenter(CadastroMapaView.Presenter presenter) {
 		this.presenter = presenter;
 		
 	}
@@ -286,7 +286,10 @@ public class CadastroMapaViewImpl extends Composite implements
 		if (setPessoasDe.size() > 0) {
 			int tamanhoMapa = this.abrirMapaVO.getCidade().getQuantidadeSurdosMapa();
 			if (setPessoasDe.size() + this.manterMapaSelecaoPessoasParaFlowPanel.getWidgetCount() > tamanhoMapa) {
-				Window.alert("Apenas " + tamanhoMapa + " pessoas(s) pode(m) compor um mapa. Você está tentando adicionar uma quantidade maior do que o mapa permite");
+				this.mostrarWarning(
+						"Apenas " + tamanhoMapa + " pessoas(s) pode(m) compor um mapa. "
+								+ "Você está tentando adicionar uma quantidade maior do que o mapa permite",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			} else {
 				this.presenter.adicionarSurdosMapa(setPessoasDe, 
 						Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
@@ -305,10 +308,17 @@ public class CadastroMapaViewImpl extends Composite implements
 	@UiHandler("manterMapaApagarMapaButton")
 	void onManterMapaApagarMapaButtonClick(ClickEvent event) {
 		if (this.presenter != null) {
-			if (Window.confirm("Deseja realmente apagar este mapa? Todos as pessoas associadas a esse ficarão sem mapa associados.")) {
-				this.presenter.apagarMapa(Long.valueOf(this.pesquisaMapaMapaListBox.getValue(
-						this.pesquisaMapaMapaListBox.getSelectedIndex())));
-			}
+			mostrarConfirmacao("Deseja realmente apagar este mapa? "
+				+ "Todos as pessoas associadas a esse ficarão sem mapa associados.", 
+				new ClickHandler() {
+					@Override
+					public void onClick(ClickEvent event) {
+						presenter.apagarMapa(Long.valueOf(pesquisaMapaMapaListBox.getValue(
+								pesquisaMapaMapaListBox.getSelectedIndex())));
+						
+					}
+				}
+			);
 		}
 	}
 	
@@ -529,12 +539,6 @@ public class CadastroMapaViewImpl extends Composite implements
 	private void fecharMarcadorMapa(Long id) {
 		InfoWindowVO vo = this.mapaInfoWindow.get(id);
 		vo.getInfoWindow().close();
-	}
-
-	@Override
-	public void mostrarWarning(String msgSafeHtml, int timeout) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -46,10 +46,8 @@ import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
@@ -67,7 +65,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.googlecode.objectify.Key;
 
-public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoView {
+public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements CadastroSurdoView {
 
 	private static CadastroSurdoViewUiBinderUiBinder uiBinder = GWT
 			.create(CadastroSurdoViewUiBinderUiBinder.class);
@@ -113,11 +111,6 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PushButton manterVoltarButton;
 	@UiField PopupPanel visualizarPopUpPanel;
 	@UiField CheckBox pesquisarSemMapaCheckBox;
-	@UiField PopupPanel warningPopUpPanel;
-	@UiField PopupPanel confirmationPopUpPanel;
-	@UiField Label confirmationMessageLabel;
-	@UiField PushButton confirmationBackPushButton;
-	@UiField PushButton confirmationConfirmPushButton;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -135,7 +128,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			UiBinder<Widget, CadastroSurdoViewImpl> {
 	}
 	
-	private Presenter presenter;
+	private CadastroSurdoView.Presenter presenter;
 	
 	private ListDataProvider<SurdoDetailsVO> resultadoPesquisa;
 	private List<SurdoDetailsVO> listaResultadoPesquisa;
@@ -182,7 +175,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	}
 
 	@Override
-	public void setPresenter(Presenter presenter) {
+	public void setPresenter(CadastroSurdoView.Presenter presenter) {
 		this.presenter = presenter;
 		
 	}	
@@ -881,41 +874,5 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 		}
 		return result;		
 	}
-	
-	@Override
-	public void mostrarWarning(String msgSafeHtml, int timeout) {
-		this.warningPopUpPanel.setPopupPosition(Window.getClientWidth()-440, 20);
-		this.warningPopUpPanel.clear();
-		this.warningPopUpPanel.add(new HTML(msgSafeHtml));
-		this.warningPopUpPanel.setVisible(true);
-		this.warningPopUpPanel.show();
-		Timer timer = new Timer() {
-			
-			@Override
-			public void run() {
-				warningPopUpPanel.hide();
-				warningPopUpPanel.setVisible(false);
-			}
-		};
-		timer.schedule(timeout);
-		
-	}
-	
-	public void mostrarConfirmacao(String mensagem, ClickHandler acao) {
-		this.confirmationMessageLabel.setText(mensagem);
-		this.confirmationConfirmPushButton.addClickHandler(acao);
-		this.confirmationPopUpPanel.setVisible(true);
-		this.confirmationPopUpPanel.show();
-		this.confirmationPopUpPanel.setPopupPosition(
-				(Window.getClientWidth() - this.confirmationPopUpPanel.getOffsetWidth() ) / 2,
-				( Window.getClientHeight() - this.confirmationPopUpPanel.getOffsetHeight() ) / 2);
-	}
-	
-	@UiHandler(value={"confirmationBackPushButton", "confirmationConfirmPushButton"})
-	void onConfirmationBackPushButtonClick(ClickEvent event) {
-		this.confirmationPopUpPanel.hide();
-		this.confirmationPopUpPanel.setVisible(false);
-	}
-	
 	
 }

@@ -10,10 +10,10 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroView;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.NaoVisitarView;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.login.vo.LoginVO;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class NaoVisitarPresenter extends AbstractCadastroPresenter implements NaoVisitarView.Presenter {
@@ -52,7 +52,9 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter informações de surdos que estão marcados para não serem visitados.\n", caught);
 				view.hideWaitingPanel();
-				Window.alert("Falha ao obter informações de surdos que estão marcados para não serem visitados\n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao obter informações de surdos que estão marcados para não serem visitados\n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 		
@@ -71,7 +73,9 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			@Override
 			public void onSuccess(Void result) {
 				view.hideWaitingPanel();
-				Window.alert("Surdo retornado para a lista de visitas com sucesso");
+				getView().mostrarWarning(
+						"Surdo retornado para a lista de visitas com sucesso",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				eventBus.fireEvent(new AbrirNaoVisitarEvent());
 			}
 			
@@ -79,7 +83,9 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao retornar surdo para serem visitados.\n", caught);
 				view.hideWaitingPanel();
-				Window.alert("Falha ao retornar surdo para serem visitados\n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao retornar surdo para serem visitados\n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}

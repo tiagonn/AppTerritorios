@@ -86,5 +86,8 @@ public interface Resources extends ClientBundle {
 	@Source("/images/icone_vermelho.png")
 	ImageResource iconeVermelho();
 	
+	@Source("/images/download.png")
+	ImageResource download();
+	
 	
 }

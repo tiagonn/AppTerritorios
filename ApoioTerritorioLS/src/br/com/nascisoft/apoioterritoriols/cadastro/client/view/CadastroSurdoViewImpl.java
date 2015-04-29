@@ -21,6 +21,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
@@ -113,6 +114,10 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	@UiField PopupPanel visualizarPopUpPanel;
 	@UiField CheckBox pesquisarSemMapaCheckBox;
 	@UiField PopupPanel warningPopUpPanel;
+	@UiField PopupPanel confirmationPopUpPanel;
+	@UiField Label confirmationMessageLabel;
+	@UiField PushButton confirmationBackPushButton;
+	@UiField PushButton confirmationConfirmPushButton;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -180,8 +185,7 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 		
-	}
-	
+	}	
 
 	@Override
 	public void setCidadeList(List<Cidade> cidades) {
@@ -422,11 +426,14 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			};
 			deletarColumn.setFieldUpdater(new FieldUpdater<SurdoDetailsVO, String>() {
 				@Override
-				public void update(int index, SurdoDetailsVO object, String value) {
-					
-					if (Window.confirm("Deseja realmente apagar este cadastro?")) {
-						presenter.onApagar(object.getId());
-					}
+				public void update(int index, final SurdoDetailsVO object, String value) {
+					mostrarConfirmacao("Deseja realmente apagar este cadastro?", new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							presenter.onApagar(object.getId());
+							
+						}
+					});
 				}
 			});
 			
@@ -891,6 +898,24 @@ public class CadastroSurdoViewImpl extends Composite implements CadastroSurdoVie
 			}
 		};
 		timer.schedule(timeout);
+		
 	}
+	
+	public void mostrarConfirmacao(String mensagem, ClickHandler acao) {
+		this.confirmationMessageLabel.setText(mensagem);
+		this.confirmationConfirmPushButton.addClickHandler(acao);
+		this.confirmationPopUpPanel.setVisible(true);
+		this.confirmationPopUpPanel.show();
+		this.confirmationPopUpPanel.setPopupPosition(
+				(Window.getClientWidth() - this.confirmationPopUpPanel.getOffsetWidth() ) / 2,
+				( Window.getClientHeight() - this.confirmationPopUpPanel.getOffsetHeight() ) / 2);
+	}
+	
+	@UiHandler(value={"confirmationBackPushButton", "confirmationConfirmPushButton"})
+	void onConfirmationBackPushButtonClick(ClickEvent event) {
+		this.confirmationPopUpPanel.hide();
+		this.confirmationPopUpPanel.setVisible(false);
+	}
+	
 	
 }

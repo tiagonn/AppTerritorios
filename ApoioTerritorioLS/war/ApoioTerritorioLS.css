@@ -1644,3 +1644,30 @@ td.datePickerMonth {
 	position: absolute;
 	padding: 10px;
 }
+
+.confirmation-popup-panel {
+	display: block;
+	position: absolute;
+	width: 400px;
+	padding: 10px;
+	background-color: #F5F5F5;	
+}
+
+.confirmation-secao {
+	display: table;
+	padding-bottom: 30px;
+	width: 100%;
+}
+
+.confirmation-label {
+	display: table-cell;
+	text-align: center;
+}
+
+.confirmation-button-panel {
+	display: table-cell;
+}
+
+.confirmation-button {
+	margin: 0 auto;
+}

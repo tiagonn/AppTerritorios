@@ -12,7 +12,7 @@ import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -22,27 +22,21 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 
-public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
+public class AdminCidadeViewImpl extends AbstractAdminViewImpl implements AdminCidadeView {
 
 	private static AdminViewUiBinderUiBinder uiBinder = GWT
 			.create(AdminViewUiBinderUiBinder.class);
 	
-	private Presenter presenter;
-	@UiField TabLayoutPanel adminTabLayoutPanel;
-	@UiField PopupPanel waitingPopUpPanel;
+	private AdminCidadeView.Presenter presenter;
 	@UiField TextBox cidadeNomeTextBox;
 	@UiField TextBox cidadeUFTextBox;
 	@UiField TextBox cidadePaisTextBox;
@@ -77,18 +71,6 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	}
 
 	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();		
-	}
-
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
-	}
-
-	@Override
 	public void initView() {
 		this.selectThisTab();
 		this.limparFormularios();
@@ -103,12 +85,7 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 	}
 
 	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.adminTabLayoutPanel.addSelectionHandler(handler);		
-	}
-
-	@Override
-	public void setPresenter(Presenter presenter) {
+	public void setPresenter(AdminCidadeView.Presenter presenter) {
 		this.presenter = presenter;
 	}
 	
@@ -207,10 +184,16 @@ public class AdminCidadeViewImpl extends Composite implements AdminCidadeView {
 			
 			Delegate<Long> deletarDelegate = new Delegate<Long>() {
 				@Override
-				public void execute(Long object) {
-					if (Window.confirm("Deseja realmente apagar esta cidade?")) {
-						presenter.apagarCidade(object);
-					}
+				public void execute(final Long object) {
+					mostrarConfirmacao("Deseja realmente apagar esta cidade?",
+						new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								presenter.apagarCidade(object);
+							}
+						}
+					);
 				}				
 			};
 			ActionCell<Long> deletarCell = new ActionCell<Long>("Apagar", deletarDelegate);

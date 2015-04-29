@@ -7,10 +7,10 @@ import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRegiaoView;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AdminRegiaoPresenter extends AbstractAdminPresenter
@@ -43,7 +43,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				Window.alert("Regiao adicionada/atualizada com sucesso");
+				getView().mostrarWarning("Regiao adicionada/atualizada com sucesso",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				getView().initView();
 			}
 			
@@ -51,7 +52,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar Regiao.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao atualizar/adicionar Regiao. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao atualizar/adicionar Regiao. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 		
@@ -72,7 +74,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter Regiões.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter Regiões. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao obter Regiões. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}
@@ -86,9 +89,11 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			public void onSuccess(Boolean result) {
 				getView().hideWaitingPanel();
 				if (result) {
-					Window.alert("Regiao apagada com sucesso");
+					getView().mostrarWarning("Regiao apagada com sucesso",
+							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				} else {
-					Window.alert("Regiao não pode ser apagada pois possui surdos associados a ela");
+					getView().mostrarWarning("Regiao não pode ser apagada pois possui surdos associados a ela",
+							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				}
 				getView().initView();
 			}
@@ -97,7 +102,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao apagar Regiao.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao apagar Regiao. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao apagar Regiao. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}
@@ -118,7 +124,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter cidades.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter cidades. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao obter cidades. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}

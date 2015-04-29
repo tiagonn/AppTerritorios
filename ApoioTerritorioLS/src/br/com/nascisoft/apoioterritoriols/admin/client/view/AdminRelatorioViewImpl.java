@@ -7,23 +7,21 @@ import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -41,15 +39,13 @@ import com.google.gwt.visualization.client.visualizations.corechart.Options;
 import com.google.gwt.visualization.client.visualizations.corechart.PieChart;
 import com.google.gwt.visualization.client.visualizations.corechart.TextStyle;
 
-public class AdminRelatorioViewImpl extends Composite implements
+public class AdminRelatorioViewImpl extends AbstractAdminViewImpl implements
 		AdminRelatorioView {
 
 	private static AdminViewUiBinderUiBinder uiBinder = GWT
 			.create(AdminViewUiBinderUiBinder.class);
 
-	private Presenter presenter;
-	@UiField TabLayoutPanel adminTabLayoutPanel;
-	@UiField PopupPanel waitingPopUpPanel;
+	private AdminRelatorioView.Presenter presenter;
 	@UiField VerticalPanel adminRelatorioVerticalPanel;
 	@UiField ListBox adminRelatorioTipoRelatorioListBox;
 	@UiField PopupPanel adminRelatorioDetalhesPopupPanel;
@@ -66,18 +62,6 @@ public class AdminRelatorioViewImpl extends Composite implements
 
 	public AdminRelatorioViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
-	}
-
-	@Override
-	public void showWaitingPanel() {
-		waitingPopUpPanel.setVisible(true);
-		waitingPopUpPanel.show();
-	}
-
-	@Override
-	public void hideWaitingPanel() {
-		waitingPopUpPanel.hide();
-		waitingPopUpPanel.setVisible(false);
 	}
 
 	@Override
@@ -100,12 +84,7 @@ public class AdminRelatorioViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setTabSelectionEventHandler(SelectionHandler<Integer> handler) {
-		this.adminTabLayoutPanel.addSelectionHandler(handler);
-	}
-
-	@Override
-	public void setPresenter(Presenter presenter) {
+	public void setPresenter(AdminRelatorioView.Presenter presenter) {
 		this.presenter = presenter;
 	}
 
@@ -251,7 +230,8 @@ public class AdminRelatorioViewImpl extends Composite implements
 		if (!StringUtils.isEmpty(this.adminRelatorioEmailTextBox.getText())) {
 			this.presenter.dispararExport(this.adminRelatorioEmailTextBox.getText()); 
 		} else {
-			Window.alert("O campo e-mail deve ser preenchido com um e-mail.");
+			mostrarWarning("O campo e-mail deve ser preenchido com um e-mail.",
+					ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 		}
 	}
 

@@ -350,6 +350,38 @@
 						styleName="imagem-div-centro">
 						<g:HTML><img src="images/esperando.gif" alt="Esperando..."/></g:HTML>
 					</g:PopupPanel>
+					<g:PopupPanel ui:field="warningPopUpPanel" styleName="warning-popup-panel" visible="false" animationEnabled="true" glassEnabled="false"></g:PopupPanel>
+					<g:PopupPanel ui:field="confirmationPopUpPanel" styleName="confirmation-popup-panel" visible="false" animationEnabled="true" glassEnabled="true" autoHideEnabled="false">
+						<g:FlowPanel width="100%">
+							<g:FlowPanel styleName="confirmation-secao">
+								<g:Label ui:field="confirmationMessageLabel" styleName="confirmation-label"></g:Label>
+							</g:FlowPanel>
+							<g:FlowPanel styleName="confirmation-secao">
+								<g:FlowPanel styleName="confirmation-button-panel">
+									<g:PushButton 
+										ui:field="confirmationBackPushButton" 
+										styleName="gwt-PushButton gwt-PushButton-up confirmation-button" 
+										title="Voltar" 
+										enabled="true" 
+										width="35px">
+											<g:upFace image="{res.voltar}" />
+											<g:downFace image="{res.voltar}" />
+									</g:PushButton>
+								</g:FlowPanel>
+								<g:FlowPanel styleName="confirmation-button-panel">
+									<g:PushButton 
+										ui:field="confirmationConfirmPushButton" 
+										styleName="gwt-PushButton gwt-PushButton-up confirmation-button" 
+										title="Confirmar" 
+										enabled="true" 
+										width="35px">
+											<g:upFace image="{res.salvar}" />
+											<g:downFace image="{res.salvar}" />
+									</g:PushButton>
+								</g:FlowPanel>
+							</g:FlowPanel>
+						</g:FlowPanel>
+					</g:PopupPanel>
 				</g:VerticalPanel>
 			</g:ScrollPanel>
 		</g:tab>		

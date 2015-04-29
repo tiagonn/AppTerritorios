@@ -4,10 +4,10 @@ import java.util.logging.Level;
 
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminBackupView;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AdminBackupPresenter extends AbstractAdminPresenter
@@ -40,14 +40,18 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				Window.alert("enderecos".equals(tipo)?"Export disparado com sucesso":"Backup disparado com sucesso");
+				getView().mostrarWarning(
+						"enderecos".equals(tipo)?"Export disparado com sucesso":"Backup disparado com sucesso",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao disparar o backup/export.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter disparar o backup/export. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao obter disparar o backup/export. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}
@@ -59,7 +63,9 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao recuperar a action de upload.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao recuperar a action de upload. \n" + caught.getMessage());
+				getView().mostrarWarning(
+						"Falha ao recuperar a action de upload. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 			@Override

@@ -6,10 +6,10 @@ import java.util.logging.Level;
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminCidadeView;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AdminCidadePresenter extends AbstractAdminPresenter
@@ -42,7 +42,7 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				Window.alert("Cidade adicionada/atualizada com sucesso");
+				getView().mostrarWarning("Cidade adicionada/atualizada com sucesso", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				getView().initView();
 			}
 			
@@ -50,7 +50,8 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar cidade.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao atualizar/adicionar cidade. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao atualizar/adicionar cidade. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 		
@@ -71,7 +72,8 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter cidades.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter cidades. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao obter cidades. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}
@@ -85,9 +87,11 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			public void onSuccess(Boolean result) {
 				getView().hideWaitingPanel();
 				if (result) {
-					Window.alert("Cidade apagada com sucesso");
+					getView().mostrarWarning("Cidade apagada com sucesso",
+							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				} else {
-					Window.alert("Não é possível apagar esta cidade pois ela possui regiões associadas");
+					getView().mostrarWarning("Não é possível apagar esta cidade pois ela possui regiões associadas",
+							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 				}
 				getView().initView();
 			}
@@ -96,7 +100,8 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao apagar cidade.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao apagar cidade. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao apagar cidade. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 	}

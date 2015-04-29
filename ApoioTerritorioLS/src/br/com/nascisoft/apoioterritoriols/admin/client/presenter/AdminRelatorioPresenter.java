@@ -5,10 +5,10 @@ import java.util.logging.Level;
 import br.com.nascisoft.apoioterritoriols.admin.client.AdminServiceAsync;
 import br.com.nascisoft.apoioterritoriols.admin.client.view.AdminRelatorioView;
 import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class AdminRelatorioPresenter extends AbstractAdminPresenter
@@ -48,7 +48,8 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter dados para relatório.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao obter dados para relatório. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao obter dados para relatório. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 		});
 		
@@ -62,14 +63,16 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				Window.alert("Export disparado com sucesso");
+				getView().mostrarWarning("Export disparado com sucesso",
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao disparar export.\n", caught);
 				getView().hideWaitingPanel();
-				Window.alert("Falha ao disparar export. \n" + caught.getMessage());
+				getView().mostrarWarning("Falha ao disparar export. \n" + caught.getMessage(),
+						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
 			}
 			
 		});

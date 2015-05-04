@@ -10,6 +10,7 @@ import br.com.nascisoft.apoioterritoriols.resources.client.CellTableCustomResour
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -27,6 +28,9 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
+import com.subshell.gwt.canvas.client.colorpicker.ColorPickerDialog;
+import com.subshell.gwt.canvas.client.dialog.DialogClosedEvent;
+import com.subshell.gwt.canvas.client.dialog.IDialogClosedHandler;
 
 public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminRegiaoView {
 
@@ -45,6 +49,10 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 	@UiField (provided=true) CellTable<RegiaoVO> pesquisaRegiaoResultadoCellTable;
 	@UiField Label pesquisaRegiaoResultadoLabel;
 	@UiField SimplePager pesquisaRegiaoResultadoSimplePager;
+	@UiField TextBox regiaoCorLetraTextBox;
+	@UiField TextBox regiaoCorFundoTextBox;
+	@UiField Button regiaoCorLetraButton;
+	@UiField Button regiaoCorFundoButton;
 	private ListDataProvider<RegiaoVO> resultadoPesquisaRegiao;
 	private Long idSelecionado;
 	
@@ -137,6 +145,10 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		this.regiaoLatitudeTextBox.setText("");
 		this.regiaoLongitudeTextBox.setText("");
 		this.regiaoCidadeListBox.setSelectedIndex(0);
+		this.regiaoCorLetraTextBox.setValue("ff0000");
+		this.regiaoCorLetraTextBox.getElement().getStyle().setBackgroundColor("#ff0000");
+		this.regiaoCorFundoTextBox.setValue("fff339");	
+		this.regiaoCorFundoTextBox.getElement().getStyle().setBackgroundColor("#fff339");	
 	}
 	
 	private void limparResultadoPesquisa() {	
@@ -280,6 +292,60 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		}
 
 		
+		
 		return validacoes;
 	}
+	
+	@UiHandler("regiaoCorFundoTextBox")
+	void onRegiaoCorFundoTextBoxValueChange(ChangeEvent event) {
+		this.regiaoCorFundoTextBox.getElement().getStyle().setBackgroundColor("#"+this.regiaoCorFundoTextBox.getValue());
+		setBoxTextColor(this.regiaoCorFundoTextBox.getValue(), this.regiaoCorFundoTextBox);
+	}
+	
+	@UiHandler("regiaoCorLetraTextBox")
+	void onRegiaoCorLetraTextBoxValueChange(ChangeEvent event) {
+		this.regiaoCorLetraTextBox.getElement().getStyle().setBackgroundColor("#"+this.regiaoCorLetraTextBox.getValue());
+		setBoxTextColor(this.regiaoCorLetraTextBox.getValue(), this.regiaoCorLetraTextBox);
+	}
+	
+	@UiHandler("regiaoCorLetraButton")
+	void onRegiaoCorLetraButtonClick(ClickEvent event) {
+		ColorPickerDialog dlg = pickColor(regiaoCorLetraTextBox);
+		dlg.setPopupPosition(event.getClientX(), event.getClientY());
+	}
+	
+	@UiHandler("regiaoCorFundoButton")
+	void onRegiaoCorFundoButtonClick(ClickEvent event) {
+		ColorPickerDialog dlg = pickColor(regiaoCorFundoTextBox);
+		dlg.setPopupPosition(event.getClientX(), event.getClientY());
+	}
+	
+	private ColorPickerDialog pickColor(final TextBox box) {
+		final ColorPickerDialog dlg = new ColorPickerDialog();
+		dlg.setColor(box.getText());
+		dlg.addDialogClosedHandler(new IDialogClosedHandler() {
+			public void dialogClosed(DialogClosedEvent event) {
+				if (!event.isCanceled()) {
+					box.setText(dlg.getColor());
+					box.getElement().getStyle().setBackgroundColor("#"+dlg.getColor());	
+					setBoxTextColor(dlg.getColor(), box);
+				}
+			}
+		});
+		dlg.center();
+		return dlg;
+	}
+	
+	private void setBoxTextColor(String color, TextBox box) {
+		try {
+			if (Integer.valueOf(color.substring(0,1)) < 7) {
+				box.getElement().getStyle().setColor("#ffffff");
+			} else {
+				box.getElement().getStyle().setColor("#000000");
+			}
+		} catch (NumberFormatException ex) {
+			box.getElement().getStyle().setColor("#000000");
+		}
+	}
+	
 }

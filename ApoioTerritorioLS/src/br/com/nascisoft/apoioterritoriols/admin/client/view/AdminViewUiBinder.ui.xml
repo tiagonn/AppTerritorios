@@ -243,6 +243,26 @@
 								<g:TextBox ui:field="regiaoLongitudeTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 						</g:row>
+						<g:row>
+							<g:customCell>
+								<g:InlineLabel text="Cor da letra: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:FlowPanel>
+									<g:TextBox ui:field="regiaoCorLetraTextBox" visibleLength="5" maxLength="6"></g:TextBox>
+									<g:Button ui:field="regiaoCorLetraButton" text="Escolher cor"></g:Button>
+								</g:FlowPanel>
+							</g:customCell>
+							<g:customCell>
+								<g:InlineLabel text="Cor do fundo: " styleName="negrito"></g:InlineLabel>
+							</g:customCell>
+							<g:customCell>
+								<g:FlowPanel>
+									<g:TextBox ui:field="regiaoCorFundoTextBox" visibleLength="5" maxLength="6"></g:TextBox>
+									<g:Button ui:field="regiaoCorFundoButton" text="Escolher cor"></g:Button>
+								</g:FlowPanel>
+							</g:customCell>
+						</g:row>
 					</g:Grid>
 					<g:HTML wordWrap="true"> <br/></g:HTML>
 					<g:Button ui:field="regiaoAdicionarButton" text="Adicionar/Atualizar"></g:Button>

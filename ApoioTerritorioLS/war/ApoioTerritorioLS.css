@@ -1671,3 +1671,11 @@ td.datePickerMonth {
 .confirmation-button {
 	margin: 0 auto;
 }
+
+.subshell-HuePicker {
+	margin-left: 5pt;
+}
+
+.gwt-DialogBox .DialogButtons button {
+	margin-left: 5pt;
+}

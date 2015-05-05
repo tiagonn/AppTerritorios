@@ -47,7 +47,9 @@ import javax.xml.bind.annotation.XmlType;
     "letra",
     "nivelZoom",
     "latitudeCentro",
-    "longitudeCentro"
+    "longitudeCentro",
+    "corLetra",
+    "corFundo"
 })
 public class RegiaoType {
 
@@ -60,8 +62,26 @@ public class RegiaoType {
     protected int nivelZoom;
     protected double latitudeCentro;
     protected double longitudeCentro;
+    protected String corLetra;
+    protected String corFundo;
 
-    /**
+    public String getCorLetra() {
+		return corLetra;
+	}
+
+	public void setCorLetra(String corLetra) {
+		this.corLetra = corLetra;
+	}
+
+	public String getCorFundo() {
+		return corFundo;
+	}
+
+	public void setCorFundo(String corFundo) {
+		this.corFundo = corFundo;
+	}
+
+	/**
      * Gets the value of the identificador property.
      * 
      */

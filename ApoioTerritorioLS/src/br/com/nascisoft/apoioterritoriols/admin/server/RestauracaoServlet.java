@@ -143,6 +143,8 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setZoom(xml.getNivelZoom());
 		retorno.setLatitudeCentro(xml.getLatitudeCentro());
 		retorno.setLongitudeCentro(xml.getLongitudeCentro());
+		retorno.setCorLetra(xml.getCorLetra());
+		retorno.setCorFundo(xml.getCorFundo());
 		
 		return retorno;		
 	}

@@ -57,7 +57,6 @@ a, a:visited, a:hover {
 }
 
 .impressao-panel-mapa {
-	background: #fff339;
 	padding: 5px;
 }
 
@@ -142,7 +141,6 @@ a, a:visited, a:hover {
 }
 
 .impressao-cabecalho-texto {
-	color: red;
 	text-align: left;
 	font-size: medium;
 }

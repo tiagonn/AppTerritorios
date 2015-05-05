@@ -17,6 +17,8 @@ public class RegiaoVO implements Serializable{
 	private Integer zoom;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
+	private String corLetra;
+	private String corFundo;
 	
 	public RegiaoVO() {
 		super();
@@ -31,8 +33,26 @@ public class RegiaoVO implements Serializable{
 		this.setLongitudeCentro(regiao.getLongitudeCentro());
 		this.setCidadeId(cidade.getId());
 		this.setCidadeNome(cidade.getNome());
+		this.setCorLetra(regiao.getCorLetra());
+		this.setCorFundo(regiao.getCorFundo());
 	}
 	
+	public String getCorLetra() {
+		return corLetra != null ? corLetra : "ff0000";
+	}
+
+	public void setCorLetra(String corLetra) {
+		this.corLetra = corLetra;
+	}
+
+	public String getCorFundo() {
+		return this.corFundo != null ? this.corFundo : "fff339";
+	}
+
+	public void setCorFundo(String corFundo) {
+		this.corFundo = corFundo;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -93,6 +113,8 @@ public class RegiaoVO implements Serializable{
 		regiao.setZoom(this.getZoom());
 		regiao.setLatitudeCentro(this.getLatitudeCentro());
 		regiao.setLongitudeCentro(this.getLongitudeCentro());
+		regiao.setCorFundo(this.getCorFundo());
+		regiao.setCorLetra(this.getCorLetra());
 		
 		return regiao;
 	}

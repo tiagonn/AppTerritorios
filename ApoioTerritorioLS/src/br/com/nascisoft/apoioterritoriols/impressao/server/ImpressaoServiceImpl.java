@@ -92,6 +92,7 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 		
 		vo.setSurdosImprimir(surdosVO);
 		vo.setCidade(mapasCidade.get(surdos.get(0).getCidade()));
+		vo.setRegiao(mapasRegiao.get(surdos.get(0).getRegiao()));
 		
 		return vo;
 	}

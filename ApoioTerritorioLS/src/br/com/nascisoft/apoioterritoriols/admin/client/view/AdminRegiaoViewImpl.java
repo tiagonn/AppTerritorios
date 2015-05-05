@@ -125,6 +125,8 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		regiao.setLetra(this.regiaoLetraTextBox.getText());
 		regiao.setZoom(Integer.valueOf(this.regiaoZoomListBox.getValue(this.regiaoZoomListBox.getSelectedIndex())));
 		regiao.setCidadeId(Long.valueOf(this.regiaoCidadeListBox.getValue(this.regiaoCidadeListBox.getSelectedIndex())));
+		regiao.setCorLetra(this.regiaoCorLetraTextBox.getText());
+		regiao.setCorFundo(this.regiaoCorFundoTextBox.getText());
 		
 		return regiao;
 	}
@@ -145,10 +147,8 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		this.regiaoLatitudeTextBox.setText("");
 		this.regiaoLongitudeTextBox.setText("");
 		this.regiaoCidadeListBox.setSelectedIndex(0);
-		this.regiaoCorLetraTextBox.setValue("ff0000");
-		this.regiaoCorLetraTextBox.getElement().getStyle().setBackgroundColor("#ff0000");
-		this.regiaoCorFundoTextBox.setValue("fff339");	
-		this.regiaoCorFundoTextBox.getElement().getStyle().setBackgroundColor("#fff339");	
+		this.setBoxTextColor("ff0000", this.regiaoCorLetraTextBox);
+		this.setBoxTextColor("fff339", this.regiaoCorFundoTextBox);
 	}
 	
 	private void limparResultadoPesquisa() {	
@@ -248,6 +248,8 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		this.regiaoZoomListBox.setSelectedIndex(obterIndice(this.regiaoZoomListBox, regiao.getZoom().toString()));
 		this.regiaoCidadeListBox.setSelectedIndex(
 				obterIndice(this.regiaoCidadeListBox, regiao.getCidadeId().toString()));
+		this.setBoxTextColor(regiao.getCorLetra(), this.regiaoCorLetraTextBox);
+		this.setBoxTextColor(regiao.getCorFundo(), this.regiaoCorFundoTextBox);
 
 	}
 	
@@ -298,13 +300,11 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 	
 	@UiHandler("regiaoCorFundoTextBox")
 	void onRegiaoCorFundoTextBoxValueChange(ChangeEvent event) {
-		this.regiaoCorFundoTextBox.getElement().getStyle().setBackgroundColor("#"+this.regiaoCorFundoTextBox.getValue());
 		setBoxTextColor(this.regiaoCorFundoTextBox.getValue(), this.regiaoCorFundoTextBox);
 	}
 	
 	@UiHandler("regiaoCorLetraTextBox")
 	void onRegiaoCorLetraTextBoxValueChange(ChangeEvent event) {
-		this.regiaoCorLetraTextBox.getElement().getStyle().setBackgroundColor("#"+this.regiaoCorLetraTextBox.getValue());
 		setBoxTextColor(this.regiaoCorLetraTextBox.getValue(), this.regiaoCorLetraTextBox);
 	}
 	
@@ -326,8 +326,6 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		dlg.addDialogClosedHandler(new IDialogClosedHandler() {
 			public void dialogClosed(DialogClosedEvent event) {
 				if (!event.isCanceled()) {
-					box.setText(dlg.getColor());
-					box.getElement().getStyle().setBackgroundColor("#"+dlg.getColor());	
 					setBoxTextColor(dlg.getColor(), box);
 				}
 			}
@@ -346,6 +344,8 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		} catch (NumberFormatException ex) {
 			box.getElement().getStyle().setColor("#000000");
 		}
+		box.setText(color);
+		box.getElement().getStyle().setBackgroundColor("#"+color);
 	}
 	
 }

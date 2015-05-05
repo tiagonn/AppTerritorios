@@ -24,7 +24,21 @@ public class Regiao implements Serializable {
 	private Integer zoom;
 	private Double latitudeCentro;
 	private Double longitudeCentro;
+	private String corLetra;
+	private String corFundo;
 	
+	public String getCorLetra() {
+		return corLetra != null ? corLetra : "ff0000";
+	}
+	public void setCorLetra(String corLetra) {
+		this.corLetra = corLetra;
+	}
+	public String getCorFundo() {
+		return corFundo != null ? corFundo : "fff339";
+	}
+	public void setCorFundo(String corFundo) {
+		this.corFundo = corFundo;
+	}
 	public Long getId() {
 		return id;
 	}

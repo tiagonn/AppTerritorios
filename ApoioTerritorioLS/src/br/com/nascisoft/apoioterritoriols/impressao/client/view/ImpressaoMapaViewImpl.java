@@ -106,7 +106,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		impressaoSimplePanel.getElement().getParentElement().getParentElement().getStyle().setFloat(Float.NONE);
 		
 		for (AbrirMapaVO vo : mapas) {
-			
+
 			VerticalPanel impressaoVerticalPanel = new VerticalPanel();
 			impressaoVerticalPanel.setStyleName("impressao-panel-vertical");
 			
@@ -121,6 +121,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			
 			VerticalPanel impressaoMapaVerticalPanel = new VerticalPanel();
 			impressaoMapaVerticalPanel.setStyleName("impressao-panel-mapa");
+			impressaoMapaVerticalPanel.getElement().getStyle().setBackgroundColor("#"+vo.getRegiao().getCorFundo());
 			
 			Label titulo = new Label("Cartão de Mapa de Território");
 			titulo.setStyleName("impressao-cabecalho-titulo");			
@@ -137,6 +138,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			Label impressaoLocalidadeLabel = new Label();
 			impressaoLocalidadeLabel.setStyleName("impressao-cabecalho-texto");
 			subtituloHorizontalPanel.add(impressaoLocalidadeLabel);
+			impressaoLocalidadeLabel.getElement().getStyle().setColor("#"+vo.getRegiao().getCorLetra());
 			
 			labelsImpressaoLocalidadeLabel.put(idPrimeiraPessoa, impressaoLocalidadeLabel);
 			
@@ -147,6 +149,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			Label impressaoTerritorioLabel = new Label();
 			impressaoTerritorioLabel.setStyleName("impressao-cabecalho-texto");
 			subtituloHorizontalPanel.add(impressaoTerritorioLabel);
+			impressaoTerritorioLabel.getElement().getStyle().setColor("#"+vo.getRegiao().getCorLetra());
 			
 			labelsImpressaoTerritorioLabel.put(idPrimeiraPessoa, impressaoTerritorioLabel);
 			

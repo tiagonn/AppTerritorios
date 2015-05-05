@@ -297,6 +297,8 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		xml.setLatitudeCentro(regiao.getLatitudeCentro());
 		xml.setLongitudeCentro(regiao.getLongitudeCentro());
 		xml.setNivelZoom(regiao.getZoom());
+		xml.setCorLetra(regiao.getCorLetra());
+		xml.setCorFundo(regiao.getCorFundo());
 		
 		return xml;
 	}

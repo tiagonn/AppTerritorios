@@ -31,9 +31,6 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.utils.SystemProperty;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.VoidWork;
@@ -57,11 +54,8 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public void dispararBackup(String destinatarios, String tipo) {
 		logger.log(Level.INFO, "Disparando queue de backup");
 		Queue queue = QueueFactory.getDefaultQueue();
-        UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
 		queue.add(withUrl("/tasks/backup")
 				.param("destinatarios", destinatarios)
-				.param("remetente", user.getEmail())
 				.param("tipo", tipo));	
 	}
 
@@ -237,9 +231,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public void dispararExport(String destinatario) {
 		logger.log(Level.INFO, "Disparando queue de export");
 		Queue queue = QueueFactory.getDefaultQueue();
-        UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
-		queue.add(withUrl("/tasks/export").param("destinatario", destinatario).param("remetente", user.getEmail()));	
+		queue.add(withUrl("/tasks/export").param("destinatario", destinatario));	
 	}
 
 	@Override

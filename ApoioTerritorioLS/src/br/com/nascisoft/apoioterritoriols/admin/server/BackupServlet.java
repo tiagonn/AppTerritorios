@@ -75,7 +75,9 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
         try {
 			String destinatarios = req.getParameter("destinatarios");
 			
-			String remetente = req.getParameter("remetente");
+			String remetente = System.getProperty("email.admin");
+			
+			logger.info("Mandando e-mail de: " + remetente +" para: " + destinatarios);
 			
 			String tipo = req.getParameter("tipo");
 			

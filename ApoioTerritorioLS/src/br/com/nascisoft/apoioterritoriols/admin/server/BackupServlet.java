@@ -33,6 +33,7 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import com.google.common.base.CharMatcher;
 import com.googlecode.objectify.Key;
 
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
@@ -157,32 +158,33 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		
 		StringBuilder csv = new StringBuilder();
 		csv.append("cidade;regiao;mapa;nome;logradouro;numero;complemento;bairro;cep;observacao;telefone;libras;")
-			.append("publicacoesPossui;anoNascimento;dvd;instrutor;tipo;horario;melhorDia;onibus;msn;latitude;longitude;qtdePessoasEndereco\n"); 
+			.append("publicacoesPossui;anoNascimento;dvd;instrutor;tipo;horario;melhorDia;onibus;msn;latitude;")
+			.append("longitude;qtdePessoasEndereco\n"); 
 		for (SurdoVO surdo : surdosVO) {
-			csv.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNomeCidade())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getRegiao())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMapa())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNome())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getLogradouro())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNumero())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getComplemento())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getBairro())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getCep())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getObservacao())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getTelefone())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getLibras())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getPublicacoesPossui())).append("\";")
-				.append("\"").append(surdo.getAnoNascimento()).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getDvd())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getInstrutor())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getSexo())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getHorario())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMelhorDia())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getOnibus())).append("\";")
-				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMsn())).append("\";")
-				.append("\"").append(surdo.getLatitude()).append("\";")
-				.append("\"").append(surdo.getLongitude()).append("\";")
-				.append("\"").append(surdo.getQtdePessoasEndereco()).append("\n");
+			csv.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getNomeCidade()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getRegiao()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMapa()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getNome()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getLogradouro()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getNumero()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getComplemento()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getBairro()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getCep()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getObservacao()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getTelefone()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getLibras()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getPublicacoesPossui()))).append(",")
+				.append(surdo.getAnoNascimento()).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getDvd()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getInstrutor()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getSexo()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getHorario()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMelhorDia()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getOnibus()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMsn()))).append(",")
+				.append(surdo.getLatitude()).append(",")
+				.append(surdo.getLongitude()).append(",")
+				.append(surdo.getQtdePessoasEndereco()).append("\n");
 		}
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -364,4 +366,27 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		return xml;		
 	}
 
+	  public static final CharMatcher BREAKLINE = new CharMatcher() {
+		    @Override
+		    public boolean matches(char c) {
+		      switch (c) {
+		        case '\t':
+		        case '\n':
+		        case '\013':
+		        case '\f':
+		        case '\r':
+		        case '\u0085':
+		        case '\u1680':
+		        case '\u2028':
+		        case '\u2029':
+		        case '\u205f':
+		        case '\u3000':
+		          return true;
+		        case '\u2007':
+		          return false;
+		        default:
+		          return c >= '\u2000' && c <= '\u200a';
+		      }
+		    }
+	  };
 }

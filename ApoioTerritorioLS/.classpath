@@ -11,5 +11,6 @@
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-5.1.5.jar" sourcepath="C:/Users/Tiagon/.m2/repository/com/googlecode/objectify/objectify/5.1.5/objectify-5.1.5-sources.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-gwt-1.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-18.0.jar" sourcepath="C:/Users/Tiagon/.m2/repository/com/google/guava/guava/18.0/guava-18.0-sources.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

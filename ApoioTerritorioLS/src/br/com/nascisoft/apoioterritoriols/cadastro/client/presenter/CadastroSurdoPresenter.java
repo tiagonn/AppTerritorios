@@ -55,7 +55,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter lista de regiões. \n" + caught.getMessage(), 
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
@@ -86,7 +86,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de bairros.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao obter lista de bairros. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);					
+				getView().mostrarWarning("Falha ao obter lista de bairros. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());					
 			}
 		});
 	}
@@ -117,7 +117,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter lista de pessoas.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao obter lista de pessoas. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);		
+				getView().mostrarWarning("Falha ao obter lista de pessoas. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());		
 			}
 
 			@Override
@@ -137,13 +137,13 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao adicionar ou alterar pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao adicionar ou alterar pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Falha ao adicionar ou alterar pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Pessoa id " + result + " salva com sucesso.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Pessoa id " + result + " salva com sucesso.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null));
 			}
 		});
@@ -162,7 +162,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao obter pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Falha ao obter pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override
@@ -181,7 +181,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao obter pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao obter pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Falha ao obter pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
@@ -211,14 +211,14 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao apagar pessoa.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao apagar pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Falha ao apagar pessoa. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
 				view.onApagarSurdo(result);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Pessoa " + result + " apagada com sucesso. ", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Pessoa " + result + " apagada com sucesso. ", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -254,7 +254,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 					public void onFailure(Throwable caught) {
 						logger.log(Level.SEVERE, "Falha ao buscar endereço.\n", caught);
 						getView().hideWaitingPanel();
-						getView().mostrarWarning("Falha ao buscar endereço. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						getView().mostrarWarning("Falha ao buscar endereço. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 					}
 					
 					public void onSuccess(GeocoderResultVO result) {
@@ -282,7 +282,7 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			public void onFailure(Throwable caught) {
 				logger.log(Level.SEVERE, "Falha ao buscar cidade.\n", caught);
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao buscar cidade. \n" + caught.getMessage(), ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Falha ao buscar cidade. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		

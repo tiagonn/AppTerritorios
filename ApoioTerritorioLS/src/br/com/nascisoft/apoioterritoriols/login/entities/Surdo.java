@@ -2,29 +2,28 @@ package br.com.nascisoft.apoioterritoriols.login.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Id;
-
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Indexed;
-import com.googlecode.objectify.annotation.NotSaved;
-import com.googlecode.objectify.annotation.Unindexed;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.IgnoreSave;
+import com.googlecode.objectify.annotation.Index;
 
-@Unindexed
-@Cached
+@Entity
+@Cache
 public class Surdo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id private Long id;
-	@Indexed private Key<Regiao> regiao;
-	@Indexed private Key<Cidade> cidade;
-	@Indexed private String nome;
+	@Index private Key<Regiao> regiao;
+	@Index private Key<Cidade> cidade;
+	@Index private String nome;
 	private String logradouro;
 	private String numero;
 	private String complemento;
-	@Indexed private String bairro;
+	@Index private String bairro;
 	private String cep;
 	private String observacao;
 	private String telefone;
@@ -37,17 +36,17 @@ public class Surdo implements Serializable {
 	private String horario;
 	private String melhorDia;
 	private String onibus;
-	@Indexed private Key<Mapa> mapa;
-	@Indexed private boolean estaAssociadoMapa = Boolean.FALSE;
+	@Index private Key<Mapa> mapa;
+	@Index private boolean estaAssociadoMapa = Boolean.FALSE;
 	private String msn;
-	@Indexed private boolean possuiMSN = Boolean.FALSE;
-	@Indexed private Double latitude;
-	@Indexed private Double longitude;
-	@Indexed private boolean mudouSe = Boolean.FALSE;
-	@Indexed private boolean visitarSomentePorAnciaos = Boolean.FALSE;
-	@NotSaved private Long mapaAnterior;
-	@NotSaved private Long regiaoId;
-	@NotSaved private Long cidadeId;
+	@Index private boolean possuiMSN = Boolean.FALSE;
+	@Index private Double latitude;
+	@Index private Double longitude;
+	@Index private boolean mudouSe = Boolean.FALSE;
+	@Index private boolean visitarSomentePorAnciaos = Boolean.FALSE;
+	@IgnoreSave private Long mapaAnterior;
+	@IgnoreSave private Long regiaoId;
+	@IgnoreSave private Long cidadeId;
 	private Byte qtdePessoasEndereco;
 	
 	public Long getId() {

@@ -2,13 +2,12 @@ package br.com.nascisoft.apoioterritoriols.login.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Id;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Unindexed;
-
-@Unindexed
-@Cached
+@Entity
+@Cache
 public class Cidade implements Serializable {
 	
 

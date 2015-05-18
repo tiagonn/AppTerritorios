@@ -30,21 +30,12 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 	private static final Logger logger = Logger
 			.getLogger(ImpressaoServiceImpl.class.getName());
 	
-	private CadastroDAO dao = null;
-	private AdminDAO adminDao = null;
-	
 	private CadastroDAO getDao() {
-		if (dao == null) {
-			dao = new CadastroDAO();
-		}
-		return dao;
+		return CadastroDAO.INSTANCE;
 	}
 	
 	private AdminDAO getAdminDao() {
-		if (adminDao == null) {
-			adminDao = new AdminDAO();
-		}
-		return adminDao;
+		return AdminDAO.INSTANCE;
 	}
 	
 	@Override

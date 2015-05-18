@@ -25,7 +25,7 @@ public class MapeamentoNovosAtributosServlet extends
 			throws ServletException, IOException {
 
 		logger.log(Level.INFO, "Task de mapeamento de novos atributos iniciada");
-		AdminDAO dao = new AdminDAO();
+		AdminDAO dao = AdminDAO.INSTANCE;
 
 		List<Surdo> surdos = dao.obterSurdos();
 

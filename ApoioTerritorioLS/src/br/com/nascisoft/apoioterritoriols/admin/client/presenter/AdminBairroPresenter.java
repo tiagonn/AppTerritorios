@@ -43,7 +43,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Bairro adicionado/atualizado com sucesso", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Bairro adicionado/atualizado com sucesso", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -52,7 +52,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar Bairro.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao atualizar/adicionar Bairro. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -74,7 +74,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter Bairros.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter Bairros. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -87,7 +87,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Bairro apagado com sucesso", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Bairro apagado com sucesso", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -96,7 +96,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao apagar Bairro.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao apagar Bairro. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -118,7 +118,7 @@ public class AdminBairroPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter cidades.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter cidades. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}

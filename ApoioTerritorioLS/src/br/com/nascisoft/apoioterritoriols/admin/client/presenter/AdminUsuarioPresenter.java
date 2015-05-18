@@ -43,7 +43,7 @@ public class AdminUsuarioPresenter extends AbstractAdminPresenter
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Usuario adicionado/atualizado com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -52,7 +52,7 @@ public class AdminUsuarioPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar usuario.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao atualizar/adicionar usuario. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -68,7 +68,7 @@ public class AdminUsuarioPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao buscar usuarios.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao buscar usuarios. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				
 			}
 
@@ -89,7 +89,7 @@ public class AdminUsuarioPresenter extends AbstractAdminPresenter
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Usuario apagado com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -98,7 +98,7 @@ public class AdminUsuarioPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao apagar usuario.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao apagar usuario. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}

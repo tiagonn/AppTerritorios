@@ -36,7 +36,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				logger.log(Level.SEVERE, "Falha ao obter lista de regiões.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter lista de regiões. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);					
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());					
 			}
 
 			@Override
@@ -56,7 +56,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				logger.log(Level.SEVERE, "Falha ao obter lista de mapas.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter lista de mapas. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
@@ -95,7 +95,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				} else {					
 					getView().mostrarWarning(
 							"Não existe pessoa associada a algum mapa selecionado. Por favor reveja a seleção e tente novamente.",
-							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				}
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			}
@@ -105,7 +105,7 @@ public class ImpressaoPresenter extends AbstractCadastroPresenter
 				logger.log(Level.SEVERE, "Falha ao obter informações para abrir o mapa.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter informações para abrir o mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);				
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());				
 			}
 		});
 				

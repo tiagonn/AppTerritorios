@@ -7,6 +7,7 @@
 	<inherits name='br.com.nascisoft.apoioterritoriols.login.Login' />
 	<inherits name="br.com.nascisoft.apoioterritoriols.resources.Resources" />
 	<inherits name="com.google.gwt.resources.Resources" />
+	<inherits name="com.googlecode.objectify.Objectify"/>
 	<source path="client" />
 	<source path="vo" />
 	<source path="xml" />

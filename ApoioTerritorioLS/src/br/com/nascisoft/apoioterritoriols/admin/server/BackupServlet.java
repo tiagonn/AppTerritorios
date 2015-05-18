@@ -123,8 +123,8 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 	}
 	
 	private ByteArrayOutputStream prepararBackupEnderecos() throws IOException {
-		AdminDAO dao = new AdminDAO();
-		CadastroDAO cadastroDAO = new CadastroDAO();
+		AdminDAO dao = AdminDAO.INSTANCE;
+		CadastroDAO cadastroDAO = CadastroDAO.INSTANCE;
 		
 		List<Surdo> surdos = dao.obterSurdos();
 		
@@ -197,7 +197,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 	}
 
 	private ByteArrayOutputStream prepararBackupCompleto() throws JAXBException, IOException {
-		AdminDAO dao = new AdminDAO();
+		AdminDAO dao = AdminDAO.INSTANCE;
 		
 		BackupType backup = new BackupType();
 		

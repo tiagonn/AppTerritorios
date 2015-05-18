@@ -204,7 +204,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		if (!StringUtils.isEmpty(this.manterCidade) 
 				&& !this.manterCidade.equals(this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			this.mostrarWarning("Ao alterar a cidade do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+			this.mostrarWarning("Ao alterar a cidade do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 		this.manterCidade = this.manterCidadeListBox.getValue(this.manterCidadeListBox.getSelectedIndex());
 		this.presenter.onManterCidadeListBoxChange(Long.valueOf(manterCidade));
@@ -215,7 +215,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		if (!StringUtils.isEmpty(this.manterRegiao) 
 				&& !this.manterRegiao.equals(this.manterRegiaoListBox.getValue(this.manterRegiaoListBox.getSelectedIndex()))
 				&& this.manterMapa != null) {
-			this.mostrarWarning("Ao alterar a região do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+			this.mostrarWarning("Ao alterar a região do cadastro ele perderá a associação que tem com o mapa atual.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 	}
 	
@@ -536,7 +536,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 					"da listagem e do mapa que ele está associado, se é que ele está associado a algum mapa, " + 
 					"até que ele seja desmarcado como não visitar na aba própria para este fim.\n\n" +
 					"Por favor, detalhe porque você está marcando este cadastro para não ser visitado no campo observação.", 
-					ApoioTerritorioLSConstants.WARNING_LONG_TIMEOUT);
+					ApoioTerritorioLSConstants.INSTANCE.warningLongTimeout());
 			if ("manterMudouSe".equals(((CheckBox)event.getSource()).getName())) {
 				this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 			} else {

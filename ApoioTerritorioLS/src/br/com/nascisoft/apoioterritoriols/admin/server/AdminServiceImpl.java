@@ -1,11 +1,13 @@
 package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.withUrl;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.utils.SystemProperty;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.VoidWork;
 
 public class AdminServiceImpl extends AbstractApoioTerritorioLSService implements
 		AdminService {
@@ -42,21 +45,12 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	
 	private static final Logger logger = Logger.getLogger(AdminService.class.getName());
 	
-	private AdminDAO dao = null;
-	private CadastroDAO cadastroDao = null;
-	
 	private AdminDAO getDao() {
-		if (dao == null) {
-			dao = new AdminDAO();
-		}
-		return dao;
+		return AdminDAO.INSTANCE;
 	}
 	
 	private CadastroDAO getCadastroDao() {
-		if (cadastroDao == null) {
-			cadastroDao = new CadastroDAO();
-		}
-		return cadastroDao;
+		return CadastroDAO.INSTANCE;
 	}
 
 	@Override
@@ -82,7 +76,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 
 	@Override
 	public List<Usuario> buscarUsuarios() {
-		return getDao().obterUsuarios();
+		return new ArrayList<Usuario>(getDao().obterUsuarios());
 	}
 
 	@Override
@@ -101,7 +95,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	@Override
 	public List<Cidade> buscarCidades() {
 		logger.info("Obtendo lista de cidades");
-		return getDao().obterCidades();
+		return new ArrayList<Cidade>(getDao().obterCidades());
 	}
 
 	@Override
@@ -113,7 +107,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 			List<Bairro> bairros = getDao().buscarBairros(id, null);
 			List<Key<Bairro>> keyBairros = new ArrayList<Key<Bairro>>();
 			for (Bairro bairro : bairros) {
-				keyBairros.add(new Key<Bairro>(Bairro.class, bairro.getId()));
+				keyBairros.add(Key.create(Bairro.class, bairro.getId()));
 			}
 			getDao().apagarBairros(keyBairros);
 			getDao().apagarCidade(id);
@@ -127,7 +121,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public void adicionarOuAtualizarRegiao(RegiaoVO regiao) {
 		logger.info("Adicionando ou atualizando regiao " + regiao.getNome());
 		Regiao reg = regiao.getRegiao();
-		reg.setCidade(new Key<Cidade>(Cidade.class, regiao.getCidadeId()));
+		reg.setCidade(Key.create(Cidade.class, regiao.getCidadeId()));
 		getDao().adicionarOuAtualizarRegiao(reg);
 	}
 	
@@ -148,21 +142,37 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 			retorno.add(new RegiaoVO(regiao, mapaCidades.get(regiao.getCidade())));
 		}
 		
-		return retorno;
+		return new ArrayList<RegiaoVO>(retorno);
 	}
 	
 	@Override
-	public Boolean apagarRegiao(Long id) {
+	public Boolean apagarRegiao(final Long id) {
 		logger.info("Apagando regiao " + id);
-		List<Surdo> surdos = this.getCadastroDao().obterSurdos(null, null, id, null, null);
+		
+		List<Surdo> surdos = getCadastroDao().obterSurdos(null, null, id, null, null);
 		if (surdos == null || surdos.size() == 0) {
-			surdos = this.getCadastroDao().obterSurdosNaoVisitar(id);
+			Iterator<Surdo> it = getCadastroDao().obterSurdosNaoVisitar().iterator();
+			while (it.hasNext()) {
+				Surdo surdo = it.next();
+				if (!id.equals(surdo.getRegiao().getId())) {
+					surdos.remove(surdo);
+				}
+			}
 		}
 		
 		Boolean apagar = surdos == null || surdos.size() == 0;
 		if (apagar) {
-			getDao().apagarRegiao(id);
+			ofy().transact(new VoidWork() {
+				@Override
+				public void vrun() {
+					getDao().apagarRegiao(id);
+				}			
+			});
+			logger.info("Região apagada com sucesso");
+		} else {
+			logger.info("Região não foi apagada pois possui pessoas associadas a ela");
 		}
+		
 		return apagar;
 	}
 
@@ -170,7 +180,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 	public void adicionarOuAtualizarBairro(BairroVO bairro) {
 		logger.info("Adicionando ou atualizando bairro " + bairro.getNome());
 		Bairro bar = bairro.getBairro();
-		bar.setCidade(new Key<Cidade>(Cidade.class, bairro.getCidadeId()));
+		bar.setCidade(Key.create(Cidade.class, bairro.getCidadeId()));
 		getDao().adicionarOuAtualizarBairro(bar);
 	}
 
@@ -191,7 +201,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 			retorno.add(new BairroVO(bairro, mapaCidades.get(bairro.getCidade())));
 		}
 		
-		return retorno;
+		return new ArrayList<BairroVO>(retorno);
 	}
 
 	@Override

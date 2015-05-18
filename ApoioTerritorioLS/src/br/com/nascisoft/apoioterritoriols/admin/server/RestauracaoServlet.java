@@ -57,7 +57,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 					(JAXBElement<BackupType>)unmarshaller.unmarshal(
 							new StreamSource(zip), BackupType.class);
 			
-			AdminDAO dao = new AdminDAO();
+			AdminDAO dao = AdminDAO.INSTANCE;
 			for (UsuarioType user : backup.getValue().getUsuarios().getUsuario()) {
 				dao.adicionarOuAtualizarUsuario(this.obterUsuario(user));
 			}
@@ -138,7 +138,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		Regiao retorno = new Regiao();
 
 		retorno.setNome(xml.getNome());
-		retorno.setCidade(new Key<Cidade>(Cidade.class, identificadorCidade));
+		retorno.setCidade(Key.create(Cidade.class, identificadorCidade));
 		retorno.setLetra(xml.getLetra());
 		retorno.setZoom(xml.getNivelZoom());
 		retorno.setLatitudeCentro(xml.getLatitudeCentro());
@@ -153,7 +153,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		Bairro retorno = new Bairro();
 		
 		retorno.setNome(xml.getNome());
-		retorno.setCidade(new Key<Cidade>(Cidade.class, identificadorCidade));
+		retorno.setCidade(Key.create(Cidade.class, identificadorCidade));
 		
 		return retorno;
 	}
@@ -163,7 +163,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		
 		retorno.setLetra(xml.getLetra());
 		retorno.setNumero(xml.getNumero());
-		retorno.setRegiao(new Key<Regiao>(Regiao.class, identificadorRegiao));
+		retorno.setRegiao(Key.create(Regiao.class, identificadorRegiao));
 		
 		return retorno;
 	}
@@ -185,7 +185,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setLogradouro(surdo.getLogradouro());
 		retorno.setLongitude(surdo.getLongitude());
 		if (identificadorMapa != null) {
-			retorno.setMapa(new Key<Mapa>(Mapa.class, identificadorMapa));
+			retorno.setMapa(Key.create(Mapa.class, identificadorMapa));
 		}
 		retorno.setMelhorDia(surdo.getMelhorDia());
 		retorno.setMsn(surdo.getMsn());
@@ -194,8 +194,8 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setObservacao(surdo.getObservacao());
 		retorno.setOnibus(surdo.getOnibus());
 		retorno.setPossuiMSN(surdo.isPossuiMSN());
-		retorno.setRegiao(new Key<Regiao>(Regiao.class, identificadorRegiao));
-		retorno.setCidade(new Key<Cidade>(Cidade.class, identificadorCidade));
+		retorno.setRegiao(Key.create(Regiao.class, identificadorRegiao));
+		retorno.setCidade(Key.create(Cidade.class, identificadorCidade));
 		retorno.setSexo(surdo.getSexo());
 		retorno.setTelefone(surdo.getTelefone());
 		retorno.setMudouSe(surdo.isMudouSe());

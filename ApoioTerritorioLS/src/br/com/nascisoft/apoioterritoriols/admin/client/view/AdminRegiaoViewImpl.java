@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.admin.client.view;
 
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
@@ -196,6 +197,7 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 			Delegate<Long> deletarDelegate = new Delegate<Long>() {
 				@Override
 				public void execute(final Long object) {
+					GWT.log("Entrando em delegate. Id: " + object);
 					mostrarConfirmacao("Deseja realmente apagar esta região?",
 							new ClickHandler() {
 								@Override
@@ -210,6 +212,7 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 			Column<RegiaoVO, Long> deletarColumn = new Column<RegiaoVO, Long>(deletarCell) {
 				@Override
 				public Long getValue(RegiaoVO object) {
+					GWT.log("Entrando em apagar região: " + object.getId());
 					return object.getId();
 				}
 			};
@@ -346,6 +349,20 @@ public class AdminRegiaoViewImpl extends AbstractAdminViewImpl implements AdminR
 		}
 		box.setText(color);
 		box.getElement().getStyle().setBackgroundColor("#"+color);
+	}
+
+	@Override
+	public void onApagarRegiao(Long id) {
+		Iterator<RegiaoVO> iter = this.resultadoPesquisaRegiao.getList().iterator();
+		while (iter.hasNext()) {
+			RegiaoVO vo = iter.next();
+			if (vo.getId().equals(id)) {
+				iter.remove();
+				break;
+			}
+		}
+		this.setRegioes(this.resultadoPesquisaRegiao.getList());
+		
 	}
 	
 }

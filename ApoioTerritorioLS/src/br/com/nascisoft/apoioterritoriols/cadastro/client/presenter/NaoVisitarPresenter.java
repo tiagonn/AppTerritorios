@@ -54,7 +54,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao obter informações de pessoas que estão marcadas para não serem visitados\n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -75,7 +75,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
 						"Pessoa retornada para a lista de visitas com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				eventBus.fireEvent(new AbrirNaoVisitarEvent());
 			}
 			
@@ -85,7 +85,7 @@ public class NaoVisitarPresenter extends AbstractCadastroPresenter implements Na
 				view.hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao retornar pessoa para ser visitada\n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}

@@ -7,6 +7,7 @@
 	<inherits name='br.com.nascisoft.apoioterritoriols.login.Login' />
 	<inherits name='br.com.nascisoft.apoioterritoriols.cadastro.Cadastro' />
 	<inherits name="com.google.gwt.activity.Activity" />
+	<inherits name="com.googlecode.objectify.Objectify"/>
 	<source path="client"/>
 	<entry-point class="br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoEntryPoint"/>
 	<set-configuration-property name="UiBinder.useSafeHtmlTemplates" value="true" />		

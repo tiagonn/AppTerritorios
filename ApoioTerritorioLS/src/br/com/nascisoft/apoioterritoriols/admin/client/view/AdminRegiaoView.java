@@ -20,4 +20,5 @@ public interface AdminRegiaoView extends AdminView {
 	void setPresenter(Presenter presenter);
 	void setRegioes(List<RegiaoVO> regioes);
 	void setCidades(List<Cidade> cidades);
+	void onApagarRegiao(Long id);
 }

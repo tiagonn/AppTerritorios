@@ -42,7 +42,7 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"enderecos".equals(tipo)?"Export disparado com sucesso":"Backup disparado com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override
@@ -51,7 +51,7 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao obter disparar o backup/export. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -65,7 +65,7 @@ public class AdminBackupPresenter extends AbstractAdminPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao recuperar a action de upload. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override

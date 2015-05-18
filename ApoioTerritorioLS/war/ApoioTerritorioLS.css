@@ -1638,7 +1638,6 @@ td.datePickerMonth {
 .warning-popup-panel {
 	width: 400px;
 	background-color: rgba(187, 40, 113, 0.68);
-	color: #FFFAFA;
 	position: absolute;
 	padding: 10px;
 }
@@ -1676,4 +1675,9 @@ td.datePickerMonth {
 
 .gwt-DialogBox .DialogButtons button {
 	margin-left: 5pt;
+}
+
+.warning-message-panel {
+	display: block;
+	color: #FFFAFA;
 }

@@ -70,7 +70,7 @@ public class AdminBackupViewImpl extends AbstractAdminViewImpl implements AdminB
 		} else {
 			this.mostrarWarning(
 					"O campo destinatário deve ser preenchido com um e-mail.",
-					ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+					ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 	}
 
@@ -81,7 +81,7 @@ public class AdminBackupViewImpl extends AbstractAdminViewImpl implements AdminB
 		} else {
 			this.mostrarWarning(
 					"O campo destinatário deve ser preenchido com um e-mail.",
-					ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+					ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 	}
 	

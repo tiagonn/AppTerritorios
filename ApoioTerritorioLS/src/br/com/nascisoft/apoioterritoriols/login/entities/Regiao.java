@@ -1,17 +1,16 @@
 package br.com.nascisoft.apoioterritoriols.login.entities;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Indexed;
-import com.googlecode.objectify.annotation.Unindexed;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
-@Unindexed
-@Cached
+@Entity
+@Cache
 public class Regiao implements Serializable {
 	
 
@@ -19,8 +18,8 @@ public class Regiao implements Serializable {
 	
 	@Id private Long id;
 	private String nome;
-	@Indexed private Key<Cidade> cidade;
-	@Indexed private String letra;
+	@Index private Key<Cidade> cidade;
+	@Index private String letra;
 	private Integer zoom;
 	private Double latitudeCentro;
 	private Double longitudeCentro;

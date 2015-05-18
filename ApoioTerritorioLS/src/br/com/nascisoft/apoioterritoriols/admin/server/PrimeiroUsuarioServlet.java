@@ -24,7 +24,7 @@ public class PrimeiroUsuarioServlet extends
 
 		logger.info("Entrando em servlet de mapeamento de primeiro usuario");
 		
-		AdminDAO dao = new AdminDAO();
+		AdminDAO dao = AdminDAO.INSTANCE;
 		
 		List<Usuario> usuarios = dao.obterUsuarios();
 		

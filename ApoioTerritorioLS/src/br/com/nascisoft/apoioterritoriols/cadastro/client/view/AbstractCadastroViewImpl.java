@@ -4,15 +4,17 @@ import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PushButton;
@@ -27,6 +29,9 @@ public abstract class AbstractCadastroViewImpl extends Composite implements Cada
 	@UiField PushButton confirmationConfirmPushButton;
 	@UiField TabLayoutPanel cadastroSurdoTabLayoutPanel;
 	@UiField PopupPanel waitingPopUpPanel;
+	@UiField FlowPanel messageFlowPanel;
+	
+	private HandlerRegistration handlerRegistration;
 
 	@Override
 	public void showWaitingPanel() {
@@ -48,16 +53,22 @@ public abstract class AbstractCadastroViewImpl extends Composite implements Cada
 	@Override
 	public void mostrarWarning(String msgSafeHtml, int timeout) {
 		this.warningPopUpPanel.setPopupPosition(Window.getClientWidth()-440, 20);
-		this.warningPopUpPanel.clear();
-		this.warningPopUpPanel.add(new HTML(msgSafeHtml));
+		messageFlowPanel.setVisible(true);
+		final Label label = new Label(msgSafeHtml);
+		messageFlowPanel.add(label);
 		this.warningPopUpPanel.setVisible(true);
 		this.warningPopUpPanel.show();
 		Timer timer = new Timer() {
 			
 			@Override
 			public void run() {
-				warningPopUpPanel.hide();
-				warningPopUpPanel.setVisible(false);
+				GWT.log("Resultado da operação de deleção de mensagem de painel de warning: " + messageFlowPanel.remove(label));
+				
+				if (messageFlowPanel.getWidgetCount()<1) {
+					warningPopUpPanel.hide();
+					warningPopUpPanel.setVisible(false);
+					messageFlowPanel.setVisible(true);
+				}
 			}
 		};
 		timer.schedule(timeout);
@@ -66,8 +77,11 @@ public abstract class AbstractCadastroViewImpl extends Composite implements Cada
 	
 	@Override
 	public void mostrarConfirmacao(String mensagem, ClickHandler acao) {
+		if (handlerRegistration != null) {
+			handlerRegistration.removeHandler();
+		}
 		this.confirmationMessageLabel.setText(mensagem);
-		this.confirmationConfirmPushButton.addClickHandler(acao);
+		handlerRegistration = this.confirmationConfirmPushButton.addClickHandler(acao);
 		this.confirmationPopUpPanel.setVisible(true);
 		this.confirmationPopUpPanel.show();
 		this.confirmationPopUpPanel.setPopupPosition(

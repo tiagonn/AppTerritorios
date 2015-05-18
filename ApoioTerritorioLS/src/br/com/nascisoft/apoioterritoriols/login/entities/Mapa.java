@@ -2,18 +2,21 @@ package br.com.nascisoft.apoioterritoriols.login.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Id;
-
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-@Cached
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+
+@Entity
+@Cache
 public class Mapa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id private Long id;
-	private Integer numero;
-	private String letra;
-	private Key<Regiao> regiao;
+	@Index private Integer numero;
+	@Index private String letra;
+	@Index private Key<Regiao> regiao;
 	
 	public Mapa() {
 		super();

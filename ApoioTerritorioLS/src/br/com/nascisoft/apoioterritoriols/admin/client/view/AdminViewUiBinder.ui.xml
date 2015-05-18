@@ -370,7 +370,9 @@
 						styleName="imagem-div-centro">
 						<g:HTML><img src="images/esperando.gif" alt="Esperando..."/></g:HTML>
 					</g:PopupPanel>
-					<g:PopupPanel ui:field="warningPopUpPanel" styleName="warning-popup-panel" visible="false" animationEnabled="true" glassEnabled="false"></g:PopupPanel>
+					<g:PopupPanel ui:field="warningPopUpPanel" styleName="warning-popup-panel" visible="false" animationEnabled="true" glassEnabled="false">
+						<g:FlowPanel ui:field="messageFlowPanel" styleName="warning-message-panel"></g:FlowPanel>
+					</g:PopupPanel>
 					<g:PopupPanel ui:field="confirmationPopUpPanel" styleName="confirmation-popup-panel" visible="false" animationEnabled="true" glassEnabled="true" autoHideEnabled="false">
 						<g:FlowPanel width="100%">
 							<g:FlowPanel styleName="confirmation-secao">

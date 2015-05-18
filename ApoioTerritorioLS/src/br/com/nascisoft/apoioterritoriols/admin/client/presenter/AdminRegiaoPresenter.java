@@ -9,6 +9,7 @@ import br.com.nascisoft.apoioterritoriols.admin.vo.RegiaoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -43,8 +44,8 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Regiao adicionada/atualizada com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Região adicionada/atualizada com sucesso",
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -53,7 +54,7 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar Regiao.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao atualizar/adicionar Regiao. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -75,27 +76,30 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter Regiões.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter Regiões. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
 
 	@Override
-	public void apagarRegiao(Long id) {
+	public void apagarRegiao(final Long id) {
+		GWT.log("Entrando em ação de apagar região em presenter. Id: " + id);
 		getView().showWaitingPanel();
 		this.service.apagarRegiao(id, new AsyncCallback<Boolean>() {
 			
 			@Override
 			public void onSuccess(Boolean result) {
+				GWT.log("Resultado da operação de deleção de mapa: " + result);
 				getView().hideWaitingPanel();
 				if (result) {
-					getView().mostrarWarning("Regiao apagada com sucesso",
-							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+					getView().mostrarWarning("Região apagada com sucesso",
+							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
+					getView().onApagarRegiao(id);
 				} else {
-					getView().mostrarWarning("Regiao não pode ser apagada pois possui surdos associados a ela",
-							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+					getView().mostrarWarning("Região não pode ser apagada pois possui surdos associados a ela",
+							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				}
-				getView().initView();
+				
 			}
 			
 			@Override
@@ -103,7 +107,7 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao apagar Regiao.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao apagar Regiao. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -125,7 +129,7 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter cidades.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter cidades. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}

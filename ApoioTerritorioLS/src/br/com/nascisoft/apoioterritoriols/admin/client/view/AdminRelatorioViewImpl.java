@@ -231,7 +231,7 @@ public class AdminRelatorioViewImpl extends AbstractAdminViewImpl implements
 			this.presenter.dispararExport(this.adminRelatorioEmailTextBox.getText()); 
 		} else {
 			mostrarWarning("O campo e-mail deve ser preenchido com um e-mail.",
-					ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+					ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 	}
 

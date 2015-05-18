@@ -49,7 +49,7 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter dados para relatório.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter dados para relatório. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -64,7 +64,7 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Export disparado com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override
@@ -72,7 +72,7 @@ public class AdminRelatorioPresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao disparar export.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao disparar export. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 		});

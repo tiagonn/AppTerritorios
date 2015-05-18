@@ -42,7 +42,7 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 			@Override
 			public void onSuccess(Void result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Cidade adicionada/atualizada com sucesso", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Cidade adicionada/atualizada com sucesso", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				getView().initView();
 			}
 			
@@ -51,7 +51,7 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao atualizar/adicionar cidade.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao atualizar/adicionar cidade. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 		
@@ -73,7 +73,7 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao obter cidades.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao obter cidades. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}
@@ -88,10 +88,10 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 				getView().hideWaitingPanel();
 				if (result) {
 					getView().mostrarWarning("Cidade apagada com sucesso",
-							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				} else {
 					getView().mostrarWarning("Não é possível apagar esta cidade pois ela possui regiões associadas",
-							ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				}
 				getView().initView();
 			}
@@ -101,7 +101,7 @@ public class AdminCidadePresenter extends AbstractAdminPresenter
 				logger.log(Level.SEVERE, "Falha ao apagar cidade.\n", caught);
 				getView().hideWaitingPanel();
 				getView().mostrarWarning("Falha ao apagar cidade. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 		});
 	}

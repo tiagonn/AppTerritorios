@@ -168,7 +168,7 @@ public class ImpressaoViewImpl extends AbstractCadastroViewImpl implements
 		if (mapaIDs.size() > 0) {
 			this.presenter.abrirImpressao(mapaIDs, true);
 		} else {
-			this.mostrarWarning("Por favor, selecione ao menos um mapa.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+			this.mostrarWarning("Por favor, selecione ao menos um mapa.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 		}
 	}
 	

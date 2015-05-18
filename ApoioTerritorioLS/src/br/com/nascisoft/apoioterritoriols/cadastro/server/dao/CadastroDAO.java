@@ -1,7 +1,10 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server.dao;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,65 +13,58 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
+import br.com.nascisoft.apoioterritoriols.login.server.dao.BaseDAO;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Query;
-import com.googlecode.objectify.util.DAOBase;
 
-public class CadastroDAO extends DAOBase {
+public class CadastroDAO extends BaseDAO {
+	
+	public static final CadastroDAO INSTANCE = new CadastroDAO(); 
 	
 //	private static final Logger logger = Logger.getLogger(CadastroDAO.class.getName());
 	
 	public Long adicionarOuAlterarSurdo(Surdo surdo) {
-		Objectify ofy = ObjectifyService.begin();
-		ofy.put(surdo);
-		return surdo.getId();
+		return ofy().save().entity(surdo).now().getId();
 	}
 	
 	public List<Surdo> obterSurdos(Long identificadorCidade, String nomeSurdo, Long regiaoId, Long identificadorMapa, Boolean estaAssociadoMapa) {
-		Objectify ofy = ObjectifyService.begin();
-		Query<Surdo> query = ofy.query(Surdo.class);
+
+		Map<String, Object> mapa = new HashMap<String, Object>();
 		if (identificadorCidade != null) {
-			query.filter("cidade", new Key<Cidade>(Cidade.class, identificadorCidade));
+			mapa.put("cidade", Key.create(Cidade.class, identificadorCidade));
 		}
 		if (nomeSurdo != null && nomeSurdo.length() > 0) {
-			query.filter("nome >=", nomeSurdo.toUpperCase()).filter("nome <", nomeSurdo.toUpperCase() + '\uFFFD');
+			mapa.put("nome >=", nomeSurdo.toUpperCase());
+			mapa.put("nome <", nomeSurdo.toUpperCase() + '\uFFFD');
 		}
 		if (regiaoId != null) {
-			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+			mapa.put("regiao", Key.create(Regiao.class, regiaoId));
 		}
 		if (identificadorMapa != null) {
-			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);
-			query.filter("mapa", key);
+			mapa.put("mapa", Key.create(Mapa.class, identificadorMapa));
 		}
 		if (estaAssociadoMapa != null) {
-			query.filter("estaAssociadoMapa", estaAssociadoMapa);
+			mapa.put("estaAssociadoMapa", estaAssociadoMapa);
 		}
-		query.filter("mudouSe", Boolean.FALSE);
-		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
-		query.order("nome");
-		return query.list();
+		mapa.put("mudouSe", Boolean.FALSE);
+		mapa.put("visitarSomentePorAnciaos", Boolean.FALSE);
+		
+		return aplicarFiltro(mapa, Surdo.class, "nome");
 	}
 	
 	public Mapa obterMapa(Key<Mapa> chave) {
-		Objectify ofy = ObjectifyService.begin();
-		return ofy.get(chave);
+		return ofy().load().key(chave).now();
 	}
 	
 	public Map<Key<Mapa>, Mapa> obterMapas(Collection<Key<Mapa>> chave) {
-		Objectify ofy = ObjectifyService.begin();
-		return ofy.get(chave);
+		return ofy().load().keys(chave);
 	}
 	
 	public Surdo obterSurdo(Long id) {
-		Objectify ofy = ObjectifyService.begin();
-		return ofy.get(Surdo.class, id);
+		return ofy().load().type(Surdo.class).id(id).now();
 	}
 	
 	public Long adicionarMapa(Long regiaoId, String letra) {
-		Objectify ofy = ObjectifyService.begin();
 		List<Mapa> mapas = this.obterMapasRegiao(regiaoId);
 		Integer i = 1;
 		for (Mapa mapa : mapas) {
@@ -82,123 +78,80 @@ public class CadastroDAO extends DAOBase {
 		Mapa mapa = new Mapa();
 		mapa.setNumero(i);
 		mapa.setLetra(letra);
-		mapa.setRegiao(new Key<Regiao>(Regiao.class, regiaoId));
+		mapa.setRegiao(Key.create(Regiao.class, regiaoId));
 		
-		ofy.put(mapa);
-		
-		return mapa.getId();
-		
+		return ofy().save().entity(mapa).now().getId();		
 	}
 	
 	public List<Mapa> obterMapasRegiao(Long regiaoId) {
-		Objectify ofy = ObjectifyService.begin();
-		Query<Mapa> query = ofy.query(Mapa.class);
+		Map<String, Object> mapa = new HashMap<String, Object>();
 		if (regiaoId != null) {
-			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+			mapa.put("regiao", Key.create(Regiao.class, regiaoId));
 		}
-		query.order("numero");
-		return query.list();
+		return aplicarFiltro(mapa, Mapa.class, "numero");
 	}
 	
 	public List<Surdo> obterSurdosSemMapa(Long regiaoId) {
-		Objectify ofy = ObjectifyService.begin();
-		Query<Surdo> query = ofy.query(Surdo.class);
+		Map<String, Object> mapa = new HashMap<String, Object>();
 		if (regiaoId != null) {
-			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+			mapa.put("regiao", Key.create(Regiao.class, regiaoId));
 		}
-		query.filter("estaAssociadoMapa", Boolean.FALSE);
-		query.filter("mudouSe", Boolean.FALSE);
-		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
+		mapa.put("estaAssociadoMapa", Boolean.FALSE);
+		mapa.put("mudouSe", Boolean.FALSE);
+		mapa.put("visitarSomentePorAnciaos", Boolean.FALSE);
 
-		query.order("nome");
-		return query.list();
+		return aplicarFiltro(mapa, Surdo.class, "nome");
 	}
 	
 	public List<Surdo> obterSurdosOutrosMapas(Long regiaoId, Long identificadorMapa) {
-		Objectify ofy = ObjectifyService.begin();
-		Query<Surdo> query = ofy.query(Surdo.class);
+		Map<String, Object> mapa = new HashMap<String, Object>();
 		if (regiaoId != null) {
-			query.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
+			mapa.put("regiao", Key.create(Regiao.class, regiaoId));
 		}
 		if (identificadorMapa != null) {
-			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);
-			query.filter("mapa !=", key);
+			mapa.put("mapa !=", Key.create(Mapa.class, identificadorMapa));
 		}
-		query.filter("estaAssociadoMapa", Boolean.TRUE);
-		query.filter("mudouSe", Boolean.FALSE);
-		query.filter("visitarSomentePorAnciaos", Boolean.FALSE);
+		mapa.put("estaAssociadoMapa", Boolean.TRUE);
+		mapa.put("mudouSe", Boolean.FALSE);
+		mapa.put("visitarSomentePorAnciaos", Boolean.FALSE);
 		
-		return query.list();
+		return aplicarFiltro(mapa, Surdo.class, null);
 	}
 	
 	public void adicionarSurdoMapa(Set<Long> surdos, Long identificadorMapa) {
-		Objectify ofy = ObjectifyService.begin();
 		for (Long id : surdos) {
-			Surdo surdo = ofy.get(Surdo.class, id);
-			Key<Mapa> key = new Key<Mapa>(Mapa.class, identificadorMapa);
-			surdo.setMapa(key);
-			ofy.put(surdo);
+			Surdo surdo = ofy().load().type(Surdo.class).id(id).now();
+			surdo.setMapa(Key.create(Mapa.class, identificadorMapa));
+			ofy().save().entity(surdo);
 		}
 	}
 	
 	public Long removerSurdoMapa(Set<Long> surdos) {
 		Long retorno = null;
-		Objectify ofy = ObjectifyService.begin();
 		for (Long id : surdos) {
-			Surdo surdo = ofy.get(Surdo.class, id);
+			Surdo surdo = ofy().load().type(Surdo.class).id(id).now();
 			if (retorno == null) {
 				retorno = surdo.getMapa().getId();
 			}
 			surdo.setMapa(null);
-			ofy.put(surdo);
+			ofy().save().entity(surdo);
 		}
 		return retorno;
 	}
 	
 	public void apagarSurdo(Long id) {
-		Objectify ofy = ObjectifyService.begin();
-		ofy.delete(Surdo.class, id);
+		ofy().delete().type(Surdo.class).id(id);
 	}
 	
 	public void apagarMapa(Long identificadorMapa) {
-		Objectify ofy = ObjectifyService.begin();
-		ofy.delete(Mapa.class, identificadorMapa);
+		ofy().delete().type(Mapa.class).id(identificadorMapa);
 	}
 	
 	public List<Surdo> obterSurdosNaoVisitar() {
 		List<Surdo> retorno = new ArrayList<Surdo>();
-		Objectify ofy = ObjectifyService.begin();
 		
-		Query<Surdo> mudouSe = ofy.query(Surdo.class);		
-		mudouSe.filter("mudouSe", Boolean.TRUE);
-		retorno.addAll(mudouSe.list());
-		
-		Query<Surdo> visitarSomentePorAnciaos = ofy.query(Surdo.class);
-		visitarSomentePorAnciaos.filter("visitarSomentePorAnciaos", Boolean.TRUE);
-		retorno.addAll(visitarSomentePorAnciaos.list());
-		
-		return retorno;
-	}
-	
-	public List<Surdo> obterSurdosNaoVisitar(Long regiaoId) {
-		List<Surdo> retorno = new ArrayList<Surdo>();
-		Objectify ofy = ObjectifyService.begin();
-		
-		Query<Surdo> mudouSe = ofy.query(Surdo.class);		
-		mudouSe.filter("mudouSe", Boolean.TRUE);
-		if (regiaoId != null) {
-			mudouSe.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
-		}
-		retorno.addAll(mudouSe.list());
-		
-		Query<Surdo> visitarSomentePorAnciaos = ofy.query(Surdo.class);
-		visitarSomentePorAnciaos.filter("visitarSomentePorAnciaos", Boolean.TRUE);
-		if (regiaoId != null) {
-			visitarSomentePorAnciaos.filter("regiao", new Key<Regiao>(Regiao.class, regiaoId));
-		}
-		retorno.addAll(visitarSomentePorAnciaos.list());
-		
-		
+		retorno.addAll(ofy().load().type(Surdo.class).filter("mudouSe", Boolean.TRUE).list());
+		retorno.addAll(ofy().load().type(Surdo.class).filter("visitarSomentePorAnciaos", Boolean.TRUE).list());
 		
 		return retorno;
 	}

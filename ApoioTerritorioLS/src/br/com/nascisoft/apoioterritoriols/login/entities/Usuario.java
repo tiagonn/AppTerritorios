@@ -1,21 +1,20 @@
 package br.com.nascisoft.apoioterritoriols.login.entities;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
-import javax.persistence.Id;
-
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Unindexed;
-
-@Unindexed
-@Cached
-public class Usuario implements Serializable {
-	
-
-	private static final long serialVersionUID = 1L;
+@Entity
+@Cache
+public class Usuario implements IsSerializable {
 	
 	@Id private String email;
 	private Boolean admin;
+	
+	public Usuario() {
+		super();
+	}
 	
 	public String getEmail() {
 		return email;

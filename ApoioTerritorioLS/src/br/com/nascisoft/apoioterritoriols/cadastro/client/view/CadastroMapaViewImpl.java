@@ -266,7 +266,7 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 				this.mostrarWarning(
 						"Apenas " + tamanhoMapa + " pessoas(s) pode(m) compor um mapa. "
 								+ "Você está tentando adicionar uma quantidade maior do que o mapa permite",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			} else {
 				this.presenter.adicionarSurdosMapa(setPessoasDe, 
 						Long.valueOf(this.pesquisaMapaMapaListBox.getValue(

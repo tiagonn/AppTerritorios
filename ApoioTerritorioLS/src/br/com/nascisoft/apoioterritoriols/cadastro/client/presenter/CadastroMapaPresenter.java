@@ -39,7 +39,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao obter lista de regiões. \n" + caught.getMessage(), 
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);					
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());					
 			}
 
 			@Override
@@ -60,7 +60,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao obter lista de mapas. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
@@ -98,12 +98,12 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao adicionar mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override
 			public void onSuccess(Long result) {
-				getView().mostrarWarning("Mapa criado com sucesso.", ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+				getView().mostrarWarning("Mapa criado com sucesso.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				abrirMapa(result);
 				getView().hideWaitingPanel();
 			}
@@ -123,7 +123,7 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao obter informações para abrir o mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
@@ -150,14 +150,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao adicionar pessoas no mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 			
 			@Override
 			public void onSuccess(Long result) {
 				getView().mostrarWarning(
 						"Pessoa(s) adicionadas com sucesso ao mapa",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}
@@ -175,14 +175,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao remover pessoas no mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
 			public void onSuccess(Long result) {
 				getView().mostrarWarning(
 						"Pessoas(s) removidas com sucesso ao mapa",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				eventBus.fireEvent(new AbrirMapaEvent(result));
 				getView().hideWaitingPanel();
 			}
@@ -200,14 +200,14 @@ public class CadastroMapaPresenter extends AbstractCadastroPresenter
 				getView().hideWaitingPanel();
 				getView().mostrarWarning(
 						"Falha ao apagar o mapa. \n" + caught.getMessage(),
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 			}
 
 			@Override
 			public void onSuccess(Void result) {
 				getView().mostrarWarning(
 						"Mapa apagado com sucesso",
-						ApoioTerritorioLSConstants.WARNING_TIMEOUT);
+						ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				view.onApagarMapa();
 				getView().hideWaitingPanel();
 			}

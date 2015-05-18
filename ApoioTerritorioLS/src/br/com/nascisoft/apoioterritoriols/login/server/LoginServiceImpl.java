@@ -19,13 +19,8 @@ public class LoginServiceImpl extends AbstractApoioTerritorioLSService implement
 	private static final Logger logger = Logger
 			.getLogger(LoginServiceImpl.class.getName());
 
-	private LoginDAO dao = null;
-	
 	private LoginDAO getDao() {
-		if (dao == null) {
-			dao = new LoginDAO();
-		}
-		return dao;
+		return LoginDAO.INSTANCE;
 	}
 	
 	@Override

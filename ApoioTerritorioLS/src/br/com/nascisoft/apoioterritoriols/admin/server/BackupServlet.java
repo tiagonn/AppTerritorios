@@ -31,6 +31,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.googlecode.objectify.Key;
 
 import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
@@ -97,8 +99,8 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 				msg.addRecipient(Message.RecipientType.TO,
 				                 new InternetAddress(destinatarios));
 				msg.setSubject("enderecos".equals(tipo) 
-						? "Export de enderecos cadastrados no ApoioTerritorioLS"
-								: "Backup de mapas e enderecos do ApoioTerritorioLS");
+						? "Export de enderecos cadastrados no ApoioTerritorio"
+								: "Backup de mapas e enderecos do ApoioTerritorio");
 				msg.setText("Segue em anexo o backup/export.\n\n\nNote que por limitação de segurança do google o anexo é um arquivo .zipe. " +
 						"Por favor renomeie o arquivo para .zip e depois o abra normalmente.");
 				Multipart mp = new MimeMultipart();						
@@ -157,27 +159,27 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		csv.append("cidade;regiao;mapa;nome;logradouro;numero;complemento;bairro;cep;observacao;telefone;libras;")
 			.append("publicacoesPossui;anoNascimento;dvd;instrutor;tipo;horario;melhorDia;onibus;msn;latitude;longitude;qtdePessoasEndereco\n"); 
 		for (SurdoVO surdo : surdosVO) {
-			csv.append("\"").append(surdo.getNomeCidade()).append("\";")
-				.append("\"").append(surdo.getRegiao()).append("\";")
-				.append("\"").append(surdo.getMapa()).append("\";")
-				.append("\"").append(surdo.getNome()).append("\";")
-				.append("\"").append(surdo.getLogradouro()).append("\";")
-				.append("\"").append(surdo.getNumero()).append("\";")
-				.append("\"").append(surdo.getComplemento()).append("\";")
-				.append("\"").append(surdo.getBairro()).append("\";")
-				.append("\"").append(surdo.getCep()).append("\";")
-				.append("\"").append(surdo.getObservacao()).append("\";")
-				.append("\"").append(surdo.getTelefone()).append("\";")
-				.append("\"").append(surdo.getLibras()).append("\";")
-				.append("\"").append(surdo.getPublicacoesPossui()).append("\";")
+			csv.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNomeCidade())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getRegiao())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMapa())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNome())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getLogradouro())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getNumero())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getComplemento())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getBairro())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getCep())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getObservacao())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getTelefone())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getLibras())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getPublicacoesPossui())).append("\";")
 				.append("\"").append(surdo.getAnoNascimento()).append("\";")
-				.append("\"").append(surdo.getDvd()).append("\";")
-				.append("\"").append(surdo.getInstrutor()).append("\";")
-				.append("\"").append(surdo.getSexo()).append("\";")
-				.append("\"").append(surdo.getHorario()).append("\";")
-				.append("\"").append(surdo.getMelhorDia()).append("\";")
-				.append("\"").append(surdo.getOnibus()).append("\";")
-				.append("\"").append(surdo.getMsn()).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getDvd())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getInstrutor())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getSexo())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getHorario())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMelhorDia())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getOnibus())).append("\";")
+				.append("\"").append(StringEscapeUtils.escapeCsv(surdo.getMsn())).append("\";")
 				.append("\"").append(surdo.getLatitude()).append("\";")
 				.append("\"").append(surdo.getLongitude()).append("\";")
 				.append("\"").append(surdo.getQtdePessoasEndereco()).append("\n");

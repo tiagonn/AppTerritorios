@@ -1,7 +1,12 @@
 package br.com.nascisoft.apoioterritoriols.login.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia.Dia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.googlecode.objectify.Key;
@@ -33,8 +38,8 @@ public class Surdo implements Serializable {
 	private String instrutor;
 	private Integer anoNascimento;
 	private String sexo;
-	private String horario;
-	private String melhorDia;
+	private MelhorPeriodo melhorPeriodo;
+	private MelhorDia melhorDiaSemana;
 	private String onibus;
 	@Index private Key<Mapa> mapa;
 	@Index private boolean estaAssociadoMapa = Boolean.FALSE;
@@ -145,17 +150,11 @@ public class Surdo implements Serializable {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public String getHorario() {
-		return horario;
+	public MelhorDia getMelhorDia() {
+		return melhorDiaSemana;
 	}
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
-	public String getMelhorDia() {
-		return melhorDia;
-	}
-	public void setMelhorDia(String melhorDia) {
-		this.melhorDia = melhorDia;
+	public void setMelhorDia(MelhorDia melhorDia) {
+		this.melhorDiaSemana = melhorDia;
 	}
 	public String getOnibus() {
 		return onibus;
@@ -277,6 +276,82 @@ public class Surdo implements Serializable {
 				break;	
 			}
 		}
+	}
+	public MelhorPeriodo getMelhorPeriodo() {
+		return melhorPeriodo;
+	}
+	public void setMelhorPeriodo(MelhorPeriodo melhorPeriodo) {
+		this.melhorPeriodo = melhorPeriodo;
+	}
+	
+	public List<Periodo> getMelhoresPeriodos() {
+		List<Periodo> retorno = new ArrayList<MelhorPeriodo.Periodo>();
+		if (this.melhorPeriodo == null) {
+			this.melhorPeriodo = new MelhorPeriodo();
+		}
+		if (this.melhorPeriodo.getManha()) {
+			retorno.add(Periodo.manha);
+		}
+		if (this.melhorPeriodo.getTarde()) {
+			retorno.add(Periodo.tarde);
+		}
+		if (this.melhorPeriodo.getNoite()) {
+			retorno.add(Periodo.noite);
+		}
+		return retorno;
+	}
+	
+	public List<Dia> getMelhoresDias() {
+		List<Dia> retorno = new ArrayList<MelhorDia.Dia>();
+		if (this.melhorDiaSemana == null) {
+			this.melhorDiaSemana = new MelhorDia();
+		}
+		if (this.melhorDiaSemana.getSegunda()) {
+			retorno.add(Dia.segunda);
+		}
+		if (this.melhorDiaSemana.getTerca()) {
+			retorno.add(Dia.terca);
+		}
+		if (this.melhorDiaSemana.getQuarta()) {
+			retorno.add(Dia.quarta);
+		}
+		if (this.melhorDiaSemana.getQuinta()) {
+			retorno.add(Dia.quinta);
+		}
+		if (this.melhorDiaSemana.getSexta()) {
+			retorno.add(Dia.sexta);
+		}
+		if (this.melhorDiaSemana.getSabado()) {
+			retorno.add(Dia.sabado);
+		}
+		if (this.melhorDiaSemana.getDomingo()) {
+			retorno.add(Dia.domingo);
+		}
+		return retorno;
+	}
+	
+	public String getMelhoresPeriodosCsv() {
+		StringBuilder retorno = new StringBuilder();
+		Iterator<Periodo> iter = this.getMelhoresPeriodos().iterator();
+		while (iter.hasNext()) {
+			retorno.append(iter.next().getNome());
+			if (iter.hasNext()) {
+				retorno.append(",");
+			}
+		}
+		return retorno.toString();
+	}
+	
+	public String getMelhoresDiasCsv(Boolean isAbreviado) {
+		StringBuilder retorno = new StringBuilder();
+		Iterator<Dia> iter = this.getMelhoresDias().iterator();
+		while (iter.hasNext()) {
+			retorno.append(isAbreviado ? iter.next().getNomeAbreviado() : iter.next().getNome());
+			if (iter.hasNext()) {
+				retorno.append(",");
+			}
+		}
+		return retorno.toString();
 	}
 	
 }

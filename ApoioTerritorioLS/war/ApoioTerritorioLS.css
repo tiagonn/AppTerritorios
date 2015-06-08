@@ -1474,6 +1474,36 @@ td.datePickerMonth {
 	font-size: small;
 }
 
+.pessoas-manter-form-dropdown-textbox {
+	height: 23px;
+	font-size: small;
+	border-style: solid;
+	border-color: #a2a2a2;
+	border-width: 1px;
+	border-right: none;
+}
+
+.pessoas-manter-dropdown-button {
+	display: inline-block;
+	vertical-align: middle;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #a2a2a2;
+	border-left: none;
+}
+
+.pessoas-manter-form-dropdown-selection-popup {
+	position: absolute;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #a2a2a2;
+	background-color: white;
+}
+
+.pessoas-manter-form-checkbox {
+	display: block;
+}
+
 .pessoas-manter-form-selectBox {
 	height: 28px;
 	font-size: small;

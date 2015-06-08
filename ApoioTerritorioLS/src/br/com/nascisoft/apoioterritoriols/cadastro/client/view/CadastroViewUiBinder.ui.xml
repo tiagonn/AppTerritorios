@@ -106,12 +106,40 @@
 								<g:TextBox ui:field="manterQtdePessoasTextBox" visibleLength="4" styleName="pessoas-manter-form-element"/>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
-								<g:Label text="Horário:" styleName="pessoas-manter-label"/>
-								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20" styleName="pessoas-manter-form-element"/>
+								<g:Label text="Melhor horário:" styleName="pessoas-manter-label"/>
+								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" maxLength="0"/>
+								<g:PushButton width="22px" ui:field='manterHorarioDropDownButton' enabled='true' title="Melhor Horário" styleName="pessoas-manter-dropdown-button">
+									<g:upFace image="{res.dropdown}" />
+									<g:downFace image="{res.dropdown}" />
+								</g:PushButton>
+								<g:PopupPanel 
+									ui:field="manterHorarioSelectionPopupPanel" 
+									styleName="pessoas-manter-form-dropdown-selection-popup" 
+									visible="false" 
+									animationEnabled="true" 
+									glassEnabled="false"
+									autoHideEnabled="true">
+									
+									<g:FlowPanel ui:field="manterHorarioSelectionFlowPanel"></g:FlowPanel>
+								</g:PopupPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
 								<g:Label text="Melhor dia:" styleName="pessoas-manter-label"/>
-								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20" styleName="pessoas-manter-form-element"/>
+								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" maxLength="0"/>
+								<g:PushButton width="22px" ui:field='manterMelhorDiaDropDownButton' enabled='true' title="Melhor dia" styleName="pessoas-manter-dropdown-button">
+									<g:upFace image="{res.dropdown}" />
+									<g:downFace image="{res.dropdown}" />
+								</g:PushButton>
+								<g:PopupPanel 
+									ui:field="manterMelhorDiaSelectionPopupPanel" 
+									styleName="pessoas-manter-form-dropdown-selection-popup" 
+									visible="false" 
+									animationEnabled="true" 
+									glassEnabled="false"
+									autoHideEnabled="true">
+									
+									<g:FlowPanel ui:field="manterMelhorDiaSelectionFlowPanel"></g:FlowPanel>
+								</g:PopupPanel>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
 								<g:Label text="Ônibus:" styleName="pessoas-manter-label"/>

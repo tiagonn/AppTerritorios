@@ -25,9 +25,13 @@ import br.com.nascisoft.apoioterritoriols.admin.xml.UsuarioType;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia.Dia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -177,7 +181,16 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setPublicacoesPossui(surdo.getPublicacoesPossui());
 		retorno.setDvd(surdo.getDvd());
 		retorno.setEstaAssociadoMapa(surdo.isEstaAssociadoMapa());
-		retorno.setHorario(surdo.getHorario());
+		retorno.setMelhorPeriodo(new MelhorPeriodo());
+		for (String periodo : surdo.getMelhorPeriodo().getPeriodo()) {
+			if (Periodo.manha.getNome().equals(periodo)) {
+				retorno.getMelhorPeriodo().setManhã(Boolean.TRUE);
+			} else if (Periodo.tarde.getNome().equals(periodo)) {
+				retorno.getMelhorPeriodo().setTarde(Boolean.TRUE);
+			} else if (Periodo.noite.getNome().equals(periodo)) {
+				retorno.getMelhorPeriodo().setNoite(Boolean.TRUE);
+			}
+		}
 		retorno.setAnoNascimento(surdo.getAnoNascimento());
 		retorno.setInstrutor(surdo.getInstrutor());
 		retorno.setLatitude(surdo.getLatitude());
@@ -187,7 +200,24 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		if (identificadorMapa != null) {
 			retorno.setMapa(Key.create(Mapa.class, identificadorMapa));
 		}
-		retorno.setMelhorDia(surdo.getMelhorDia());
+		retorno.setMelhorDia(new MelhorDia());
+		for (String dia : surdo.getMelhorDia().getDia()) {
+			if (Dia.segunda.getNome().equals(dia)) {
+				retorno.getMelhorDia().setSegunda(Boolean.TRUE);
+			} else if (Dia.terca.getNome().equals(dia)) {
+				retorno.getMelhorDia().setTerca(Boolean.TRUE);
+			} else if (Dia.quarta.getNome().equals(dia)) {
+				retorno.getMelhorDia().setQuarta(Boolean.TRUE);
+			} else if (Dia.quinta.getNome().equals(dia)) {
+				retorno.getMelhorDia().setQuinta(Boolean.TRUE);
+			} else if (Dia.sexta.getNome().equals(dia)) {
+				retorno.getMelhorDia().setSexta(Boolean.TRUE);
+			} else if (Dia.sabado.getNome().equals(dia)) {
+				retorno.getMelhorDia().setSabado(Boolean.TRUE);
+			} else if (Dia.domingo.getNome().equals(dia)) {
+				retorno.getMelhorDia().setDomingo(Boolean.TRUE);
+			} 
+		}
 		retorno.setMsn(surdo.getMsn());
 		retorno.setNome(surdo.getNome());
 		retorno.setNumero(surdo.getNumero());

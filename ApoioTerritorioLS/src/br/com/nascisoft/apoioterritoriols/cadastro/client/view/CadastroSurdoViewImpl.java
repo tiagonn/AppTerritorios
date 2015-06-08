@@ -9,6 +9,10 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia.Dia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
@@ -19,12 +23,16 @@ import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.maps.client.HasMapOptions;
 import com.google.gwt.maps.client.MapOptions;
 import com.google.gwt.maps.client.MapTypeId;
@@ -47,6 +55,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
@@ -107,6 +116,12 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField PushButton manterVoltarButton;
 	@UiField PopupPanel visualizarPopUpPanel;
 	@UiField CheckBox pesquisarSemMapaCheckBox;
+	@UiField PushButton manterHorarioDropDownButton;
+	@UiField PushButton manterMelhorDiaDropDownButton;
+	@UiField FlowPanel manterHorarioSelectionFlowPanel;
+	@UiField FlowPanel manterMelhorDiaSelectionFlowPanel;
+	@UiField PopupPanel manterHorarioSelectionPopupPanel;
+	@UiField PopupPanel manterMelhorDiaSelectionPopupPanel;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -141,6 +156,20 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.resultadoPesquisa = new ListDataProvider<SurdoDetailsVO>();
 		this.resultadoPesquisa.addDataDisplay(this.pesquisaResultadoCellTable);
 		this.pesquisaResultadoSimplePager.setDisplay(this.pesquisaResultadoCellTable);		
+		
+		this.manterHorarioSelectionPopupPanel.addCloseHandler(new CloseHandler<PopupPanel>() {
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				manterHorarioSelectionPopupPanel.setVisible(Boolean.FALSE);
+			}
+		});
+		
+		this.manterMelhorDiaSelectionPopupPanel.addCloseHandler(new CloseHandler<PopupPanel>() {
+			@Override
+			public void onClose(CloseEvent<PopupPanel> event) {
+				manterMelhorDiaSelectionPopupPanel.setVisible(Boolean.FALSE);
+			}
+		});
 	}
 	
 	public void initView() {
@@ -327,7 +356,11 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			TextColumn<SurdoDetailsVO> mapaColumn = new TextColumn<SurdoDetailsVO>() {
 				@Override
 				public String getValue(SurdoDetailsVO object) {
-					return object.getMapa().substring(5);
+					if (!StringUtils.isEmpty(object.getMapa())) {
+						return object.getMapa().substring(5);
+					} else {
+						return "";
+					}
 				}
 			};			
 			ListHandler<SurdoDetailsVO> mapaSortHandler = new ListHandler<SurdoDetailsVO>(this.resultadoPesquisa.getList());
@@ -650,6 +683,15 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterVisitarSomentePorAnciaos.setValue(Boolean.FALSE);
 		this.manterMapaSateliteCheckBox.setValue(false);
 		this.manterQtdePessoasTextBox.setText("1");
+		this.manterMelhorDiaSelectionPopupPanel.hide();
+		for (int i = this.manterMelhorDiaSelectionFlowPanel.getWidgetCount(); i > 0; i--) {
+			this.manterMelhorDiaSelectionFlowPanel.remove(i-1);
+		}
+		this.manterMelhorDiaSelectionFlowPanel.getWidgetCount();
+		this.manterHorarioSelectionPopupPanel.hide();
+		for (int i = this.manterHorarioSelectionFlowPanel.getWidgetCount(); i > 0; i--) {
+			this.manterHorarioSelectionFlowPanel.remove(i-1);
+		}
 	}
 	
 	private Surdo populaSurdo() {
@@ -670,8 +712,8 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		surdo.setInstrutor(this.manterInstrutorTextBox.getText());
 		surdo.setAnoNascimento(this.manterAnoNascimentoIntegerBox.getValue());
 		surdo.setSexo(this.manterSexoListBox.getValue(this.manterSexoListBox.getSelectedIndex()));
-		surdo.setHorario(this.manterHorarioTextBox.getText());
-		surdo.setMelhorDia(this.manterMelhorDiaTextBox.getText());
+		surdo.setMelhorDia(new MelhorDia(this.manterMelhorDiaTextBox.getValue(), Boolean.TRUE));
+		surdo.setMelhorPeriodo(new MelhorPeriodo(this.manterHorarioTextBox.getValue()));
 		surdo.setOnibus(this.manterOnibusTextBox.getText());
 		surdo.setMsn(this.manterMSNTextBox.getText());
 		if (this.manterRegiao != null && this.manterRegiao.equals(surdo.getRegiaoId().toString())) {
@@ -693,6 +735,27 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 				? Byte.valueOf(this.manterQtdePessoasTextBox.getValue())
 						:null);
 		return surdo;
+	}
+	
+	private void atualizarTextBox(Boolean isAdd, TextBox box, String valor) {
+		StringBuilder valorAtual = new StringBuilder(box.getText());
+		if (isAdd) {
+			if (valorAtual.length() > 0) {
+				valorAtual.append(",");
+			}
+			valorAtual.append(valor);
+		} else {
+			int i = valorAtual.indexOf(valor);
+			if (i > 0) {
+				i = i-2;
+			}
+			valorAtual.replace(i, i+valor.length()+1, "");
+			if (valorAtual.length() < 3) {
+				valorAtual = new StringBuilder();
+			}
+			
+		}
+		box.setText(valorAtual.toString());
 	}
 	
 	private void populaManter(Surdo surdo) {
@@ -719,8 +782,39 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterAnoNascimentoIntegerBox.setValue(surdo.getAnoNascimento());
 		this.manterSexoListBox.setSelectedIndex(
 				obterIndice(this.manterSexoListBox, surdo.getSexo()));
-		this.manterHorarioTextBox.setText(surdo.getHorario());
-		this.manterMelhorDiaTextBox.setText(surdo.getMelhorDia());
+		for (int i = 0; i < Dia.values().length; i++) {
+			final Dia dia = Dia.values()[i];
+			CheckBox cb = new CheckBox(dia.getNome());
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					atualizarTextBox(event.getValue(), manterMelhorDiaTextBox, dia.getNomeAbreviado());
+				}
+			});
+			cb.setStyleName("pessoas-manter-form-checkbox");
+			if (surdo.getMelhoresDias().contains(dia)) {
+				cb.setValue(Boolean.TRUE);
+			}
+			this.manterMelhorDiaSelectionFlowPanel.add(cb);	
+		}
+		this.manterMelhorDiaTextBox.setText(surdo.getMelhoresDiasCsv(Boolean.TRUE));
+		
+		for (int i = 0; i < Periodo.values().length; i++) {
+			final Periodo periodo = Periodo.values()[i];
+			CheckBox cb = new CheckBox(periodo.getNome());
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					atualizarTextBox(event.getValue(), manterHorarioTextBox, periodo.getNome());
+				}
+			});
+			cb.setStyleName("pessoas-manter-form-checkbox");
+			if (surdo.getMelhoresPeriodos().contains(periodo)) {
+				cb.setValue(Boolean.TRUE);
+			}
+			this.manterHorarioSelectionFlowPanel.add(cb);
+		}
+		this.manterHorarioTextBox.setText(surdo.getMelhoresPeriodosCsv());
 		this.manterOnibusTextBox.setText(surdo.getOnibus());
 		this.manterMSNTextBox.setText(surdo.getMsn());
 		this.manterMapa = surdo.getMapa();
@@ -860,5 +954,43 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		}
 		return result;		
 	}
+	
+	@UiHandler(value={"manterHorarioDropDownButton","manterHorarioTextBox"})
+	void onManterHorarioDropDownButtonClick(ClickEvent event) {
+		if (!this.manterHorarioSelectionPopupPanel.isVisible()) {
+			this.manterHorarioSelectionPopupPanel.show();
+			this.manterHorarioSelectionPopupPanel.setVisible(Boolean.TRUE);
+			this.manterHorarioSelectionPopupPanel.getElement().getStyle().setLeft(
+					this.manterHorarioTextBox.getAbsoluteLeft(), Unit.PX);
+			this.manterHorarioSelectionPopupPanel.getElement().getStyle().setTop(
+					this.manterHorarioTextBox.getAbsoluteTop()+
+					this.manterHorarioTextBox.getOffsetHeight(), Unit.PX);
+			this.manterHorarioSelectionPopupPanel.getElement().getStyle().setWidth(
+					this.manterHorarioTextBox.getOffsetWidth()+
+					this.manterHorarioDropDownButton.getOffsetWidth()-2, Unit.PX);
+		} else {
+			this.manterHorarioSelectionPopupPanel.hide();
+		}
+	}
+	
+	@UiHandler(value={"manterMelhorDiaTextBox", "manterMelhorDiaDropDownButton"})
+	void onManterMelhorDiaClick(ClickEvent event) {
+		if (!this.manterMelhorDiaSelectionPopupPanel.isVisible()) {
+			this.manterMelhorDiaSelectionPopupPanel.show();
+			this.manterMelhorDiaSelectionPopupPanel.setVisible(Boolean.TRUE);
+			this.manterMelhorDiaSelectionPopupPanel.getElement().getStyle().setLeft(
+					this.manterMelhorDiaTextBox.getAbsoluteLeft(), Unit.PX);
+			this.manterMelhorDiaSelectionPopupPanel.getElement().getStyle().setTop(
+					this.manterMelhorDiaTextBox.getAbsoluteTop()+
+					this.manterMelhorDiaTextBox.getOffsetHeight(), Unit.PX);
+			this.manterMelhorDiaSelectionPopupPanel.getElement().getStyle().setWidth(
+					this.manterMelhorDiaTextBox.getOffsetWidth()+
+					this.manterMelhorDiaDropDownButton.getOffsetWidth()-2, Unit.PX);
+		} else {
+			this.manterMelhorDiaSelectionPopupPanel.hide();
+		}
+		
+	}
+	
 	
 }

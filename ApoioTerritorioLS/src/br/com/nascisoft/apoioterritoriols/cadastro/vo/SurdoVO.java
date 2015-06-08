@@ -3,14 +3,18 @@ package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
+import java.util.Iterator;
+import java.util.List;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia.Dia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class SurdoVO implements Serializable {
 
@@ -32,8 +36,8 @@ public class SurdoVO implements Serializable {
 	private String dvd;
 	private String instrutor;
 	private String sexo;
-	private String horario;
-	private String melhorDia;
+	private List<Periodo> melhoresPeriodos;
+	private List<Dia> melhoresDias;
 	private String onibus;
 	private String msn;
 	private Double latitude;	
@@ -75,8 +79,8 @@ public class SurdoVO implements Serializable {
 		this.setDvd(surdo.getDvd());
 		this.setInstrutor(surdo.getInstrutor());
 		this.setSexo(surdo.getSexo());
-		this.setHorario(surdo.getHorario());
-		this.setMelhorDia(surdo.getMelhorDia());
+		this.setMelhoresPeriodos(surdo.getMelhoresPeriodos());
+		this.setMelhoresDia(surdo.getMelhoresDias());
 		this.setOnibus(surdo.getOnibus());
 		this.setMsn(surdo.getMsn());
 		this.setNomeCidade(cidade.getNome());
@@ -180,20 +184,12 @@ public class SurdoVO implements Serializable {
 		this.sexo = sexo;
 	}
 
-	public String getHorario() {
-		return horario;
+	public List<Dia> getMelhoresDias() {
+		return melhoresDias;
 	}
 
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
-
-	public String getMelhorDia() {
-		return melhorDia;
-	}
-
-	public void setMelhorDia(String melhorDia) {
-		this.melhorDia = melhorDia;
+	public void setMelhoresDia(List<Dia> melhoresDias) {
+		this.melhoresDias = melhoresDias;
 	}
 
 	public String getOnibus() {
@@ -286,21 +282,27 @@ public class SurdoVO implements Serializable {
 				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
 			}
 		}
-		if (!StringUtils.isEmpty(this.getDvd())) {
-			if ("Sim".equals(this.getDvd())) {
-				retorno.append("<u>").append("Possui</u> DVD; ");
-			} else {
-				retorno.append("<u>").append("Não possui</u> DVD; ");
-			}
-		}
+//		if (!StringUtils.isEmpty(this.getDvd())) {
+//			if ("Sim".equals(this.getDvd())) {
+//				retorno.append("<u>").append("Possui</u> DVD; ");
+//			} else {
+//				retorno.append("<u>").append("Não possui</u> DVD; ");
+//			}
+//		}
 		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
 			retorno.append("Publicações que possui: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
 		}
-		if (!StringUtils.isEmpty(this.getMelhorDia())) {
-			retorno.append("Melhor dia: ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+		
+		if (this.getMelhoresDias().size() > 0) {
+			retorno
+				.append(this.getMelhoresDias().size() == 1 ? "Melhor dia: <u>" : "Melhores dias: <u>")
+				.append(this.getMelhoresDiasCsv(false)).append("</u>");
 		}
-		if (!StringUtils.isEmpty(this.getHorario())) {
-			retorno.append("Melhor horário: ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+		
+		if (this.getMelhoresPeriodos().size() > 0) {
+			retorno
+				.append(this.getMelhoresPeriodos().size() == 1 ? "Melhor horário: <u>" : "Melhores horários: <u>")
+				.append(this.getMelhoresPeriodosCsv()).append("</u>");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
 			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
@@ -334,11 +336,11 @@ public class SurdoVO implements Serializable {
 		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
 			retorno.append("Publ: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
 		}
-		if (!StringUtils.isEmpty(this.getMelhorDia())) {
-			retorno.append("Dia: ").append("<u>").append(this.getMelhorDia()).append("</u>").append("; ");
+		if (this.getMelhoresDias().size() > 0) {
+			retorno.append("Dia: <u>").append(this.getMelhoresDiasCsv(true)).append("</u>");
 		}
-		if (!StringUtils.isEmpty(this.getHorario())) {
-			retorno.append("Horário: ").append("<u>").append(this.getHorario()).append("</u>").append("; ");
+		if (this.getMelhoresPeriodos().size() > 0) {
+			retorno.append("Hora: <u>").append(this.getMelhoresPeriodosCsv()).append("</u>");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
 			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
@@ -418,5 +420,38 @@ public class SurdoVO implements Serializable {
 		return html.toString();
 
 	}
+
+	public List<Periodo> getMelhoresPeriodos() {
+		return melhoresPeriodos;
+	}
+
+	public void setMelhoresPeriodos(List<Periodo> melhoresPeriodos) {
+		this.melhoresPeriodos = melhoresPeriodos;
+	}
+	
+	public String getMelhoresPeriodosCsv() {
+		StringBuilder retorno = new StringBuilder();
+		Iterator<Periodo> iter = this.getMelhoresPeriodos().iterator();
+		while (iter.hasNext()) {
+			retorno.append(iter.next().getNome());
+			if (iter.hasNext()) {
+				retorno.append(",");
+			}
+		}
+		return retorno.toString();
+	}
+	
+	public String getMelhoresDiasCsv(Boolean isAbreviado) {
+		StringBuilder retorno = new StringBuilder();
+		Iterator<Dia> iter = this.getMelhoresDias().iterator();
+		while (iter.hasNext()) {
+			retorno.append(isAbreviado ? iter.next().getNomeAbreviado() : iter.next().getNome());
+			if (iter.hasNext()) {
+				retorno.append(",");
+			}
+		}
+		return retorno.toString();
+	}
+	
 
 }

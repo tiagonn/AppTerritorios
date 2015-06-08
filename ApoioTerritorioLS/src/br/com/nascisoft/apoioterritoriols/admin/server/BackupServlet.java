@@ -44,6 +44,8 @@ import br.com.nascisoft.apoioterritoriols.admin.xml.CidadeType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.CidadesType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.MapaType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.MapasType;
+import br.com.nascisoft.apoioterritoriols.admin.xml.MelhorDiaType;
+import br.com.nascisoft.apoioterritoriols.admin.xml.MelhorPeriodoType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.ObjectFactory;
 import br.com.nascisoft.apoioterritoriols.admin.xml.RegiaoType;
 import br.com.nascisoft.apoioterritoriols.admin.xml.RegioesType;
@@ -56,6 +58,8 @@ import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorDia.Dia;
+import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
@@ -160,7 +164,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		
 		StringBuilder csv = new StringBuilder();
 		csv.append("cidade,regiao,mapa,nome,logradouro,numero,complemento,bairro,cep,observacao,telefone,libras,")
-			.append("publicacoesPossui,anoNascimento,dvd,instrutor,tipo,horario,melhorDia,onibus,msn,latitude,")
+			.append("publicacoesPossui,anoNascimento,dvd,instrutor,tipo,melhoresHorarios,melhoresDias,onibus,msn,latitude,")
 			.append("longitude,qtdePessoasEndereco\n"); 
 		for (SurdoVO surdo : surdosVO) {
 			csv.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getNomeCidade()))).append(",")
@@ -180,8 +184,8 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getDvd()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getInstrutor()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getSexo()))).append(",")
-				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getHorario()))).append(",")
-				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMelhorDia()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMelhoresPeriodosCsv()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMelhoresDiasCsv(false)))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getOnibus()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getMsn()))).append(",")
 				.append(surdo.getLatitude()).append(",")
@@ -339,7 +343,10 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		xml.setPublicacoesPossui(surdo.getPublicacoesPossui());
 		xml.setDvd(surdo.getDvd());
 		xml.setEstaAssociadoMapa(surdo.getEstaAssociadoMapa());
-		xml.setHorario(surdo.getHorario());
+		xml.setMelhorPeriodo(new MelhorPeriodoType());
+		for (Periodo periodo : surdo.getMelhoresPeriodos()) {
+			xml.getMelhorPeriodo().getPeriodo().add(periodo.getNome());
+		}
 		xml.setId(surdo.getId());
 		xml.setAnoNascimento(surdo.getAnoNascimento());
 		xml.setInstrutor(surdo.getInstrutor());
@@ -350,7 +357,10 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		if (surdo.getMapa() != null) {
 			xml.setIdentificadorMapa(surdo.getMapa().getId());
 		}
-		xml.setMelhorDia(surdo.getMelhorDia());
+		xml.setMelhorDia(new MelhorDiaType());
+		for (Dia dia : surdo.getMelhoresDias()) {
+			xml.getMelhorDia().getDia().add(dia.getNome());
+		}
 		xml.setMsn(surdo.getMsn());
 		xml.setNome(surdo.getNome());
 		xml.setNumero(surdo.getNumero());

@@ -1502,6 +1502,8 @@ td.datePickerMonth {
 
 .pessoas-manter-form-checkbox {
 	display: block;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 .pessoas-manter-form-selectBox {

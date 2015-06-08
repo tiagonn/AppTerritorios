@@ -107,7 +107,7 @@
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
 								<g:Label text="Melhor horário:" styleName="pessoas-manter-label"/>
-								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" maxLength="0"/>
+								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" readOnly="true"/>
 								<g:PushButton width="22px" ui:field='manterHorarioDropDownButton' enabled='true' title="Melhor Horário" styleName="pessoas-manter-dropdown-button">
 									<g:upFace image="{res.dropdown}" />
 									<g:downFace image="{res.dropdown}" />
@@ -125,7 +125,7 @@
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
 								<g:Label text="Melhor dia:" styleName="pessoas-manter-label"/>
-								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" maxLength="0"/>
+								<g:TextBox ui:field="manterMelhorDiaTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" readOnly="true"/>
 								<g:PushButton width="22px" ui:field='manterMelhorDiaDropDownButton' enabled='true' title="Melhor dia" styleName="pessoas-manter-dropdown-button">
 									<g:upFace image="{res.dropdown}" />
 									<g:downFace image="{res.dropdown}" />

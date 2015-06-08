@@ -134,6 +134,9 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	String manterCidade;
 	boolean buscaEndereco = true;
 	
+	List<CheckBox> listaMelhoresDias = new ArrayList<CheckBox>();
+	List<CheckBox> listaMelhoresPeriodos = new ArrayList<CheckBox>();
+	
 	@UiTemplate("CadastroViewUiBinder.ui.xml")
 	interface CadastroSurdoViewUiBinderUiBinder extends
 			UiBinder<Widget, CadastroSurdoViewImpl> {
@@ -170,6 +173,8 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 				manterMelhorDiaSelectionPopupPanel.setVisible(Boolean.FALSE);
 			}
 		});
+
+		this.iniciaMelhoresDiasEPeriodoCheckboxes();
 	}
 	
 	public void initView() {
@@ -651,7 +656,39 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.pesquisaResultadoSimplePager.setVisible(false);
 	}
 	
+	private void iniciaMelhoresDiasEPeriodoCheckboxes() {
+		for (int i = 0; i < Dia.values().length; i++) {
+			final Dia dia = Dia.values()[i];
+			CheckBox cb = new CheckBox(dia.getNome());
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					atualizarTextBox(event.getValue(), manterMelhorDiaTextBox, dia.getNomeAbreviado());
+				}
+			});
+			cb.setStyleName("pessoas-manter-form-checkbox");
+			this.manterMelhorDiaSelectionFlowPanel.add(cb);	
+			this.listaMelhoresDias.add(cb);
+		}
+		
+		for (int i = 0; i < Periodo.values().length; i++) {
+			final Periodo periodo = Periodo.values()[i];
+			CheckBox cb = new CheckBox(periodo.getNome());
+			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+				@Override
+				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					atualizarTextBox(event.getValue(), manterHorarioTextBox, periodo.getNome());
+				}
+			});
+			cb.setStyleName("pessoas-manter-form-checkbox");
+			this.manterHorarioSelectionFlowPanel.add(cb);
+			this.listaMelhoresPeriodos.add(cb);
+		}		
+	}
+	
+
 	private void limparManter() {
+		GWT.log("Entrando em limparManter");
 		this.buscaEndereco = true;
 		this.manterId = null;
 		this.manterMapa = null;
@@ -684,13 +721,14 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterMapaSateliteCheckBox.setValue(false);
 		this.manterQtdePessoasTextBox.setText("1");
 		this.manterMelhorDiaSelectionPopupPanel.hide();
-		for (int i = this.manterMelhorDiaSelectionFlowPanel.getWidgetCount(); i > 0; i--) {
-			this.manterMelhorDiaSelectionFlowPanel.remove(i-1);
-		}
-		this.manterMelhorDiaSelectionFlowPanel.getWidgetCount();
 		this.manterHorarioSelectionPopupPanel.hide();
-		for (int i = this.manterHorarioSelectionFlowPanel.getWidgetCount(); i > 0; i--) {
-			this.manterHorarioSelectionFlowPanel.remove(i-1);
+		for (CheckBox cb : this.listaMelhoresDias) {
+			GWT.log("Limpando checkbox " + cb.getText());
+			cb.setValue(Boolean.FALSE);
+		}
+		for (CheckBox cb : this.listaMelhoresPeriodos) {
+			GWT.log("Limpando checkbox " + cb.getText());
+			cb.setValue(Boolean.FALSE);
 		}
 	}
 	
@@ -747,7 +785,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		} else {
 			int i = valorAtual.indexOf(valor);
 			if (i > 0) {
-				i = i-2;
+				i = i-1;
 			}
 			valorAtual.replace(i, i+valor.length()+1, "");
 			if (valorAtual.length() < 3) {
@@ -756,6 +794,50 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			
 		}
 		box.setText(valorAtual.toString());
+	}
+	
+	private void marcarMelhoresPeriodos(MelhorPeriodo melhoresPeriodos) {
+		for (CheckBox cb : this.listaMelhoresPeriodos) {
+			GWT.log("Marcando checkboxes de melhores periodos: " + cb.getText());
+			if (Periodo.manha.getNome().equals(cb.getText())) {
+				GWT.log("Manhã: " + melhoresPeriodos.getManha());
+				cb.setValue(melhoresPeriodos.getManha());
+			} else if (Periodo.tarde.getNome().equals(cb.getText())) {
+				GWT.log("Tarde: " + melhoresPeriodos.getTarde());
+				cb.setValue(melhoresPeriodos.getTarde());
+			} else if (Periodo.noite.getNome().equals(cb.getText())) {
+				GWT.log("Noite: " + melhoresPeriodos.getNoite());
+				cb.setValue(melhoresPeriodos.getNoite());
+			}
+		}
+	}
+	
+	private void marcarMelhoresDias(MelhorDia melhoresDias) {
+		for (CheckBox cb : this.listaMelhoresDias) {
+			GWT.log("Marcando checkboxes de melhores dias: " + cb.getText());
+			if (Dia.segunda.getNome().equals(cb.getText())) {
+				GWT.log("Segunda: " + melhoresDias.getSegunda());
+				cb.setValue(melhoresDias.getSegunda());
+			} else if (Dia.terca.getNome().equals(cb.getText())) {
+				GWT.log("Terça: " + melhoresDias.getTerca());
+				cb.setValue(melhoresDias.getTerca());
+			} else if (Dia.quarta.getNome().equals(cb.getText())) {
+				GWT.log("Quarta: " + melhoresDias.getQuarta());
+				cb.setValue(melhoresDias.getQuarta());
+			} else if (Dia.quinta.getNome().equals(cb.getText())) {
+				GWT.log("Quinta: " + melhoresDias.getQuinta());
+				cb.setValue(melhoresDias.getQuinta());
+			} else if (Dia.sexta.getNome().equals(cb.getText())) {
+				GWT.log("Sexta: " + melhoresDias.getSexta());
+				cb.setValue(melhoresDias.getSexta());
+			} else if (Dia.sabado.getNome().equals(cb.getText())) {
+				GWT.log("Sábado: " + melhoresDias.getSabado());
+				cb.setValue(melhoresDias.getSabado());
+			} else if (Dia.domingo.getNome().equals(cb.getText())) {
+				GWT.log("Domingo: " + melhoresDias.getDomingo());
+				cb.setValue(melhoresDias.getDomingo());
+			}
+		}				
 	}
 	
 	private void populaManter(Surdo surdo) {
@@ -782,39 +864,10 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterAnoNascimentoIntegerBox.setValue(surdo.getAnoNascimento());
 		this.manterSexoListBox.setSelectedIndex(
 				obterIndice(this.manterSexoListBox, surdo.getSexo()));
-		for (int i = 0; i < Dia.values().length; i++) {
-			final Dia dia = Dia.values()[i];
-			CheckBox cb = new CheckBox(dia.getNome());
-			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-				@Override
-				public void onValueChange(ValueChangeEvent<Boolean> event) {
-					atualizarTextBox(event.getValue(), manterMelhorDiaTextBox, dia.getNomeAbreviado());
-				}
-			});
-			cb.setStyleName("pessoas-manter-form-checkbox");
-			if (surdo.getMelhoresDias().contains(dia)) {
-				cb.setValue(Boolean.TRUE);
-			}
-			this.manterMelhorDiaSelectionFlowPanel.add(cb);	
-		}
 		this.manterMelhorDiaTextBox.setText(surdo.getMelhoresDiasCsv(Boolean.TRUE));
-		
-		for (int i = 0; i < Periodo.values().length; i++) {
-			final Periodo periodo = Periodo.values()[i];
-			CheckBox cb = new CheckBox(periodo.getNome());
-			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-				@Override
-				public void onValueChange(ValueChangeEvent<Boolean> event) {
-					atualizarTextBox(event.getValue(), manterHorarioTextBox, periodo.getNome());
-				}
-			});
-			cb.setStyleName("pessoas-manter-form-checkbox");
-			if (surdo.getMelhoresPeriodos().contains(periodo)) {
-				cb.setValue(Boolean.TRUE);
-			}
-			this.manterHorarioSelectionFlowPanel.add(cb);
-		}
+		marcarMelhoresDias(surdo.getMelhorDia());
 		this.manterHorarioTextBox.setText(surdo.getMelhoresPeriodosCsv());
+		marcarMelhoresPeriodos(surdo.getMelhorPeriodo());
 		this.manterOnibusTextBox.setText(surdo.getOnibus());
 		this.manterMSNTextBox.setText(surdo.getMsn());
 		this.manterMapa = surdo.getMapa();

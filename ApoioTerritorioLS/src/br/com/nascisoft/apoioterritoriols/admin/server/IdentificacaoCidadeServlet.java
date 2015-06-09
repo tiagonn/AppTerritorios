@@ -1,7 +1,9 @@
 package br.com.nascisoft.apoioterritoriols.admin.server;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -30,7 +32,14 @@ public class IdentificacaoCidadeServlet extends
 		String cidade = req.getParameter("nome");
 		String uf = req.getParameter("uf");
 		
+		InputStream is = this.getServletContext().getResourceAsStream("/WEB-INF/apoioterritorio.properties");
+		Properties props = new Properties();
+		props.load(is);
+
+		String key = props.getProperty("mapsKey");
+		
 		final Geocoder geocoder = new Geocoder();
+		geocoder.setApiKey(key);
 		GeocoderRequest geocoderRequest = 
 				new GeocoderRequestBuilder().setAddress(cidade + ", " + uf + ", Brasil").setLanguage("pt-BR").setRegion("BR").getGeocoderRequest();
 		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);

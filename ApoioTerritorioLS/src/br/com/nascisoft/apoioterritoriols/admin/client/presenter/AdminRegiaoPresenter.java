@@ -96,7 +96,7 @@ public class AdminRegiaoPresenter extends AbstractAdminPresenter
 							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 					getView().onApagarRegiao(id);
 				} else {
-					getView().mostrarWarning("Região não pode ser apagada pois possui surdos associados a ela",
+					getView().mostrarWarning("Região não pode ser apagada pois possui pessoas ou mapas associados a ela",
 							ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
 				}
 				

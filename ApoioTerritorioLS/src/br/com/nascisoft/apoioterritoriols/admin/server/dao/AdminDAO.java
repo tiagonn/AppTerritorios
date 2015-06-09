@@ -28,6 +28,10 @@ public class AdminDAO extends BaseDAO {
 		return ofy().load().type(Mapa.class).list();
 	}
 	
+	public List<Mapa> obterMapas(Long regionId) {
+		return ofy().load().type(Mapa.class).filter("regiao", Key.create(Regiao.class, regionId)).list();
+	}
+	
 	public List<Surdo> obterSurdosAtivos() {
 		return ofy().load().type(Surdo.class).filter("estaAssociadoMapa", true).list();
 	}

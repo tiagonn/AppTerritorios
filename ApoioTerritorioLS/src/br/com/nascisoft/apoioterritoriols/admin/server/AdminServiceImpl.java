@@ -22,6 +22,7 @@ import br.com.nascisoft.apoioterritoriols.admin.vo.RelatorioVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
+import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Usuario;
@@ -155,6 +156,11 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 		}
 		
 		Boolean apagar = surdos == null || surdos.size() == 0;
+		
+		List<Mapa> mapas = getDao().obterMapas(id);
+		
+		apagar = apagar && mapas.size() == 0;
+		
 		if (apagar) {
 			ofy().transact(new VoidWork() {
 				@Override
@@ -164,7 +170,7 @@ public class AdminServiceImpl extends AbstractApoioTerritorioLSService implement
 			});
 			logger.info("Região apagada com sucesso");
 		} else {
-			logger.info("Região não foi apagada pois possui pessoas associadas a ela");
+			logger.info("Região não foi apagada pois possui pessoas ou mapas associadas a ela");
 		}
 		
 		return apagar;

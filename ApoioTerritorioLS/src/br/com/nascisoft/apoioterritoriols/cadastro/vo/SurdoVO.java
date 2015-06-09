@@ -296,13 +296,13 @@ public class SurdoVO implements Serializable {
 		if (this.getMelhoresDias().size() > 0) {
 			retorno
 				.append(this.getMelhoresDias().size() == 1 ? "Melhor dia: <u>" : "Melhores dias: <u>")
-				.append(this.getMelhoresDiasCsv(false)).append("</u>");
+				.append(this.getMelhoresDiasCsv(false)).append("</u>; ");
 		}
 		
 		if (this.getMelhoresPeriodos().size() > 0) {
 			retorno
 				.append(this.getMelhoresPeriodos().size() == 1 ? "Melhor horário: <u>" : "Melhores horários: <u>")
-				.append(this.getMelhoresPeriodosCsv()).append("</u>");
+				.append(this.getMelhoresPeriodosCsv()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
 			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
@@ -337,10 +337,10 @@ public class SurdoVO implements Serializable {
 			retorno.append("Publ: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
 		}
 		if (this.getMelhoresDias().size() > 0) {
-			retorno.append("Dia: <u>").append(this.getMelhoresDiasCsv(true)).append("</u>");
+			retorno.append("Dia: <u>").append(this.getMelhoresDiasCsv(true)).append("</u>; ");
 		}
 		if (this.getMelhoresPeriodos().size() > 0) {
-			retorno.append("Hora: <u>").append(this.getMelhoresPeriodosCsv()).append("</u>");
+			retorno.append("Hora: <u>").append(this.getMelhoresPeriodosCsv()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
 			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");

@@ -1,11 +1,9 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.client;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
@@ -54,8 +52,6 @@ public interface CadastroService extends RemoteService {
 	List<SurdoNaoVisitarDetailsVO> obterSurdosNaoVisitar();
 	
 	void retornarSurdoNaoVisitar(Long id);
-	
-	GeocoderResultVO buscarEndereco(String endereco) throws IOException;
 	
 	Boolean existePessoasNosMapas(List<Long> mapasIDs);
 

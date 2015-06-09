@@ -1,13 +1,10 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +13,6 @@ import br.com.nascisoft.apoioterritoriols.admin.server.dao.AdminDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroService;
 import br.com.nascisoft.apoioterritoriols.cadastro.server.dao.CadastroDAO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
@@ -29,10 +25,6 @@ import br.com.nascisoft.apoioterritoriols.login.server.AbstractApoioTerritorioLS
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
 import com.googlecode.objectify.Key;
 
 public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implements
@@ -319,31 +311,6 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	@Override
 	public Cidade obterCidade(Long identificadorCidade) {
 		return this.getAdminDao().obterCidade(identificadorCidade);
-	}
-
-	@Override
-	public GeocoderResultVO buscarEndereco(String endereco) throws IOException {
-		InputStream is = this.getServletContext().getResourceAsStream("/WEB-INF/apoioterritorio.properties");
-		Properties props = new Properties();
-		props.load(is);
-
-		String key = props.getProperty("mapsKey");
-		
-		final Geocoder geocoder = new Geocoder();
-		geocoder.setApiKey(key);
-		GeocoderRequest geocoderRequest = 
-				new GeocoderRequestBuilder().setAddress(endereco).setLanguage("pt-BR").setRegion("BR").getGeocoderRequest();
-		
-		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-		
-		GeocoderResultVO vo = new GeocoderResultVO();
-		vo.setStatus(geocoderResponse.getStatus().toString());
-		if (!geocoderResponse.getResults().isEmpty()) {
-			vo.setLat(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
-			vo.setLng(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue());
-		}
-		
-		return vo;
 	}
 
 	@Override

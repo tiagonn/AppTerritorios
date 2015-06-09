@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoNaoVisitarDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
@@ -57,8 +56,6 @@ public interface CadastroServiceAsync {
 	void obterRegioes(Long cidadeId, AsyncCallback<List<Regiao>> callback);
 
 	void obterCidade(Long identificadorCidade, AsyncCallback<Cidade> callback);
-
-	void buscarEndereco(String endereco, AsyncCallback<GeocoderResultVO> callback);
 
 	void existePessoasNosMapas(List<Long> mapasIDs,
 			AsyncCallback<Boolean> callback);

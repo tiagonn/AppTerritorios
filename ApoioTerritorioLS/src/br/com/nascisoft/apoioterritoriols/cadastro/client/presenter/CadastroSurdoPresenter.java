@@ -8,7 +8,6 @@ import br.com.nascisoft.apoioterritoriols.cadastro.client.CadastroServiceAsync;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.EditarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.event.PesquisarSurdoEvent;
 import br.com.nascisoft.apoioterritoriols.cadastro.client.view.CadastroSurdoView;
-import br.com.nascisoft.apoioterritoriols.cadastro.vo.GeocoderResultVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoDetailsVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.entities.Bairro;
@@ -24,6 +23,10 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.maps.client.base.HasLatLng;
 import com.google.gwt.maps.client.base.LatLng;
+import com.google.gwt.maps.client.geocoder.Geocoder;
+import com.google.gwt.maps.client.geocoder.GeocoderCallback;
+import com.google.gwt.maps.client.geocoder.GeocoderRequest;
+import com.google.gwt.maps.client.geocoder.HasGeocoderResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements CadastroSurdoView.Presenter {
@@ -247,33 +250,31 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 					sb.append(cep).append(separador);
 				}
 				
-				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador).append(cidade.getPais());
+				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador);
 				
-				service.buscarEndereco(sb.toString(), new AsyncCallback<GeocoderResultVO>() {
+				Geocoder geocoder = new Geocoder();
+				GeocoderRequest request = new GeocoderRequest();
+				request.setAddress(sb.toString());
+				geocoder.geocode(request, new GeocoderCallback() {
 					@Override
-					public void onFailure(Throwable caught) {
-						logger.log(Level.SEVERE, "Falha ao buscar endereço.\n", caught);
-						getView().hideWaitingPanel();
-						getView().mostrarWarning("Falha ao buscar endereço. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
-					}
-					
-					public void onSuccess(GeocoderResultVO result) {
+					public void callback(List<HasGeocoderResult> responses, String status) {
 						HasLatLng centro = roundLatLng(new LatLng(cidade.getLatitudeCentro(), cidade.getLongitudeCentro()));
-						if ("OK".equals(result.getStatus())) {
-							HasLatLng retorno = roundLatLng(new LatLng(result.getLat(), result.getLng()));
+						if ("OK".equals(status)) {
+								// pegando a primeira resposta
+							HasLatLng result = responses.get(0).getGeometry().getLocation();
+							HasLatLng retorno = roundLatLng(new LatLng(result.getLatitude(), result.getLongitude()));
 							boolean naoEncontrouEndereco = retorno.equals(centro);
 							if (naoEncontrouEndereco) {
 								retorno = new LatLng(cidade.getLatitudeCentroTerritorio(), cidade.getLongitudeCentroTerritorio());
 							} else {
-								retorno = new LatLng(result.getLat(), result.getLng());
+								retorno = new LatLng(result.getLatitude(), result.getLongitude());
 							}
 							view.setPosition(retorno, !naoEncontrouEndereco, true);
 						} else {
 							view.setPosition(centro, false, true);
 						}				
-						getView().hideWaitingPanel();
-						
-					};
+						getView().hideWaitingPanel();						
+					}
 				});
 				
 			}

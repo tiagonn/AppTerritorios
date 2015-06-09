@@ -1,10 +1,13 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.server;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -319,8 +322,15 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	}
 
 	@Override
-	public GeocoderResultVO buscarEndereco(String endereco) {
+	public GeocoderResultVO buscarEndereco(String endereco) throws IOException {
+		InputStream is = this.getServletContext().getResourceAsStream("/WEB-INF/apoioterritorio.properties");
+		Properties props = new Properties();
+		props.load(is);
+
+		String key = props.getProperty("mapsKey");
+		
 		final Geocoder geocoder = new Geocoder();
+		geocoder.setApiKey(key);
 		GeocoderRequest geocoderRequest = 
 				new GeocoderRequestBuilder().setAddress(endereco).setLanguage("pt-BR").setRegion("BR").getGeocoderRequest();
 		

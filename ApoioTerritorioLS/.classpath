@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/geocoder-java-0.15.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt2.7-mapsV3.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-visualization.jar"/>
@@ -12,5 +11,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-gwt-1.2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-18.0.jar" sourcepath="C:/Users/Tiagon/.m2/repository/com/google/guava/guava/18.0/guava-18.0-sources.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine (5)"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/geocoder-java-0.16.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -182,13 +182,15 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setDvd(surdo.getDvd());
 		retorno.setEstaAssociadoMapa(surdo.isEstaAssociadoMapa());
 		retorno.setMelhorPeriodo(new MelhorPeriodo());
-		for (String periodo : surdo.getMelhorPeriodo().getPeriodo()) {
-			if (Periodo.manha.getNome().equals(periodo)) {
-				retorno.getMelhorPeriodo().setManhã(Boolean.TRUE);
-			} else if (Periodo.tarde.getNome().equals(periodo)) {
-				retorno.getMelhorPeriodo().setTarde(Boolean.TRUE);
-			} else if (Periodo.noite.getNome().equals(periodo)) {
-				retorno.getMelhorPeriodo().setNoite(Boolean.TRUE);
+		if (surdo.getMelhorPeriodo() != null) {
+			for (String periodo : surdo.getMelhorPeriodo().getPeriodo()) {
+				if (Periodo.manha.getNome().equals(periodo)) {
+					retorno.getMelhorPeriodo().setManhã(Boolean.TRUE);
+				} else if (Periodo.tarde.getNome().equals(periodo)) {
+					retorno.getMelhorPeriodo().setTarde(Boolean.TRUE);
+				} else if (Periodo.noite.getNome().equals(periodo)) {
+					retorno.getMelhorPeriodo().setNoite(Boolean.TRUE);
+				}
 			}
 		}
 		retorno.setAnoNascimento(surdo.getAnoNascimento());
@@ -201,22 +203,24 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 			retorno.setMapa(Key.create(Mapa.class, identificadorMapa));
 		}
 		retorno.setMelhorDia(new MelhorDia());
-		for (String dia : surdo.getMelhorDia().getDia()) {
-			if (Dia.segunda.getNome().equals(dia)) {
-				retorno.getMelhorDia().setSegunda(Boolean.TRUE);
-			} else if (Dia.terca.getNome().equals(dia)) {
-				retorno.getMelhorDia().setTerca(Boolean.TRUE);
-			} else if (Dia.quarta.getNome().equals(dia)) {
-				retorno.getMelhorDia().setQuarta(Boolean.TRUE);
-			} else if (Dia.quinta.getNome().equals(dia)) {
-				retorno.getMelhorDia().setQuinta(Boolean.TRUE);
-			} else if (Dia.sexta.getNome().equals(dia)) {
-				retorno.getMelhorDia().setSexta(Boolean.TRUE);
-			} else if (Dia.sabado.getNome().equals(dia)) {
-				retorno.getMelhorDia().setSabado(Boolean.TRUE);
-			} else if (Dia.domingo.getNome().equals(dia)) {
-				retorno.getMelhorDia().setDomingo(Boolean.TRUE);
-			} 
+		if (surdo.getMelhorDia() != null) {
+			for (String dia : surdo.getMelhorDia().getDia()) {
+				if (Dia.segunda.getNome().equals(dia)) {
+					retorno.getMelhorDia().setSegunda(Boolean.TRUE);
+				} else if (Dia.terca.getNome().equals(dia)) {
+					retorno.getMelhorDia().setTerca(Boolean.TRUE);
+				} else if (Dia.quarta.getNome().equals(dia)) {
+					retorno.getMelhorDia().setQuarta(Boolean.TRUE);
+				} else if (Dia.quinta.getNome().equals(dia)) {
+					retorno.getMelhorDia().setQuinta(Boolean.TRUE);
+				} else if (Dia.sexta.getNome().equals(dia)) {
+					retorno.getMelhorDia().setSexta(Boolean.TRUE);
+				} else if (Dia.sabado.getNome().equals(dia)) {
+					retorno.getMelhorDia().setSabado(Boolean.TRUE);
+				} else if (Dia.domingo.getNome().equals(dia)) {
+					retorno.getMelhorDia().setDomingo(Boolean.TRUE);
+				} 
+			}
 		}
 		retorno.setMsn(surdo.getMsn());
 		retorno.setNome(surdo.getNome());

@@ -179,7 +179,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getObservacao()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getTelefone()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getLibras()))).append(",")
-				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getPublicacoesPossui()))).append(",")
+				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getPublicacoesPossui() != null ? surdo.getPublicacoesPossui() : ""))).append(",")
 				.append(surdo.getAnoNascimento()).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getDvd()))).append(",")
 				.append(BackupServlet.BREAKLINE.removeFrom(StringEscapeUtils.escapeCsv(surdo.getInstrutor()))).append(",")

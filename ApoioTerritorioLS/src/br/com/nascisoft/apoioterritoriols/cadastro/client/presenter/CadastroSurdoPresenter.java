@@ -129,6 +129,8 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 					getView().hideWaitingPanel();
 				}
 			});			
+		} else {
+			getView().setResultadoPesquisa(null);
 		}
 	}
 

@@ -270,12 +270,14 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		
 	@Override
 	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
+		this.showWaitingPanel();
 		if (resultadoPesquisa == null && this.listaResultadoPesquisa != null) {
 			resultadoPesquisa = this.listaResultadoPesquisa;
 		}
 		
 		this.listaResultadoPesquisa = resultadoPesquisa;
-		this.filtrarPesquisa();		
+		this.filtrarPesquisa();	
+		this.hideWaitingPanel();
 	}
 	
 	private void mostrarResultadoPesquisa() {

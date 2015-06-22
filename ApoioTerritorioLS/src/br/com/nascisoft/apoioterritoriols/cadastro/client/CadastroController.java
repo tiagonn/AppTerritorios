@@ -220,8 +220,10 @@ public class CadastroController implements CadastroPresenter,
 					try {
 							// Aba Surdo
 						if (currentToken.startsWith("surdos")) {
+							boolean novaView = false;
 							if (cadastroSurdoView == null) {
 								cadastroSurdoView = new CadastroSurdoViewImpl();
+								novaView = true;
 							}
 							if (cadastroSurdoPresenter == null) {
 								cadastroSurdoPresenter = new CadastroSurdoPresenter(
@@ -275,7 +277,7 @@ public class CadastroController implements CadastroPresenter,
 									estaAssociadoMapa = null;
 								}
 								String dispararPesquisaString=parametros[5].split("=")[1];
-								dispararPesquisa = Boolean.valueOf(dispararPesquisaString);
+								dispararPesquisa = Boolean.valueOf(dispararPesquisaString) || novaView;
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
 										identificadorCidade,
 										nomeSurdo,

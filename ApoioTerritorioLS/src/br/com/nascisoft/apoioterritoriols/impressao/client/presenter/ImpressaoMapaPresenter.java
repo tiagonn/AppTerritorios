@@ -9,6 +9,7 @@ import br.com.nascisoft.apoioterritoriols.impressao.client.ImpressaoServiceAsync
 import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView;
 import br.com.nascisoft.apoioterritoriols.impressao.client.view.ImpressaoMapaView.IImpressaoPresenter;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -40,6 +41,7 @@ public class ImpressaoMapaPresenter implements IImpressaoPresenter {
 	public void abrirImpressaoMapa(List<Long> mapasIDs) {
 		this.service.obterDadosImpressao(mapasIDs, new AsyncCallback<List<AbrirMapaVO>>() {
 			public void onSuccess(List<AbrirMapaVO> result) {
+				GWT.log("Obter dados impressão realizado com sucesso. Tamanho da lista de resultado: " + result.size());
 				view.abrirImpressaoMapa(result);
 				logger.log(Level.INFO, "Busca de dados de impressao realizada com sucesso.");
 			};

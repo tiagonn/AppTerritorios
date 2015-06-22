@@ -97,6 +97,8 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		
 		FlowPanel impressaoRootPanel = new FlowPanel();
 		impressaoRootPanel.setStyleName("impressao-root");
+		impressaoSimplePanel.clear();
+		impressaoSimplePanel.getElement().removeAllChildren();
 		impressaoSimplePanel.add(impressaoRootPanel);
 		impressaoSimplePanel.getElement().getStyle().setPosition(Position.RELATIVE);
 		impressaoSimplePanel.getElement().getStyle().setFloat(Float.NONE);

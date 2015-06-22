@@ -10,13 +10,23 @@ public class PesquisarSurdoEvent extends GwtEvent<PesquisarSurdoEventHandler> {
 	String nomeRegiao; 
 	String identificadorMapa;
 	Boolean estaAssociadoMapa;
+	Boolean dispararPesquisa;
 
-	public PesquisarSurdoEvent(String identificadorCidade, String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
+	public Boolean getDispararPesquisa() {
+		return dispararPesquisa;
+	}
+
+	public void setDispararPesquisa(Boolean dispararPesquisa) {
+		this.dispararPesquisa = dispararPesquisa;
+	}
+
+	public PesquisarSurdoEvent(String identificadorCidade, String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa, Boolean dispararPesquisa) {
 		this.identificadorCidade = identificadorCidade;
 		this.nomeSurdo = nomeSurdo;
 		this.nomeRegiao = nomeRegiao;
 		this.identificadorMapa = identificadorMapa;
 		this.estaAssociadoMapa = estaAssociadoMapa;
+		this.dispararPesquisa = dispararPesquisa;
 	}
 
 	@Override

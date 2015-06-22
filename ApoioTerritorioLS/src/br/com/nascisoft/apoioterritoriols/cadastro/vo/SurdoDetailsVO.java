@@ -1,6 +1,7 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
@@ -19,6 +20,13 @@ public class SurdoDetailsVO implements Serializable {
 	private String endereco;
 	private String observacao;
 	private String nomeCidade;
+	
+	public static final Comparator<SurdoDetailsVO> COMPARATOR_NOME = new Comparator<SurdoDetailsVO>() {
+		@Override
+		public int compare(SurdoDetailsVO o1, SurdoDetailsVO o2) {
+			return o1.getNome().compareTo(o2.getNome());
+		}
+	};
 	
 	public SurdoDetailsVO() {
 		super();

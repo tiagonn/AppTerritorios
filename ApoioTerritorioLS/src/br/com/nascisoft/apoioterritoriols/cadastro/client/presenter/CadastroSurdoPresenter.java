@@ -95,46 +95,47 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	}
 
 	@Override
-	public void onPesquisaPesquisarButtonClick(String identificadorCidade, String nomeSurdo, String nomeRegiao, String identificadorMapa, Boolean estaAssociadoMapa) {
-		eventBus.fireEvent(new PesquisarSurdoEvent(identificadorCidade, nomeSurdo, nomeRegiao, identificadorMapa, estaAssociadoMapa));
-	}
+	public void onPesquisaPesquisarEvent(final String identificadorCidade,
+			final String nomeSurdo, final String regiaoId,
+			final String identificadorMapa, final Boolean estaAssociadoMapa,
+			final Boolean dispararPesquisa) {
+		
+		if (dispararPesquisa) {
+			getView().showWaitingPanel();
+			Long mapa = null;
+			Long cidade = null;
+			if (!StringUtils.isEmpty(identificadorCidade)) {
+				cidade = Long.valueOf(identificadorCidade);
+			}
+			if (!StringUtils.isEmpty(identificadorMapa)) {
+				mapa = Long.valueOf(identificadorMapa);
+			}
+			Long regiao = null;
+			if (!StringUtils.isEmpty(regiaoId)) {
+				regiao = Long.valueOf(regiaoId);
+			}
+			service.obterSurdos(cidade, nomeSurdo, regiao, mapa, estaAssociadoMapa, new AsyncCallback<List<SurdoDetailsVO>>() {
 	
-	@Override
-	public void onPesquisaPesquisarEvent(final String identificadorCidade, final String nomeSurdo, final String regiaoId, final String identificadorMapa, final Boolean estaAssociadoMapa) {
-		getView().showWaitingPanel();
-		Long mapa = null;
-		Long cidade = null;
-		if (!StringUtils.isEmpty(identificadorCidade)) {
-			cidade = Long.valueOf(identificadorCidade);
+				@Override
+				public void onFailure(Throwable caught) {
+					logger.log(Level.SEVERE, "Falha ao obter lista de pessoas.\n", caught);
+					getView().hideWaitingPanel();
+					getView().mostrarWarning("Falha ao obter lista de pessoas. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());		
+				}
+	
+				@Override
+				public void onSuccess(List<SurdoDetailsVO> result) {
+					view.setResultadoPesquisa(result);
+					getView().hideWaitingPanel();
+				}
+			});			
 		}
-		if (!StringUtils.isEmpty(identificadorMapa)) {
-			mapa = Long.valueOf(identificadorMapa);
-		}
-		Long regiao = null;
-		if (!StringUtils.isEmpty(regiaoId)) {
-			regiao = Long.valueOf(regiaoId);
-		}
-		service.obterSurdos(cidade, nomeSurdo, regiao, mapa, estaAssociadoMapa, new AsyncCallback<List<SurdoDetailsVO>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				logger.log(Level.SEVERE, "Falha ao obter lista de pessoas.\n", caught);
-				getView().hideWaitingPanel();
-				getView().mostrarWarning("Falha ao obter lista de pessoas. \n" + caught.getMessage(), ApoioTerritorioLSConstants.INSTANCE.warningTimeout());		
-			}
-
-			@Override
-			public void onSuccess(List<SurdoDetailsVO> result) {
-				view.setResultadoPesquisa(result);
-				getView().hideWaitingPanel();
-			}
-		});			
 	}
 
 	@Override
-	public void adicionarOuAlterarSurdo(Surdo surdo) {
+	public void adicionarOuAlterarSurdo(Surdo surdo, List<SurdoDetailsVO> surdos) {
 		getView().showWaitingPanel();
-		service.adicionarOuAlterarSurdo(surdo, new AsyncCallback<Long>() {
+		service.adicionarOuAlterarSurdo(surdo, surdos, new AsyncCallback<List<SurdoDetailsVO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -144,10 +145,11 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 			}
 
 			@Override
-			public void onSuccess(Long result) {
+			public void onSuccess(List<SurdoDetailsVO> result) {
 				getView().hideWaitingPanel();
-				getView().mostrarWarning("Pessoa id " + result + " salva com sucesso.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
-				eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null));
+				getView().mostrarWarning("Pessoa salva com sucesso.", ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
+				getView().setResultadoPesquisa(result);
+				eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null, false));
 			}
 		});
 	}
@@ -296,6 +298,12 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 	@Override
 	public void onAdicionar() {
 		getView().onAdicionar();
+	}
+
+	@Override
+	public void onManterVoltarClick() {
+		getView().setResultadoPesquisa(null);
+		eventBus.fireEvent(new PesquisarSurdoEvent("", "", "", "", null, false));
 	}
 
 }

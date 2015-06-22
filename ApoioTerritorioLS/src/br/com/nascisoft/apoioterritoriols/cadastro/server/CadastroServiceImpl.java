@@ -113,7 +113,8 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 	}
 
 	@Override
-	public Long adicionarOuAlterarSurdo(final Surdo surdo) {
+	public List<SurdoDetailsVO> adicionarOuAlterarSurdo(Surdo surdo, List<SurdoDetailsVO> surdos) {
+//		List<SurdoDetailsVO> listaNova = new ArrayList<SurdoDetailsVO>(surdos);
 		String operacao = surdo.getId() != null ? " alterado" : " adicionado";
 		if (surdo.isMudouSe() || surdo.isVisitarSomentePorAnciaos()) {
 			surdo.setMapa(null);
@@ -127,9 +128,9 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 		
 						
 		if (surdo.getMapaAnterior() != null) {
-			List<Surdo> surdos = getDao().obterSurdos(null, null, null, surdo.getMapaAnterior(), null);
+			List<Surdo> surdosMapaAnterior = getDao().obterSurdos(null, null, null, surdo.getMapaAnterior(), null);
 			
-			if (surdos.size() == 1) {
+			if (surdosMapaAnterior.size() == 1) {
 				getDao().apagarMapa(surdo.getMapaAnterior());
 			}
 			
@@ -144,10 +145,31 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 			bairro.setNome(surdo.getBairro());
 			AdminDAO.INSTANCE.adicionarOuAtualizarBairro(bairro);
 		}
+		
+		Cidade cidade = this.getAdminDao().obterCidade(surdo.getCidadeId());
+		Regiao regiao = this.getAdminDao().obterRegiao(surdo.getRegiaoId());
+		Mapa mapa = null;
+		if (surdo.getMapa() != null) {
+			mapa = this.getDao().obterMapa(surdo.getMapa());
+		}
+		SurdoDetailsVO novoSurdoVO = new SurdoDetailsVO(surdo, mapa, regiao, cidade);
+		
+		if (" alterado".equals(operacao)) {
+			for (int i = 0; i < surdos.size(); i++) {
+				if (surdos.get(i).getId().equals(novoSurdoVO.getId())) {
+					surdos.remove(i);
+					break;
+				}
+			}
+		}
+		
+		surdos.add(novoSurdoVO);
+		
+		Collections.sort(surdos, SurdoDetailsVO.COMPARATOR_NOME);
 						
 		logger.log(Level.INFO, "Surdo " + id + operacao + " com sucesso");
 		
-		return id;
+		return surdos;
 	}
 
 	@Override

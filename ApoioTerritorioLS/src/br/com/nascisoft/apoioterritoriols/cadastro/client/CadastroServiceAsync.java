@@ -26,7 +26,8 @@ public interface CadastroServiceAsync {
 
 	void obterMapasRegiao(Long regiaoId, AsyncCallback<List<Mapa>> callback);
 
-	void adicionarOuAlterarSurdo(Surdo surdo, AsyncCallback<Long> callback);
+	void adicionarOuAlterarSurdo(Surdo surdo, List<SurdoDetailsVO> surdos,
+			AsyncCallback<List<SurdoDetailsVO>> callback);
 
 	void obterSurdo(Long id, AsyncCallback<Surdo> callback);
 

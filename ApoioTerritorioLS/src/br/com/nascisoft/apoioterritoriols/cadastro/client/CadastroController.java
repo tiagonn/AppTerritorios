@@ -111,7 +111,8 @@ public class CadastroController implements CadastroPresenter,
 								"&identificadorRegiao="+event.getNomeRegiao()+
 								"&nomeSurdo="+event.getNomeSurdo()+
 								"&identificadorMapa="+event.getIdentificadorMapa()+
-								"&estaAssociadoMapa="+event.getEstaAssociadoMapa());					
+								"&estaAssociadoMapa="+event.getEstaAssociadoMapa()+
+								"&dispararPesquisa="+event.getDispararPesquisa());					
 					}
 				});
 
@@ -229,10 +230,10 @@ public class CadastroController implements CadastroPresenter,
 							}	
 							
 							cadastroSurdoPresenter.selectThisTab();
-							
+
 							if ("surdos".equals(currentToken)) {
 								cadastroSurdoPresenter.initView();
-								cadastroSurdoPresenter.onPesquisaPesquisarEvent(null, null, null, null, null);
+								cadastroSurdoPresenter.onPesquisaPesquisarEvent(null, null, null, null, null, true);
 							} else if (currentToken.startsWith("surdos!pesquisar")) {
 								String queryString = currentToken.split("#")[1];
 								String[] parametros = queryString.split("&");
@@ -241,6 +242,7 @@ public class CadastroController implements CadastroPresenter,
 								String nomeRegiao = null;
 								String identificadorMapa = null;
 								Boolean estaAssociadoMapa = null;
+								Boolean dispararPesquisa = null;
 								try {
 									identificadorCidade = parametros[0].split("=")[1];
 								} catch (ArrayIndexOutOfBoundsException e) {
@@ -272,12 +274,15 @@ public class CadastroController implements CadastroPresenter,
 								if (estaAssociadoMapa != null && estaAssociadoMapa) {
 									estaAssociadoMapa = null;
 								}
+								String dispararPesquisaString=parametros[5].split("=")[1];
+								dispararPesquisa = Boolean.valueOf(dispararPesquisaString);
 								cadastroSurdoPresenter.onPesquisaPesquisarEvent(
 										identificadorCidade,
 										nomeSurdo,
 										nomeRegiao,
 										identificadorMapa,
-										estaAssociadoMapa);	
+										estaAssociadoMapa,
+										dispararPesquisa);	
 							} else if ("surdos!adicionar".equals(currentToken)) {
 								cadastroSurdoPresenter.onAdicionar();
 							} else if (currentToken.startsWith("surdos!editar")) {

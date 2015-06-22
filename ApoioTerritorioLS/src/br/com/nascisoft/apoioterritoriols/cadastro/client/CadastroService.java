@@ -35,7 +35,8 @@ public interface CadastroService extends RemoteService {
 	
 	List<Mapa> obterMapasRegiao(Long regiaoId);
 	
-	Long adicionarOuAlterarSurdo(Surdo surdo);
+	List<SurdoDetailsVO> adicionarOuAlterarSurdo(Surdo surdo,
+			List<SurdoDetailsVO> surdos);
 	
 	Surdo obterSurdo(Long id);
 	

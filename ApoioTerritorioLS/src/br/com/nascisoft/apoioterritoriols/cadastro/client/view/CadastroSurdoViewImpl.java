@@ -270,6 +270,9 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		
 	@Override
 	public void setResultadoPesquisa(List<SurdoDetailsVO> resultadoPesquisa) {
+		if (resultadoPesquisa == null && this.listaResultadoPesquisa != null) {
+			resultadoPesquisa = this.listaResultadoPesquisa;
+		}
 		this.limparResultadoPesquisa();
 		this.pesquisaResultadoCellTable.setRowCount(resultadoPesquisa.size());
 		this.resultadoPesquisa.setList(resultadoPesquisa);
@@ -549,7 +552,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterLongitude = marker.getPosition().getLongitude();
 		this.manterMapaPopupPanel.hide();
 		Surdo surdo = populaSurdo();
-		this.presenter.adicionarOuAlterarSurdo(surdo);
+		this.presenter.adicionarOuAlterarSurdo(surdo, this.listaResultadoPesquisa);
 	}
 	
 	@UiHandler("manterMapaVoltarEnderecoButton")
@@ -981,7 +984,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	
 	@UiHandler("manterVoltarButton")
 	void onManterVoltarButtonClick(ClickEvent e) {
-		History.back();
+		this.presenter.onManterVoltarClick();
 	}
 	
 	@UiHandler("pesquisarSemMapaCheckBox")
@@ -1044,6 +1047,5 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		}
 		
 	}
-	
 	
 }

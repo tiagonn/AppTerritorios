@@ -273,11 +273,9 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		if (resultadoPesquisa == null && this.listaResultadoPesquisa != null) {
 			resultadoPesquisa = this.listaResultadoPesquisa;
 		}
-		this.limparResultadoPesquisa();
-		this.pesquisaResultadoCellTable.setRowCount(resultadoPesquisa.size());
-		this.resultadoPesquisa.setList(resultadoPesquisa);
+		
 		this.listaResultadoPesquisa = resultadoPesquisa;
-		this.mostrarResultadoPesquisa();
+		this.filtrarPesquisa();		
 	}
 	
 	private void mostrarResultadoPesquisa() {
@@ -923,35 +921,6 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		}
 	}
 	
-	@UiHandler("pesquisaFiltrarTextBox")
-	void onPesquisaFiltrarTextBoxKeyUpEvent(KeyUpEvent event) {
-		this.limparResultadoPesquisa();
-		if (this.pesquisaFiltrarTextBox.getValue().length()>0) {
-			List<SurdoDetailsVO> resultado = filtrarResultadoPesquisa(this.pesquisaFiltrarTextBox.getValue());
-			this.resultadoPesquisa.setList(resultado);
-			this.pesquisaResultadoCellTable.setRowCount(resultado.size());
-		} else {
-			this.resultadoPesquisa.setList(this.listaResultadoPesquisa);
-			this.pesquisaResultadoCellTable.setRowCount(this.listaResultadoPesquisa.size());
-		}
-		this.mostrarResultadoPesquisa();
-	}
-	
-	private List<SurdoDetailsVO> filtrarResultadoPesquisa(String query) {
-		List<SurdoDetailsVO> result = new ArrayList<SurdoDetailsVO>();
-		for (SurdoDetailsVO vo : this.listaResultadoPesquisa) {
-			if ( (vo.getNome().toUpperCase().indexOf(query.toUpperCase()) != -1)
-					|| (vo.getNomeCidade().toUpperCase().indexOf(query.toUpperCase()) != -1)
-					|| (vo.getRegiao().toUpperCase().indexOf(query.toUpperCase()) != -1) 
-					|| (vo.getMapa().toUpperCase().indexOf(query.toUpperCase()) != -1)
-					|| (vo.getEndereco().toUpperCase().indexOf(query.toUpperCase()) != -1)
-					) {
-				result.add(vo);
-			}
-		}
-		return result;
-	}
-	
 	@Override
 	public void onVisualizar(SurdoVO surdo) {
 		int clientWidth = Window.getClientWidth();
@@ -987,28 +956,54 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.presenter.onManterVoltarClick();
 	}
 	
+	@UiHandler("pesquisaFiltrarTextBox")
+	void onPesquisaFiltrarTextBoxKeyUpEvent(KeyUpEvent event) {
+		this.filtrarPesquisa();
+	}
+	
 	@UiHandler("pesquisarSemMapaCheckBox")
 	void onPesquisarSemMapaCheckBoxValueChange(ValueChangeEvent<Boolean> event) {
+		this.filtrarPesquisa();
+	}
+	
+	private void filtrarPesquisa() {
 		this.limparResultadoPesquisa();
-		if (event.getValue()) {
-			List<SurdoDetailsVO> resultado = filtrarResultadoPesquisaSemMapa();
-			this.resultadoPesquisa.setList(resultado);
-			this.pesquisaResultadoCellTable.setRowCount(resultado.size());
-		} else {
-			this.resultadoPesquisa.setList(this.listaResultadoPesquisa);
-			this.pesquisaResultadoCellTable.setRowCount(this.listaResultadoPesquisa.size());
+		List<SurdoDetailsVO> listaNova = new ArrayList<SurdoDetailsVO>(this.listaResultadoPesquisa);
+		if (this.pesquisarSemMapaCheckBox.getValue()) {
+			listaNova = filtrarResultadoPesquisaSemMapa(listaNova);
 		}
+		if (this.pesquisaFiltrarTextBox.getValue().length()>0) {
+			listaNova = filtrarResultadoPesquisa(this.pesquisaFiltrarTextBox.getValue(), listaNova);
+		} 
+		
+		this.resultadoPesquisa.setList(listaNova);
+		this.pesquisaResultadoCellTable.setRowCount(listaNova.size());
 		this.mostrarResultadoPesquisa();
 	}
 	
-	private List<SurdoDetailsVO> filtrarResultadoPesquisaSemMapa() {
+	private List<SurdoDetailsVO> filtrarResultadoPesquisaSemMapa(List<SurdoDetailsVO> lista) {
 		List<SurdoDetailsVO> result = new ArrayList<SurdoDetailsVO>();
-		for (SurdoDetailsVO vo : this.listaResultadoPesquisa) {
+		for (SurdoDetailsVO vo : lista) {
 			if (StringUtils.isEmpty(vo.getMapa())) {
 				result.add(vo);
 			}
 		}
 		return result;		
+	}
+	
+	private List<SurdoDetailsVO> filtrarResultadoPesquisa(String query, List<SurdoDetailsVO> lista) {
+		List<SurdoDetailsVO> result = new ArrayList<SurdoDetailsVO>();
+		for (SurdoDetailsVO vo : lista) {
+			if ( (vo.getNome().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getNomeCidade().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getRegiao().toUpperCase().indexOf(query.toUpperCase()) != -1) 
+					|| (vo.getMapa().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					|| (vo.getEndereco().toUpperCase().indexOf(query.toUpperCase()) != -1)
+					) {
+				result.add(vo);
+			}
+		}
+		return result;
 	}
 	
 	@UiHandler(value={"manterHorarioDropDownButton","manterHorarioTextBox"})

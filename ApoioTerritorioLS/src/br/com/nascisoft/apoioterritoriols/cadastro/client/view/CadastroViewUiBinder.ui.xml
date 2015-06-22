@@ -46,7 +46,7 @@
 								<g:ListBox ui:field="manterCidadeListBox" styleName="pessoas-manter-form-selectBox"/>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
-								<g:Label text="Regiao:" styleName="pessoas-manter-label"/>
+								<g:Label text="Região:" styleName="pessoas-manter-label"/>
 								<g:ListBox ui:field="manterRegiaoListBox" styleName="pessoas-manter-form-selectBox"/>
 							</g:FlowPanel>
 							<g:FlowPanel styleName="pessoas-manter-bloco">
@@ -77,11 +77,15 @@
 								<g:Label text="Telefone:" styleName="pessoas-manter-label"/>
 								<g:TextBox ui:field="manterTelefoneTextBox" visibleLength="20" styleName="pessoas-manter-form-element"/>
 							</g:FlowPanel>
-							<g:FlowPanel styleName="pessoas-manter-bloco">
+							<g:FlowPanel ui:field="manterNacionalidadePanel" styleName="pessoas-manter-bloco" visible="false">
+								<g:Label text="Nacionalidade:" styleName="pessoas-manter-label"/>
+								<g:TextBox ui:field="manterNacionalidadeTextBox" styleName="pessoas-manter-form-element"/>
+							</g:FlowPanel>
+							<g:FlowPanel ui:field="manterLibrasPanel" styleName="pessoas-manter-bloco" visible="false">
 								<g:Label text="Libras:" styleName="pessoas-manter-label"/>
 								<g:ListBox ui:field="manterLibrasListBox" styleName="pessoas-manter-form-selectBox"/>
 							</g:FlowPanel>
-							<g:FlowPanel styleName="pessoas-manter-bloco">
+							<g:FlowPanel ui:field="manterDVDPanel" styleName="pessoas-manter-bloco" visible="false">
 								<g:Label text="DVD:" styleName="pessoas-manter-label"/>
 								<g:ListBox ui:field="manterDVDListBox" styleName="pessoas-manter-form-selectBox"/>
 							</g:FlowPanel>
@@ -108,7 +112,7 @@
 							<g:FlowPanel styleName="pessoas-manter-bloco">
 								<g:Label text="Melhor horário:" styleName="pessoas-manter-label"/>
 								<g:TextBox ui:field="manterHorarioTextBox" visibleLength="20" styleName="pessoas-manter-form-dropdown-textbox" readOnly="true"/>
-								<g:PushButton width="22px" ui:field='manterHorarioDropDownButton' enabled='true' title="Melhor Horário" styleName="pessoas-manter-dropdown-button">
+								<g:PushButton width="18px" ui:field='manterHorarioDropDownButton' enabled='true' title="Melhor Horário" styleName="pessoas-manter-dropdown-button">
 									<g:upFace image="{res.dropdown}" />
 									<g:downFace image="{res.dropdown}" />
 								</g:PushButton>

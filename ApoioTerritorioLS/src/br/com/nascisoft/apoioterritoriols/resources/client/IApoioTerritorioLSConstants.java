@@ -7,5 +7,6 @@ public interface IApoioTerritorioLSConstants extends Constants {
 	int warningTimeout();
 	int warningLongTimeout();
 	boolean isLibras();
+	boolean isMultiNacionalidade();
 
 }

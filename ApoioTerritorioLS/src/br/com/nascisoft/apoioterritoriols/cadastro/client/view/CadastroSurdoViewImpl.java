@@ -122,6 +122,10 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField FlowPanel manterMelhorDiaSelectionFlowPanel;
 	@UiField PopupPanel manterHorarioSelectionPopupPanel;
 	@UiField PopupPanel manterMelhorDiaSelectionPopupPanel;
+	@UiField FlowPanel manterNacionalidadePanel;
+	@UiField FlowPanel manterLibrasPanel;
+	@UiField FlowPanel manterDVDPanel;
+	@UiField TextBox manterNacionalidadeTextBox;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -733,6 +737,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			GWT.log("Limpando checkbox " + cb.getText());
 			cb.setValue(Boolean.FALSE);
 		}
+		this.manterNacionalidadeTextBox.setText("");
 	}
 	
 	private Surdo populaSurdo() {
@@ -747,9 +752,13 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		surdo.setCep(this.manterCEPTextBox.getText());
 		surdo.setObservacao(this.manterObservacaoTextArea.getText());
 		surdo.setTelefone(this.manterTelefoneTextBox.getText());
-		surdo.setLibras(this.manterLibrasListBox.getValue(this.manterLibrasListBox.getSelectedIndex()));
+		if (ApoioTerritorioLSConstants.INSTANCE.isLibras()) {
+			surdo.setLibras(this.manterLibrasListBox.getValue(this.manterLibrasListBox.getSelectedIndex()));
+			surdo.setDvd(this.manterDVDListBox.getValue(this.manterDVDListBox.getSelectedIndex()));
+		} else if (ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade()) {
+			surdo.setLibras(this.manterNacionalidadeTextBox.getText());
+		}
 		surdo.setPublicacoesPossui(this.manterPublicacoesTextBox.getText());
-		surdo.setDvd(this.manterDVDListBox.getValue(this.manterDVDListBox.getSelectedIndex()));
 		surdo.setInstrutor(this.manterInstrutorTextBox.getText());
 		surdo.setAnoNascimento(this.manterAnoNascimentoIntegerBox.getValue());
 		surdo.setSexo(this.manterSexoListBox.getValue(this.manterSexoListBox.getSelectedIndex()));
@@ -860,6 +869,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterTelefoneTextBox.setText(surdo.getTelefone());
 		this.manterLibrasListBox.setSelectedIndex(
 				obterIndice(this.manterLibrasListBox, surdo.getLibras()));
+		this.manterNacionalidadeTextBox.setText(surdo.getLibras());
 		this.manterPublicacoesTextBox.setText(surdo.getPublicacoesPossui());
 		this.manterDVDListBox.setSelectedIndex(
 				obterIndice(this.manterDVDListBox, surdo.getDvd()));
@@ -880,6 +890,9 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterVisitarSomentePorAnciaos.setValue(surdo.isVisitarSomentePorAnciaos());
 		this.manterCidadeListBox.setSelectedIndex(obterIndice(this.manterCidadeListBox, this.manterCidade));
 		this.manterQtdePessoasTextBox.setValue(surdo.getQtdePessoasEndereco()!=null?surdo.getQtdePessoasEndereco().toString():"1");
+		this.manterLibrasPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
+		this.manterDVDPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
+		this.manterNacionalidadePanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade());
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {

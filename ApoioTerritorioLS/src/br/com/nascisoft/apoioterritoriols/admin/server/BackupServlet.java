@@ -163,7 +163,7 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 		}
 		
 		StringBuilder csv = new StringBuilder();
-		csv.append("cidade,regiao,mapa,nome,logradouro,numero,complemento,bairro,cep,observacao,telefone,libras,")
+		csv.append("cidade,regiao,mapa,nome,logradouro,numero,complemento,bairro,cep,observacao,telefone,libras/nacionalidade,")
 			.append("publicacoesPossui,anoNascimento,dvd,instrutor,tipo,melhoresHorarios,melhoresDias,onibus,msn,latitude,")
 			.append("longitude,qtdePessoasEndereco\n"); 
 		for (SurdoVO surdo : surdosVO) {

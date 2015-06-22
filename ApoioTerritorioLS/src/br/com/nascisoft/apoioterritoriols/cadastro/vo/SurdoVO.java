@@ -13,6 +13,7 @@ import br.com.nascisoft.apoioterritoriols.login.entities.MelhorPeriodo.Periodo;
 import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
@@ -270,27 +271,32 @@ public class SurdoVO implements Serializable {
 		StringBuilder retorno = new StringBuilder();
 		
 		if (!StringUtils.isEmpty(this.getSexo())) {
-			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
+			retorno.append("<u>").append(this.getSexo()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getIdade())) {
-			retorno.append("Aproximadamente ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+			retorno.append("Aproximadamente <u>").append(this.getIdade()).append(" anos;</u> ");
 		}
-		if (!StringUtils.isEmpty(this.getLibras())) {
-			if ("Sim".equals(this.getLibras())) {
-				retorno.append("<u>").append("Sabe</u> LIBRAS; ");
-			} else {
-				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
+		if (ApoioTerritorioLSConstants.INSTANCE.isLibras()) {
+			if (!StringUtils.isEmpty(this.getLibras())) {
+				if ("Sim".equals(this.getLibras())) {
+					retorno.append("<u>Sabe</u> LIBRAS; ");
+				} else {
+					retorno.append("<u>Não sabe</u> LIBRAS; ");
+				}
 			}
+			if (!StringUtils.isEmpty(this.getDvd())) {
+				if ("Sim".equals(this.getDvd())) {
+					retorno.append("<u>Possui</u> DVD; ");
+				} else {
+					retorno.append("<u>Não possui</u> DVD; ");
+				}
+			}
+		} 
+		if (ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade() && !StringUtils.isEmpty(this.getLibras())) {
+			retorno.append("Nacionalidade: <u>").append(this.getLibras()).append("</u>; ");
 		}
-//		if (!StringUtils.isEmpty(this.getDvd())) {
-//			if ("Sim".equals(this.getDvd())) {
-//				retorno.append("<u>").append("Possui</u> DVD; ");
-//			} else {
-//				retorno.append("<u>").append("Não possui</u> DVD; ");
-//			}
-//		}
 		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
-			retorno.append("Publicações que possui: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+			retorno.append("Publicações que possui: <u>").append(this.getPublicacoesPossui()).append("</u>; ");
 		}
 		
 		if (this.getMelhoresDias().size() > 0) {
@@ -305,13 +311,13 @@ public class SurdoVO implements Serializable {
 				.append(this.getMelhoresPeriodosCsv()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
-			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+			retorno.append("Ônibus: <u>").append(this.getOnibus()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getMsn())) {
-			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+			retorno.append("E-mail: <u>").append(this.getMsn()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getObservacao())) {
-			retorno.append("</br><strong>Outras observações: </strong>").append(this.getObservacao());
+			retorno.append("</br><strong>Outras observações: </strong>").append(this.getObservacao()).append("; ");
 		}
 		
 		return retorno.toString();
@@ -321,20 +327,32 @@ public class SurdoVO implements Serializable {
 		StringBuilder retorno = new StringBuilder();
 		
 		if (!StringUtils.isEmpty(this.getSexo())) {
-			retorno.append("<u>").append(this.getSexo()).append("</u>").append("; ");
+			retorno.append("<u>").append(this.getSexo()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getIdade())) {
-			retorno.append("Aprox. ").append("<u>").append(this.getIdade()).append(" anos;</u> ");
+			retorno.append("Aprox. <u>").append(this.getIdade()).append(" anos</u>; ");
 		}
-		if (!StringUtils.isEmpty(this.getLibras())) {
-			if ("Sim".equals(this.getLibras())) {
-				retorno.append("<u>").append("Sabe</u> LIBRAS; ");
-			} else {
-				retorno.append("<u>").append("Não sabe</u> LIBRAS; ");
+		if (ApoioTerritorioLSConstants.INSTANCE.isLibras()) {
+			if (!StringUtils.isEmpty(this.getLibras())) {
+				if ("Sim".equals(this.getLibras())) {
+					retorno.append("<u>Sabe</u> LIBRAS; ");
+				} else {
+					retorno.append("<u>Não sabe</u> LIBRAS; ");
+				}
+			}
+			if (!StringUtils.isEmpty(this.getDvd())) {
+				if ("Sim".equals(this.getDvd())) {
+					retorno.append("<u>Possui</u> DVD; ");
+				} else {
+					retorno.append("<u>Não possui</u> DVD; ");
+				}
 			}
 		}
+		if (ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade() && !StringUtils.isEmpty(this.getLibras())) {
+			retorno.append("Nacion: <u>").append(this.getLibras()).append("</u>; ");
+		}
 		if (!StringUtils.isEmpty(this.getPublicacoesPossui())) {
-			retorno.append("Publ: ").append("<u>").append(this.getPublicacoesPossui()).append("</u>").append("; ");
+			retorno.append("Publ: <u>").append(this.getPublicacoesPossui()).append("</u>; ");
 		}
 		if (this.getMelhoresDias().size() > 0) {
 			retorno.append("Dia: <u>").append(this.getMelhoresDiasCsv(true)).append("</u>; ");
@@ -343,16 +361,16 @@ public class SurdoVO implements Serializable {
 			retorno.append("Hora: <u>").append(this.getMelhoresPeriodosCsv()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getOnibus())) {
-			retorno.append("Ônibus: ").append("<u>").append(this.getOnibus()).append("</u>").append("; ");
+			retorno.append("Ônibus: <u>").append(this.getOnibus()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getMsn())) {
-			retorno.append("E-mail: ").append("<u>").append(this.getMsn()).append("</u>").append("; ");
+			retorno.append("E-mail: <u>").append(this.getMsn()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getTelefone())) {
-			retorno.append("Tel: ").append("<u>").append(this.getTelefone()).append("</u>").append("; ");
+			retorno.append("Tel: <u>").append(this.getTelefone()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getInstrutor())) {
-			retorno.append("Instrutor: ").append("<u>").append(this.getInstrutor()).append("</u>").append("; ");
+			retorno.append("Instrutor: <u>").append(this.getInstrutor()).append("</u>; ");
 		}
 		if (!StringUtils.isEmpty(this.getObservacao())) {
 			retorno.append("</br><strong>Outras obs: </strong>").append(this.getObservacao());

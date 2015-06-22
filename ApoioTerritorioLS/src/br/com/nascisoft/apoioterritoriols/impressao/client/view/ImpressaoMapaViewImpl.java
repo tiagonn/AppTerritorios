@@ -51,7 +51,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			UiBinder<Widget, ImpressaoMapaViewImpl> {
 	}
 	
-	@UiField SimplePanel impressaoSimplePanel;
+	@UiField FlowPanel impressaoSimplePanel;
 	
 	@SuppressWarnings("unused")
 	private Boolean paisagem;
@@ -185,6 +185,8 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 			imprimirMapaCheckBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {				
 				@Override
 				public void onValueChange(ValueChangeEvent<Boolean> event) {
+					GWT.log("Tentando obter painel de mapa " + idPrimeiraPessoa);
+					GWT.log(""+paineisImpressaoMapaVerticalPanel.get(idPrimeiraPessoa));
 					paineisImpressaoMapaVerticalPanel.get(idPrimeiraPessoa).setVisible(event.getValue());
 				}
 			});
@@ -330,13 +332,6 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 									.append("<td width=8%").append(classe1).append(">Encontrou?</td>")
 									.append("<td width=8%").append(classe1).append(">Publicador</td>")
 									.append("<td width=63%").append(classe1).append(">Resumo da conversa</td>")
-								.append("</tr>")
-								.append("<tr>")
-								.append("<td class=\"impressao-td\">/</td>")
-								.append("<td class=\"impressao-td\"></td>")
-								.append("<td class=\"impressao-td\"></td>")
-								.append("<td class=\"impressao-td\"></td>")
-								.append("<td class=\"impressao-td\"></td>")
 								.append("</tr>")
 								.append("<tr>")
 								.append("<td class=\"impressao-td\">/</td>")

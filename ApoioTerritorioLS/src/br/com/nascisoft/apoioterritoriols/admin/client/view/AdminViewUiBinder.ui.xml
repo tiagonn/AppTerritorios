@@ -131,7 +131,7 @@
 								<g:TextBox ui:field="cidadePaisTextBox" visibleLength="25"></g:TextBox>
 							</g:customCell>
 							<g:customCell>
-								<g:InlineLabel text="Qtde de surdos por mapa: " styleName="negrito"></g:InlineLabel>
+								<g:InlineLabel text="Qtde de cadastros por mapa: " styleName="negrito"></g:InlineLabel>
 							</g:customCell>
 							<g:customCell>
 								<g:ListBox ui:field="cidadeQuantidadeSurdosMapaListBox"/>

@@ -116,8 +116,6 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField PushButton manterVoltarButton;
 	@UiField PopupPanel visualizarPopUpPanel;
 	@UiField CheckBox pesquisarSemMapaCheckBox;
-	@UiField PushButton manterHorarioDropDownButton;
-	@UiField PushButton manterMelhorDiaDropDownButton;
 	@UiField FlowPanel manterHorarioSelectionFlowPanel;
 	@UiField FlowPanel manterMelhorDiaSelectionFlowPanel;
 	@UiField PopupPanel manterHorarioSelectionPopupPanel;
@@ -661,6 +659,12 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.pesquisaResultadoLabel.setText("");
 		this.pesquisaResultadoCellTable.setVisible(false);
 		this.pesquisaResultadoSimplePager.setVisible(false);
+		
+		String dropDownImageUrl = "url(" + Resources.INSTANCE.dropdown().getSafeUri().asString()+")";
+		GWT.log("Setando imagem de fundo aos TextBoxes manterHorario e manterMelhorDia: " + dropDownImageUrl);
+		this.manterHorarioTextBox.getElement().getStyle().setBackgroundImage(dropDownImageUrl);
+		this.manterMelhorDiaTextBox.getElement().getStyle().setBackgroundImage(dropDownImageUrl);
+
 	}
 	
 	private void iniciaMelhoresDiasEPeriodoCheckboxes() {
@@ -1021,8 +1025,8 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		return result;
 	}
 	
-	@UiHandler(value={"manterHorarioDropDownButton","manterHorarioTextBox"})
-	void onManterHorarioDropDownButtonClick(ClickEvent event) {
+	@UiHandler(value={"manterHorarioTextBox"})
+	void onManterHorarioTextBoxClick(ClickEvent event) {
 		if (!this.manterHorarioSelectionPopupPanel.isVisible()) {
 			this.manterHorarioSelectionPopupPanel.show();
 			this.manterHorarioSelectionPopupPanel.setVisible(Boolean.TRUE);
@@ -1032,15 +1036,14 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 					this.manterHorarioTextBox.getAbsoluteTop()+
 					this.manterHorarioTextBox.getOffsetHeight(), Unit.PX);
 			this.manterHorarioSelectionPopupPanel.getElement().getStyle().setWidth(
-					this.manterHorarioTextBox.getOffsetWidth()+
-					this.manterHorarioDropDownButton.getOffsetWidth()-2, Unit.PX);
+					this.manterHorarioTextBox.getOffsetWidth()-2, Unit.PX);
 		} else {
 			this.manterHorarioSelectionPopupPanel.hide();
 		}
 	}
 	
-	@UiHandler(value={"manterMelhorDiaTextBox", "manterMelhorDiaDropDownButton"})
-	void onManterMelhorDiaClick(ClickEvent event) {
+	@UiHandler(value={"manterMelhorDiaTextBox"})
+	void onManterMelhorDiaTextBoxClick(ClickEvent event) {
 		if (!this.manterMelhorDiaSelectionPopupPanel.isVisible()) {
 			this.manterMelhorDiaSelectionPopupPanel.show();
 			this.manterMelhorDiaSelectionPopupPanel.setVisible(Boolean.TRUE);
@@ -1050,8 +1053,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 					this.manterMelhorDiaTextBox.getAbsoluteTop()+
 					this.manterMelhorDiaTextBox.getOffsetHeight(), Unit.PX);
 			this.manterMelhorDiaSelectionPopupPanel.getElement().getStyle().setWidth(
-					this.manterMelhorDiaTextBox.getOffsetWidth()+
-					this.manterMelhorDiaDropDownButton.getOffsetWidth()-2, Unit.PX);
+					this.manterMelhorDiaTextBox.getOffsetWidth()-2, Unit.PX);
 		} else {
 			this.manterMelhorDiaSelectionPopupPanel.hide();
 		}

@@ -1476,11 +1476,11 @@ td.datePickerMonth {
 
 .pessoas-manter-form-dropdown-textbox {
 	height: 23px;
+	width: 172px;
 	font-size: small;
 	border-style: solid;
 	border-color: #a2a2a2;
 	border-width: 1px;
-	border-right: none;
 	vertical-align: middle;
 }
 

@@ -742,6 +742,10 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			cb.setValue(Boolean.FALSE);
 		}
 		this.manterNacionalidadeTextBox.setText("");
+		GWT.log("Sistema configurado para LIBRAS: " + ApoioTerritorioLSConstants.INSTANCE.isLibras());
+		this.manterLibrasPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
+		this.manterDVDPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
+		this.manterNacionalidadePanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade());
 	}
 	
 	private Surdo populaSurdo() {
@@ -894,9 +898,6 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterVisitarSomentePorAnciaos.setValue(surdo.isVisitarSomentePorAnciaos());
 		this.manterCidadeListBox.setSelectedIndex(obterIndice(this.manterCidadeListBox, this.manterCidade));
 		this.manterQtdePessoasTextBox.setValue(surdo.getQtdePessoasEndereco()!=null?surdo.getQtdePessoasEndereco().toString():"1");
-		this.manterLibrasPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
-		this.manterDVDPanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isLibras());
-		this.manterNacionalidadePanel.setVisible(ApoioTerritorioLSConstants.INSTANCE.isMultiNacionalidade());
 	}
 	
 	private void iniciarSNListBox(ListBox snListBox) {

@@ -1,5 +1,6 @@
 package br.com.nascisoft.apoioterritoriols.login.server;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import br.com.nascisoft.apoioterritoriols.login.client.LoginService;
@@ -35,7 +36,14 @@ public class LoginServiceImpl extends AbstractApoioTerritorioLSService implement
 			logger.info("Tentando realizar o login do usuário " + 
 					user.getUserId() + ", e-mail: " + user.getEmail());
 			
-			Usuario usuarioAutenticado = getDao().obterUsuario(user.getEmail());
+			List<Usuario> usuarios = getDao().obterUsuariosCadastrados();
+			Usuario usuarioAutenticado = null;
+			for (Usuario usuarioLista : usuarios) {
+				if (user.getEmail().equalsIgnoreCase(usuarioLista.getEmail())) {
+					usuarioAutenticado = usuarioLista;
+					break;
+				}
+			}
 			
 			if (usuarioAutenticado != null) {			
 				usuario.setEmail(user.getEmail());

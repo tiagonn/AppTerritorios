@@ -161,6 +161,8 @@ public class CadastroServiceImpl extends AbstractApoioTerritorioLSService implem
 					break;
 				}
 			}
+		} else if (surdos == null) {
+			surdos = new ArrayList<SurdoDetailsVO>();
 		}
 		
 		surdos.add(novoSurdoVO);

@@ -42,8 +42,8 @@ public class IdentificacaoCidadeServlet extends
         
         for (GeocoderResult result : geocoderResponse.getResults()) {
             writer.println("Endereço: " + result.getFormattedAddress() + "<br/>");
-        	writer.println("Latitude: " + result.getGeometry().getLocation().getLat() + "<br/>");
-        	writer.println("Longitude: " + result.getGeometry().getLocation().getLng() + "<br/>");
+        	writer.println("Latitude,Longitude: <br/> " + result.getGeometry().getLocation().getLat() + "," 
+        			+ result.getGeometry().getLocation().getLng() + "<br/>");
         }
         
         writer.println("</body></html>");

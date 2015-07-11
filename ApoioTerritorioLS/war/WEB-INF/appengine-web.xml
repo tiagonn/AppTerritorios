@@ -15,6 +15,7 @@
   </static-files>
 
   <!-- Configure java.util.logging -->
+  <!-- Não esquecer de configurar isLibras em IApoioTerritoriLSConstants.properties -->
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     <property name="email.admin" value="tiagonn@gmail.com"/>

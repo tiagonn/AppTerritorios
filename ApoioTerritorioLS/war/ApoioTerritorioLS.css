@@ -1714,3 +1714,19 @@ td.datePickerMonth {
 	display: block;
 	color: #FFFAFA;
 }
+
+.pessoas-manter-warning-panel {
+	right: 0;
+	text-align: center;
+}
+.pessoas-manter-warning-table {
+	display: table;
+	width: 100%;	
+}
+.pessoas-manter-warning-cell {
+	display: table-cell;
+	width: 50%;
+	padding: 10px;
+	vertical-align: middle;
+	text-align: right;	
+}

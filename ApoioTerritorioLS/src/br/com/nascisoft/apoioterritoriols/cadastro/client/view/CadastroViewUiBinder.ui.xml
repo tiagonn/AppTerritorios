@@ -189,9 +189,26 @@
 							animationEnabled="true" 
 							glassEnabled="true">
 							<g:VerticalPanel>
-								<g:HTML ui:field="manterWarningEnderecoHTML" wordWrap="true" styleName="surdo-warning-centro" visible="false">
-									O endereco não foi encontrado. Você precisará selecioná-lo manualmente ou voltar e alterar o cadastro.<br/><br/>
-								</g:HTML>
+								<g:FlowPanel ui:field="manterWarningManualFlowPanel" styleName="pessoas-manter-warning-panel"> 
+									<g:Label wordWrap="true" styleName="surdo-warning-centro">
+										O endereco inserido não foi encontrado. Você precisará alterar o cadastro ou determinar manualmente a localização ou inserir as coordenadas geográficas (lat,long) abaixo:
+									</g:Label>
+									<g:FlowPanel styleName="pessoas-manter-warning-table">
+										<g:FlowPanel styleName="pessoas-manter-warning-cell">
+											<g:TextBox ui:field="manterMapaLatLngTextBox"></g:TextBox>
+										</g:FlowPanel>
+										<g:FlowPanel styleName="pessoas-manter-warning-cell">
+											<g:PushButton 
+												width="35px" 
+												ui:field='manterMapaLatLngButton' 
+												enabled='true' 
+												title="Buscar coordenadas">
+													<g:upFace image="{res.buscar}" />
+													<g:downFace image="{res.buscar}" />
+											</g:PushButton>
+										</g:FlowPanel>
+									</g:FlowPanel>
+								</g:FlowPanel>
 								<g:LayoutPanel ui:field="manterMapaLayoutPanel"></g:LayoutPanel>
 								<g:HTML><br/></g:HTML>
 								<g:FlowPanel width="100%">

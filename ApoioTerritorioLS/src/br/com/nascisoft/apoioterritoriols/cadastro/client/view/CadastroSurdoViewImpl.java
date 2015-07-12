@@ -104,7 +104,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField SimplePager pesquisaResultadoSimplePager;
 	@UiField PopupPanel manterMapaPopupPanel;
 	@UiField LayoutPanel manterMapaLayoutPanel;
-	@UiField HTML manterWarningEnderecoHTML;
+	@UiField FlowPanel manterWarningManualFlowPanel;
 	@UiField PushButton manterMapaConfirmarEnderecoButton;
 	@UiField PushButton manterMapaVoltarEnderecoButton;
 	@UiField CheckBox manterMudouSe;
@@ -124,6 +124,8 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	@UiField FlowPanel manterLibrasPanel;
 	@UiField FlowPanel manterDVDPanel;
 	@UiField TextBox manterNacionalidadeTextBox;
+	@UiField TextBox manterMapaLatLngTextBox;
+	@UiField PushButton manterMapaLatLngButton;
 	
 	MultiWordSuggestOracle bairroOracle;
 	
@@ -505,12 +507,13 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 	public void setPosition(HasLatLng position, Boolean sucesso, Boolean mostraMapa) {
 		
 		int zoom = 17;
-		this.manterWarningEnderecoHTML.setVisible(false);
+		this.manterWarningManualFlowPanel.setVisible(false);
 		int heightMinus = 100;
 		if (!sucesso) {
-			this.manterWarningEnderecoHTML.setVisible(true);
+			this.manterWarningManualFlowPanel.setVisible(true);
+			this.manterMapaLatLngTextBox.setText("");
 			zoom = 12;
-			heightMinus = 130;
+			heightMinus = 160;
 		} 
 		this.manterLatitude = position.getLatitude();
 		this.manterLongitude = position.getLongitude();
@@ -1026,7 +1029,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		return result;
 	}
 	
-	@UiHandler(value={"manterHorarioTextBox"})
+	@UiHandler("manterHorarioTextBox")
 	void onManterHorarioTextBoxClick(ClickEvent event) {
 		if (!this.manterHorarioSelectionPopupPanel.isVisible()) {
 			this.manterHorarioSelectionPopupPanel.show();
@@ -1043,7 +1046,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		}
 	}
 	
-	@UiHandler(value={"manterMelhorDiaTextBox"})
+	@UiHandler("manterMelhorDiaTextBox")
 	void onManterMelhorDiaTextBoxClick(ClickEvent event) {
 		if (!this.manterMelhorDiaSelectionPopupPanel.isVisible()) {
 			this.manterMelhorDiaSelectionPopupPanel.show();
@@ -1059,6 +1062,22 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			this.manterMelhorDiaSelectionPopupPanel.hide();
 		}
 		
+	}
+	
+	@UiHandler("manterMapaLatLngButton")
+	void onManterMapaLatLngButtonClick(ClickEvent event) {
+		try {
+			String[] coord = this.manterMapaLatLngTextBox.getText().replaceAll("\\s+","").split(",");
+			Double lat = Double.valueOf(coord[0]);
+			Double lng = Double.valueOf(coord[1]);
+			HasLatLng newPosition = new LatLng(lat,  lng);
+			this.marker.setPosition(newPosition);			
+			this.marker.getMap().setCenter(newPosition);
+			this.marker.getMap().setZoom(17);
+		} catch (Exception ex) {
+			this.mostrarWarning("As coordenadas geográficas inseridas não estão no formato apropriado. Por favor utilize o formato lat,long como em -22.9099384,-47.0626332", 
+					ApoioTerritorioLSConstants.INSTANCE.warningTimeout());
+		}
 	}
 	
 }

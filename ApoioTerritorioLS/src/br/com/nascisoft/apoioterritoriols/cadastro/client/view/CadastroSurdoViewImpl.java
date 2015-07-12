@@ -513,7 +513,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			this.manterWarningManualFlowPanel.setVisible(true);
 			this.manterMapaLatLngTextBox.setText("");
 			zoom = 12;
-			heightMinus = 160;
+			heightMinus = 180;
 		} 
 		this.manterLatitude = position.getLatitude();
 		this.manterLongitude = position.getLongitude();
@@ -533,7 +533,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 			opt.setNavigationControl(true);
 			opt.setScrollwheel(true);
 			MapWidget mapa = new MapWidget(opt);
-			int width = Window.getClientWidth()-50;
+			int width = Window.getClientWidth()-100;
 			int left = (Window.getClientWidth() - width)/2;
 			int height = Window.getClientHeight()-heightMinus;
 			String widthString = width+"px";

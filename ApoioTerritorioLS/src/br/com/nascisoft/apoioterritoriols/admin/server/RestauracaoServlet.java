@@ -234,7 +234,7 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 		retorno.setTelefone(surdo.getTelefone());
 		retorno.setMudouSe(surdo.isMudouSe());
 		retorno.setVisitarSomentePorAnciaos(surdo.isVisitarSomentePorAnciaos());
-		retorno.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco());
+		retorno.setQtdePessoasEndereco(surdo.getQtdePessoasEndereco() != 0 ? surdo.getQtdePessoasEndereco() : null);
 		
 		return retorno;
 	}

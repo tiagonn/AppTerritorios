@@ -106,8 +106,8 @@ public class BackupServlet extends AbstractApoioTerritorioLSHttpServlet {
 				msg.addRecipient(Message.RecipientType.TO,
 				                 new InternetAddress(destinatarios));
 				msg.setSubject("enderecos".equals(tipo) 
-						? "Export de enderecos cadastrados no ApoioTerritorio"
-								: "Backup de mapas e enderecos do ApoioTerritorio");
+						? "Export de enderecos cadastrados no APPTerritorios"
+								: "Backup de mapas e enderecos do APPTerritorios");
 				msg.setText("Segue em anexo o backup/export.\n\n\nNote que por limitação de segurança do google o anexo é um arquivo .zipe. " +
 						"Por favor renomeie o arquivo para .zip e depois o abra normalmente.");
 				Multipart mp = new MimeMultipart();						

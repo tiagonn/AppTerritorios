@@ -92,5 +92,35 @@ public interface Resources extends ClientBundle {
 	@Source("/images/dropdown.png")
 	ImageResource dropdown();
 	
+	@Source("/images/icone_branco_1.png")
+	ImageResource iconeBranco1();
+	
+	@Source("/images/icone_branco_2.png")
+	ImageResource iconeBranco2();
+	
+	@Source("/images/icone_branco_3.png")
+	ImageResource iconeBranco3();
+	
+	@Source("/images/icone_branco_4.png")
+	ImageResource iconeBranco4();
+	
+	@Source("/images/icone_branco_5.png")
+	ImageResource iconeBranco5();
+	
+	@Source("/images/icone_branco_6.png")
+	ImageResource iconeBranco6();
+	
+	@Source("/images/icone_branco_7.png")
+	ImageResource iconeBranco7();
+	
+	@Source("/images/icone_branco_8.png")
+	ImageResource iconeBranco8();
+	
+	@Source("/images/icone_branco_9.png")
+	ImageResource iconeBranco9();
+	
+	@Source("/images/icone_branco_10.png")
+	ImageResource iconeBranco10();
+	
 	
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.AbrirMapaVO;
 import br.com.nascisoft.apoioterritoriols.cadastro.vo.SurdoVO;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
+import br.com.nascisoft.apoioterritoriols.resources.client.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Float;
@@ -108,6 +109,8 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		impressaoSimplePanel.getElement().getParentElement().getParentElement().getStyle().setFloat(Float.NONE);
 		
 		for (AbrirMapaVO vo : mapas) {
+			
+			GWT.log("Mapa sendo processado: " + vo.getSurdosImprimir().get(0).getMapa());
 
 			VerticalPanel impressaoVerticalPanel = new VerticalPanel();
 			impressaoVerticalPanel.setStyleName("impressao-panel-vertical");
@@ -258,6 +261,14 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				cellspacing2="\"1px\"";
 				mapaGrande = true;
 				break;
+			
+			case 10:
+				zoom = 15;
+				classe = " class=\"impressao-celula-pequena\"";
+				classe1 = " class=\"impressao-celula-titulo\"";
+				classeTitulo = " class=\"impressao-td-borda-inferior-pequena\"";
+				altura = ALTURA_MAPA;
+				largura = LARGURA_MAPA;
 				
 			default:
 				break;
@@ -285,12 +296,14 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				
 				SurdoVO surdo = surdos.get(i);
 				
+				GWT.log("Processando pessoa " + surdo.getNome());
+				
 				labelsImpressaoLocalidadeLabel.get(idPrimeiraPessoa).setText(surdo.getRegiao() + " / " + surdo.getNomeCidade());
 				labelsImpressaoTerritorioLabel.get(idPrimeiraPessoa).setText(surdo.getMapa().substring(5));
 				
 				
 				
-				adicionarMarcadorSurdo(i+1, surdo, mapa, quantidadeMapa == 1);
+				adicionarMarcadorSurdo(i+1, surdo, mapa, quantidadeMapa == 1, quantidadeMapa == 4 || quantidadeMapa == 5);
 				StringBuilder html = new StringBuilder();
 				
 				if (quantidadeMapa == 1) {
@@ -462,62 +475,70 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 						.append("</table>");				
 					
 				} else {
-					
-					
-					if (i == 0) {
-						html.append("<table width=100% cellspacing=0px cellpadding=0 border=0>")
-							.append("<tr><td ").append(classeTitulo).append(">")
-							.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
-							.append("</td></tr>");
-					}
+										
+					if (vo.getCidade().getQuantidadeSurdosMapa() == 10) {
+						if (i == 0) {
+							html.append("<div ").append(classeTitulo).append(">")
+								.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
+								.append("</div>");
+						}
+						html.append("<div style=\"display: inline-block;\"").append(classe).append("><strong>").append(i+1).append(" - ")
+							.append(StringUtils.toCamelCase(surdo.getNome())).append("</strong> - ")
+							.append(surdo.getEndereco()).append("</p>");
+					} else {
 	
-					html.append("<table width=100% cellspacing=3px cellpadding=0 border=0>");
-					html.append("<tr>")
-							.append("<td width=").append(larguraRelativa1).append(">")
-								.append("<table width=100% cellspacing=").append(cellspacing1).append(" cellpadding=0 border=0>")
-									.append("<tr>")
-										.append("<td").append(classe).append("><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
-									.append("</tr>")
-									.append("<tr>")
-										.append("<td").append(classe).append("><strong>End:</strong> ").append(surdo.getEndereco()).append("</td>")
-									.append("</tr>")
-									.append("<tr>")
-										.append("<td").append(classe).append("><strong>Obs:</strong> ").append(surdo.getObservacaoConsolidadaResumida()).append("</td>")
-									.append("</tr>")
-								.append("</table>")
-							.append("</td>")
-							.append("<td width=").append(larguraRelativa2).append(">")
-								.append("<table width=100% cellspacing=").append(cellspacing2).append(" cellpadding=0 border=0>")
-									.append("<tr class=\"impressao-tr-pequeno\">")
-										.append("<td").append(classe1).append(">Data</td>")
-										.append("<td").append(classe1).append(">Detalhes da conversa</td>")
-									.append("</tr>")
-									.append("<tr class=\"impressao-tr-pequeno\">")
-										.append("<td class=\"impressao-td\">/</td>")
-										.append("<td class=\"impressao-td\"></td>")
-									.append("</tr>")
-									.append("<tr class=\"impressao-tr-pequeno\">")
-										.append("<td class=\"impressao-td\">/</td>")
-										.append("<td class=\"impressao-td\"></td>")
-									.append("</tr>")
-									.append("<tr class=\"impressao-tr-pequeno\">")
-										.append("<td class=\"impressao-td\">/</td>")
-										.append("<td class=\"impressao-td\"></td>")
-									.append("</tr>")
-									.append("<tr class=\"impressao-tr-pequeno\">")
-										.append("<td class=\"impressao-td\">/</td>")
-										.append("<td class=\"impressao-td\"></td>")
-									.append("</tr>");
-					if (quantidadeMapa == 5) {
-						html.append("<tr class=\"impressao-tr-pequeno\">")
-								.append("<td class=\"impressao-td\">/</td>")
-								.append("<td class=\"impressao-td\"></td>")
-							.append("</tr>");
+						if (i == 0) {
+							html.append("<table width=100% cellspacing=0px cellpadding=0 border=0>")
+								.append("<tr><td ").append(classeTitulo).append(">")
+								.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
+								.append("</td></tr>");
+						} 
+
+						html.append("<table width=100% cellspacing=3px cellpadding=0 border=0>");
+						html.append("<tr>")
+								.append("<td width=").append(larguraRelativa1).append(">")
+									.append("<table width=100% cellspacing=").append(cellspacing1).append(" cellpadding=0 border=0>")
+										.append("<tr>")
+											.append("<td").append(classe).append("><strong>Nome:</strong> ").append(StringUtils.toCamelCase(surdo.getNome())).append("</td>")
+										.append("</tr>")
+										.append("<tr>")
+											.append("<td").append(classe).append("><strong>End:</strong> ").append(surdo.getEndereco()).append("</td>")
+										.append("</tr>")
+										.append("<tr>")
+											.append("<td").append(classe).append("><strong>Obs:</strong> ").append(surdo.getObservacaoConsolidadaResumida()).append("</td>")
+										.append("</tr>")
+									.append("</table>")
+								.append("</td>")
+								.append("<td width=").append(larguraRelativa2).append(">")
+									.append("<table width=100% cellspacing=").append(cellspacing2).append(" cellpadding=0 border=0>")
+										.append("<tr class=\"impressao-tr-pequeno\">")
+											.append("<td").append(classe1).append(">Data</td>")
+											.append("<td").append(classe1).append(">Detalhes da conversa</td>")
+										.append("</tr>")
+										.append("<tr class=\"impressao-tr-pequeno\">")
+											.append("<td class=\"impressao-td\">/</td>")
+											.append("<td class=\"impressao-td\"></td>")
+										.append("</tr>")
+										.append("<tr class=\"impressao-tr-pequeno\">")
+											.append("<td class=\"impressao-td\">/</td>")
+											.append("<td class=\"impressao-td\"></td>")
+										.append("</tr>")
+										.append("<tr class=\"impressao-tr-pequeno\">")
+											.append("<td class=\"impressao-td\">/</td>")
+											.append("<td class=\"impressao-td\"></td>")
+										.append("</tr>")
+										.append("<tr class=\"impressao-tr-pequeno\">")
+											.append("<td class=\"impressao-td\">/</td>")
+											.append("<td class=\"impressao-td\"></td>")
+										.append("</tr>");
+						if (quantidadeMapa == 5) {
+							html.append("<tr class=\"impressao-tr-pequeno\">")
+									.append("<td class=\"impressao-td\">/</td>")
+									.append("<td class=\"impressao-td\"></td>")
+								.append("</tr>");
+						}
+						html.append("</table>").append("</td>").append("</tr>").append("</table>");	
 					}
-							html.append("</table>")
-							.append("</td>")
-						.append("</tr>")
-						.append("</table>");		
 				}
 				
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setHTML(i+1, 0, html.toString());
@@ -532,22 +553,60 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 		}
 	}
 	
-	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa, boolean mapaIndividual) {
+	private void adicionarMarcadorSurdo(int surdoNro, SurdoVO surdo, MapWidget mapa, boolean mapaIndividual, boolean usarIconeHomemMulher) {
 		HasMarkerOptions markerOpt = new MarkerOptions();
 		markerOpt.setClickable(false);
 		markerOpt.setVisible(true);
 		if (!mapaIndividual) {
 			HasMarkerImage icon = null;
-			if (!StringUtils.isEmpty(surdo.getSexo())) {
-				if ("Homem".equals(surdo.getSexo())) {
-					icon = new MarkerImage.Builder("images/icone_homem_"+surdoNro+".png").build();
-				} else if ("Mulher".equals(surdo.getSexo())) {
-					icon = new MarkerImage.Builder("images/icone_mulher_"+surdoNro+".png").build();
+			if (usarIconeHomemMulher) {
+				if (!StringUtils.isEmpty(surdo.getSexo())) {
+					if ("Homem".equals(surdo.getSexo())) {
+						icon = new MarkerImage.Builder("images/icone_homem_"+surdoNro+".png").build();
+					} else if ("Mulher".equals(surdo.getSexo())) {
+						icon = new MarkerImage.Builder("images/icone_mulher_"+surdoNro+".png").build();
+					} else {
+						icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
+					}
 				} else {
 					icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
 				}
 			} else {
-				icon = new MarkerImage.Builder("images/icone_branco_"+surdoNro+".png").build();
+				switch (surdoNro) {
+				case 1:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco1().getSafeUri().asString()).build();
+					break;
+				case 2:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco2().getSafeUri().asString()).build();
+					break;
+				case 3:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco3().getSafeUri().asString()).build();
+					break;
+				case 4:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco4().getSafeUri().asString()).build();
+					break;
+				case 5:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco5().getSafeUri().asString()).build();
+					break;
+				case 6:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco6().getSafeUri().asString()).build();
+					break;
+				case 7:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco7().getSafeUri().asString()).build();
+					break;
+				case 8:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco8().getSafeUri().asString()).build();
+					break;
+				case 9:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco9().getSafeUri().asString()).build();
+					break;
+				case 10:
+					icon = new MarkerImage.Builder(Resources.INSTANCE.iconeBranco10().getSafeUri().asString()).build();
+					break;
+
+				default:
+					break;
+				}
 			}
 			markerOpt.setIcon(icon);
 		}

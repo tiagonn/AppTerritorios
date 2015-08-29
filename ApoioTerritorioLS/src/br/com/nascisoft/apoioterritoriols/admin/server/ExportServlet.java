@@ -113,7 +113,7 @@ public class ExportServlet extends AbstractApoioTerritorioLSHttpServlet {
 				msg.setFrom(new InternetAddress(remetente));
 				msg.addRecipient(Message.RecipientType.TO,
 				                 new InternetAddress(destinatarios));
-				msg.setSubject("Export de relatorio de enderecos/surdos do ApoioTerritorio");
+				msg.setSubject("Export de relatorio de enderecos/pessoas do APPTerritorios");
 				msg.setText("Segue em anexo o export. \n\nNote que por limitação de segurança do google o anexo é um arquivo .zipe. " +
 						"Por favor renomeie o arquivo para .zip e depois abra normalmente.");
 				Multipart mp = new MimeMultipart();						

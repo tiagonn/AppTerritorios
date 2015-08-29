@@ -77,7 +77,7 @@ public class ImpressaoServiceImpl extends AbstractApoioTerritorioLSService imple
 					mapasCidade.get(surdo.getCidade())));
 		}
 		
-		Collections.sort(surdosVO, SurdoVO.COMPARATOR_ENDERECO);
+		Collections.sort(surdosVO, SurdoVO.COMPARATOR_LATITUDE);
 		
 		AbrirMapaVO vo = new AbrirMapaVO();
 		

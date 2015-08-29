@@ -54,6 +54,13 @@ public class SurdoVO implements Serializable {
 		}
 	};
 	
+	public static final Comparator<SurdoVO> COMPARATOR_LATITUDE = new Comparator<SurdoVO>() {
+		@Override
+		public int compare(SurdoVO o1, SurdoVO o2) {
+			return o1.getLatitude().compareTo(o2.getLatitude())*-1;
+		}
+	};
+	
 	public SurdoVO() {
 		super();
 	}

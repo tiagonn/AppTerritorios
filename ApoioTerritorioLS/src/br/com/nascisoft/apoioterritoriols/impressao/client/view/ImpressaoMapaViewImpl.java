@@ -303,10 +303,15 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				
 				
 				
-				adicionarMarcadorSurdo(i+1, surdo, mapa, quantidadeMapa == 1, quantidadeMapa == 4 || quantidadeMapa == 5);
+				adicionarMarcadorSurdo(
+						i+1, 
+						surdo, 
+						mapa, 
+						vo.getCidade().getQuantidadeSurdosMapa() == 1, 
+						vo.getCidade().getQuantidadeSurdosMapa() == 4 || vo.getCidade().getQuantidadeSurdosMapa() == 5);
 				StringBuilder html = new StringBuilder();
 				
-				if (quantidadeMapa == 1) {
+				if (quantidadeMapa == 1 && vo.getCidade().getQuantidadeSurdosMapa() != 10) {
 				
 					html.append("<table width=100% cellspacing=0 border=1>")
 						.append("<tr><td width=100%>")
@@ -542,7 +547,7 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				}
 				
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setHTML(i+1, 0, html.toString());
-				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setBorderWidth(quantidadeMapa == 1 ? 0 : 1);
+				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setBorderWidth(quantidadeMapa == 1 && vo.getCidade().getQuantidadeSurdosMapa() != 10 ? 0 : 1);
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setCellSpacing(0);
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setWidth(largura);
 			}

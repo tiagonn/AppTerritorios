@@ -83,20 +83,23 @@ public class RestauracaoServlet extends AbstractApoioTerritorioLSHttpServlet {
 										mapaCidades.get(regiao.getIdentificadorCidade()))));
 			}
 			
-			for (BairroType bairro : backup.getValue().getBairros().getBairro()) {
-				dao.adicionarOuAtualizarBairro(this.obterBairro(
-						bairro,
-						mapaCidades.get(bairro.getIdentificadorCidade())));
+			if (backup.getValue().getBairros() != null) {
+				for (BairroType bairro : backup.getValue().getBairros().getBairro()) {
+					dao.adicionarOuAtualizarBairro(this.obterBairro(
+							bairro,
+							mapaCidades.get(bairro.getIdentificadorCidade())));
+				}
 			}
-			
-			
 			Map<Long, Long> mapaMapas = new HashMap<Long, Long>();
-			for (MapaType mapa : backup.getValue().getMapas().getMapa()) {
-				mapaMapas.put(mapa.getIdentificador(), 
-						dao.adicionarMapa(
-								this.obterMapa(
-										mapa,
-										mapaRegioes.get(mapa.getIdentificadorRegiao()))));
+			
+			if (backup.getValue().getMapas() != null) {
+				for (MapaType mapa : backup.getValue().getMapas().getMapa()) {
+					mapaMapas.put(mapa.getIdentificador(), 
+							dao.adicionarMapa(
+									this.obterMapa(
+											mapa,
+											mapaRegioes.get(mapa.getIdentificadorRegiao()))));
+				}
 			}
 			
 			

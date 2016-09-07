@@ -262,6 +262,14 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				mapaGrande = true;
 				break;
 			
+			case 6:
+				zoom = 15;
+				classe = " class=\"impressao-celula-pequena\"";
+				classe1 = " class=\"impressao-celula-titulo\"";
+				classeTitulo = " class=\"impressao-td-borda-inferior-pequena\"";
+				altura = ALTURA_MAPA;
+				largura = LARGURA_MAPA;
+				
 			case 10:
 				zoom = 15;
 				classe = " class=\"impressao-celula-pequena\"";
@@ -311,7 +319,9 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 						vo.getCidade().getQuantidadeSurdosMapa() == 4 || vo.getCidade().getQuantidadeSurdosMapa() == 5);
 				StringBuilder html = new StringBuilder();
 				
-				if (quantidadeMapa == 1 && vo.getCidade().getQuantidadeSurdosMapa() != 10) {
+				if (quantidadeMapa == 1 
+						&& vo.getCidade().getQuantidadeSurdosMapa() != 10 
+						&& vo.getCidade().getQuantidadeSurdosMapa() != 6) {
 				
 					html.append("<table width=100% cellspacing=0 border=1>")
 						.append("<tr><td width=100%>")
@@ -481,7 +491,55 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 					
 				} else {
 										
-					if (vo.getCidade().getQuantidadeSurdosMapa() == 10) {
+					if (vo.getCidade().getQuantidadeSurdosMapa() == 6) {
+						if (i == 0) {
+							html.append("<div ").append(classeTitulo).append(">")
+								.append("<div style=\"width:60%;display:inline-block\">")
+								.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
+								.append("</div>")
+								.append("<div style=\"width:40%;display:inline-block\">Registro de Visitas*</div></div>");
+						}
+						html.append("<div ").append(classe).append(">")
+								.append("<div style=\"width:60%;display: inline-block;vertical-align:middle;\">")
+									.append("<p><strong>").append(i+1).append(" - ")
+									.append(StringUtils.toCamelCase(surdo.getNome())).append("</strong> - ")
+									.append(surdo.getEndereco()).append(" - ")
+									.append(surdo.getDadosComplementoResumido()).append("</p>")
+								.append("</div><div style=\"width:40%;display: inline-block;vertical-align:middle;\">")
+									.append("<table width=\"100%\">")
+										.append("<tr>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+										.append("</tr>")
+										.append("<tr>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+										.append("</tr>")
+										.append("<tr>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+											.append("<td style=\"width: 18%\" class=\"impressao-td-borda-inferior-pequena\">/</td>")
+											.append("<td style=\"width: 15%\" class=\"impressao-td-borda-inferior-pequena\"></td>")
+										.append("</tr>")
+									.append("</table>")
+								.append("</div>")
+							.append("</div>");
+						if (i==surdos.size()-1) {
+							html.append("<div style=\"border-top: black; border-top-width: thin; border-top-style: solid; font-family: Tahoma; font-size:xx-small; text-align: center;\">")
+								.append("* Por favor, preencha o registro da visita com a data e se a pessoa foi encontrada ou não. Por exemplo: 10/09 - Sim ou 21/02 - Não</div>");
+						}
+					} 
+					else if (vo.getCidade().getQuantidadeSurdosMapa() == 10) {
 						if (i == 0) {
 							html.append("<div ").append(classeTitulo).append(">")
 								.append("<strong>").append(surdo.getMapa()).append("</strong> - Impresso em: ").append(dtf.format(date).toString())
@@ -547,7 +605,11 @@ public class ImpressaoMapaViewImpl extends Composite implements ImpressaoMapaVie
 				}
 				
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setHTML(i+1, 0, html.toString());
-				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setBorderWidth(quantidadeMapa == 1 && vo.getCidade().getQuantidadeSurdosMapa() != 10 ? 0 : 1);
+				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setBorderWidth(
+						quantidadeMapa == 1 
+						&& vo.getCidade().getQuantidadeSurdosMapa() != 10 
+						&& vo.getCidade().getQuantidadeSurdosMapa() != 6 
+							? 0 : 1);
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setCellSpacing(0);
 				paineisImpressaoSurdoFlexTable.get(idPrimeiraPessoa).setWidth(largura);
 			}

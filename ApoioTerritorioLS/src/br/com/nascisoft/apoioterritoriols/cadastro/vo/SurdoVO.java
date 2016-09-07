@@ -1,10 +1,13 @@
 package br.com.nascisoft.apoioterritoriols.cadastro.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 import br.com.nascisoft.apoioterritoriols.login.entities.Cidade;
 import br.com.nascisoft.apoioterritoriols.login.entities.Mapa;
@@ -14,8 +17,6 @@ import br.com.nascisoft.apoioterritoriols.login.entities.Regiao;
 import br.com.nascisoft.apoioterritoriols.login.entities.Surdo;
 import br.com.nascisoft.apoioterritoriols.login.util.StringUtils;
 import br.com.nascisoft.apoioterritoriols.resources.client.ApoioTerritorioLSConstants;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class SurdoVO implements Serializable {
 
@@ -476,6 +477,58 @@ public class SurdoVO implements Serializable {
 			}
 		}
 		return retorno.toString();
+	}
+	
+	public String getDadosComplementoResumido() {
+		ArrayList<String> detalhes = new ArrayList<String>();
+		if (this.getIdade() != null) {
+			Integer idade = Integer.valueOf(this.getIdade());
+			if (idade < 12) {
+				detalhes.add("Criança");
+			} else if (idade < 20) {
+				detalhes.add("Jovem");
+			} else {
+				detalhes.add("Adulto");
+			}
+		}
+		if (this.getSexo() != null) {
+			detalhes.add(this.getSexo());
+		}
+		
+		
+		if (ApoioTerritorioLSConstants.INSTANCE.isLibras()) {
+			if (!StringUtils.isEmpty(this.getLibras())) {
+				if ("Sim".equals(this.getLibras())) {
+					detalhes.add("Sabe LIBRAS");
+				} else {
+					detalhes.add("Não sabe LIBRAS");
+				}
+			}
+		}
+		
+		if (!StringUtils.isEmpty(this.getOnibus())) {
+			detalhes.add("Ônibus: " + this.getOnibus());
+		}
+		
+		if (!StringUtils.isEmpty(this.getInstrutor())) {
+			detalhes.add("Instrutor: " + this.getInstrutor());
+		}
+		
+		String retorno = "";
+		
+		if (detalhes.size() > 0) {
+			if (detalhes.size() == 1) {
+				retorno = detalhes.get(0);
+			} else {
+				StringBuilder builder = new StringBuilder();
+				for (String detalhe : detalhes) {
+					builder.append(detalhe).append(", ");
+				}
+				retorno = builder.substring(0, builder.length()-2);
+			}
+		}
+		
+		return retorno;
 	}
 	
 

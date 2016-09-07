@@ -4,6 +4,7 @@ public enum QuantidadeSurdosMapaEnum {
 	UM(1), 
 	QUATRO(4),
 	CINCO(5),
+	SEIS(6),
 	DEZ(10);
 	
 	private Integer qtde;

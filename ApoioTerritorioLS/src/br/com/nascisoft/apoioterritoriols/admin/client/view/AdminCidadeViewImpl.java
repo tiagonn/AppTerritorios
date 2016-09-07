@@ -153,6 +153,7 @@ public class AdminCidadeViewImpl extends AbstractAdminViewImpl implements AdminC
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.UM.getQtde()));
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.QUATRO.getQtde()));
 		this.cidadeQuantidadeSurdosMapaListBox.addItem("5 - Grande", String.valueOf(QuantidadeSurdosMapaEnum.CINCO.getQtde()));
+		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.SEIS.getQtde()));
 		this.cidadeQuantidadeSurdosMapaListBox.addItem(String.valueOf(QuantidadeSurdosMapaEnum.DEZ.getQtde()));
 	}
 	

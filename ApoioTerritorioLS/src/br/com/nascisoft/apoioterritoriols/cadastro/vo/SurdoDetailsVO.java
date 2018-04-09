@@ -20,6 +20,7 @@ public class SurdoDetailsVO implements Serializable {
 	private String endereco;
 	private String observacao;
 	private String nomeCidade;
+	private String enderecoReduzido;
 	
 	public static final Comparator<SurdoDetailsVO> COMPARATOR_NOME = new Comparator<SurdoDetailsVO>() {
 		@Override
@@ -43,6 +44,7 @@ public class SurdoDetailsVO implements Serializable {
 		this.setEndereco(surdo.getEndereco());
 		this.setObservacao(surdo.getObservacao());
 		this.setNomeCidade(cidade.getNome());
+		this.setEnderecoReduzido(surdo.getLogradouro() + ", " + surdo.getNumero());
 	}
 	
 	public SurdoDetailsVO(SurdoVO surdo) {
@@ -55,6 +57,7 @@ public class SurdoDetailsVO implements Serializable {
 		this.setEndereco(surdo.getEndereco());
 		this.setObservacao(surdo.getObservacao());
 		this.setNomeCidade(surdo.getNomeCidade());
+		this.setEnderecoReduzido(surdo.getLogradouro() + ", " + surdo.getNumero());
 	}
 	
 	public Long getId() {
@@ -122,6 +125,14 @@ public class SurdoDetailsVO implements Serializable {
 
 	public void setNomeCidade(String nomeCidade) {
 		this.nomeCidade = nomeCidade;
+	}
+
+	public String getEnderecoReduzido() {
+		return enderecoReduzido;
+	}
+
+	public void setEnderecoReduzido(String enderecoReduzido) {
+		this.enderecoReduzido = enderecoReduzido;
 	}
 
 }

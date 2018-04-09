@@ -710,7 +710,7 @@ public class CadastroSurdoViewImpl extends AbstractCadastroViewImpl implements C
 		this.manterLatitude = null;
 		this.manterRegiao = null;
 		this.manterCidade = null;
-		this.manterNomeTextBox.setText("");         
+		this.manterNomeTextBox.setText("-");         
 		this.manterLogradouroTextBox.setText("");   
 		this.manterNumeroTextBox.setText("");       
 		this.manterComplementoTextBox.setText("");  

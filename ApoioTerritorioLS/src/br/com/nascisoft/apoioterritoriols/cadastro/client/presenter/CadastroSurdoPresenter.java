@@ -254,11 +254,13 @@ public class CadastroSurdoPresenter extends AbstractCadastroPresenter implements
 					sb.append(cep).append(separador);
 				}
 				
-				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador);
+				sb.append(cidade.getNome()).append(separador).append(cidade.getUF()).append(separador).append(cidade.getPais()).append(separador);
 				
 				Geocoder geocoder = new Geocoder();
 				GeocoderRequest request = new GeocoderRequest();
+				logger.info("Endereço de pesquisa: " + sb.toString());
 				request.setAddress(sb.toString());
+				request.setRegion("AR");
 				geocoder.geocode(request, new GeocoderCallback() {
 					@Override
 					public void callback(List<HasGeocoderResult> responses, String status) {

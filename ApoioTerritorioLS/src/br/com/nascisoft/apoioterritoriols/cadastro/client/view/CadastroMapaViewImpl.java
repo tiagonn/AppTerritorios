@@ -322,7 +322,7 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 		
 		this.manterMapaSelecaoPessoasDeFlowPanel.clear();
 		for (SurdoDetailsVO surdo : vo.getSurdosDe()) {
-			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getNome()));
+			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getEnderecoReduzido()));
 			cb.setStyleName("mapas-manter-selecao-checkbox");
 			final Long idSurdo = surdo.getId();
 			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {				
@@ -343,7 +343,7 @@ public class CadastroMapaViewImpl extends AbstractCadastroViewImpl implements
 		
 		this.manterMapaSelecaoPessoasParaFlowPanel.clear();
 		for (SurdoDetailsVO surdo : vo.getSurdosPara()) {
-			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getNome()));
+			CheckBox cb = new CheckBox(StringUtils.toCamelCase(surdo.getEnderecoReduzido()));
 			cb.setStyleName("mapas-manter-selecao-checkbox");
 			final Long idSurdo = surdo.getId();
 			cb.addValueChangeHandler(new ValueChangeHandler<Boolean>() {				

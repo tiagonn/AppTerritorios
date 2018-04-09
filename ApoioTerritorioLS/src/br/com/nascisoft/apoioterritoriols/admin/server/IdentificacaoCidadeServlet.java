@@ -32,7 +32,7 @@ public class IdentificacaoCidadeServlet extends
 		
 		final Geocoder geocoder = new Geocoder();
 		GeocoderRequest geocoderRequest = 
-				new GeocoderRequestBuilder().setAddress(cidade + ", " + uf + ", Brasil").setLanguage("pt-BR").setRegion("BR").getGeocoderRequest();
+				new GeocoderRequestBuilder().setAddress(cidade + ", " + uf + ", Argentina").setLanguage("pt-BR").setRegion("AR").getGeocoderRequest();
 		GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
 		
 		resp.setContentType("text/html");

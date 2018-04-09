@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="APPTerritorioLS" default="build" basedir=".">
+	<!-- Arguments to gwtc and devmode targets -->
+	<property name="gwt.args" value="" />
+
+	<!-- Configure path to GWT SDK -->
+	<property name="gwt.sdk" location="/Users/tiago/dev/gwt-2.7.0" />
+
+	<property name="appengine.sdk" location="/Users/tiago/dev/appengine-java-sdk-1.9.63/" />
+
+	<path id="project.class.path">
+		<pathelement location="war/WEB-INF/classes" />
+		<pathelement location="${gwt.sdk}/gwt-user.jar" />
+		<pathelement location="${gwt.sdk}/gwt-dev.jar" />
+		<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+		<pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
+		<fileset dir="${appengine.sdk}/lib" includes="**/*.jar" />
+		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
+		<!-- Add any additional non-server libs (such as JUnit) here -->
+	</path>
+
+	<path id="project.class.path">
+		<pathelement location="war/WEB-INF/classes" />
+		<pathelement location="${gwt.sdk}/gwt-user.jar" />
+		<fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
+		<!-- Add any additional non-server libs (such as JUnit) -->
+		<fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
+	</path>
+
+	<path id="tools.class.path">
+		<path refid="project.class.path" />
+		<pathelement location="${appengine.sdk}/lib/appengine-tools-api.jar" />
+		<fileset dir="${appengine.sdk}/lib/tools">
+			<include name="**/asm-*.jar" />
+			<include name="**/datanucleus-enhancer-*.jar" />
+		</fileset>
+	</path>
+
+	<target name="libs" description="Copy libs to WEB-INF/lib">
+		<mkdir dir="war/WEB-INF/lib" />
+		<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
+		<!---->
+		<!-- Add any additional server libs that need to be copied -->
+		<copy todir="war/WEB-INF/lib" flatten="true">
+			<fileset dir="${appengine.sdk}/lib/user" includes="**/*.jar" />
+		</copy>
+	</target>
+
+	<target name="javac" depends="libs" description="Compile java source to bytecode">
+		<mkdir dir="war/WEB-INF/classes" />
+		<javac srcdir="src" includes="**" encoding="utf-8" destdir="war/WEB-INF/classes" source="1.7" target="1.7" nowarn="true" debug="true" debuglevel="lines,vars,source" includeantruntime="false">
+			<classpath refid="project.class.path" />
+		</javac>
+		<copy todir="war/WEB-INF/classes">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+		<taskdef name="datanucleusenhancer" classpathref="tools.class.path" classname="org.datanucleus.enhancer.tools.EnhancerTask" />
+		<datanucleusenhancer classpathref="tools.class.path" failonerror="true">
+			<fileset dir="war/WEB-INF/classes" includes="**/*.class" />
+		</datanucleusenhancer>
+	</target>
+
+	<target name="gwtc" depends="javac" description="GWT compile to JavaScript (production mode)">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler" maxmemory="512m">
+			<classpath>
+				<pathelement location="src" />
+				<path refid="project.class.path" />
+			</classpath>
+			<arg line="-war" />
+			<arg value="war" />
+			<!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+			<arg line="${gwt.args}" />
+			<arg value="br.com.nascisoft.apoioterritoriols.resources.Resources" />
+			<arg value="br.com.nascisoft.apoioterritoriols.login.Login" />
+			<arg value="br.com.nascisoft.apoioterritoriols.admin.Admin" />
+			<arg value="br.com.nascisoft.apoioterritoriols.cadastro.Cadastro" />
+			<arg value="br.com.nascisoft.apoioterritoriols.impressao.Impressao" />
+		</java>
+	</target>
+
+	<target name="devmode" depends="javac" description="Run development mode (pass -Dgwt.args=-nosuperDevMode to fallback to classic DevMode)">
+		<java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode" maxmemory="1g">
+			<classpath>
+				<pathelement location="src" />
+				<path refid="project.class.path" />
+				<pathelement location="${gwt.sdk}/gwt-codeserver.jar" />
+			</classpath>
+			<arg value="-startupUrl" />
+			<arg value="Cadastro.html" />
+			<arg line="-war" />
+			<arg value="war" />
+			<!-- Additional arguments like -style PRETTY, -logLevel DEBUG or -nosuperDevMode -->
+			<arg line="${gwt.args}" />
+			<arg value="br.com.nascisoft.apoioterritoriols.resources.Resources" />
+			<arg value="br.com.nascisoft.apoioterritoriols.login.Login" />
+			<arg value="br.com.nascisoft.apoioterritoriols.admin.Admin" />
+			<arg value="br.com.nascisoft.apoioterritoriols.cadastro.Cadastro" />
+			<arg value="br.com.nascisoft.apoioterritoriols.impressao.Impressao" />
+		</java>
+	</target>
+
+	<!--
+Test targets suppressed because -junit argument was not specified when running webAppCreator.
+
+  <target name="javac.tests" depends="javac" description="Compiles test code">
+    <javac srcdir="test" includes="**" encoding="utf-8"
+      source="1.7" target="1.7" nowarn="true"
+      destdir="war/WEB-INF/classes"
+      debug="true" debuglevel="lines,vars,source">
+      <classpath location="path_to_the_junit_jar"/>
+      <classpath refid="project.class.path"/>
+    </javac>
+  </target>
+  
+  <target name="test.dev" depends="javac.tests" description="Run development mode tests">
+    <mkdir dir="reports/htmlunit.dev" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes" maxmemory="256m">
+      <sysproperty key="gwt.args" value="-devMode -logLevel WARN -war www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/tiago/dev/gwt-2.8.2/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/tiago/dev/gwt-2.8.2/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="path_to_the_junit_jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.dev" >
+        <fileset dir="test" >
+          <include name="**/*Suite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.prod" depends="javac.tests" description="Run production mode tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="yes" haltonfailure="yes" maxmemory="256m">
+      <sysproperty key="gwt.args" value="-logLevel WARN -war www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/tiago/dev/gwt-2.8.2/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/tiago/dev/gwt-2.8.2/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="path_to_the_junit_jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod" >
+        <fileset dir="test" >
+          <include name="**/*Suite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test" description="Run development and production mode tests">
+    <antcall target="test.dev" />
+    <antcall target="test.prod" />
+  </target>
+-->
+
+	<target name="build" depends="gwtc" description="Build this project">
+		<!--
+		<jar destfile="war/WEB-INF/lib/appterritoriols.jar" basedir="war/WEB-INF/classes" includes="**" />
+		<copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />
+		<copy todir="war/WEB-INF/lib" file="${appengine.sdk}/lib/opt/user/appengine-api-labs/v1/appengine-api-labs.jar" />
+		<copy todir="war/WEB-INF/lib" file="${appengine.sdk}/lib/opt/user/appengine-endpoints/v1/appengine-endpoints-deps.jar" />
+		<copy todir="war/WEB-INF/lib" file="${appengine.sdk}/lib/opt/user/appengine-endpoints/v1/appengine-endpoints.jar" />
+		<copy todir="war/WEB-INF/lib" file="${appengine.sdk}/lib/opt/user/jsr107/v1/appengine-jsr107cache-1.9.63.jar" />
+		<copy todir="war/WEB-INF/lib" file="${appengine.sdk}/lib/opt/user/jsr107/v1/jsr107cache-1.1.jar" />
+		-->
+	</target>
+
+	<target name="war" depends="build" description="Create a war file">
+		<zip destfile="AppTerritorioLS.war" basedir="war" />
+	</target>
+
+	<target name="clean" description="Cleans this project">
+		<delete dir="war/WEB-INF/classes" failonerror="false" />
+		<delete dir="war/admin" failonerror="false" />
+		<delete dir="war/login" failonerror="false" />
+		<delete dir="war/resources" failonerror="false" />
+		<delete dir="war/cadastro" failonerror="false" />
+		<delete dir="war/impressao" failonerror="false" />
+	</target>
+
+</project>
